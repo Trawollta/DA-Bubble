@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "da-bubble-c426e": {
+      "hosting": {
+        "da-bubble": [
+          "da-bubble-c426e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "da-bubble-c426e"
+  }
+}

@@ -11,7 +11,7 @@ import { initializeApp } from 'firebase/app';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'DABubble';
+  title = 'da-bubble';
 
   firebaseConfig = {
     apiKey: 'AIzaSyBp8iKKC9okcRYyLdCUb9h92m_NeeqhtLc',

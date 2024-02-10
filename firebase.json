@@ -1,1 +1,13 @@
+<<<<<<< HEAD
 {}
+=======
+{
+  "hosting": [
+    {
+      "target": "da-bubble",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}
+>>>>>>> d24f93cd100db222737951271d726b2c5cc88198

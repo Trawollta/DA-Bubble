@@ -23,4 +23,8 @@ export class AppComponent {
   };
 
   app = initializeApp(this.firebaseConfig);
+
+  redirectToDashboard() {
+    window.location.href = '/dashboard';
+  }
 }

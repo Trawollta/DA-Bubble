@@ -8,9 +8,7 @@ body {
 // wofür wird das gebraucht? Hab ein Verständnissproblem, weil  Gruß Alex
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-
 
 @mixin dFlex($jc: center, $ai: center, $g: 0px, $fd: row) {
     display: flex;
@@ -58,11 +56,12 @@ body {
 }
 
 
-
 /* max screen width */
+
 $maxScreenWidth: 1400px;
 
 /* projekt colors*/
+
 $white: white;
 $background: rgb(236, 238, 254);
 $light_purple: rgb(173, 176, 217);

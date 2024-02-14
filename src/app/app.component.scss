@@ -1,0 +1,11 @@
+@import './../styles.scss';
+
+div{
+    @include dFlex();
+    @include size($h: 200px);
+    background-color: $background;
+    button{
+        background-color: $purple1;
+        @include btnMobile();
+    }
+}

@@ -6,7 +6,7 @@ import { initializeApp } from 'firebase/app';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink  ],
+  imports: [CommonModule, RouterOutlet, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -23,4 +23,8 @@ export class AppComponent {
   };
 
   app = initializeApp(this.firebaseConfig);
+
+  redirectToDashboard() {
+    window.location.href = '/dashboard';
+  }
 }

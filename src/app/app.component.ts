@@ -3,11 +3,17 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import { ButtonComponent } from './button/button.component';
+import { HeaderComponent } from './shared/header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, ButtonComponent],
+  imports: [
+    CommonModule,
+     RouterOutlet,
+     RouterLink,
+     ButtonComponent,
+    HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

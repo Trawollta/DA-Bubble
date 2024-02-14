@@ -1,10 +1,10 @@
 @import './../styles.scss';
 
 div{
-    @include dFlex();
-    @include size($h: 200px);
-    background-color: $background;
+    @include dFlex($fd: column);
+   
     button{
+        @include marginIndividual($t: 50px);
         background-color: $purple1;
         @include btnMobile();
     }

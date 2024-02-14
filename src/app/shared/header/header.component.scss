@@ -1,0 +1,36 @@
+@import './../../../styles.scss';
+
+section{
+    background-color: $background;
+    width: 100dvw;
+    @include dFlex();
+}
+.content{
+    @include dFlex($jc: space-between, $g:32px);
+    width: 90vw;
+    max-width: $maxScreenWidth;
+    
+    .logoContainer{
+        @include dFlex($g: 11px);
+        img{
+            @include size($w: 45, $h: 45);
+        }
+    }
+    .searchBarContainer{
+        min-width: 50px;
+        height: 45px;
+        background-color: aqua;
+        flex: 1;
+    }
+    .accountContainer{
+        @include dFlex($g: 11px);
+        .menu{
+            @include dFlex();
+            .imgAvatar{
+                @include size50;
+                border-radius: 100%;
+            }
+        }
+    }
+
+}

@@ -9,4 +9,13 @@ import { Component } from '@angular/core';
 })
 export class ChatComponent {
   openAwnsers() {}
+
+  openEmojis() {
+    let emojiDiv = document.getElementById('emojis');
+    if (emojiDiv && emojiDiv.classList.contains('d-none')) {
+      emojiDiv.classList.remove('d-none');
+    } else if (emojiDiv && emojiDiv.classList.contains('d-none') == false) {
+      emojiDiv.classList.add('d-none');
+    }
+  }
 }

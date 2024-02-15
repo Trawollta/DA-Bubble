@@ -1,7 +1,7 @@
 main {
   max-width: 989px;
   max-height: 940px;
-  top: 115px;
+  top: 50px;
   left: 406px;
   border-radius: 30px;
   display: flex;
@@ -53,6 +53,8 @@ main {
 .contact-row {
   width: 100px;
   height: 40px;
+  display: flex;
+  align-items: center;
   img {
     width: 40px;
     height: 40px;
@@ -187,4 +189,19 @@ main {
   letter-spacing: 0em;
   text-align: left;
   display: flex;
+}
+
+.emoji-div {
+  display: flex;
+  max-width: 100px;
+  height: 30px;
+  padding: 3px, 15px, 3px, 20px;
+  border-radius: 25px, 25px, 0px, 25px;
+  border: 1px;
+  gap: 5px;
+}
+
+
+.d-none {
+    display: none;
 }

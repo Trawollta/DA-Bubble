@@ -16,7 +16,7 @@
     <div class="all-channel">
       <div class="channel-dialog">
         <div class="channel-header">
-            <div>
+            <div (click)="openChannels()">
                 <img src="../../assets/img/icons/arrow_drop_down.svg" alt="">
             </div>
             <div class="channel-headline-wrapper">
@@ -29,7 +29,12 @@
         </div>
       </div>
       <div class="channel-overview"></div>
-      <div class="channel-add"></div>
+      <div class="channel-add">
+          <div (click)="addNewChannel()" class="menu-adder">
+            <img src="../../../assets/img/icons/add_circle.svg" alt="">
+            <p>Channel hinzufügen</p>
+          </div>  
+      </div>
     </div>
     <div class="direct-messages"></div>
   </section>

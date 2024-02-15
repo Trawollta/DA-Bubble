@@ -5,8 +5,10 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './channel-menu.component.html',
-  styleUrl: './channel-menu.component.scss'
+  styleUrl: './channel-menu.component.scss',
 })
 export class ChannelMenuComponent {
+  openChannels() {}
 
+  addNewChannel(){}
 }

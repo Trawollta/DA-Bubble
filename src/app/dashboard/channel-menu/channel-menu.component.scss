@@ -67,6 +67,7 @@ main {
   max-height: 162px;
   display: fleX;
   padding-top: 25px;
+  flex-direction: column;
 }
 
 .direct-messages {
@@ -125,4 +126,22 @@ main {
   padding: 3px;
   border-radius: 15px;
   gap: 10px;
+}
+
+.menu-adder {
+  display: flex;
+  flex-direction: row;
+  width: 216px;
+  height: 33px;
+  padding: 4px 10px 4px 10px;
+  gap: 10px;
+  align-items: center;
+  p {
+    font-family: "Nunito Sans";
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
 }

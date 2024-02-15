@@ -54,6 +54,7 @@ section {
     @media screen and (min-width: 600px) {
         top: 0;
         height: 100vh;
+        animation: fadeIn 2s;
     }
 
     .innerContainer {
@@ -82,16 +83,26 @@ section {
                     @include dFlex($g: 15px);
                     font-size: 20px;
                     font-weight: 600;
-                    line-height: 27px;  
-                    &:hover{
+                    line-height: 27px;
+                    padding: 10px 30px 10px 30px;
+                    border-radius: 100px;
+
+                    // width: ;
+                    &:hover {
                         background-color: $background;
                         color: $purple3;
+
+                        img {
+                            filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+
+                        }
                     }
                 }
 
-                img{
+                img {
                     width: 30px;
                     height: 30px;
+
                 }
             }
         }

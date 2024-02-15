@@ -1,65 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-
-* {
-    font-family: 'Nunito Sans';
-}
-
-html,
-body {
-    height: 100%;
-}
-
-
-body {
-    margin: 0;
-}
-
-@mixin dFlex($jc: center, $ai: center, $g: 0px, $fd: row) {
-    display: flex;
-    justify-content: $jc;
-    align-items: $ai;
-    gap: $g;
-    flex-direction: $fd;
-}
-
-@mixin size($h: auto, $w: 100%) {
-    height: $h;
-    width: $w;
-}
-
-@mixin size40($h: 40px, $w: 40px) {
-    height: $h;
-    width: $w;
-}
-
-@mixin size50($h: 50px, $w: 50px) {
-    height: $h;
-    width: $w;
-}
-
-@mixin marginIndividual($l: 0, $t: 0, $r: 0, $b: 0) {
-    margin-top: $t;
-    margin-bottom: $b;
-    margin-left: $l;
-    margin-right: $r;
-}
-
-@mixin paddingIndividual($l: 0, $t: 0, $r: 0, $b: 0) {
-    padding-top: $t;
-    padding-bottom: $b;
-    padding-left: $l;
-    padding-right: $r;
-}
-
-@mixin btnMobile() {
-    height: 49px;
-    border-radius: 25px;
-    padding-block: 0;
-    padding-inline: 25px;
-    border-width: 0;
-}
-
-
 /* max screen width */
 
 $maxScreenWidth: 1400px;
@@ -76,3 +15,62 @@ $purple3: rgb(83, 90, 241);
 $purple1: rgb(68, 77, 242);
 $online_green: rgb(146, 200, 62);
 $rosa_error: rgb(237, 30, 121);
+
+* {
+  font-family: "Nunito Sans";
+}
+
+body {
+  margin: 0;
+}
+
+@mixin dFlex($jc: center, $ai: center, $g: 0px, $fd: row) {
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
+  gap: $g;
+  flex-direction: $fd;
+}
+
+@mixin size($h: auto, $w: 100%) {
+  height: $h;
+  width: $w;
+}
+
+@mixin size40($h: 40px, $w: 40px) {
+  height: $h;
+  width: $w;
+}
+
+@mixin size50($h: 50px, $w: 50px) {
+  height: $h;
+  width: $w;
+}
+
+@mixin marginIndividual($l: 0, $t: 0, $r: 0, $b: 0) {
+  margin-top: $t;
+  margin-bottom: $b;
+  margin-left: $l;
+  margin-right: $r;
+}
+
+@mixin paddingIndividual($l: 0, $t: 0, $r: 0, $b: 0) {
+  padding-top: $t;
+  padding-bottom: $b;
+  padding-left: $l;
+  padding-right: $r;
+}
+
+@mixin btnMobile() {
+  height: 49px;
+  border-radius: 25px;
+  padding-block: 0;
+  padding-inline: 25px;
+  border-width: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: $background;
+}

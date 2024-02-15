@@ -1,0 +1,93 @@
+@import "../../../styles.scss";
+
+main {
+  background-color: $background;
+}
+
+.channel-menu {
+  max-width: 366px;
+  max-height: 940px;
+  top: 115px;
+  left: 20px;
+  padding: 32px 30px 32px 30px;
+  border-radius: 30px;
+  gap: 25px;
+  background-color: white;
+  position: absolute;
+}
+
+.header-wrapper {
+  width: 306px;
+  height: 60px;
+  border-radius: 30px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+}
+
+.left-header-menu {
+  display: flex;
+  width: 250px;
+  height: 60px;
+  padding: 0px 20px 0px 0px;
+  gap: 15px;
+}
+
+.header-text {
+  font-family: "Nunito Sans";
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 33px;
+  letter-spacing: 0em;
+  text-align: left;
+  position: relative;
+  bottom: 8px;
+}
+
+.edit-img-div {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 20px;
+  gap: 10px;
+}
+
+.edit-img {
+  position: relative;
+  width: 20.5px;
+  height: 20.52px;
+  top: 11.17px;
+  left: 11px;
+}
+
+.all-channel {
+  max-width: 306px;
+  max-height: 162px;
+  gap: 25px;
+}
+
+.direct-messages {
+  width: 306px;
+  height: 484px;
+  gap: 25px;
+}
+
+.channel-dialog {
+  width: 306px;
+  height: 46px;
+  padding: 3px 0px 3px 0px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+}
+
+.channel-header {
+  width: 176px;
+  height: 40px;
+  padding: 5px 10px 5px 0px;
+  border-radius: 15px;
+  gap: 15px;
+  display: flex;
+}

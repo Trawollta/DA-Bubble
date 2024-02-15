@@ -1,7 +1,8 @@
 @import './../../styles.scss';
 app-inputfield,
 app-button {
-    width: 100%;
+    max-width: 436px;
+    width: -webkit-fill-available;
     @include dFlex();
 }
 
@@ -27,6 +28,8 @@ dialog {
     }
     .button-field {
         display: flex;
+        max-width: 350px;
+        width: -webkit-fill-available;
         gap: 30px;
     }
 }
@@ -36,8 +39,8 @@ dialog {
     text-align: center;
 }
 
-@media (max-width: 370px) {
+@media (max-width: 397px) {
     .button-field {
-        gap: 15px !important;
+        gap: 12px !important;
     }
 }

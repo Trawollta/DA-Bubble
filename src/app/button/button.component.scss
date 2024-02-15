@@ -27,7 +27,6 @@ button {
     width: -webkit-fill-available !important;
     gap: 10px;
     border-radius: 25px;
-    padding: 12px 32px;
     background-color: $background;
     color: $purple2;
     text-align: center;
@@ -37,9 +36,9 @@ img {
     height: 25px;
 }
 
-@media (max-width: 380px) {
+@media (max-width: 397px) {
     button {
         font-size: 0.8em;
-        padding: 12px 18px;
+        padding: 12px 12px;
     }
 }

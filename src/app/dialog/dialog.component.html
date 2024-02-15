@@ -9,9 +9,9 @@
         <p>Passwort vergessen?</p>
     </div>
     <div><span>ODER</span></div>
-    <app-button [classes]="['google']" (clicked)="redirectDashboard()" imgPath="assets/img/icons/google.svg" caption="Anmelden mit Google"></app-button>
+    <app-button [classes]="['google']" imgPath="assets/img/icons/google.svg" caption="Anmelden mit Google"></app-button>
     <div class="button-field">
-        <app-button [classes]="['primary']" (clicked)="redirectDashboard()" caption="Anmelden"></app-button>
+        <app-button [classes]="['primary']" caption="Anmelden"></app-button>
         <app-button [classes]="['secondary']" (clicked)="redirectDashboard()" caption="Gäste-Login"></app-button>
     </div>
 </dialog>

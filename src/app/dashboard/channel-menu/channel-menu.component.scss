@@ -65,7 +65,8 @@ main {
 .all-channel {
   max-width: 306px;
   max-height: 162px;
-  gap: 25px;
+  display: fleX;
+  padding-top: 25px;
 }
 
 .direct-messages {
@@ -90,4 +91,38 @@ main {
   border-radius: 15px;
   gap: 15px;
   display: flex;
+}
+
+.channel-headline-wrapper {
+  width: 121px;
+  height: 27px;
+  gap: 10px;
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+  img {
+    width: 20px;
+    height: 18px;
+    top: 0.5px;
+    left: 2px;
+    position: relative;
+  }
+  p {
+    font-family: "Nunito Sans";
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: 0em;
+    text-align: left;
+    width: 87px;
+    height: 27px;
+  }
+}
+
+.add-channel {
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  border-radius: 15px;
+  gap: 10px;
 }

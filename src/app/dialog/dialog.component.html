@@ -1,10 +1,17 @@
 <dialog>
     <header>
-        <span></span>
+        <h3>Überschrift</h3>
     </header>
-    <div></div>
-    <app-inputfield></app-inputfield>
-    <app-inputfield></app-inputfield>
-    <app-inputfield></app-inputfield>
-
+    <div class="hint">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</div>
+    <div class="input-fields">
+        <app-inputfield></app-inputfield>
+        <app-inputfield></app-inputfield>
+        <p>Passwort vergessen?</p>
+    </div>
+    <div><span>ODER</span></div>
+    <app-button [classes]="['google']" (clicked)="redirectDashboard()" imgPath="assets/img/icons/google.svg" caption="Anmelden mit Google"></app-button>
+    <div class="button-field">
+        <app-button [classes]="['primary']" (clicked)="redirectDashboard()" caption="Anmelden"></app-button>
+        <app-button [classes]="['secondary']" (clicked)="redirectDashboard()" caption="Gäste-Login"></app-button>
+    </div>
 </dialog>

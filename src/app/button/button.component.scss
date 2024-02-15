@@ -11,6 +11,7 @@ button {
 
 .primary {
     background-color: $purple1;
+    border: solid 1px $purple1;
     color: $white;
 }
 
@@ -18,4 +19,27 @@ button {
     background-color: $white;
     border: solid 1px $purple2;
     color: $purple2;
+}
+
+.google {
+    @include dFlex();
+    max-width: 500px;
+    width: -webkit-fill-available !important;
+    gap: 10px;
+    border-radius: 25px;
+    padding: 12px 32px;
+    background-color: $background;
+    color: $purple2;
+    text-align: center;
+}
+
+img {
+    height: 25px;
+}
+
+@media (max-width: 380px) {
+    button {
+        font-size: 0.8em;
+        padding: 12px 18px;
+    }
 }

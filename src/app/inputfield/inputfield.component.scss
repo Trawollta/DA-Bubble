@@ -1,0 +1,10 @@
+@import './../../styles.scss';
+input {
+    max-width: 436px;
+    width: -webkit-fill-available;
+    height: 28px;
+    border-radius: 100px;
+    border: none;
+    padding: 18px 32px;
+    background-color: $background;
+}

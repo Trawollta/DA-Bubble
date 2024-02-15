@@ -1,0 +1,165 @@
+@import './../../../../styles.scss';
+
+section {
+    @include dFlex();
+
+}
+
+.accountContainer {
+    @include dFlex($g: 11px);
+
+    h3 {
+        display: none;
+
+        @media screen and (min-width: 600px) {
+            display: block;
+        }
+    }
+
+    .avatarCon {
+
+        @include dFlex();
+
+        .imgAvatar {
+            @include size50;
+            border-radius: 100%;
+        }
+
+        .imgArrow {
+            display: none;
+
+            @media screen and (min-width: 600px) {
+                display: block;
+            }
+        }
+    }
+
+}
+
+.closedMenu {
+    display: none;
+}
+
+.openMenu {
+    @include dFlex($ai: flex-end);
+    bottom: 0;
+    left: 0;
+    width: 100dvw;
+    height: calc(100vh + 200px);
+    background-color: rgba(0, 0, 0, 0.116);
+    position: absolute;
+    animation: moveIn 0.3s;
+    z-index: 99;
+
+    @media screen and (min-width: 600px) {
+        top: 0;
+        height: 100vh;
+        animation: fadeIn 2s;
+    }
+
+    .innerContainer {
+        @include dFlex($fd: column, $g: 25px);
+        width: 100%;
+        height: 206px;
+        border-radius: 30px 30px 0 0;
+        background-color: $white;
+
+        .closeBar {
+            width: 62px;
+            height: 6px;
+            border-radius: 23px;
+            background-color: $bar_grey;
+        }
+
+        .menuOuterContainer {
+            @include dFlex($fd: column, $ai: flex-start, $g: 15px);
+            width: 100%;
+            margin-left: 60px;
+
+            .menu {
+                @include dFlex($fd: column, $ai: flex-start, $g: 15px);
+
+                a {
+                    @include dFlex($g: 15px);
+                    font-size: 20px;
+                    font-weight: 600;
+                    line-height: 27px;
+                    padding: 10px 30px 10px 30px;
+                    border-radius: 100px;
+
+                    // width: ;
+                    &:hover {
+                        background-color: $background;
+                        color: $purple3;
+
+                        img {
+                            filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+
+                        }
+                    }
+                }
+
+                img {
+                    width: 30px;
+                    height: 30px;
+
+                }
+            }
+        }
+
+        @media screen and (min-width: 600px) {
+            @include dFlex();
+            position: absolute;
+            top: 65px;
+            right: 80px;
+            width: 282px;
+            height: 181px;
+            border-radius: 30px 0 30px 30px;
+            background-color: $white;
+            box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+
+            .closeBar {
+                width: 0;
+                height: 0;
+
+            }
+
+            .menuOuterContainer {
+                @include dFlex();
+                width: 100%;
+                margin-left: 0;
+
+                .menu {
+
+
+                    a {
+                        @include dFlex($g: 15px);
+                        font-size: 24px;
+                        line-height: 33px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@keyframes moveIn {
+    0% {
+        bottom: -200px
+    }
+
+    100% {
+        bottom: 0
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

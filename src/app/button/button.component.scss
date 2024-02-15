@@ -1,7 +1,21 @@
 @import './../../styles.scss';
 button {
-    background-color: $purple1;
-    padding: 1em;
     font-size: 1em;
-    font-family: 'Nunito Sans';
+    font-weight: 700;
+    width: fit-content;
+    border-radius: 25px;
+    padding: 12px 25px;
+    cursor: pointer;
+    border: none;
+}
+
+.primary {
+    background-color: $purple1;
+    color: $white;
+}
+
+.secondary {
+    background-color: $white;
+    border: solid 1px $purple2;
+    color: $purple2;
 }

@@ -4,15 +4,10 @@
             <img src="assets/img/icons/Logo.svg" alt="logo">
             <h3>DABubble</h3>
         </div>
-        <div *ngIf="desktop" class="searchBarContainer">
+        <div class="searchBarContainer">
 
         </div>
-        <div class="accountContainer">
-            <h3 *ngIf="desktop">Frederik Beck</h3>
-            <a class="menu" href="">
-                <img class="imgAvatar" src="assets/img/avatars/Frederik Beck.svg" alt="avatar">
-                <img  *ngIf="desktop" src="assets/img/icons/keyboard_arrow_down.svg" alt="arrow-down">
-            </a>
-        </div>
+        <app-header-menu></app-header-menu>
+        
     </div>
 </section>

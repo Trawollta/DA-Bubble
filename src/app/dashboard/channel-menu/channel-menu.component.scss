@@ -120,6 +120,45 @@ main {
   }
 }
 
+.channel-overview {
+  width: 306px;
+  height: 33px;
+  gap: 13px;
+}
+
+.channel-overview-wrapper {
+  width: 306px;
+  height: 33px;
+  border-radius: 30px;
+  gap: 15px;
+  display: flex;
+}
+
+.channel-wrapper {
+  display: flex;
+  font-family: "Nunito Sans";
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 158px;
+  height: 33px;
+  padding: 4px 20px 4px 20px;
+  p {
+    font-family: "Nunito Sans";
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+    width: 84px;
+    height: 25px;
+  }
+  span {
+    font-family: "Nunito Sans";
+    font-size: 18px;
+  }
+}
+
 .add-channel {
   width: 30px;
   height: 30px;
@@ -143,5 +182,44 @@ main {
     line-height: 25px;
     letter-spacing: 0em;
     text-align: left;
+  }
+}
+
+.messages-wrapper {
+  display: flex;
+  width: 254px;
+  height: 40px;
+  padding: 5px 10px 5px 0px;
+  gap: 15px;
+  align-items: center;
+
+  img {
+    width: 30px;
+    height: 40px;
+    top: 0.5px;
+    left: 2px;
+    position: relative;
+  }
+}
+
+.message-helper {
+  width: 199px;
+  height: 27px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  img {
+    width: 24px;
+    height: 24px;
+  }
+  p {
+    font-family: "Nunito Sans";
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: 0em;
+    text-align: left;
+    width: 165px;
+    height: 27px;
   }
 }

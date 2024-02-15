@@ -10,15 +10,14 @@ import { Component, HostListener } from '@angular/core';
 })
 export class HeaderComponent {
 
-  screenWidth = window.innerWidth;
-  desktop = false;
+  desktop:boolean = this.setDesktopFlag();
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event): void {
-    this.screenWidth = window.innerWidth;
-    
-    (this.screenWidth > 600)? this.desktop = true : this.desktop=false;
-    
+  onResize(event: Event): void { 
+    this.desktop = this.setDesktopFlag();
   }
 
+  setDesktopFlag(){
+    return (window.innerWidth > 600)? true : false;
+  }
 }

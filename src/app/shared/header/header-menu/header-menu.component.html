@@ -1,1 +1,29 @@
-<p>header-menu works!</p>
+<section>
+    <div class="accountContainer" (click)="menuClicked()">
+        <h3>Frederik Beck</h3>
+        <div class="menu" >
+            <img class="imgAvatar" src="assets/img/avatars/Frederik Beck.svg" alt="avatar">
+            <img class="imgArrow"  src="assets/img/icons/keyboard_arrow_down.svg" alt="arrow-down">
+        </div>
+        
+        
+    </div>
+    <div class="menuContainer" class="closedMenu" [ngClass]="{'openMenu': active}">
+        <div class="closeContainer">
+            <div class="closeBar"></div>
+        </div>
+        <div class="menu">
+            <a>
+                <img src="assets/img/icons/account_circle.svg" alt="avatarIcon">
+                <span>Profile</span>
+            </a>
+            <a>
+                
+                <img src="assets/img/icons/logout.svg" alt="logoutIcon">
+                <span>Profile</span>
+            </a>
+                
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,39 @@
+@import './../../../../styles.scss';
+section{
+    @include dFlex();
+}
+.accountContainer {
+    @include dFlex($g: 11px);
+    h3{
+        display: none;
+        @media  screen and (min-width: 600px) {
+            display: block;
+        }
+    }
+
+    .menu {
+        @include dFlex();
+
+        .imgAvatar {
+            @include size50;
+            border-radius: 100%;
+        }
+        .imgArrow{
+            display: none;
+            @media  screen and (min-width: 600px) {
+            display: block;
+        }
+        }
+    }
+
+    
+       
+    
+}
+.closedMenu {
+    display: none;
+}
+
+.openMenu {
+    display: block;
+}

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component,} from '@angular/core';
-
+import { Component} from '@angular/core';
 
 @Component({
   selector: 'app-header-menu',
@@ -13,8 +12,20 @@ import { Component,} from '@angular/core';
 })
 export class HeaderMenuComponent {
 
+active: boolean = false;
+
+  menuClicked() {
+    this.active = !this.active;
+    if (this.active) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto'; 
+
+  }
+
+  stopPropagation(e:Event) {
+    e.stopPropagation();
+}
   //desktop: boolean = this.setDesktopFlag();
-  active: boolean = false;
+  
 
  /* ngOnInit() {
    this.active = false;
@@ -30,12 +41,4 @@ export class HeaderMenuComponent {
     return window.innerWidth > 600;
   } */
 
-
-  menuClicked() {
-    this.active = !this.active;
-    if (this.active) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto'; 
-
-  }
-  
 }

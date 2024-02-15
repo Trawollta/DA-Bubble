@@ -1,29 +1,31 @@
 <section>
     <div class="accountContainer" (click)="menuClicked()">
         <h3>Frederik Beck</h3>
-        <div class="menu" >
+        <div class="avatarCon">
             <img class="imgAvatar" src="assets/img/avatars/Frederik Beck.svg" alt="avatar">
-            <img class="imgArrow"  src="assets/img/icons/keyboard_arrow_down.svg" alt="arrow-down">
-        </div>
-        
-        
-    </div>
-    <div class="menuContainer" class="closedMenu" [ngClass]="{'openMenu': active}">
-        <div class="closeContainer">
-            <div class="closeBar"></div>
-        </div>
-        <div class="menu">
-            <a>
-                <img src="assets/img/icons/account_circle.svg" alt="avatarIcon">
-                <span>Profile</span>
-            </a>
-            <a>
-                
-                <img src="assets/img/icons/logout.svg" alt="logoutIcon">
-                <span>Profile</span>
-            </a>
-                
+            <img class="imgArrow" src="assets/img/icons/keyboard_arrow_down.svg" alt="arrow-down">
         </div>
 
+
+    </div>
+    <div *ngIf="active" class="openMenu" (click)="menuClicked()">
+        <div class="innerContainer" (click)="stopPropagation($event)">
+            <div class="closeContainer" (click)="menuClicked()">
+                <div class="closeBar"></div>
+            </div>
+            <div class="menuOuterContainer">
+                <div class="menu">
+                    <a>
+                        <img src="assets/img/icons/account_circle.svg" alt="avatarIcon">
+                        <span>Profile</span>
+                    </a>
+                    <a>
+                        <img src="assets/img/icons/logout.svg" alt="logoutIcon">
+                        <span>Log out</span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
     </div>
 </section>

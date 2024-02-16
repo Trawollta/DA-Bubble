@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject} from '@angular/core';
+import { GlobalFunctionsService } from 'app/services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/global-variables.service';
 
 @Component({
@@ -14,8 +15,9 @@ import { GlobalVariablesService } from 'app/services/global-variables.service';
 export class HeaderMenuComponent {
 
 globalVariables = inject (GlobalVariablesService);
+globalFunctions = inject (GlobalFunctionsService);
 
-active: boolean = false;
+/* active: boolean = false;
 
   menuClicked() {
     this.active = !this.active;
@@ -26,7 +28,7 @@ active: boolean = false;
 
   stopPropagation(e:Event) {
     e.stopPropagation();
-}
+} */
   
 
 }

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ButtonComponent } from 'app/button/button.component';
 import { InputfieldComponent } from 'app/inputfield/inputfield.component';
+import { GlobalVariablesService } from 'app/services/global-variables.service';
 
 @Component({
   selector: 'app-dialog',
@@ -11,7 +12,12 @@ import { InputfieldComponent } from 'app/inputfield/inputfield.component';
 })
 export class DialogComponent {
 
+  globalVariables = inject (GlobalVariablesService);
+  constructor(){
+  this.globalVariables.login = true;
+}
   redirectDashboard() {
+    this.globalVariables.login = false;
     window.location.href = '/dashboard';
   }
 }

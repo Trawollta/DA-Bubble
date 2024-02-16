@@ -1,5 +1,5 @@
 <section>
-    <div class="accountContainer" (click)="menuClicked()">
+    <div class="accountContainer" (click)="globalFunctions.menuClicked()">
         <h3 *ngIf="globalVariables.desktop600">Frederik Beck</h3>
         <div class="avatarCon">
             <img class="imgAvatar" src="assets/img/avatars/Frederik Beck.svg" alt="avatar">
@@ -8,9 +8,9 @@
 
 
     </div>
-    <div *ngIf="active" class="openMenu" (click)="menuClicked()">
-        <div class="innerContainer" (click)="stopPropagation($event)">
-            <div class="closeContainer" (click)="menuClicked()">
+    <div *ngIf="globalFunctions.active" class="openMenu" (click)="globalFunctions.menuClicked()">
+        <div class="innerContainer" (click)="globalFunctions.stopPropagation($event)">
+            <div class="closeContainer" (click)="globalFunctions.menuClicked()">
                 <div class="closeBar"></div>
             </div>
             <div class="menuOuterContainer">

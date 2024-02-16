@@ -1,3 +1,13 @@
+.create-channel {
+    position: absolute;
+    top:0;
+    height:100vh;   
+    background-color: rgba(0, 0, 0, 0.285);
+    width:100%;
+    left:0;
+    z-index:1;
+}
+
 .headline {
     display:flex;
     justify-content: space-between;

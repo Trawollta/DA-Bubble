@@ -6,6 +6,7 @@ import { ButtonComponent } from './button/button.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { GlobalVariablesService } from './services/global-variables.service';
+import { ProfileComponent } from './dialog/profile/profile.component';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import { GlobalVariablesService } from './services/global-variables.service';
     RouterLink,
     ButtonComponent,
     DialogComponent,
-    HeaderComponent],
+    HeaderComponent,
+  ProfileComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

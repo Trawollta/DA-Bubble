@@ -1,1 +1,42 @@
-<p>profile works!</p>
+<section>
+    <div class="card">
+    <div class="content">
+        
+        <div class="head">
+            <h3>Profile</h3>
+            <img (click)="close()" src="assets/img/icons/close.svg" alt="close profile">
+        </div>
+        <div class="imgContainer">
+            <img src="{{profile.img}}" alt="profile image">
+        </div>
+        <div class="nameContainer">
+            <h2>{{profile.profilename}}</h2>
+            <div class="editContainer" (click)="editProfile()">
+                <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/edit.svg" alt="edit profile">
+                <span *ngIf="globalVariables.desktop600">Bearbeiten</span>
+            </div>
+            
+        </div>
+        <div *ngIf="profile.online" class="status" >
+            <img src="assets/img/icons/online.svg" alt="profile online">
+            <span>Aktiv</span>
+        </div>
+        <div *ngIf="!profile.online" class="status" >
+            <img src="assets/img/icons/offline.svg" alt="profile offline">
+            <span>Abwesend</span>
+        </div>
+        <div class="mailContainer">
+            <div class="mailImg">
+                <img src="assets/img/icons/mail.svg" alt="e-mail">
+            </div>
+            <div class="mailAdressContainer">
+                <h4>E-Mail-Adresse</h4>
+                <a href= "mailto:{{profile.email}}">{{profile.email}}</a>
+            </div>
+        </div>
+        <app-button [classes]="['primary']" (clicked)="openMessage()" caption="Nachricht" imgPath="assets/img/icons/mode_comment.svg"></app-button>
+    </div>
+</div>
+
+
+</section>

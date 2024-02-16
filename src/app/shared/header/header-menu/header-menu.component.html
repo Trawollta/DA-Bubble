@@ -8,7 +8,8 @@
 
 
     </div>
-    <div *ngIf="globalFunctions.active" class="openMenu" (click)="globalFunctions.menuClicked()">
+    <!-- <app-profile *ngIf="globalVariables.showProfile"></app-profile> -->
+    <div *ngIf="globalVariables.showMenu" class="openMenu" (click)="globalFunctions.menuClicked()">
         <div class="innerContainer" (click)="globalFunctions.stopPropagation($event)">
             <div class="closeContainer" (click)="globalFunctions.menuClicked()">
                 <div class="closeBar"></div>
@@ -17,7 +18,7 @@
                 <div class="menu">
                     <a>
                         <img src="assets/img/icons/account_circle.svg" alt="avatarIcon">
-                        <span>Profile</span>
+                        <span (click)="openProfile()">Profile </span>
                     </a>
                     <a (click)="login()">
                         <img src="assets/img/icons/logout.svg" alt="logoutIcon">

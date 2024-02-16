@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { GlobalVariablesService } from './global-variables.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalFunctionsService {
+  globalVariables = inject (GlobalVariablesService);
   
-  active: boolean = false;
+  
   channel: boolean =false;
 
   menuClicked() {
-    this.active = !this.active;
-    if (this.active) document.body.style.overflow = 'hidden';
+    this.globalVariables.showMenu = !this.globalVariables.showMenu;
+    if (this.globalVariables.showMenu) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto'; 
-
   }
 
   openOverlay() {

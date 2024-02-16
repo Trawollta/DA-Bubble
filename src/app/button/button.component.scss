@@ -50,9 +50,10 @@ img {
     height: 28px;
 }
 
-@media (max-width: 397px) {
+@media (max-width: 400px) or (max-height:700px) {
     button {
         font-size: 0.8em;
-        padding: 12px 12px;
+        padding: 10px 10px;
+        height: 40px;
     }
 }

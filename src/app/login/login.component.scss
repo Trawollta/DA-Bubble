@@ -5,9 +5,13 @@ section {
     width: 100%;
 }
 
+.loginheader {
+    height: 100px;
+}
+
 .login-header-left {
     position: absolute;
-    top: 75px;
+    top: 50px;
     left: 75px;
     @include dFlex();
     gap: 10px;
@@ -18,7 +22,7 @@ section {
 
 .login-header-right {
     position: absolute;
-    top: 75px;
+    top: 50px;
     right: 75px;
     @include dFlex($ai: flex-end, $fd: column);
     gap: 10px;
@@ -30,4 +34,52 @@ section {
 
 app-dialog {
     @include dFlex();
+}
+
+@media (max-width: 800px) {
+    .login-header-left {
+        position: absolute;
+        top: 20px;
+        display: flex;
+        align-items: center;
+        left: 0;
+        right: 0;
+    }
+    .login-header-right {
+        position: absolute;
+        top: unset;
+        bottom: 10px;
+        display: flex;
+        align-items: center;
+        left: 0;
+        right: 0;
+        gap: 0;
+    }
+}
+
+@media (max-height:730px) {
+    .login-header-left {
+        position: absolute;
+        top: 5px;
+        display: flex;
+        align-items: center;
+        left: 0;
+        right: 0;
+        h1 {
+            font-size: 20px;
+        }
+        img {
+            height: 40px;
+        }
+    }
+    .login-header-right {
+        position: absolute;
+        top: unset;
+        bottom: 5px;
+        display: flex;
+        align-items: center;
+        left: 0;
+        right: 0;
+        gap: 0;
+    }
 }

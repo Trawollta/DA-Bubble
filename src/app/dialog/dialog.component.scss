@@ -1,52 +1,74 @@
-@import './../../styles.scss';
-app-inputfield,
-app-button {
-    max-width: 436px;
-    width: -webkit-fill-available;
-    @include dFlex();
-}
-
-dialog {
-    @include dFlex($fd: column);
-    max-height: 769px;
-    height: -webkit-fill-available;
-    width: 80vw;
-    max-width: 606px;
-    border-radius: 30px;
-    border: none;
-    box-shadow: 0px 2px 10px 0px rgb(0 0 0 / 8%);
-    gap: 20px;
-    padding: 35px 20px;
-    h2 {
-        font-size: 46px;
-        color: $purple1;
-        margin: 0;
+    @import './../../styles.scss';
+    app-inputfield,
+    app-button {
+        max-width: 436px;
+        width: -webkit-fill-available;
+        @include dFlex();
     }
-    .input-fields {
+    
+    dialog {
         @include dFlex($fd: column);
-        width: 100%;
-        gap: 40px;
-        p {
-            color: $purple2;
-            font-size: 18px;
+        max-height: 769px;
+        height: 65vh;
+        width: 80vw;
+        max-width: 606px;
+        border-radius: 30px;
+        border: none;
+        box-shadow: 0px 2px 10px 0px rgb(0 0 0 / 8%);
+        gap: 20px;
+        padding: 35px 20px;
+        h2 {
+            font-size: 46px;
+            color: $purple1;
+            margin: 0;
+        }
+        .input-fields {
+            @include dFlex($fd: column);
+            width: 100%;
+            gap: 40px;
+            p {
+                color: $purple2;
+                font-size: 18px;
+            }
+        }
+        .button-field {
+            display: flex;
+            max-width: 350px;
+            width: -webkit-fill-available;
+            gap: 30px;
         }
     }
-    .button-field {
+    
+    .hint {
         display: flex;
-        max-width: 350px;
-        width: -webkit-fill-available;
-        gap: 30px;
+        text-align: center;
+        font-size: 20px;
     }
-}
-
-.hint {
-    display: flex;
-    text-align: center;
-    font-size: 20px;
-}
-
-@media (max-width: 397px) {
-    .button-field {
-        gap: 12px !important;
+    
+    @media (max-width: 400px) or (max-height:870px) {
+        .hint {
+            font-size: 14px;
+        }
+        .button-field {
+            gap: 12px !important;
+        }
+        dialog {
+            gap: 10px !important;
+            h2 {
+                font-size: 35px;
+                margin: 0;
+            }
+            .input-fields {
+                gap: 15px;
+                p {
+                    margin: 0;
+                }
+            }
+        }
     }
-}
+    
+    @media (max-height:600px) {
+        dialog {
+            height: 60vh;
+        }
+    }

@@ -8,3 +8,9 @@ input {
     padding: 18px 32px;
     background-color: $background;
 }
+
+@media (max-height:700px) {
+    input {
+        padding: 8px 20px !important;
+    }
+}

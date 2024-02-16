@@ -1,9 +1,7 @@
 @import './../styles.scss';
-
-div{
+div {
     @include dFlex($fd: column);
-   
-    button{
+    button {
         @include marginIndividual($t: 50px);
         background-color: $purple1;
         @include btnMobile();

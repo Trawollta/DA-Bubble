@@ -1,0 +1,14 @@
+@import './../../styles.scss';
+section {
+    display: flex;
+}
+
+.login-header-left {}
+
+.login-header-right {}
+
+app-dialog {
+    width: 100vw;
+    height: calc(100vh - 65px);
+    display: flex;
+}

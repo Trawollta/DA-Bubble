@@ -8,13 +8,13 @@ section {
 .accountContainer {
     @include dFlex($g: 11px);
 
-    h3 {
+   /*  h3 {
         display: none;
 
         @media screen and (min-width: 600px) {
             display: block;
         }
-    }
+    } */
 
     .avatarCon {
 
@@ -25,13 +25,13 @@ section {
             border-radius: 100%;
         }
 
-        .imgArrow {
+       /*  .imgArrow {
             display: none;
 
             @media screen and (min-width: 600px) {
                 display: block;
             }
-        }
+        } */
     }
 
 }

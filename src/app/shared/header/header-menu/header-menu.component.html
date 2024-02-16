@@ -1,9 +1,9 @@
 <section>
     <div class="accountContainer" (click)="menuClicked()">
-        <h3>Frederik Beck</h3>
+        <h3 *ngIf="globalVariables.desktop600">Frederik Beck</h3>
         <div class="avatarCon">
             <img class="imgAvatar" src="assets/img/avatars/Frederik Beck.svg" alt="avatar">
-            <img class="imgArrow" src="assets/img/icons/keyboard_arrow_down.svg" alt="arrow-down">
+            <img *ngIf="globalVariables.desktop600" class="imgArrow" src="assets/img/icons/keyboard_arrow_down.svg" alt="arrow-down">
         </div>
 
 

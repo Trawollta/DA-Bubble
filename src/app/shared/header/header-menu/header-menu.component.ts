@@ -17,6 +17,10 @@ export class HeaderMenuComponent {
 globalVariables = inject (GlobalVariablesService);
 globalFunctions = inject (GlobalFunctionsService);
 
+login(){
+  this.globalVariables.login = true;
+    window.location.href = '';
+}
 /* active: boolean = false;
 
   menuClicked() {

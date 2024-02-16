@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
+import { GlobalVariablesService } from 'app/services/global-variables.service';
 
 @Component({
   selector: 'app-header',
@@ -14,19 +15,6 @@ import { HeaderMenuComponent } from './header-menu/header-menu.component';
 })
 export class HeaderComponent {
 
-  
-// desktop: boolean = this.setDesktopFlag();
+  globalVariables = inject(GlobalVariablesService);
 
-
- //der Eventlistener ist nur nötig, wenn man die Bildschirmgröße live ändern will
-/*   @HostListener('window:resize', ['$event'])
-  onResize(event: Event): void {
-    this.desktop = this.setDesktopFlag();
-  }
- */
-  setDesktopFlag() {
-    return window.innerWidth > 600;
-  } 
-
- 
 }

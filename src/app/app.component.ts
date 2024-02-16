@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import { ButtonComponent } from './button/button.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { GlobalVariablesService } from './services/global-variables.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,9 @@ import { DialogComponent } from './dialog/dialog.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+
+  globalVariables = inject (GlobalVariablesService);
+
   title = 'da-bubble';
 
   firebaseConfig = {
@@ -36,4 +40,16 @@ export class AppComponent {
   redirectToDashboard() {
     window.location.href = '/dashboard';
   }
+
+
+ //der Eventlistener ist nur nötig, wenn man die Bildschirmgröße live ändern will
+ //aber wir können hier feste Breakpoints festlegen und können so die Screenbeiten anpassen ohne die Werte in den jeweiligen SCSS Fisles zu suchen
+   @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.setDesktopFlag(); 
+  }
+  setDesktopFlag() {
+    this.globalVariables.desktop600 = window.innerWidth > 600;
+    this.globalVariables.desktop900 = window.innerWidth > 900;
+  } 
 }

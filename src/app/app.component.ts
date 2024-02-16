@@ -22,7 +22,7 @@ import { GlobalVariablesService } from './services/global-variables.service';
 })
 export class AppComponent {
 
-  globalVariables = inject (GlobalVariablesService);
+  globalVariables = inject(GlobalVariablesService);
 
   title = 'da-bubble';
 
@@ -42,14 +42,14 @@ export class AppComponent {
   }
 
 
- //der Eventlistener ist nur nötig, wenn man die Bildschirmgröße live ändern will
- //aber wir können hier feste Breakpoints festlegen und können so die Screenbeiten anpassen ohne die Werte in den jeweiligen SCSS Fisles zu suchen
-   @HostListener('window:resize', ['$event'])
+  //der Eventlistener ist nur nötig, wenn man die Bildschirmgröße live ändern will
+  //aber wir können hier feste Breakpoints festlegen und können so die Screenbeiten anpassen ohne die Werte in den jeweiligen SCSS Fisles zu suchen
+  @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
-    this.setDesktopFlag(); 
+    this.setDesktopFlag();
   }
   setDesktopFlag() {
     this.globalVariables.desktop600 = window.innerWidth > 600;
     this.globalVariables.desktop900 = window.innerWidth > 900;
-  } 
+  }
 }

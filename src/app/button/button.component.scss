@@ -13,12 +13,21 @@ button {
     background-color: $purple1;
     border: solid 1px $purple1;
     color: $white;
+    &:hover {
+        background-color: $purple2;
+        border: solid 1px $purple2;
+    }
 }
 
 .secondary {
     background-color: $white;
     border: solid 1px $purple2;
     color: $purple2;
+    &:hover {
+        background-color: $purple1;
+        border: solid 1px $purple1;
+        color: $white;
+    }
 }
 
 .google {
@@ -27,13 +36,18 @@ button {
     width: -webkit-fill-available !important;
     gap: 10px;
     border-radius: 25px;
+    border: 1px solid $background;
     background-color: $background;
     color: $purple2;
     text-align: center;
+    &:hover {
+        border: solid 1px $purple1;
+        color: $purple1;
+    }
 }
 
 img {
-    height: 25px;
+    height: 28px;
 }
 
 @media (max-width: 397px) {

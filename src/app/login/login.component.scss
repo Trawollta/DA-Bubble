@@ -1,14 +1,33 @@
 @import './../../styles.scss';
 section {
     display: flex;
+    height: 100%;
+    width: 100%;
 }
 
-.login-header-left {}
+.login-header-left {
+    position: absolute;
+    top: 75px;
+    left: 75px;
+    @include dFlex();
+    gap: 10px;
+    h1 {
+        font-weight: 800;
+    }
+}
 
-.login-header-right {}
+.login-header-right {
+    position: absolute;
+    top: 75px;
+    right: 75px;
+    @include dFlex($ai: flex-end, $fd: column);
+    gap: 10px;
+    span {
+        font-weight: 600;
+        padding: 0 25px;
+    }
+}
 
 app-dialog {
-    width: 100vw;
-    height: calc(100vh - 65px);
-    display: flex;
+    @include dFlex();
 }

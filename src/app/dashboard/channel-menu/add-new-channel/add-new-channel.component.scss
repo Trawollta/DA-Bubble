@@ -9,14 +9,13 @@
 }
 
 .headline {
-    display:flex;
+    display: flex;
     justify-content: space-between;
 }
 
 h2 {
     font-weight: 700;
     font-size: 14px;
-    font-family: "Nunito Sans";
     width: 197px;
 }
 
@@ -27,14 +26,10 @@ h2 {
 .text {
     font-weight: 400;
     font-size: 8px;
-    font-family: "Nunito Sans";
     text-align: left;
 }
 
 h3 {
     font-weight: 700;
     font-size: 12px;
-    font-family: "Nunito Sans";
 }
-
-

@@ -1,0 +1,72 @@
+@import './../../../styles.scss';
+
+section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100dvw;
+    background-color: rgba(0, 0, 0, 0.116);
+    @include dFlex();
+    z-index: 99;
+
+    .card {
+        width: 80dvw;
+        max-width: 500px;
+        border-radius: 30px;
+        background-color: $white;
+        @include dFlex($fd:column);
+    }
+}
+
+.content {
+    @include dFlex($fd:column);
+    width: 80%;
+    .head {
+        @include dFlex($jc: space-between);
+        width: 100%;
+    }
+
+    .imgContainer {
+        width: 100%;
+        @include dFlex();
+
+        img {
+            @include size($w: 200px, $h: 200px);
+            border-radius: 100%;
+        }
+    }
+    .nameContainer{
+        @include dFlex($jc: space-between);
+        width: 100%;
+    }
+    .status{
+        @include dFlex($jc:flex-start, $g:15px);
+        width: 100%;
+    }
+    .mailContainer{
+        @include dFlex($jc:flex-start, $g:15px);
+        margin-top: 16px;
+        width: 100%;
+        .mailImg{
+            height: 70px;
+            padding-top: 9px;
+            box-sizing: border-box;
+            @include dFlex($ai:flex-start);
+            img{
+                width: 25px;
+                height: 20px;
+            }
+        }
+        .mailAdressContainer{
+            @include dFlex($fd:column, $ai:flex-start, $g:10px); 
+            h4{
+                margin:0;
+            }
+        }
+    }
+    app-button{
+        height: 49px;
+        margin: 49px 0;
+    }
+}

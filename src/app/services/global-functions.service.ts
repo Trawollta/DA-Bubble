@@ -56,4 +56,11 @@ export class GlobalFunctionsService {
       });
     });
   }
+
+  // function to add data to a Collection you choose
+  addData(desc: string, goalCollection: string) {
+    let data = { description: desc };
+    let dataCollection = collection(this.firestore, goalCollection);
+    return addDoc(dataCollection, data);
+  }
 }

@@ -1,6 +1,6 @@
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/global-variables.service';
 
@@ -9,12 +9,15 @@ import { GlobalVariablesService } from 'app/services/global-variables.service';
   standalone: true,
   imports: [RouterLink, CommonModule],
   templateUrl: './add-new-channel.component.html',
-  styleUrl: './add-new-channel.component.scss'
+  styleUrl: './add-new-channel.component.scss',
 })
 export class AddNewChannelComponent {
+  globalVariables = inject(GlobalVariablesService);
 
-  globalVariables = inject (GlobalVariablesService);
-  globalFunctions = inject (GlobalFunctionsService);
-  
+  constructor(public globalFunctions: GlobalFunctionsService) {}
 
+  addNewChannel() {
+    // let desc = inputs of channel (channelName) 
+    this.globalFunctions.addData(desc, 'channels');
+  }
 }

@@ -38,7 +38,7 @@
         <div></div>
         <div></div>
       </div>
-      <div class="channel-add" (click)="globalFunctions.openOverlay()">
+      <div class="channel-add" (click)="this.globalFunctions.openOverlay()">
         <app-add-new-channel
           *ngIf="globalFunctions.channel"
         ></app-add-new-channel>

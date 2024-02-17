@@ -1,6 +1,6 @@
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/global-variables.service';
 
@@ -12,12 +12,15 @@ import { GlobalVariablesService } from 'app/services/global-variables.service';
   styleUrl: './add-new-channel.component.scss',
 })
 export class AddNewChannelComponent {
-  globalVariables = inject(GlobalVariablesService);
-
   constructor(public globalFunctions: GlobalFunctionsService) {}
 
   addNewChannel() {
-    // let desc = inputs of channel (channelName) 
-    this.globalFunctions.addData(desc, 'channels');
+    const descElement = document.getElementById('newChannel');
+    if (descElement) {
+      const desc = (descElement as HTMLInputElement).value;
+      this.globalFunctions.addData(desc, 'channels', 'channelName');
+    }
   }
 }
+
+

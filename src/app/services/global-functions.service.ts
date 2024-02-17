@@ -58,8 +58,9 @@ export class GlobalFunctionsService {
   }
 
   // function to add data to a Collection you choose
-  addData(desc: string, goalCollection: string) {
-    let data = { description: desc };
+  addData(desc: string, goalCollection: string, description: string) {
+    let toGo = description;
+    let data = { channelName: desc };
     let dataCollection = collection(this.firestore, goalCollection);
     return addDoc(dataCollection, data);
   }

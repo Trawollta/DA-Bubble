@@ -44,7 +44,7 @@ section {
         @include dFlex($jc:flex-start, $g:15px);
         width: 100%;
     }
-    .mailContainer{
+    .iconTxtContainer{
         @include dFlex($jc:flex-start, $g:15px);
         margin-top: 16px;
         width: 100%;
@@ -53,20 +53,22 @@ section {
             padding-top: 9px;
             box-sizing: border-box;
             @include dFlex($ai:flex-start);
+           
             img{
                 width: 25px;
                 height: 20px;
             }
         }
         .mailAdressContainer{
-            @include dFlex($fd:column, $ai:flex-start, $g:10px); 
-            h4{
-                margin:0;
-            }
+           margin-left: 100px; 
+            
         }
     }
     app-button{
         height: 49px;
         margin: 49px 0;
     }
+}
+h4{
+    margin:0;
 }

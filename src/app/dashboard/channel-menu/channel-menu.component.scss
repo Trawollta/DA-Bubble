@@ -1,216 +1,242 @@
 @import "../../../styles.scss";
 main {
-    background-color: $background;
+  background-color: $background;
 }
 
 .channel-menu {
-    max-width: 366px;
-    max-height: 940px;
-    top: 115px;
-    left: 20px;
-    padding: 32px 30px 32px 30px;
-    border-radius: 30px;
-    gap: 25px;
-    background-color: white;
-    position: absolute;
+  max-width: 366px;
+  max-height: 940px;
+  top: 115px;
+  left: 20px;
+  padding: 32px 30px 32px 30px;
+  border-radius: 30px;
+  gap: 25px;
+  background-color: white;
+  position: absolute;
 }
 
 .header-wrapper {
-    width: 306px;
-    height: 60px;
-    border-radius: 30px;
-    justify-content: space-between;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
+  width: 306px;
+  height: 60px;
+  border-radius: 30px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
 }
 
 .left-header-menu {
-    display: flex;
-    width: 250px;
-    height: 60px;
-    padding: 0px 20px 0px 0px;
-    gap: 15px;
+  display: flex;
+  width: 250px;
+  height: 60px;
+  padding: 0px 20px 0px 0px;
+  gap: 15px;
 }
 
 .header-text {
-    font-size: 23px;
-    font-weight: 700;
-    line-height: 33px;
-    letter-spacing: 0em;
-    text-align: left;
-    position: relative;
-    bottom: 8px;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 33px;
+  letter-spacing: 0em;
+  text-align: left;
+  position: relative;
+  bottom: 8px;
 }
 
 .edit-img-div {
-    width: 40px;
-    height: 40px;
-    padding: 8px;
-    border-radius: 20px;
-    gap: 10px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 20px;
+  gap: 10px;
 }
 
 .edit-img {
-    position: relative;
-    width: 20.5px;
-    height: 20.52px;
-    top: 11.17px;
-    left: 11px;
+  position: relative;
+  width: 20.5px;
+  height: 20.52px;
+  top: 11.17px;
+  left: 11px;
+  &:hover {
+    cursor: pointer;
+    background-color: #eceefe;
+    border-radius: 40px;
+  }
 }
 
 .all-channel {
-    max-width: 306px;
-    max-height: 162px;
-    display: fleX;
-    padding-top: 25px;
-    flex-direction: column;
+  max-width: 306px;
+  max-height: 162px;
+  display: fleX;
+  padding-top: 25px;
+  flex-direction: column;
 }
 
 .direct-messages {
-    width: 306px;
-    height: 484px;
-    gap: 25px;
+  width: 306px;
+  height: 484px;
+  gap: 25px;
 }
 
 .channel-dialog {
-    width: 306px;
-    height: 46px;
-    padding: 3px 0px 3px 0px;
-    justify-content: space-between;
-    display: flex;
-    flex-direction: row;
+  width: 306px;
+  height: 46px;
+  padding: 3px 0px 3px 0px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
 }
 
 .channel-header {
-    width: 176px;
-    height: 40px;
-    padding: 5px 10px 5px 0px;
-    border-radius: 15px;
-    gap: 15px;
-    display: flex;
+  width: 176px;
+  height: 40px;
+  padding: 5px 10px 5px 0px;
+  border-radius: 15px;
+  gap: 15px;
+  display: flex;
 }
 
 .channel-headline-wrapper {
-    width: 121px;
+  width: 121px;
+  height: 27px;
+  gap: 10px;
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+  img {
+    width: 20px;
+    height: 18px;
+    top: 0.5px;
+    left: 2px;
+    position: relative;
+  }
+  p {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: 0em;
+    text-align: left;
+    width: 87px;
     height: 27px;
-    gap: 10px;
-    flex-direction: row;
-    align-items: center;
-    display: flex;
-    img {
-        width: 20px;
-        height: 18px;
-        top: 0.5px;
-        left: 2px;
-        position: relative;
-    }
-    p {
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 27px;
-        letter-spacing: 0em;
-        text-align: left;
-        width: 87px;
-        height: 27px;
-    }
+  }
 }
 
 .channel-overview {
-    width: 306px;
-    height: 33px;
-    gap: 13px;
+  width: 306px;
+  height: 33px;
+  gap: 13px;
 }
 
 .channel-overview-wrapper {
-    width: 306px;
-    height: 33px;
-    border-radius: 30px;
-    gap: 15px;
-    display: flex;
+  width: 306px;
+  height: 33px;
+  border-radius: 30px;
+  gap: 15px;
+  display: flex;
+}
+
+.channel-arrow-dropdown {
+  img:hover {
+    cursor: pointer;
+    background-color: #eceefe;
+    border-radius: 40px;
+  }
+}
+
+.channel-arrow-dropdown-sec {
+  img {
+    width: 30px;
+    height: 40px;
+    top: 0.5px;
+    left: 2px;
+    position: relative;
+  }
+  img:hover {
+    cursor: pointer;
+    background-color: #eceefe;
+    border-radius: 40px;
+  }
 }
 
 .channel-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    width: 158px;
-    height: 33px;
-    padding: 4px 20px 4px 20px;
-    p {
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 25px;
-        letter-spacing: 0em;
-        text-align: left;
-        width: 84px;
-        height: 25px;
-    }
-    span {
-        font-size: 18px;
-    }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 158px;
+  height: 33px;
+  padding: 4px 20px 4px 20px;
+  p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+    width: 84px;
+    height: 25px;
+  }
+  span {
+    font-size: 18px;
+  }
 }
 
 .add-channel {
-    width: 30px;
-    height: 30px;
-    padding: 3px;
-    border-radius: 15px;
-    gap: 10px;
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  border-radius: 15px;
+  gap: 10px;
+  img:hover {
+    cursor: pointer;
+    background-color: #eceefe;
+    border-radius: 40px;
+  }
 }
 
 .menu-adder {
-    display: flex;
-    flex-direction: row;
-    width: 216px;
-    height: 33px;
-    padding: 4px 10px 4px 10px;
-    gap: 10px;
-    align-items: center;
-    p {
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 25px;
-        letter-spacing: 0em;
-        text-align: left;
-    }
+  display: flex;
+  flex-direction: row;
+  width: 216px;
+  height: 33px;
+  padding: 4px 10px 4px 10px;
+  gap: 10px;
+  align-items: center;
+  p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
 }
 
 .messages-wrapper {
-    display: flex;
-    width: 254px;
-    height: 40px;
-    padding: 5px 10px 5px 0px;
-    gap: 15px;
-    align-items: center;
-    img {
-        width: 30px;
-        height: 40px;
-        top: 0.5px;
-        left: 2px;
-        position: relative;
-    }
+  display: flex;
+  width: 254px;
+  height: 40px;
+  padding: 5px 10px 5px 0px;
+  gap: 15px;
+  align-items: center;
 }
 
 .message-helper {
-    width: 199px;
+  width: 199px;
+  height: 27px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  img {
+    width: 24px;
+    height: 24px;
+  }
+  p {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: 0em;
+    text-align: left;
+    width: 165px;
     height: 27px;
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    img {
-        width: 24px;
-        height: 24px;
-    }
-    p {
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 27px;
-        letter-spacing: 0em;
-        text-align: left;
-        width: 165px;
-        height: 27px;
-    }
+  }
 }

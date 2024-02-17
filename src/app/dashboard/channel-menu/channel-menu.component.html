@@ -30,9 +30,8 @@
       </div>
       <div class="channel-overview">
         <div class="channel-overview-wrapper">
-          <div class="channel-wrapper">
-            <span>#</span>
-            <p>Placeholder</p>
+          <div class="channel-wrapper" *ngFor="let channel of allChannels">
+            <p><span>#</span>{{ channel.channelName }}</p>
           </div>
         </div>
         <div></div>

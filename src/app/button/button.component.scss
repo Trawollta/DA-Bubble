@@ -1,5 +1,9 @@
 @import './../../styles.scss';
 button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     font-size: 1em;
     font-weight: 700;
     width: fit-content;
@@ -24,8 +28,8 @@ button {
     border: solid 1px $purple2;
     color: $purple2;
     &:hover {
-        background-color: $purple1;
-        border: solid 1px $purple1;
+        background-color: $purple3;
+        border: solid 1px $purple3;
         color: $white;
     }
 }

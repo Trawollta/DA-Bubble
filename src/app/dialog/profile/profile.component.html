@@ -1,67 +1,69 @@
 <section>
-    <div class="card">
-        <div class="content">
+    <div class="cardOuterContainer">
+        <div class="card">
+            <div class="content">
 
-            <div *ngIf="!globalVariables.showEditProfile" class="head">
-                <h3>Profile</h3>
-                <img (click)="close()" src="assets/img/icons/close.svg" alt="close profile">
-            </div>
-            <div *ngIf="globalVariables.showEditProfile" class="head">
-                <h3>Dein Profil bearbeiten</h3>
-                <img (click)="globalVariables.showEditProfile = false" src="assets/img/icons/close.svg" alt="close profile">
-            </div>
-            <div class="imgContainer">
-                <img src="{{profile.img}}" alt="profile image">
-            </div>
-            <div *ngIf="!globalVariables.showEditProfile" class="nameContainer">
-                <h2>{{profile.profilename}}</h2>
-                <div class="editContainer" (click)="editProfile()">
-                    <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/edit.svg" alt="edit profile">
-                    <span *ngIf="globalVariables.desktop600">Bearbeiten</span>
+                <div *ngIf="!globalVariables.showEditProfile" class="head">
+                    <h3>Profile</h3>
+                    <img (click)="close()" src="assets/img/icons/close.svg" alt="close profile">
                 </div>
-
-            </div>
-            <div *ngIf="globalVariables.showEditProfile" >
-                <div class="iconTxtContainer">
-                    <img src="assets/img/icons/account_circle.svg" alt="edit profile">
-                    <h4>Vollständiger Name</h4>
+                <div *ngIf="globalVariables.showEditProfile" class="head">
+                    <h3>Dein Profil bearbeiten</h3>
+                    <img (click)="globalVariables.showEditProfile = false" src="assets/img/icons/close.svg"
+                        alt="close profile">
                 </div>
-                <div class="editContainer" (click)="editProfile()">
-                    <span *ngIf="globalVariables.desktop600">Bearbeiten</span>
+                <div class="imgContainer">
+                    <img src="{{profile.img}}" alt="profile image">
                 </div>
+                <div *ngIf="!globalVariables.showEditProfile" class="nameContainer">
+                    <h2>{{profile.profilename}}</h2>
+                    <div class="editContainer" (click)="editProfile()">
+                        <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/edit.svg" alt="edit profile">
+                        <span *ngIf="globalVariables.desktop600">Bearbeiten</span>
+                    </div>
 
-            </div>
-            <div *ngIf="globalVariables.showEditProfile" class="inputFieldContainer">
-                <input type="text" placeholder="Dein Name hier">
-            </div>
-
-            <div *ngIf="profile.online && !globalVariables.showEditProfile" class="status">
-                <img src="assets/img/icons/online.svg" alt="profile online">
-                <span>Aktiv</span>
-            </div>
-            <div *ngIf="!profile.online && !globalVariables.showEditProfile" class="status">
-                <img src="assets/img/icons/offline.svg" alt="profile offline">
-                <span>Abwesend</span>
-            </div>
-
-
-
-            <div >
-                <div class="iconTxtContainer">
-                    <img src="assets/img/icons/mail.svg" alt="e-mail">
-                    <h4>E-Mail-Adresse</h4>
                 </div>
-                <div *ngIf="!globalVariables.showEditProfile" class="mailAdressContainer">
-                    <a href="mailto:{{profile.email}}">{{profile.email}}</a>
+                <div *ngIf="globalVariables.showEditProfile">
+                    <div class="iconTxtContainer">
+                        <img src="assets/img/icons/account_circle.svg" alt="edit profile">
+                        <h4>Vollständiger Name</h4>
+                    </div>
+                    <div class="editContainer" (click)="editProfile()">
+                        <span *ngIf="globalVariables.desktop600">Bearbeiten</span>
+                    </div>
+
                 </div>
                 <div *ngIf="globalVariables.showEditProfile" class="inputFieldContainer">
-                    <input type="text" placeholder="Deine E-Mail hier">
+                    <input type="text" placeholder="Dein Name hier">
                 </div>
+
+                <div *ngIf="profile.online && !globalVariables.showEditProfile" class="status">
+                    <img src="assets/img/icons/online.svg" alt="profile online">
+                    <span>Aktiv</span>
+                </div>
+                <div *ngIf="!profile.online && !globalVariables.showEditProfile" class="status">
+                    <img src="assets/img/icons/offline.svg" alt="profile offline">
+                    <span>Abwesend</span>
+                </div>
+
+
+
+                <div>
+                    <div class="iconTxtContainer">
+                        <img src="assets/img/icons/mail.svg" alt="e-mail">
+                        <h4>E-Mail-Adresse</h4>
+                    </div>
+                    <div *ngIf="!globalVariables.showEditProfile" class="mailAdressContainer">
+                        <a href="mailto:{{profile.email}}">{{profile.email}}</a>
+                    </div>
+                    <div *ngIf="globalVariables.showEditProfile" class="inputFieldContainer">
+                        <input type="text" placeholder="Deine E-Mail hier">
+                    </div>
+                </div>
+                <app-button [classes]="['primary']" (clicked)="openMessage()" caption="Nachricht"
+                    imgPath="assets/img/icons/mode_comment.svg"></app-button>
             </div>
-            <app-button [classes]="['primary']" (clicked)="openMessage()" caption="Nachricht"
-                imgPath="assets/img/icons/mode_comment.svg"></app-button>
         </div>
     </div>
-
 
 </section>

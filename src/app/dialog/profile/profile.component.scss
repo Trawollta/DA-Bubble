@@ -10,18 +10,50 @@ section {
     @include dFlex();
     z-index: 99;
 
-    .card {
-        width: 80dvw;
-        max-width: 500px;
-        border-radius: 30px;
-        background-color: $white;
-        @include dFlex($fd:column);
+    .cardOuterContainer {
+        height: 100vh;
+        @include dFlex();
+
+        .card {
+            width: 80dvw;
+            max-width: 500px;
+            border-radius: 30px;
+            background-color: $white;
+            @include dFlex($fd: column);
+        }
+
+        @media screen and (min-width: 600px) {
+            position: relative;
+            width: 100%;
+            max-width: $maxScreenWidth;
+            justify-content: flex-end;
+            align-items: flex-start;
+
+            .card {
+                position: absolute;
+                top: 100px;
+                right: 5vw;
+                border-radius: 30px 0 30px 30px;
+            }
+        }
+
+        @media screen and (min-width: 1560px) {
+            @include dFlex($jc: flex-end, $ai: flex-start);
+            height: calc(100vh - 100px);
+
+            .card {
+                position: static !important;
+            }
+        }
     }
 }
 
+/* .cardOuterContainer {} */
+
 .content {
-    @include dFlex($fd:column);
+    @include dFlex($fd: column);
     width: 80%;
+
     .head {
         @include dFlex($jc: space-between);
         width: 100%;
@@ -36,39 +68,46 @@ section {
             border-radius: 100%;
         }
     }
-    .nameContainer{
+
+    .nameContainer {
         @include dFlex($jc: space-between);
         width: 100%;
     }
-    .status{
-        @include dFlex($jc:flex-start, $g:15px);
+
+    .status {
+        @include dFlex($jc: flex-start, $g: 15px);
         width: 100%;
     }
-    .iconTxtContainer{
-        @include dFlex($jc:flex-start, $g:15px);
+
+    .iconTxtContainer {
+        @include dFlex($jc: flex-start, $g: 15px);
         margin-top: 16px;
         width: 100%;
-        .mailImg{
+
+        .mailImg {
             height: 70px;
             padding-top: 9px;
             box-sizing: border-box;
-            @include dFlex($ai:flex-start);
-           
-            img{
+            @include dFlex($ai: flex-start);
+
+            img {
                 width: 25px;
                 height: 20px;
             }
         }
-        .mailAdressContainer{
-           margin-left: 100px; 
-            
+
+        .mailAdressContainer {
+            margin-left: 100px;
+
         }
     }
-    app-button{
+
+    app-button {
         height: 49px;
         margin: 49px 0;
     }
 }
-h4{
-    margin:0;
+
+h4 {
+    margin: 0;
 }

@@ -22,6 +22,12 @@
             color: $purple1;
             margin: 0;
         }
+        .input-icon {
+            max-width: 436px;
+            width: -webkit-fill-available;
+            position: relative;
+            display: inline-block;
+        }
         .input-fields {
             @include dFlex($fd: column);
             width: 100%;

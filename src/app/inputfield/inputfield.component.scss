@@ -4,13 +4,34 @@ input {
     width: -webkit-fill-available;
     height: 28px;
     border-radius: 100px;
-    border: none;
     padding: 18px 32px;
-    background-color: $background;
+    outline: none;
 }
 
 @media (max-height:700px) {
     input {
         padding: 8px 20px !important;
+    }
+}
+
+.login {
+    border: 1px solid $background;
+    background-color: $background;
+    &:hover {
+        border-color: $light_purple;
+    }
+    &:focus {
+        border-color: $purple3 !important;
+    }
+}
+
+.standard {
+    border: 1px solid $light_purple;
+    background-color: none;
+    &:hover {
+        border-color: $purple2;
+    }
+    &:focus {
+        border-color: $purple3 !important;
     }
 }

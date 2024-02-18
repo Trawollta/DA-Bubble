@@ -4,8 +4,14 @@
     </header>
     <div class="hint">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</div>
     <div class="input-fields">
-        <app-inputfield type="email" placeholder="beispielname@email.com"></app-inputfield>
-        <app-inputfield type="passwort" placeholder="Passwort"></app-inputfield>
+        <div class="input-icon">
+            <img src="">
+            <app-inputfield [classes]="['standard']" type="email" placeholder="beispielname@email.com"></app-inputfield>
+        </div>
+        <div class="input-icon">
+            <img src="">
+            <app-inputfield [classes]="['login']" type="passwort" placeholder="Passwort"></app-inputfield>
+        </div>
         <p>Passwort vergessen?</p>
     </div>
     <div><span>ODER</span></div>

@@ -28,17 +28,6 @@ export class AppComponent {
 
   title = 'da-bubble';
 
-  firebaseConfig = {
-    apiKey: 'AIzaSyBp8iKKC9okcRYyLdCUb9h92m_NeeqhtLc',
-    authDomain: 'da-bubble-58fa2.firebaseapp.com',
-    projectId: 'da-bubble-58fa2',
-    storageBucket: 'da-bubble-58fa2.appspot.com',
-    messagingSenderId: '25842217870',
-    appId: '1:25842217870:web:b34b86392152e9da16aadf',
-  };
-
-  app = initializeApp(this.firebaseConfig);
-
   redirectToDashboard() {
     window.location.href = '/dashboard';
   }

@@ -1,30 +1,67 @@
 import { Injectable, inject } from '@angular/core';
 import { GlobalVariablesService } from './global-variables.service';
+import {
+  Firestore,
+  addDoc,
+  collection,
+  collectionData,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from '@angular/fire/firestore';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GlobalFunctionsService {
-  globalVariables = inject (GlobalVariablesService);
-  
-  
-  channel: boolean =false;
+  globalVariables = inject(GlobalVariablesService);
+
+  channel: boolean = false;
 
   menuClicked() {
     this.globalVariables.showMenu = !this.globalVariables.showMenu;
     if (this.globalVariables.showMenu) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto'; 
+    else document.body.style.overflow = 'auto';
   }
 
   openOverlay() {
     this.channel = !this.channel;
     if (this.channel) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto'; 
-
+    else document.body.style.overflow = 'auto';
   }
 
-  stopPropagation(e:Event) {
+  stopPropagation(e: Event) {
     e.stopPropagation();
-}
-  constructor() { }
+  }
+  constructor(private firestore: Firestore) {}
+
+  // simple function to get data from firestore returns a collection
+  getData(item: string) {
+    let dataCollection = collection(this.firestore, item);
+    console.log(dataCollection);
+    return collectionData(dataCollection, { idField: 'id' });
+  }
+
+
+  // function to get data from firebase and save it into an local Array
+  getCollection(item: string, targetArray: any) {
+    const collectionReference = collection(this.firestore, item);
+    onSnapshot(collectionReference, (querySnapshot) => {
+      targetArray.length = 0;
+      querySnapshot.forEach((doc) => {
+        let docData = doc.data();
+        docData['id'] = doc.id;
+        targetArray.push(docData);
+      });
+    });
+  }
+
+  // function to add data to a Collection you choose
+  addData(desc: string, goalCollection: string, description: string) {
+    let toGo = description;
+    let data = { channelName: desc };
+    let dataCollection = collection(this.firestore, goalCollection);
+    return addDoc(dataCollection, data);
+  }
 }

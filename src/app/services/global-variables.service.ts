@@ -9,10 +9,10 @@ export class GlobalVariablesService {
   desktop900: boolean = window.innerWidth > 900;
   login: boolean = false;
   accountAdjustment: boolean = false;
-  showProfile:boolean = false;
-  showMenu:boolean = false;
-  showWriteMessage:boolean = false;
-  showEditProfile:boolean = false;
+  showProfile: boolean = false;
+  showMenu: boolean = false;
+  showWriteMessage: boolean = false;
+  showEditProfile: boolean = false;
 
   constructor() {
 

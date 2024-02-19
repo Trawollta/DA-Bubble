@@ -22,12 +22,6 @@
             color: $purple1;
             margin: 0;
         }
-        .input-icon {
-            max-width: 436px;
-            width: -webkit-fill-available;
-            position: relative;
-            display: inline-block;
-        }
         .input-fields {
             @include dFlex($fd: column);
             width: 100%;
@@ -51,12 +45,12 @@
         font-size: 20px;
     }
     
-    @media (max-width: 400px) or (max-height:870px) {
+    @media (max-width: 400px) or (max-height:940px) {
         .hint {
             font-size: 14px;
         }
         .button-field {
-            gap: 12px !important;
+            gap: 5px !important;
         }
         dialog {
             gap: 10px !important;

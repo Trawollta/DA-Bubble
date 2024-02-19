@@ -11,7 +11,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ButtonComponent {
   @Input() caption: string = "";
   @Input() imgPath: string = "";
-  @Input() classes?: string | string[] = ['primary', 'secondary', 'google'];
+  @Input() classes?: string | string[] = [];
   @Output() clicked = new EventEmitter<Event>();
 
   onClick() {

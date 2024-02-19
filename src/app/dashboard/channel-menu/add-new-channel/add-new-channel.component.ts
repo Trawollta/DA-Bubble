@@ -3,15 +3,20 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/global-variables.service';
+import { InputfieldComponent } from 'app/inputfield/inputfield.component';
+import { ButtonComponent } from 'app/button/button.component';
 
 @Component({
   selector: 'app-add-new-channel',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, InputfieldComponent, ButtonComponent],
   templateUrl: './add-new-channel.component.html',
   styleUrl: './add-new-channel.component.scss',
 })
 export class AddNewChannelComponent {
+createChannel() {
+throw new Error('Method not implemented.');
+}
   constructor(public globalFunctions: GlobalFunctionsService) {}
 
   addNewChannel() {

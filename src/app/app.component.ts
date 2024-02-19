@@ -7,6 +7,8 @@ import { HeaderComponent } from './shared/header/header.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { GlobalVariablesService } from './services/global-variables.service';
 import { ProfileComponent } from './dialog/profile/profile.component';
+import { GlobalFunctionsService } from './services/global-functions.service';
+import { AddNewChannelComponent } from './dashboard/channel-menu/add-new-channel/add-new-channel.component';
 
 @Component({
   selector: 'app-root',
@@ -18,13 +20,15 @@ import { ProfileComponent } from './dialog/profile/profile.component';
     ButtonComponent,
     DialogComponent,
     HeaderComponent,
-  ProfileComponent],
+    ProfileComponent,
+    AddNewChannelComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
 
   globalVariables = inject(GlobalVariablesService);
+  globalFunctions = inject (GlobalFunctionsService);
 
   title = 'da-bubble';
 

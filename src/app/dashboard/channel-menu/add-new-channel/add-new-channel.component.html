@@ -1,10 +1,11 @@
 <div class="create-channel">
     <div class="headline">
         <div>
-            <h2>Channel erstellen</h2>
+            <span class="top"> Channel erstellen</span>
         </div>
         <div>
-            <button>X</button>
+            <app-button [classes]="['']" (clicked)="addNewChannel()" caption=""
+            imgPath="assets/img/icons/close.svg"></app-button>
         </div>
     </div>
             <div class="about">
@@ -17,22 +18,23 @@
                     <h3>Channel-Name</h3>
                 </div>
 
-                    <div>
-                        <span>placeholder</span>
-                    </div>
-
+                <div class="input-icon">
+                    <img src="">
+                    <app-inputfield [classes]="['standard']" type="text" placeholder="Kooperationsprojekte"></app-inputfield>
+                </div>
                     <div>
                         <h3>Beschreibung</h3>
                     </div>
 
-                    <div>
-                        <span>placeholder</span>
-                    </div>
+                <div class="input-icon">
+                    <img src="">
+                    <app-inputfield [classes]="['standard']" type="text" placeholder="Dein Text hier"></app-inputfield>
+                </div>
 
                     <div class="button-area">
-                        <button (click)="addNewChannel()">Erstellen</button>
+                        <app-button [classes]="['primary']" (clicked)="addNewChannel()" caption="Erstellen"
+                        imgPath=""></app-button>
                     </div>
-                    <input type="text" id="newChannel">
 </div>
 
 

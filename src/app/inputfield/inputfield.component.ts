@@ -13,6 +13,7 @@ export class InputfieldComponent implements OnInit {
   @Input() placeholder: string = "";
   @Input() classes?: string | string[] = [];
   @Input() imgName: string = "";
+  @Input() imgSize: string = "";
   imgActive: string = "";
 
   ngOnInit() {

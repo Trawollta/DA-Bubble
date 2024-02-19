@@ -1,12 +1,12 @@
 <div *ngIf="type=='email'" class="input-icon">
     <div class="input-icon-img">
-        <img [ngStyle]="{'height': '16px'}" src="assets/img/icons/{{imgActive}}.svg">
+        <img [ngStyle]="{'height': imgSize}" src="assets/img/input-imgs/{{imgActive}}.svg">
     </div>
     <input [ngClass]="classes" type={{type}} placeholder={{placeholder}} (focus)="onFokus()" (blur)="onBlur()">
 </div>
 <div *ngIf="type=='password'" class="input-icon">
     <div class="input-icon-img">
-        <img [ngStyle]="{'height': '22px'}" src="assets/img/icons/{{imgActive}}.svg">
+        <img [ngStyle]="{'height': imgSize}" src="assets/img/input-imgs/{{imgActive}}.svg">
     </div>
     <input [ngClass]="classes" type={{type}} placeholder={{placeholder}} (focus)="onFokus()" (blur)="onBlur()">
 </div>

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { InputfieldComponent } from "../../inputfield/inputfield.component";
 
 @Component({
-  selector: 'app-chat',
-  standalone: true,
-  imports: [],
-  templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss',
+    selector: 'app-chat',
+    standalone: true,
+    templateUrl: './chat.component.html',
+    styleUrl: './chat.component.scss',
+    imports: [InputfieldComponent]
 })
 export class ChatComponent {
   openAwnsers() {}

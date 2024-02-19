@@ -53,9 +53,7 @@
           <p class="username">User</p>
         </div>
         <div class="speech-bubble-current-user" (click)="openEmojis()">
-          <span class="speech-bubble-current-user-text"
-            >Hallo</span
-          >
+          <span class="speech-bubble-current-user-text">Hallo</span>
         </div>
         <div class="reaction-btn">
           <img src="../../../assets/img/reactions/three_dots.svg" alt="" />
@@ -70,7 +68,11 @@
       <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
     </div>
   </section>
-  <!-- <section>
-    <input type="text" placeholder="Placeholder für Marnie">
-  </section> -->
+  <section>
+    <app-inputfield
+      [classes]="['standard']"
+      type="text"
+      placeholder="Deine Nachricht"
+    ></app-inputfield>
+  </section>
 </main>

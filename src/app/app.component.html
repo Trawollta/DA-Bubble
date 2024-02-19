@@ -1,3 +1,4 @@
 <app-header *ngIf="!globalVariables.login"></app-header>
 <app-profile *ngIf="globalVariables.showProfile"></app-profile>
+<app-add-new-channel *ngIf="globalFunctions.channel"></app-add-new-channel>
 <router-outlet></router-outlet>

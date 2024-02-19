@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ButtonComponent } from 'app/button/button.component';
+import { InputfieldComponent } from 'app/inputfield/inputfield.component';
 import { GlobalVariablesService } from 'app/services/global-variables.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { GlobalVariablesService } from 'app/services/global-variables.service';
   standalone: true,
   imports: [
     ButtonComponent,
+    InputfieldComponent,
     CommonModule
   ],
   templateUrl: './profile.component.html',
@@ -22,6 +24,9 @@ export class ProfileComponent {
     online: true
   }
 
+  profileNameBuffer:string = '';
+  emailBuffer:string = '';
+
   globalVariables = inject(GlobalVariablesService);
   close() {
     this.globalVariables.showProfile = false;
@@ -33,5 +38,13 @@ export class ProfileComponent {
 
   editProfile(){
     this.globalVariables.showEditProfile = true;
+  }
+  cancelEdit(){
+    this.profileNameBuffer = '';
+    this.emailBuffer = '';
+    this.globalVariables.showEditProfile = false
+  }
+  sumbitEdit(){
+
   }
 }

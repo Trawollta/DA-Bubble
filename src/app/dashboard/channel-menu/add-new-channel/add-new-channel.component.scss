@@ -6,9 +6,9 @@
     width: 80%;
     padding-left: 40px;
     padding-right: 40px;
-    top: 50%; /* Zentriert den Container vertikal */
-    left: 50%; /* Zentriert den Container horizontal */
-    transform: translate(-50%, -50%); /* Korrigiert die Position, um genaue Zentrierung zu erreichen */
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
 }
 
 @media screen and (min-width: 800px) {
@@ -16,7 +16,6 @@
         width: 872px;
         height: 539px;
         border-radius: 40px;
-        /* Die Zentrierungslogik bleibt gleich und funktioniert auch bei angepassten Breiten/Höhen */
     }
 }
 

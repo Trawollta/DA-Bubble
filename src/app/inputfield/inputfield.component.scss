@@ -4,13 +4,35 @@ input {
     width: -webkit-fill-available;
     height: 28px;
     border-radius: 100px;
-    padding: 18px 32px;
+    padding: 18px 32px 18px 60px;
     outline: none;
+    font-size: 1em;
 }
 
-@media (max-height:700px) {
+.input-icon {
+    max-width: 436px;
+    width: -webkit-fill-available;
+    height: fit-content;
+    position: relative;
+    display: inline-block;
+    .input-icon-img {
+        @include dFlex();
+        position: absolute;
+        height: 40px;
+        left: 30px;
+        top: 13px;
+    }
+}
+
+@media (max-width: 480px) or (max-height:700px) {
     input {
-        padding: 8px 20px !important;
+        padding: 8px 10px 8px 50px !important;
+        font-size: 0.8em;
+    }
+    .input-icon-img {
+        height: 40px;
+        left: 18px !important;
+        top: 2px !important;
     }
 }
 

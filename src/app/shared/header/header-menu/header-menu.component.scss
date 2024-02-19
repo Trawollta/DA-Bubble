@@ -59,7 +59,7 @@ section {
         width: 100%;
         max-width: $maxScreenWidth;
 
-        @media screen and (min-width: 1560px) {
+        @media screen and (min-width: calc($maxScreenWidth + 220px)) { //calc($maxScreenWidth + 220px) 2140px
             @include dFlex($jc: flex-end, $ai: flex-start);
             height: calc(100vh - 100px);
 

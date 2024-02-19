@@ -4,14 +4,16 @@ import { CommonModule } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/global-variables.service';
 
 @Component({
-  selector: 'app-chat',
-  standalone: true,
-  templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss',
-  imports: [InputfieldComponent, CommonModule],
+    selector: 'app-private-chat',
+    standalone: true,
+    templateUrl: './private-chat.component.html',
+    styleUrl: './private-chat.component.scss',
+    imports: [InputfieldComponent, CommonModule]
 })
-export class ChatComponent {
+export class PrivateChatComponent {
   globalVariables = inject(GlobalVariablesService);
+  currentUser: any;
+
   openAwnsers() {}
 
   openEmojis() {
@@ -21,5 +23,9 @@ export class ChatComponent {
     } else if (emojiDiv && emojiDiv.classList.contains('d-none') == false) {
       emojiDiv.classList.add('d-none');
     }
+  }
+
+  ngOnInit(){
+    console.log(this.globalVariables.userToChatWith)
   }
 }

@@ -54,9 +54,19 @@
           <p>Direktnachrichten</p>
         </div>
       </div>
-      <div class="user-wrapper d-none" *ngFor="let user of allUsers" id="directMessage">
-        <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="userImage" />
-        <p>{{ user.userName }}</p>
+      <div class="user-wrapper d-none" id="directMessage">
+        <div
+          class="user-detail"
+          *ngFor="let user of allUsers"
+          (click)="this.globalFunctions.openDirectMessageUser(user)"
+        >
+          <p>
+            <img
+              src="../../../assets/img/avatars/Elias_Neumann.svg"
+              alt="userImage"
+            />{{ user.userName }}
+          </p>
+        </div>
       </div>
     </div>
   </section>

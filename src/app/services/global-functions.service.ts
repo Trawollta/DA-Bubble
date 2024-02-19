@@ -31,6 +31,13 @@ export class GlobalFunctionsService {
     else document.body.style.overflow = 'auto';
   }
 
+  openDirectMessageUser(user: any) {
+    this.globalVariables.isChatVisable = true;
+    let userToChatWith = [user];
+    this.globalVariables.userToChatWith = userToChatWith[0];
+    console.log(this.globalVariables.userToChatWith);
+}
+
   stopPropagation(e: Event) {
     e.stopPropagation();
   }

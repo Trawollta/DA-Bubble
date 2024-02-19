@@ -67,7 +67,6 @@ main {
 
 .all-channel {
   max-width: 306px;
-  max-height: 162px;
   display: fleX;
   padding-top: 25px;
   flex-direction: column;
@@ -124,17 +123,13 @@ main {
 
 .channel-overview {
   width: 306px;
-  height: 33px;
   gap: 13px;
 }
 
 .channel-overview-wrapper {
   max-width: 306px;
-  max-height: 33px;
   border-radius: 30px;
   gap: 15px;
-  display: flex;
-  flex-direction: column;
 }
 
 .channel-arrow-dropdown {

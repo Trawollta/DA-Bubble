@@ -129,8 +129,8 @@ main {
 }
 
 .channel-overview-wrapper {
-  width: 306px;
-  height: 33px;
+  max-width: 306px;
+  max-height: 33px;
   border-radius: 30px;
   gap: 15px;
   display: flex;
@@ -165,8 +165,8 @@ main {
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  width: 158px;
-  height: 33px;
+  max-width: 158px;
+  max-height: 33px;
   padding: 4px 20px 4px 20px;
   p {
     font-size: 18px;
@@ -240,4 +240,8 @@ main {
     width: 165px;
     height: 27px;
   }
+}
+
+.d-none {
+  display: none;
 }

@@ -14,9 +14,6 @@ import { ButtonComponent } from 'app/button/button.component';
   styleUrl: './add-new-channel.component.scss',
 })
 export class AddNewChannelComponent {
-createChannel() {
-throw new Error('Method not implemented.');
-}
   constructor(public globalFunctions: GlobalFunctionsService) {}
 
   addNewChannel() {

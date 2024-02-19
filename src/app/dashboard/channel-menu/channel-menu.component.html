@@ -24,14 +24,14 @@
             <p>Channels</p>
           </div>
         </div>
-        <div class="add-channel">
+        <div class="add-channel" (click)="this.globalFunctions.openOverlay()" >
           <img src="../../../assets/img/icons/add.svg" alt="" />
         </div>
       </div>
-      <div class="channel-overview">
+      <div class="channel-overview d-none" id="channels">
         <div class="channel-overview-wrapper">
           <div class="channel-wrapper" *ngFor="let channel of allChannels">
-            <p><span>#</span>{{ channel.channelName }}</p>
+            <p ><span>#</span>{{ channel.channelName }}</p>
           </div>
         </div>
         <div></div>

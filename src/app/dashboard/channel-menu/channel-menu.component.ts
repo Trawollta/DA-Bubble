@@ -16,8 +16,17 @@ export class ChannelMenuComponent {
   globalVariables = inject(GlobalVariablesService);
   allChannels: any = [];
 
-  openChannels() {}
   constructor(public globalFunctions: GlobalFunctionsService) {}
+
+  openChannels() {
+    
+    let channelDiv = document.getElementById('channels');
+    if (channelDiv && channelDiv.classList.contains('d-none')) {
+      channelDiv.classList.remove('d-none');
+    } else if (channelDiv && channelDiv.classList.contains('d-none') == false) {
+      channelDiv.classList.add('d-none');
+    }
+  }
 
   ngOnInit() {
     this.globalFunctions.getCollection('channels', this.allChannels);

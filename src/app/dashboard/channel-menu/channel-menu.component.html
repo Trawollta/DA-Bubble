@@ -1,49 +1,73 @@
 <main class="channel-menu">
-    <section class="header-wrapper">
-        <div class="left-header-menu">
-            <img src="../../assets/img/icons/Workspace logo.svg" alt="" />
-            <p class="header-text">Code Learning</p>
+  <section class="header-wrapper">
+    <div class="left-header-menu">
+      <img src="../../assets/img/icons/Workspace logo.svg" alt="" />
+      <p class="header-text">Code Learning</p>
+    </div>
+    <div class="edit-img-div">
+      <img
+        class="edit-img"
+        src="../../assets/img/icons/edit_square.svg"
+        alt="edit"
+      />
+    </div>
+  </section>
+  <section>
+    <div class="all-channel">
+      <div class="channel-dialog">
+        <div class="channel-header">
+          <div (click)="openChannels()" class="channel-arrow-dropdown">
+            <img src="../../assets/img/icons/arrow_drop_down.svg" alt="" />
+          </div>
+          <div class="channel-headline-wrapper">
+            <img src="../../../assets/img/icons/workspaces.svg" alt="" />
+            <p>Channels</p>
+          </div>
         </div>
         <div class="add-channel" (click)="this.globalFunctions.openOverlay()">
-            <img src="../../../assets/img/icons/add.svg" alt="" />
+          <img src="../../../assets/img/icons/add.svg" alt="" />
         </div>
-        <div class="channel-overview d-none" id="channels">
-            <div class="channel-overview-wrapper">
-                <div class="channel-wrapper" *ngFor="let channel of allChannels">
-                    <p><span>#</span>{{ channel.channelName }}</p>
-                </div>
-            </div>
-            <div></div>
-            <div></div>
+      </div>
+      <div class="channel-overview d-none" id="channels">
+        <div class="channel-overview-wrapper">
+          <div class="channel-wrapper" *ngFor="let channel of allChannels">
+            <p><span>#</span>{{ channel.channelName }}</p>
+          </div>
         </div>
-        <div class="channel-add" (click)="this.globalFunctions.openOverlay()">
-            <a class="menu-adder">
-                <img src="../../../assets/img/icons/add_circle.svg" alt="" />
-                <p>Channel hinzufügen</p>
-            </a>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="channel-add" (click)="this.globalFunctions.openOverlay()">
+        <a class="menu-adder">
+          <img src="../../../assets/img/icons/add_circle.svg" alt="" />
+          <p>Channel hinzufügen</p>
+        </a>
+      </div>
+    </div>
+    <div class="direct-messages">
+      <div class="messages-wrapper">
+        <div class="channel-arrow-dropdown-sec" (click)="openDirectMessage()">
+          <img src="../../../assets/img/icons/arrow_drop_down.svg" alt="" />
         </div>
-        <div class="direct-messages">
-            <div class="messages-wrapper">
-                <div class="channel-arrow-dropdown-sec" (click)="openDirectMessage()">
-                    <img src="../../../assets/img/icons/arrow_drop_down.svg" alt="" />
-                </div>
-                <div class="direct-messages">
-                    <div class="messages-wrapper">
-                        <div class="channel-arrow-dropdown-sec">
-                            <img src="../../../assets/img/icons/arrow_drop_down.svg" alt="" />
-                        </div>
-                        <div class="message-helper">
-                            <img src="../../../assets/img/icons/account_circle.svg" alt="" />
-                            <p>Direktnachrichten</p>
-                        </div>
-                    </div>
-                    <div></div>
-                </div>
-            </div>
-            <div class="user-wrapper d-none" *ngFor="let user of allUsers" id="directMessage">
-                <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="userImage" />
-                <p>{{ user.userName }}</p>
-            </div>
+        <div class="message-helper">
+          <img src="../../../assets/img/icons/account_circle.svg" alt="" />
+          <p>Direktnachrichten</p>
         </div>
-    </section>
+      </div>
+      <div class="user-wrapper d-none" id="directMessage">
+        <div
+          class="user-detail"
+          *ngFor="let user of allUsers"
+          (click)="this.globalFunctions.openDirectMessageUser(user)"
+        >
+          <p>
+            <img
+              src="../../../assets/img/avatars/Elias_Neumann.svg"
+              alt="userImage"
+            />{{ user.userName }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>

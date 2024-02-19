@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class GlobalVariablesService {
-
   desktop600: boolean = window.innerWidth > 600;
   desktop900: boolean = window.innerWidth > 900;
   login: boolean = false;
@@ -13,8 +12,8 @@ export class GlobalVariablesService {
   showMenu: boolean = false;
   showWriteMessage: boolean = false;
   showEditProfile: boolean = false;
+  isChatVisable: boolean = false;
+  userToChatWith: Array<any> = [];
 
-  constructor() {
-
-  }
+  constructor() {}
 }

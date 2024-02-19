@@ -46,7 +46,7 @@
     </div>
     <div class="direct-messages">
       <div class="messages-wrapper">
-        <div class="channel-arrow-dropdown-sec">
+        <div class="channel-arrow-dropdown-sec" (click)="openDirectMessage()">
           <img src="../../../assets/img/icons/arrow_drop_down.svg" alt="" />
         </div>
         <div class="message-helper">
@@ -54,7 +54,10 @@
           <p>Direktnachrichten</p>
         </div>
       </div>
-      <div></div>
+      <div class="user-wrapper d-none" *ngFor="let user of allUsers" id="directMessage">
+        <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="userImage" />
+        <p>{{ user.userName }}</p>
+      </div>
     </div>
   </section>
 </main>

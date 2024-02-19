@@ -15,12 +15,21 @@ import { AddNewChannelComponent } from './add-new-channel/add-new-channel.compon
 export class ChannelMenuComponent {
   globalVariables = inject(GlobalVariablesService);
   allChannels: any = [];
+  allUsers: any = [];
 
   constructor(public globalFunctions: GlobalFunctionsService) {}
 
   openChannels() {
-    
     let channelDiv = document.getElementById('channels');
+    if (channelDiv && channelDiv.classList.contains('d-none')) {
+      channelDiv.classList.remove('d-none');
+    } else if (channelDiv && channelDiv.classList.contains('d-none') == false) {
+      channelDiv.classList.add('d-none');
+    }
+  }
+
+  openDirectMessage() {
+    let channelDiv = document.getElementById('directMessage');
     if (channelDiv && channelDiv.classList.contains('d-none')) {
       channelDiv.classList.remove('d-none');
     } else if (channelDiv && channelDiv.classList.contains('d-none') == false) {
@@ -30,5 +39,7 @@ export class ChannelMenuComponent {
 
   ngOnInit() {
     this.globalFunctions.getCollection('channels', this.allChannels);
+    this.globalFunctions.getCollection('user', this.allUsers);
+    console.log(this.allUsers);
   }
 }

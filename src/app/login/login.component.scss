@@ -36,6 +36,14 @@ app-dialog {
     @include dFlex();
 }
 
+.footer {
+    @include dFlex();
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+}
+
 @media (max-width: 800px) {
     .login-header-left {
         position: absolute;
@@ -48,7 +56,7 @@ app-dialog {
     .login-header-right {
         position: absolute;
         top: unset;
-        bottom: 10px;
+        bottom: 55px;
         display: flex;
         align-items: center;
         left: 0;

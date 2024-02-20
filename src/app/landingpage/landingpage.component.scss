@@ -1,12 +1,6 @@
 @import './../../styles.scss';
-section {
-    display: flex;
-    height: 100%;
-    width: 100%;
-}
-
 .loginheader {
-    height: 100px;
+    height: 135px;
 }
 
 .login-header-left {
@@ -30,10 +24,6 @@ section {
         font-weight: 600;
         padding: 0 25px;
     }
-}
-
-app-dialog {
-    @include dFlex();
 }
 
 .footer {
@@ -66,6 +56,9 @@ app-dialog {
 }
 
 @media (max-height:730px) {
+    .loginheader {
+        height: 85px;
+    }
     .login-header-left {
         position: absolute;
         top: 15px;

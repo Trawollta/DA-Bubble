@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { LangingpageComponent } from './landingpage/landingpage.component';
 import { AddNewChannelComponent } from './dashboard/channel-menu/add-new-channel/add-new-channel.component';
 
 
 export const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', component: LangingpageComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'add-new-channel', component: AddNewChannelComponent },
 ];
@@ -17,4 +17,4 @@ export const routes: Routes = [
   exports: [RouterModule],
 })
 
-export class AppRoutingModule {}
+export class AppRoutingModule { }

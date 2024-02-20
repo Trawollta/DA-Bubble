@@ -6,7 +6,32 @@ app-button {
     @include dFlex();
 }
 
+header {
+    @include dFlex();
+    width: 100%;
+}
+
+.go-back-wrapper {
+    width: 28%;
+}
+
+.go-back {
+    height: 35px;
+    width: 35px;
+    border-radius: 100px;
+    background-image: url(/assets/img/icons/arrow_back.svg);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: center;
+    cursor: pointer;
+    &:hover {
+        background-color: $background;
+        background-image: url(/assets/img/icons/arrow_back_hover.svg) !important;
+    }
+}
+
 h2 {
+    width: 100%;
     font-size: 46px;
     color: $purple1;
     margin: 0;
@@ -41,6 +66,18 @@ form {
     font-size: 20px;
 }
 
+@media (max-width: 600px) {
+    .go-back-wrapper {
+        width: 18%;
+    }
+}
+
+@media (max-width: 500px) {
+    h2 {
+        font-size: 38px;
+    }
+}
+
 @media (max-width: 400px) or (max-height:940px) {
     .info {
         font-size: 14px;
@@ -67,5 +104,16 @@ form {
     }
     .or {
         font-size: 13px;
+    }
+    .go-back {
+        height: 30px;
+        width: 30px;
+        background-size: 15px;
+    }
+}
+
+@media (max-width: 500px) {
+    h2 {
+        font-size: 26px;
     }
 }

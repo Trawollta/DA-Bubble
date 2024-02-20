@@ -1,12 +1,22 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { InputfieldComponent } from 'app/inputfield/inputfield.component';
+import { GlobalVariablesService } from 'app/services/global-variables.service';
+import { DialogComponent } from "../dialog.component";
+import { ButtonComponent } from 'app/button/button.component';
 
 @Component({
   selector: 'app-log-in',
   standalone: true,
-  imports: [],
   templateUrl: './log-in.component.html',
-  styleUrl: './log-in.component.scss'
+  styleUrl: './log-in.component.scss',
+  imports: [CommonModule, InputfieldComponent, ButtonComponent, FormsModule, DialogComponent]
 })
 export class LogInComponent {
-
+  globalVariables = inject(GlobalVariablesService);
+  redirectDashboard() {
+    this.globalVariables.login = false;
+    window.location.href = '/dashboard';
+  }
 }

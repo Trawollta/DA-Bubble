@@ -17,19 +17,6 @@ export class AddNewChannelComponent {
   [x: string]: any;
   constructor(public globalFunctions: GlobalFunctionsService, public globalVariables: GlobalVariablesService ) {}
 
-  addNewChannel() {
-    const descElement = document.getElementById('newChannel');
-    if (descElement) {
-      const desc = (descElement as HTMLInputElement).value;
-      this.globalFunctions.addData(desc, 'channels', 'channelName');
-    }
-  }
-
-  closeOverlay() {
-    this.globalVariables.showProfile = false; 
-    this.globalFunctions.channel = false; 
-    
-  }
 
 }
 

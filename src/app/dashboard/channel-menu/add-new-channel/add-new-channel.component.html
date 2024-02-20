@@ -6,7 +6,7 @@
         <span class="top"> Channel erstellen</span>
       </div>
       <div>
-        <img (click)="closeOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
+        <img (click)="globalFunctions.closeOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
       </div>
     </div>
     <div class="about">
@@ -44,12 +44,10 @@
     <div class="button-area">
       <app-button
         [classes]="['primary']"
-        (clicked)="addNewChannel()"
+        (clicked)="globalFunctions.toggleOverlays()"
         caption="Erstellen"
         imgPath=""
       ></app-button>
     </div>
     </div>
   </div>
-  
-  

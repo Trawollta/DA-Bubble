@@ -1,0 +1,35 @@
+<div class="main-content">
+
+    <div class="overlay" *ngIf="globalFunctions.adduser">
+        <div class="headline">
+    <div>
+        <span class="top"> Leute hinzufuegen</span>
+        </div>
+        <div>
+        <img (click)="globalFunctions.closeOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
+        </div>
+    </div>
+    <div class="add">
+        <div class="checkbox-container">
+            <input type="checkbox" id="privateChannel" name="channelType" value="private">
+            <label for="privateChannel">Privater Channel</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="addAllMembers" name="addMembers" value="all">
+            <label for="addAllMembers">Alle Mitglieder hinzufügen</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="addCertainPeople" name="addMembers" value="certain">
+            <label for="addCertainPeople">Bestimmte Leute hinzufügen</label>
+        </div>
+        <div class="button-area">
+            <app-button
+              [classes]="['primary']"
+              (clicked)="addNewChannel()"
+              caption="Erstellen"
+              imgPath=""
+            ></app-button>
+        </div>
+    </div>
+    </div>
+    </div>

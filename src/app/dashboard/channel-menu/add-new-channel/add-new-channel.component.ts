@@ -14,7 +14,8 @@ import { ButtonComponent } from 'app/button/button.component';
   styleUrl: './add-new-channel.component.scss',
 })
 export class AddNewChannelComponent {
-  constructor(public globalFunctions: GlobalFunctionsService) {}
+  [x: string]: any;
+  constructor(public globalFunctions: GlobalFunctionsService, public globalVariables: GlobalVariablesService ) {}
 
   addNewChannel() {
     const descElement = document.getElementById('newChannel');
@@ -23,6 +24,13 @@ export class AddNewChannelComponent {
       this.globalFunctions.addData(desc, 'channels', 'channelName');
     }
   }
+
+  closeOverlay() {
+    this.globalVariables.showProfile = false; 
+    this.globalFunctions.channel = false; 
+    
+  }
+
 }
 
 

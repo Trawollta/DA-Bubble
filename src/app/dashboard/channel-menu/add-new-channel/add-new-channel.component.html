@@ -1,55 +1,55 @@
-<div class="create-channel">
-  <div class="headline">
+<div class="main-content">
+
+  <div class="overlay" *ngIf="globalFunctions.channel">
+    <div class="headline">
+      <div>
+        <span class="top"> Channel erstellen</span>
+      </div>
+      <div>
+        <img (click)="closeOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
+      </div>
+    </div>
+    <div class="about">
+      <span class="text">
+        Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
+        themenbezogen sein #marketing zum Beispiel.
+      </span>
+    </div>
+  
     <div>
-      <span class="top"> Channel erstellen</span>
+      <h3>Channel-Name</h3>
+    </div>
+  
+    <div class="input-icon">
+      <img src="" />
+      <app-inputfield
+        [classes]="['standard']"
+        type="text"
+        placeholder="Kooperationsprojekte"
+      ></app-inputfield>
     </div>
     <div>
+      <h3>Beschreibung</h3>
+    </div>
+  
+    <div class="input-icon">
+      <img src="" />
+      <app-inputfield
+        [classes]="['standard']"
+        type="text"
+        placeholder="Dein Text hier"
+      ></app-inputfield>
+    </div>
+  
+    <div class="button-area">
       <app-button
-        [classes]="['']"
+        [classes]="['primary']"
         (clicked)="addNewChannel()"
-        caption=""
-        imgPath="assets/img/icons/close.svg"
+        caption="Erstellen"
+        imgPath=""
       ></app-button>
     </div>
+    </div>
   </div>
-  <div class="about">
-    <span class="text">
-      Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
-      themenbezogen sein #marketing zum Beispiel.
-    </span>
-  </div>
-
-  <div>
-    <h3>Channel-Name</h3>
-  </div>
-
-  <div class="input-icon">
-    <img src="" />
-    <app-inputfield
-      [classes]="['standard']"
-      type="text"
-      placeholder="Kooperationsprojekte"
-    ></app-inputfield>
-  </div>
-  <div>
-    <h3>Beschreibung</h3>
-  </div>
-
-  <div class="input-icon">
-    <img src="" />
-    <app-inputfield
-      [classes]="['standard']"
-      type="text"
-      placeholder="Dein Text hier"
-    ></app-inputfield>
-  </div>
-
-  <div class="button-area">
-    <app-button
-      [classes]="['primary']"
-      (clicked)="addNewChannel()"
-      caption="Erstellen"
-      imgPath=""
-    ></app-button>
-  </div>
-</div>
+  
+  

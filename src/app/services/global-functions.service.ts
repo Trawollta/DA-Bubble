@@ -38,6 +38,12 @@ export class GlobalFunctionsService {
     
   }
 
+  closeUserOverlay() {
+    this.globalVariables.showProfile = false; 
+    this.adduser = false; 
+    
+  }
+
   openUserOverlay() {
     this.adduser = !this.adduser;
     if (this.adduser) document.body.style.overflow = 'hidden';

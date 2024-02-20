@@ -6,7 +6,7 @@
         <span class="top"> Leute hinzufuegen</span>
         </div>
         <div>
-        <img (click)="globalFunctions.closeOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
+        <img (click)="globalFunctions.closeUserOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
         </div>
     </div>
     <div class="add">
@@ -24,10 +24,10 @@
         </div>
         <div class="button-area">
             <app-button
-              [classes]="['primary']"
-              (clicked)="addNewChannel()"
-              caption="Erstellen"
-              imgPath=""
+            [classes]="['primary']"
+            (clicked)="addNewChannel()"
+            caption="Erstellen"
+            imgPath=""
             ></app-button>
         </div>
     </div>

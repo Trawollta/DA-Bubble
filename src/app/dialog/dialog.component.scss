@@ -52,29 +52,35 @@
     }
     
     @media (max-width: 400px) or (max-height:940px) {
-        .hint {
+        .info {
             font-size: 14px;
+        }
+        form {
+            gap: 10px;
         }
         .button-field {
             gap: 5px !important;
         }
         dialog {
+            padding: 15px 10px;
             gap: 10px !important;
+            height: fit-content;
             h2 {
-                font-size: 35px;
+                font-size: 30px;
                 margin: 0;
             }
             .input-fields {
                 gap: 15px;
                 p {
                     margin: 0;
+                    font-size: 14px;
                 }
             }
         }
-    }
-    
-    @media (max-height:600px) {
-        dialog {
-            height: 60vh;
+        .info {
+            font-size: 13px;
+        }
+        .or {
+            font-size: 13px;
         }
     }

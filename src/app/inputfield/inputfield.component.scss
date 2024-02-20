@@ -24,6 +24,11 @@ input {
     }
 }
 
+.search-icon {
+    left: unset !important;
+    right: 30px;
+}
+
 @media (max-width: 480px) or (max-height:700px) {
     input {
         padding: 8px 10px 8px 50px !important;

@@ -7,6 +7,7 @@ export class GlobalVariablesService {
   desktop600: boolean = window.innerWidth > 600;
   desktop900: boolean = window.innerWidth > 900;
   login: boolean = false;
+  signup: boolean = false;
   accountAdjustment: boolean = false;
   showProfile: boolean = false;
   showMenu: boolean = false;
@@ -15,5 +16,5 @@ export class GlobalVariablesService {
   isChatVisable: boolean = false;
   userToChatWith: Array<any> = [];
 
-  constructor() {}
+  constructor() { }
 }

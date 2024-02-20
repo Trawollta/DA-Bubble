@@ -15,6 +15,7 @@ export class InputfieldComponent implements OnInit {
   @Input() id: string = "";
   @Input() placeholder: string = "";
   @Input() classes?: string | string[] = [];
+  @Input() optionClasses?: string | string[] = [];
   @Input() imgName: string = "";
   @Input() imgSize: string = "";
   imgActive: string = "";

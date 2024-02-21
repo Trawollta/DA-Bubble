@@ -40,6 +40,5 @@ export class ChannelMenuComponent {
   ngOnInit() {
     this.globalFunctions.getCollection('channels', this.allChannels);
     this.globalFunctions.getCollection('user', this.allUsers);
-    console.log(this.allUsers);
   }
 }

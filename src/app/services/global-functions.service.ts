@@ -17,6 +17,7 @@ import {
 export class GlobalFunctionsService {
   globalVariables = inject(GlobalVariablesService);
 
+
   channel: boolean = false;
 
   menuClicked() {
@@ -32,9 +33,9 @@ export class GlobalFunctionsService {
   }
 
   openDirectMessageUser(user: any) {
-    this.globalVariables.isChatVisable = true;
     let userToChatWith = [user];
     this.globalVariables.userToChatWith = userToChatWith[0];
+    this.globalVariables.isChatVisable = true;
     console.log(this.globalVariables.userToChatWith);
 }
 

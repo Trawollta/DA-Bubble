@@ -1,9 +1,10 @@
 <main *ngIf="globalVariables.isChatVisable">
   <section class="msg-header">
     <div class="topic-headline">
-      <div class="headline">
+      <div class="headline" (click)="logFunction()">
         <p>#</p>
-        <p>{{ currentUser.userName }}</p>
+        <p>{{ globalVariables.userToChatWith }}</p>
+
         <img src="../../../assets/img/icons/keyboard_arrow_down.svg" alt="" />
       </div>
     </div>
@@ -76,3 +77,4 @@
     ></app-inputfield>
   </section>
 </main>
+

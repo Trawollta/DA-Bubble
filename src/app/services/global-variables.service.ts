@@ -12,7 +12,7 @@ export class GlobalVariablesService {
   showMenu: boolean = false;
   showWriteMessage: boolean = false;
   showEditProfile: boolean = false;
-  isChatVisable: boolean = false;
+  isChatVisable: boolean = true;
   userToChatWith: Array<any> = [];
 
   constructor() {}

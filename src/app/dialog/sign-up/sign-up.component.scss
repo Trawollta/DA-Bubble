@@ -1,9 +1,18 @@
 @import './../../../styles.scss';
 app-inputfield,
 app-button {
-    max-width: 436px;
+    max-width: 500px;
     width: -webkit-fill-available;
     @include dFlex();
+}
+
+app-button {
+    justify-content: flex-end;
+}
+
+section {
+    @include dFlex($fd: column, $g: 30px);
+    margin: 80px 20px;
 }
 
 header {
@@ -40,7 +49,7 @@ h2 {
 .input-fields {
     @include dFlex($fd: column);
     width: 100%;
-    gap: 30px;
+    gap: 35px;
     p {
         color: $purple2;
         font-size: 18px;
@@ -49,21 +58,92 @@ h2 {
 
 .button-field {
     display: flex;
-    max-width: 350px;
+    max-width: 500px;
     width: -webkit-fill-available;
     gap: 30px;
 }
 
 form {
-    @include dFlex($fd: column);
-    width: 80%;
-    gap: 20px;
+    @include dFlex($fd: column, $ai: flex-start);
+    width: 100%;
+    gap: 30px;
 }
 
 .info {
     display: flex;
     text-align: center;
     font-size: 20px;
+    max-width: 500px;
+}
+
+.contact-checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start !important;
+    div {
+        display: flex;
+    }
+}
+
+.custom-checkbox {
+    input {
+        display: none;
+        &:checked~.checkmark:after {
+            display: block;
+        }
+    }
+    .checkmark {
+        position: relative;
+        height: 15px;
+        width: 15px;
+        display: inline-block;
+        margin-right: 10px;
+        border: 2px solid $purple2;
+        border-radius: 3px;
+        cursor: pointer;
+        &:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 4px;
+            top: -1px;
+            width: 5px;
+            height: 10px;
+            border: 1px solid $purple2;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+    }
+}
+
+label {
+    a {
+        border-radius: 30px;
+        cursor: pointer;
+        color: $purple2;
+        &:hover {
+            background-color: $background;
+        }
+    }
+}
+
+@media (max-width: 540px) or (max-height:780px) {
+    section {
+        margin: 40px 20px;
+        gap: 10px !important;
+    }
+    h2 {
+        font-size: 38px;
+    }
+    .go-back-wrapper {
+        width: 35%;
+    }
+    label {
+        font-size: 0.6;
+        a {
+            font-size: 0.6;
+        }
+    }
 }
 
 @media (max-width: 600px) {
@@ -72,9 +152,15 @@ form {
     }
 }
 
-@media (max-width: 500px) {
+@media (max-height:780px) {
+    section {
+        margin: 20px 10px;
+    }
+}
+
+@media (max-width: 390px) {
     h2 {
-        font-size: 38px;
+        font-size: 25px !important;
     }
 }
 
@@ -102,18 +188,9 @@ form {
     .info {
         font-size: 13px;
     }
-    .or {
-        font-size: 13px;
-    }
     .go-back {
         height: 30px;
         width: 30px;
         background-size: 15px;
-    }
-}
-
-@media (max-width: 500px) {
-    h2 {
-        font-size: 26px;
     }
 }

@@ -15,4 +15,8 @@ import { GlobalVariablesService } from 'app/services/global-variables.service';
 })
 export class SignUpComponent {
   globalVariables = inject(GlobalVariablesService);
+
+  goBack() {
+    this.globalVariables.signup = false;
+  }
 }

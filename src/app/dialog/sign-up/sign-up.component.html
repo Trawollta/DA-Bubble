@@ -1,22 +1,37 @@
 <app-dialog>
-    <header>
-        <div class="go-back-wrapper">
-            <div class="go-back"></div>
-        </div>
-        <h2>Konto erstellen</h2>
-    </header>
-    <div class="info">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</div>
-    <form #logInForm="ngForm" name="login-form">
-        <div class="input-fields">
-            <app-inputfield [imgSize]="'22px'" [classes]="['login']" type="text" imgName="person" placeholder="Name und Nachname"></app-inputfield>
-            <app-inputfield [imgSize]="'16px'" [classes]="['login']" type="email" id="email" imgName="mail" placeholder="beispielname@email.com"></app-inputfield>
-            <app-inputfield [imgSize]="'22px'" [classes]="['login']" type="password" imgName="lock" placeholder="Password"></app-inputfield>
-            <p>Passwort vergessen?</p>
-        </div>
-        <div><span class="or">ODER</span></div>
-        <app-button [classes]="['google']" imgPath="assets/img/icons/google.svg" caption="Anmelden mit Google"></app-button>
-        <div class="button-field">
-            <app-button type="submit" [classes]="['primary']" caption="Anmelden"></app-button>
-        </div>
-    </form>
+    <section>
+        <header>
+            <div class="go-back-wrapper" (click)="goBack()">
+                <div class="go-back"></div>
+            </div>
+            <h2>Konto erstellen</h2>
+        </header>
+        <div class="info">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</div>
+        <form #logInForm="ngForm" name="login-form">
+            <div class="input-fields">
+                <app-inputfield [imgSize]="'22px'" [classes]="['login']" type="text" imgName="person" placeholder="Name und Nachname"></app-inputfield>
+                <app-inputfield [imgSize]="'16px'" [classes]="['login']" type="email" id="email" imgName="mail" placeholder="beispielname@email.com"></app-inputfield>
+                <app-inputfield [imgSize]="'22px'" [classes]="['login']" type="password" imgName="lock" placeholder="Password"></app-inputfield>
+            </div>
+            <div class="contact-checkbox">
+                <div>
+                    <label class="custom-checkbox">
+                    <input #checkbox="ngModel" ngModel id="privacy-policy-checkbox" class="checkbox" name="privacy-policy" type="checkbox" required>
+                    <span class="checkmark"></span>
+                </label>
+                    <label for="privacy-policy-checkbox">
+                    Ich stimme der
+                    <a routerLink="/privacypolicy">Datenschutzerklärung </a> 
+                    zu.
+                </label>
+                </div>
+                <div class="hint">
+                    <span></span>
+                </div>
+            </div>
+            <div class="button-field">
+                <app-button type="submit" [classes]="['primary']" caption="Weiter"></app-button>
+            </div>
+        </form>
+    </section>
 </app-dialog>

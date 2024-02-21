@@ -9,21 +9,18 @@
     dialog {
         @include dFlex($fd: column);
         max-height: 769px;
-        height: 65vh;
+        height: fit-content;
         width: 80vw;
-        max-width: 606px;
+        max-width: 600px;
         border-radius: 30px;
         border: none;
         box-shadow: 0px 2px 10px 0px rgb(0 0 0 / 8%);
-        padding: 35px 20px;
+        gap: 30px;
+        padding: unset;
     }
     
     @media (max-width: 400px) or (max-height:940px) {
         app-log-in {
             gap: 10px !important;
-        }
-        dialog {
-            padding: 15px 10px;
-            height: fit-content;
         }
     }

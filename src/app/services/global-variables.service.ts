@@ -7,7 +7,7 @@ export class GlobalVariablesService {
   desktop600: boolean = window.innerWidth > 600;
   desktop900: boolean = window.innerWidth > 900;
   login: boolean = true;
-  signup: boolean = true;
+  signup: boolean = false;
   accountAdjustment: boolean = false;
   showProfile: boolean = false;
   showMenu: boolean = false;

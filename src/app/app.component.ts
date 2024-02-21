@@ -9,6 +9,8 @@ import { GlobalVariablesService } from './services/global-variables.service';
 import { ProfileComponent } from './dialog/profile/profile.component';
 import { GlobalFunctionsService } from './services/global-functions.service';
 import { AddNewChannelComponent } from './dashboard/channel-menu/add-new-channel/add-new-channel.component';
+import { AddContactsComponent } from './dashboard/channel-menu/add-contacts/add-contacts.component';
+
 
 @Component({
   selector: 'app-root',
@@ -21,7 +23,8 @@ import { AddNewChannelComponent } from './dashboard/channel-menu/add-new-channel
     DialogComponent,
     HeaderComponent,
     ProfileComponent,
-    AddNewChannelComponent],
+    AddNewChannelComponent,
+    AddContactsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -35,7 +38,6 @@ export class AppComponent {
   redirectToDashboard() {
     window.location.href = '/dashboard';
   }
-
 
   //der Eventlistener ist nur nötig, wenn man die Bildschirmgröße live ändern will
   //aber wir können hier feste Breakpoints festlegen und können so die Screenbeiten anpassen ohne die Werte in den jeweiligen SCSS Fisles zu suchen

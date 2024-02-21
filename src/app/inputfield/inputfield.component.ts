@@ -1,17 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-inputfield',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './inputfield.component.html',
   styleUrl: './inputfield.component.scss'
 })
 export class InputfieldComponent implements OnInit {
   @Input() type: string = "";
+  @Input() id: string = "";
   @Input() placeholder: string = "";
   @Input() classes?: string | string[] = [];
+  @Input() optionClasses?: string | string[] = [];
   @Input() imgName: string = "";
   @Input() imgSize: string = "";
   imgActive: string = "";

@@ -1,21 +1,14 @@
+
 .overlay {
     background-color: white;
     z-index: 2;
-    max-width: 700px;
+    width:100%;
     padding-left: 40px;
     padding-right: 40px;
     height: 100vh;
 }
 @media screen and (min-width: 800px) {
-    .overlay {
-        background-color: white;
-        z-index: 2;
-        max-width: 700px;
-        padding-left: 40px;
-        padding-right: 40px;
-        border-radius: 40px;
-        height: 55vh;
-    }
+    
 }
 
 .main-content {
@@ -31,10 +24,6 @@
     z-index: 1;
 }
 
-.close-btn {
-    cursor:pointer;
-}
-
 .headline {
     display: flex;
     justify-content: space-between;
@@ -46,24 +35,19 @@
     font-size: 28px;
 }
 
-.about {
-    width: 100%;
+.close-btn {
+    cursor:pointer;
 }
 
-.text {
-    font-weight: 400;
-    font-size: 16px;
-    text-align: left;
+.add {
+    margin-top: 80px;
 }
 
-h3 {
-    margin-top:20px;
-    font-weight: 700;
-    font-size: 20px;
+.checkbox-container {
+    margin-bottom: 15px;
 }
 
 .button-area {
     display:flex;
     justify-content: flex-end;
-    margin-top: 20px;
 }

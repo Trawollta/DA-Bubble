@@ -19,6 +19,7 @@ export class GlobalFunctionsService {
 
 
   channel: boolean = false;
+  adduser: boolean = false;
 
   menuClicked() {
     this.globalVariables.showMenu = !this.globalVariables.showMenu;
@@ -30,6 +31,32 @@ export class GlobalFunctionsService {
     this.channel = !this.channel;
     if (this.channel) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
+  }
+
+  closeOverlay() {
+    this.globalVariables.showProfile = false; 
+    this.channel = false; 
+    
+  }
+
+  closeUserOverlay() {
+    this.globalVariables.showProfile = false; 
+    this.adduser = false; 
+    
+  }
+
+  openUserOverlay() {
+    this.adduser = !this.adduser;
+    if (this.adduser) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }
+
+  toggleOverlays() {
+    console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);
+    this.channel = false;
+    this.adduser = true;
+    console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);
+    document.body.style.overflow = 'hidden';
   }
 
   openDirectMessageUser(user: any) {

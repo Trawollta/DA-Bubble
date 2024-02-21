@@ -2,7 +2,7 @@
 button {
     @include dFlex();
     gap: 10px;
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 700;
     width: fit-content;
     border-radius: 30px;
@@ -49,10 +49,10 @@ img {
     height: 28px;
 }
 
-@media (max-width: 400px) or (max-height:700px) {
+@media (max-width: 437px) or (max-height:700px) {
     button {
         font-size: 0.8em;
-        padding: 10px 10px 10px 3px;
+        padding: 10px 8px 10px 3px;
         height: 40px;
     }
 }

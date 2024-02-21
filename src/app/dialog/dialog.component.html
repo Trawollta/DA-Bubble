@@ -1,19 +1,3 @@
 <dialog>
-    <header>
-        <h2>Anmeldung</h2>
-    </header>
-    <div class="hint">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</div>
-    <form>
-        <div class="input-fields">
-            <app-inputfield [imgSize]="'16px'" [classes]="['login']" type="email" imgName="mail" placeholder="beispielname@email.com"></app-inputfield>
-            <app-inputfield [imgSize]="'22px'" [classes]="['login']" type="password" imgName="lock" placeholder="Password"></app-inputfield>
-            <p>Passwort vergessen?</p>
-        </div>
-        <div><span>ODER</span></div>
-        <app-button [classes]="['google']" imgPath="assets/img/icons/google.svg" caption="Anmelden mit Google"></app-button>
-        <div class="button-field">
-            <app-button [classes]="['primary']" caption="Anmelden"></app-button>
-            <app-button [classes]="['secondary']" (clicked)="redirectDashboard()" caption="Gäste-Login"></app-button>
-        </div>
-    </form>
+    <ng-content></ng-content>
 </dialog>

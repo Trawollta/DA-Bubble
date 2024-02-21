@@ -1,0 +1,18 @@
+<section>
+    <div class="loginheader">
+        <div class="login-header-left">
+            <img src="assets/img/icons/logo.svg">
+            <h1>DABubble</h1>
+        </div>
+        <div *ngIf="globalVariables.login && !globalVariables.signup" class="login-header-right">
+            <span>Neu bei DABubble?</span>
+            <app-button [classes]="['google']" (clicked)="goToSignUp()" caption="Konto erstellen"></app-button>
+        </div>
+    </div>
+    <app-log-in *ngIf="globalVariables.login && !globalVariables.signup"></app-log-in>
+    <app-sign-up *ngIf="globalVariables.login && globalVariables.signup"></app-sign-up>
+    <div class="footer">
+        <app-button [classes]="['google']" caption="Impressum"></app-button>
+        <app-button [classes]="['google']" caption="Datenschutz"></app-button>
+    </div>
+</section>

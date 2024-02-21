@@ -1,12 +1,6 @@
 @import './../../styles.scss';
-section {
-    display: flex;
-    height: 100%;
-    width: 100%;
-}
-
 .loginheader {
-    height: 100px;
+    height: 135px;
 }
 
 .login-header-left {
@@ -32,8 +26,12 @@ section {
     }
 }
 
-app-dialog {
+.footer {
     @include dFlex();
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
 }
 
 @media (max-width: 800px) {
@@ -48,7 +46,7 @@ app-dialog {
     .login-header-right {
         position: absolute;
         top: unset;
-        bottom: 10px;
+        bottom: 55px;
         display: flex;
         align-items: center;
         left: 0;
@@ -58,24 +56,24 @@ app-dialog {
 }
 
 @media (max-height:730px) {
+    .loginheader {
+        height: 85px;
+    }
     .login-header-left {
         position: absolute;
-        top: 5px;
+        top: 15px;
         display: flex;
         align-items: center;
         left: 0;
         right: 0;
-        h1 {
-            font-size: 20px;
-        }
         img {
-            height: 40px;
+            height: 50px;
         }
     }
     .login-header-right {
         position: absolute;
         top: unset;
-        bottom: 5px;
+        bottom: 44px;
         display: flex;
         align-items: center;
         left: 0;

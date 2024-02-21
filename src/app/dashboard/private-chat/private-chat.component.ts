@@ -25,7 +25,7 @@ export class PrivateChatComponent {
     }
   }
 
-  ngOnInit(){
+  logFunction() {
     console.log(this.globalVariables.userToChatWith)
   }
 }

@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class GlobalVariablesService {
   desktop600: boolean = window.innerWidth > 600;
   desktop900: boolean = window.innerWidth > 900;
-  login: boolean = true;
+  login: boolean = false;
   signup: boolean = false;
   accountAdjustment: boolean = false;
   showProfile: boolean = false;

@@ -23,7 +23,4 @@ export class LangingpageComponent {
     this.globalVariables.signup = true;
   }
 
-  redirectDashboard() {
-    window.location.href = '/dashboard';
-  }
 }

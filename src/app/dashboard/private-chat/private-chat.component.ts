@@ -13,7 +13,7 @@ import { GlobalVariablesService } from 'app/services/global-variables.service';
 export class PrivateChatComponent {
   globalVariables = inject(GlobalVariablesService);
   currentUser: any;
-
+  
   openAwnsers() {}
 
   openEmojis() {
@@ -26,6 +26,9 @@ export class PrivateChatComponent {
   }
 
   logFunction() {
-    console.log(this.globalVariables.userToChatWith)
+    
+    console.log(this.globalVariables.userToChatWith.userName);
+    
   }
+  
 }

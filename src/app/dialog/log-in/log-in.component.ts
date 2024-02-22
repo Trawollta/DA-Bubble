@@ -16,7 +16,6 @@ import { ButtonComponent } from 'app/button/button.component';
 export class LogInComponent {
   globalVariables = inject(GlobalVariablesService);
   redirectDashboard() {
-    this.globalVariables.login = false;
     window.location.href = '/dashboard';
   }
 }

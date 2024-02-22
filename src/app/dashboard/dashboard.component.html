@@ -1,3 +1,4 @@
 <app-channel-menu></app-channel-menu>
-<app-private-chat></app-private-chat>
+<app-chat *ngIf="globalVariables.isChatVisable"></app-chat>
+<app-private-chat *ngIf="!globalVariables.isChatVisable"></app-private-chat>
 <app-thread></app-thread>

@@ -14,7 +14,7 @@ export class GlobalVariablesService {
   showWriteMessage: boolean = false;
   showEditProfile: boolean = false;
   isChatVisable: boolean = true;
-  userToChatWith: Array<any> = [];
+  userToChatWith: any = [];
 
   constructor() { }
 }

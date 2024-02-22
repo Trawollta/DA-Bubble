@@ -63,7 +63,6 @@ export class GlobalFunctionsService {
     let userToChatWith = [user];
     this.globalVariables.userToChatWith = userToChatWith[0];
     this.globalVariables.isChatVisable = true;
-    console.log(this.globalVariables.userToChatWith);
 }
 
   stopPropagation(e: Event) {

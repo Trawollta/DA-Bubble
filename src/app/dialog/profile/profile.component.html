@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="inputFieldContainer">
-                    <app-inputfield *ngIf="globalVariables.showEditProfile" type="text" placeholder="Dein Name hier"></app-inputfield>
+                    <app-inputfield *ngIf="globalVariables.showEditProfile" [classes]="'noIcon standard'" type="text" placeholder="Dein Name hier"></app-inputfield>
                     <!-- <input type="text" placeholder="Dein Name hier"> -->
                 </div>
 
@@ -57,7 +57,7 @@
                 <div class="mailContainer">
                     <!-- area show mail -->
                     <div class="iconTxtContainer">
-                        <img src="assets/img/icons/mail.svg" alt="e-mail">
+                        <img src="assets/img/input-imgs/mail_black.svg" alt="e-mail">
                         <h4>E-Mail-Adresse</h4>
                     </div>
                     <div *ngIf="!globalVariables.showEditProfile" class="mailAdressContainer">
@@ -65,7 +65,7 @@
                     </div>
                     <!-- area edit mail -->
                     <div *ngIf="globalVariables.showEditProfile" class="inputFieldContainer">
-                        <app-inputfield type="email" placeholder="Deine E-Mail hier"></app-inputfield>
+                        <app-inputfield type="email" [classes]="'noIcon standard'" placeholder="Deine E-Mail hier"></app-inputfield>
                         <!-- <input type="email" placeholder="Deine E-Mail hier"> -->
                     </div>
                 </div>
@@ -74,9 +74,9 @@
                     caption="Nachricht" imgPath="assets/img/icons/mode_comment.svg"></app-button>
                 <!-- area button cancel or submit change -->
                 <div *ngIf="globalVariables.showEditProfile" class="btnContainer">
-                    <app-button [classes]="['secondary']" (clicked)="cancelEdit()" caption="Abbrechen">
+                    <app-button [classes]="['secondary noIcon']" (clicked)="cancelEdit()" caption="Abbrechen">
                     </app-button>
-                    <app-button [classes]="['primary']" (clicked)="sumbitEdit()" caption="Speichern">
+                    <app-button [classes]="['primary noIcon']" (clicked)="sumbitEdit()" caption="Speichern">
                     </app-button>
                 </div>
 

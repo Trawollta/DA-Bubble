@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ButtonComponent } from 'app/button/button.component';
-import { DialogComponent } from 'app/dialog/dialog.component';
 import { LogInComponent } from "../dialog/log-in/log-in.component";
 import { GlobalVariablesService } from 'app/services/global-variables.service';
 import { SignUpComponent } from 'app/dialog/sign-up/sign-up.component';
@@ -11,7 +10,7 @@ import { SignUpComponent } from 'app/dialog/sign-up/sign-up.component';
   standalone: true,
   templateUrl: './landingpage.component.html',
   styleUrl: './landingpage.component.scss',
-  imports: [DialogComponent, CommonModule, ButtonComponent, LogInComponent, SignUpComponent]
+  imports: [CommonModule, ButtonComponent, LogInComponent, SignUpComponent]
 })
 export class LangingpageComponent {
   globalVariables = inject(GlobalVariablesService);
@@ -23,4 +22,7 @@ export class LangingpageComponent {
     this.globalVariables.signup = true;
   }
 
+  ngOnInit() {
+    console.log('init landing');
+  }
 }

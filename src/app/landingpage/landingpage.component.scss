@@ -55,6 +55,12 @@
     }
 }
 
+@media (max-height:790px) {
+    .loginheader {
+        height: 100px;
+    }
+}
+
 @media (max-height:730px) {
     .loginheader {
         height: 85px;

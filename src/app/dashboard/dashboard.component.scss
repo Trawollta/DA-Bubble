@@ -1,20 +1,26 @@
-
+section{
+  display: flex;
+    justify-content: center;
+    width: 100vw;
+}
 .app-container {
   display: flex;
-  justify-content: center;
-  gap: 50px;
+  justify-content: space-between;
+  gap: 10px;
+  width: 90%;
+  margin-top: 20px;
 }
 
 .channel-menu {
-  flex-shrink: 0; 
-  width: 400px; 
+  //flex-shrink: 0; 
+  //width: 400px; 
   height: 100%; 
 }
 
 .chat-content, .thread-content {
-  flex-grow: 1; 
-  flex-shrink: 1; 
+ /*  flex-grow: 1; 
+  flex-shrink: 1;  */
   min-width: 360px; 
-
+flex: 1;
 }
   

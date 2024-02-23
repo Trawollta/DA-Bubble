@@ -1,5 +1,5 @@
 <div class="input-icon">
-    <div class="input-icon-img" [ngClass]="optionClasses">
+    <div *ngIf="imgName!=''" class="input-icon-img" [ngClass]="optionClasses">
         <img [ngStyle]="{'height': imgSize}" src="assets/img/input-imgs/{{imgActive}}.svg">
     </div>
     <input *ngIf="type === 'email'" [ngClass]="classes" type={{type}} id={{id}} placeholder={{placeholder}} [(ngModel)]="value" (ngModelChange)="onValueChange($event)" [required]="required" email (focus)="onFokus()" (blur)="onFocusOut()" />

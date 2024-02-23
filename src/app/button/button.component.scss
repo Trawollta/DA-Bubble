@@ -10,6 +10,14 @@ button {
     cursor: pointer;
     border: none;
 }
+.noIcon{
+    gap: 0 !important;
+    padding: 12px 25px !important;
+    font-size: 14px;
+    @media screen and (min-width: 480px){
+        font-size: 18px;
+    }
+}
 
 .primary {
     background-color: $purple1;
@@ -52,7 +60,7 @@ img {
 @media (max-width: 437px) or (max-height:700px) {
     button {
         font-size: 0.8em;
-        padding: 10px 8px 10px 3px;
+       // padding: 10px 8px 10px 3px;
         height: 40px;
     }
 }

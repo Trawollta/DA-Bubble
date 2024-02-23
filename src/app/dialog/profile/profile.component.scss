@@ -10,12 +10,13 @@ section {
     @include dFlex();
     z-index: 99;
 
+
     .cardOuterContainer {
         height: 100vh;
         @include dFlex();
 
         .card {
-            width: 80dvw;
+            width: 95dvw;
             max-width: 500px;
             border-radius: 30px;
             background-color: $white;
@@ -37,7 +38,8 @@ section {
             }
         }
 
-        @media screen and (min-width: calc($maxScreenWidth + 220px)) { //1560px
+        @media screen and (min-width: calc($maxScreenWidth + 220px)) {
+            //1560px
             @include dFlex($jc: flex-end, $ai: flex-start);
             height: calc(100vh - 200px);
             max-width: $maxScreenWidth;
@@ -58,6 +60,17 @@ section {
     .head {
         @include dFlex($jc: space-between);
         width: 100%;
+        font-size: 24px;
+
+        img {
+            height: 32px;
+            cursor: pointer;
+            transition: 0.3s;
+            &:hover{
+                transform: scale(1.2);
+                filter: invert(23%) sepia(66%) saturate(3301%) hue-rotate(233deg) brightness(97%) contrast(96%);
+            }
+        }
     }
 
     .imgContainer {
@@ -73,11 +86,29 @@ section {
     .nameContainer {
         @include dFlex($jc: space-between);
         width: 100%;
+        h2{
+            margin-bottom: 4px;
+        }
+        .editContainer{
+            font-size: 18px;
+            color: $purple3;
+            cursor: pointer;
+            transition: 0.3s;
+            &:hover{
+                color: $purple1;
+                font-size: 20px;
+            }
+        }
     }
 
     .status {
         @include dFlex($jc: flex-start, $g: 15px);
         width: 100%;
+        font-size: 20px;
+        img{
+            height: 16px;
+            width: auto;
+        }
     }
 
     .mailContainer {
@@ -87,8 +118,9 @@ section {
 
     .iconTxtContainer {
         @include dFlex($jc: flex-start, $g: 15px);
-        margin-top: 16px;
+        margin-top: 20px;
         width: 100%;
+        font-size: 20px;
 
         .mailImg {
             height: 70px;
@@ -102,23 +134,29 @@ section {
             }
         }
 
-        
+
 
     }
-    .inputFieldContainer{
+
+    .inputFieldContainer {
         width: 100%;
     }
-.mailAdressContainer {
-            margin-left: 40px;
 
-        }
+    .mailAdressContainer {
+        margin-left: 35px;
+        font-size: 18px;
+
+    }
+
     app-button {
-        height: 49px;
-        margin: 49px 0;
+        height: 54px;
+        margin: 49px 0 15px 0;
     }
-    .btnContainer{
-        @include dFlex($g: 32px);
+
+    .btnContainer {
+        @include dFlex($jc: space-between);
         width: 100%;
+        max-width: 320px;
     }
 }
 

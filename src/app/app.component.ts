@@ -10,6 +10,7 @@ import { ProfileComponent } from './dialog/profile/profile.component';
 import { GlobalFunctionsService } from './services/global-functions.service';
 import { AddNewChannelComponent } from './dashboard/channel-menu/add-new-channel/add-new-channel.component';
 import { AddContactsComponent } from './dashboard/channel-menu/add-contacts/add-contacts.component';
+import { PrivateChatComponent } from './dashboard/private-chat/private-chat.component';
 
 
 @Component({
@@ -24,7 +25,8 @@ import { AddContactsComponent } from './dashboard/channel-menu/add-contacts/add-
     HeaderComponent,
     ProfileComponent,
     AddNewChannelComponent,
-    AddContactsComponent],
+    AddContactsComponent,
+  PrivateChatComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

@@ -1,14 +1,13 @@
 <section>
+    <button class="menu-toggle-btn" (click)="toggleChannelMenu()">Workspace-Menu schließen</button>
     <div class="app-container">
-        <div class="channel-menu">
+        <div class="channel-menu" *ngIf="globalVariables.showChannelMenu">
             <app-channel-menu></app-channel-menu>
         </div>
         <div class="chat-content">
             <app-chat *ngIf="!globalVariables.isChatVisable"></app-chat>
             <app-private-chat *ngIf="globalVariables.isChatVisable"></app-private-chat>
-        </div>
-        <!-- <div class="thread-content"> -->
             <app-thread *ngIf="globalVariables.showThread"></app-thread>
-        <!-- </div> -->
+        </div>
     </div>
 </section>

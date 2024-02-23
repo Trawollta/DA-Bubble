@@ -17,6 +17,7 @@ export class GlobalVariablesService {
   isChatVisable: boolean = true;
   userToChatWith: any = [];
   showThread: boolean = false;
+  showChannelMenu: boolean = true; 
 
   constructor() { }
 }

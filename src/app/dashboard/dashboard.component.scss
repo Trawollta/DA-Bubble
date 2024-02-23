@@ -12,15 +12,21 @@ section{
 }
 
 .channel-menu {
-  //flex-shrink: 0; 
-  //width: 400px; 
   height: 100%; 
 }
 
 .chat-content, .thread-content {
- /*  flex-grow: 1; 
-  flex-shrink: 1;  */
   min-width: 360px; 
-flex: 1;
+  flex: 1;
+}
+
+.menu-toggle-btn {
+  position: fixed;
+  left: 5%;
+  bottom: 226px;
+  transform: translateX(-50%); 
+  writing-mode: vertical-lr; 
+  transform: rotate(180deg);
+  border-radius: 30px
 }
   

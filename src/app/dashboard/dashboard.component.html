@@ -1,4 +1,12 @@
-<app-channel-menu></app-channel-menu>
-<app-chat *ngIf="!globalVariables.isChatVisable"></app-chat>
-<app-private-chat *ngIf="globalVariables.isChatVisable"></app-private-chat>
-<app-thread></app-thread>
+<div class="app-container">
+        <div class="channel-menu">
+            <app-channel-menu></app-channel-menu>
+        </div>
+    <div class="chat-content">
+        <app-chat *ngIf="!globalVariables.isChatVisable"></app-chat>
+        <app-private-chat *ngIf="globalVariables.isChatVisable"></app-private-chat>
+      </div>
+    <div class ="thread-content">
+        <app-thread *ngIf="globalVariables.showThread"></app-thread>
+    </div>
+</div>

@@ -12,7 +12,7 @@ import { GlobalVariablesService } from 'app/services/global-variables.service';
 })
 export class ChatComponent {
   globalVariables = inject(GlobalVariablesService);
-  openAwnsers() {}
+
 
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');
@@ -21,5 +21,9 @@ export class ChatComponent {
     } else if (emojiDiv && emojiDiv.classList.contains('d-none') == false) {
       emojiDiv.classList.add('d-none');
     }
+  }
+
+  openAnswers() {
+    
   }
 }

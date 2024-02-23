@@ -68,6 +68,8 @@ export class GlobalFunctionsService {
   stopPropagation(e: Event) {
     e.stopPropagation();
   }
+
+
   constructor(private firestore: Firestore) {}
 
   // simple function to get data from firestore returns a collection

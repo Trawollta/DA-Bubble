@@ -13,8 +13,11 @@ import { GlobalVariablesService } from 'app/services/global-variables.service';
 export class PrivateChatComponent {
   globalVariables = inject(GlobalVariablesService);
   currentUser: any;
-  
-  openAwnsers() {}
+
+
+  openAnswers() {
+    this.globalVariables.showThread = !this.globalVariables.showThread;
+  }
 
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');

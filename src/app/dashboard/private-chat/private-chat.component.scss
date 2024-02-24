@@ -6,10 +6,8 @@ main {
   max-height: 940px;
   border-radius: 30px;
   background-color: white;
- // margin-top: 20px;
+  height: 74vh;
 }
-
-
 
   .msg-header {
     max-width: 989px;
@@ -101,6 +99,8 @@ main {
     top: 2px;
     padding: 10px, 16px, 10px, 16px;
     gap: 20px;
+    flex-grow: 1;
+    
   }
   
   .info-area {

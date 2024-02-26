@@ -18,6 +18,9 @@ export class GlobalVariablesService {
   userToChatWith: any = [];
   showThread: boolean = false;
   showChannelMenu: boolean = true; 
+  showChannels: boolean = false;
+  gotoChannel: any = [];
+  isChannelVisible: boolean = true;
   
   openChannel:string='';
   channelData: {

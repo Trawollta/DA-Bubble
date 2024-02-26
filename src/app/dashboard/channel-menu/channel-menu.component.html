@@ -29,9 +29,10 @@
         </div>
       </div>
       <div class="channel-overview d-none" id="channels">
-        <div class="channel-overview-wrapper">
-          <div class="channel-wrapper" *ngFor="let channel of allChannels">
+        <div class="channel-overview">
+          <div class="channel-wrapper" *ngFor="let channel of allChannels" (click)="globalFunctions.openChannelList(channel)">
             <p><span>#</span>{{ channel.channelName }}</p>
+          </div>
           </div>
         </div>
         <div></div>
@@ -43,7 +44,6 @@
           <p>Channel hinzufügen</p>
         </a>
       </div>
-    </div>
     <div class="direct-messages">
       <div class="messages-wrapper">
         <div class="channel-arrow-dropdown-sec" (click)="openDirectMessage()">

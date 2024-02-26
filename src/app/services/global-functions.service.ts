@@ -66,6 +66,11 @@ export class GlobalFunctionsService {
     this.globalVariables.isChatVisable = true;
 }
 
+  openChannelList(channel: any) {
+    this.globalVariables.openChannel = channel.channelName;
+    this.globalVariables.isChannelVisible = true;
+}
+
   stopPropagation(e: Event) {
     e.stopPropagation();
   }

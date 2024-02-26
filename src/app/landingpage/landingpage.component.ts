@@ -21,8 +21,4 @@ export class LangingpageComponent {
   goToSignUp() {
     this.globalVariables.signup = true;
   }
-
-  ngOnInit() {
-    console.log('init landing');
-  }
 }

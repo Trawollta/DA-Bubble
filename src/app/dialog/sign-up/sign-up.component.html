@@ -11,7 +11,7 @@
             </div>
         </header>
         <div class="info">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</div>
-        <form #signupForm="ngForm" name="signup-form" (ngSubmit)="onSubmit(signUpUserData)">
+        <form #signupForm="ngForm" name="signup-form" (ngSubmit)="onSubmit()">
             <div class="input-fields">
                 <app-inputfield #name="ngModel" name="name" id="name" [(ngModel)]="signUpUserData.name" [imgSize]="'22px'" [classes]="['login']" type="text" imgName="person" [required]="true" placeholder="Name und Nachname"></app-inputfield>
                 <div class="hint">
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="button-field">
-                <app-button [classes]="['primary']" caption="Weiter" [isDisabled]="signupForm.valid? false : true" (clicked)="goChooseAvatar()"></app-button>
+                <app-button [classes]="['primary','noIcon']" caption="Weiter" [isDisabled]="signupForm.valid? false : true" (clicked)="goChooseAvatar()"></app-button>
             </div>
         </form>
     </section>
@@ -60,18 +60,22 @@
                 </div>
             </div>
         </header>
-        <div class="avatar-img"><img src="assets/img/avatars/avatar_0.svg"></div>
+        <div class="avatar-img"><img [ngClass]="selectedAvatar? 'small' : 'big'" [src]="selectedAvatar || 'assets/img/avatars/avatar_0.svg'"></div>
         <h3 class="user-name">{{signUpUserData.name}}</h3>
-        <div>Aus der Liste wählen</div>
+        <span class="avatar-hint">Aus der Liste wählen</span>
         <div class="avatar-list">
             <div *ngFor="let img of avatarImgs">
-                <img class="avatar-pic" [src]="img">
+                <img class="avatar-pic" [src]="img" (click)="selectAvatar(img)">
             </div>
         </div>
-        <form #signupForm="ngForm" name="signup-form" (ngSubmit)="onSubmit(signUpUserData)">
-            <input type="file">
+        <form #signupForm="ngForm" name="signup-form" (ngSubmit)="onSubmit()">
+            <div class="file-upload-wrapper">
+                <input type="file" id="file-input" #fileInput hidden />
+                <span class="avatar-hint" id="file-name">eigenes Bild verwenden</span>
+                <app-button id="custom-button" type="button" [classes]="['secondary','noIcon']" caption="Datei hochladen" (click)="triggerFileInput()"></app-button>
+            </div>
             <div class="button-field">
-                <app-button *ngIf="signUpStep == 'chooseAvatar'" type="submit" [isDisabled]="signupForm.valid? false : true" [classes]="['primary']" caption="Weiter"></app-button>
+                <app-button *ngIf="signUpStep == 'chooseAvatar'" type="submit" [isDisabled]="signupForm.valid? false : true" [classes]="['primary','noIcon']" caption="Weiter"></app-button>
             </div>
         </form>
     </section>

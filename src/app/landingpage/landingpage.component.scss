@@ -27,7 +27,7 @@
 }
 
 .footer {
-    @include dFlex();
+    @include dFlex($g: 20px);
     position: absolute;
     bottom: 2px;
     left: 0;

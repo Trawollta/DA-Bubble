@@ -13,8 +13,8 @@
             <div><span class="or">ODER</span></div>
             <app-button [classes]="['google']" imgPath="assets/img/icons/google.svg" caption="Anmelden mit Google"></app-button>
             <div class="button-field">
-                <app-button type="submit" [classes]="['primary']" caption="Anmelden"></app-button>
-                <app-button [classes]="['secondary']" (clicked)="redirectDashboard()" caption="Gäste-Login"></app-button>
+                <app-button type="submit" [classes]="['primary','noIcon']" caption="Anmelden"></app-button>
+                <app-button [classes]="['secondary','noIcon']" (clicked)="redirectDashboard()" caption="Gäste-Login"></app-button>
             </div>
         </form>
     </section>

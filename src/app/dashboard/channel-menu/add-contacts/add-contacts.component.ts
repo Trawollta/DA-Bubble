@@ -31,6 +31,7 @@ export class AddContactsComponent {
   addNewChannel() {
 
       this.globalFunctions.addData( 'channels', this.globalVariables.channelData);
+      this.globalVariables.openChannel = this.globalVariables.channelData.channelName;
       this.globalVariables.channelData.channelName = '';
       this.globalVariables.channelData.description = '';
       this.globalFunctions.closeUserOverlay();

@@ -28,7 +28,7 @@ export class InputfieldComponent implements OnInit, ControlValueAccessor {
   @Input() imgSize: string = "";
   @Input() required: boolean = false;
   imgActive: string = "";
-  @Input() value: string = ''; //hi Marni, muss ich das hier nicht auch dem Inputfeld übergebe? Gruß Alex
+  value: string = ''; 
   private onChange: (value: string) => void = () => { };
   private onTouched: () => void = () => { };
 

@@ -18,6 +18,15 @@ export class GlobalVariablesService {
   userToChatWith: any = [];
   showThread: boolean = false;
   showChannelMenu: boolean = true; 
+  newChannel:string = '';
+  newChannelDescription: string = '';
+  channelData: {
+    description: string;
+    channelName: string;
+  } = {
+    description: '',
+    channelName: ''
+  };
 
   constructor() { }
 }

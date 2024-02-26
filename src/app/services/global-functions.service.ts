@@ -52,10 +52,11 @@ export class GlobalFunctionsService {
   }
 
   toggleOverlays() {
-    console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);
+   // console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);
     this.channel = false;
     this.adduser = true;
-    console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);
+   // console.log('input feld Channel: ', this.globalVariables.newChannel);
+   // console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);
     document.body.style.overflow = 'hidden';
   }
 
@@ -93,10 +94,11 @@ export class GlobalFunctionsService {
     });
   }
 
+  // hab die Funktion geänder 26.2, Alex
   // function to add data to a Collection you choose
-  addData(desc: string, goalCollection: string, description: string) {
-    let toGo = description;
-    let data = { channelName: desc };
+  addData(goalCollection: string, input:any) { /* desc: string, , description: string */
+    //let toGo = description;
+    let data = input;
     let dataCollection = collection(this.firestore, goalCollection);
     return addDoc(dataCollection, data);
   }

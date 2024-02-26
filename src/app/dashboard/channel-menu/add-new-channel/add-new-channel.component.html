@@ -22,11 +22,13 @@
   
     <div class="input-icon">
       <img src="" />
-      <app-inputfield
+      <input type="text" #newChannel="ngModel" [(ngModel)]="globalVariables.channelData.channelName">
+      <!-- <app-inputfield
+       
         [classes]="['standard']"
         type="text"
         placeholder="Kooperationsprojekte"
-      ></app-inputfield>
+      ></app-inputfield> -->
     </div>
     <div>
       <h3>Beschreibung</h3>
@@ -34,11 +36,12 @@
   
     <div class="input-icon">
       <img src="" />
-      <app-inputfield
+      <input type="text" #newChannelDescription="ngModel" [(ngModel)]="globalVariables.channelData.description">
+      <!-- <app-inputfield
         [classes]="['standard']"
         type="text"
         placeholder="Dein Text hier"
-      ></app-inputfield>
+      ></app-inputfield> -->
     </div>
   
     <div class="button-area">

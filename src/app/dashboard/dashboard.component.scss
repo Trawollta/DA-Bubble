@@ -1,0 +1,45 @@
+.content-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+}
+
+.channel-menu, .chat-content, .thread-content {
+  flex: 1;
+  min-width: 360px;
+  height: 100%;
+  margin-left:40px;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  width: 90%;
+  margin-top: 20px;
+}
+
+.menu-toggle-btn {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0px;
+  position: fixed;
+  left: -88px;
+  bottom: 30%;
+  transform: rotate(270deg);
+  border-radius: 0 0 30px 30px;
+  background: var(--White, #fff);
+  box-shadow: 4px 4px 7px #0003;
+  padding: 12px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.menu-toggle-btn:hover {
+  background: var(--purple1, rgb(68, 77, 242)); 
+  color: #fff; 
+  box-shadow: 0 0 15px var(--purple1, rgb(68, 77, 242)); 
+}

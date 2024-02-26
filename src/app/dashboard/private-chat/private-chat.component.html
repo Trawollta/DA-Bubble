@@ -4,6 +4,7 @@
       <div class="headline" (click)="logFunction()">
         <p>#</p>
         <p>{{ globalVariables.userToChatWith.userName }}</p>
+        <p>{{ globalVariables.openChannel }}</p>
 
         <img src="../../../assets/img/icons/keyboard_arrow_down.svg" alt="" />
       </div>
@@ -40,7 +41,7 @@
         <img src="../../../assets/img/reactions/three_dots.svg" alt="" />
       </div>
       <div class="replie-wrapper">
-        <p class="replie-text" (click)="openAwnsers()">1 Antworten</p>
+        <p class="replie-text" (click)="openAnswers()">1 Antworten</p>
         <p class="timestamp-text">Letze Antwort Time</p>
       </div>
     </div>
@@ -60,7 +61,7 @@
           <img src="../../../assets/img/reactions/three_dots.svg" alt="" />
         </div>
         <div class="replie-wrapper">
-          <p class="replie-text" (click)="openAwnsers()">1 Antworten</p>
+          <p class="replie-text" (click)="openAnswers()">1 Antworten</p>
           <p class="timestamp-text">Letze Antwort Time</p>
         </div>
       </div>

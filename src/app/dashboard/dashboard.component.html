@@ -1,4 +1,19 @@
-<app-channel-menu></app-channel-menu>
-<app-chat *ngIf="!globalVariables.isChatVisable"></app-chat>
-<app-private-chat *ngIf="globalVariables.isChatVisable"></app-private-chat>
-<app-thread></app-thread>
+<section>
+    <div class="menu-toggle-btn" (click)="toggleChannelMenu()">
+        <span>Workspace-Menu schließen</span>
+    </div>
+    <div class="app-container">
+        <div class="channel-menu" *ngIf="globalVariables.showChannelMenu">
+            <app-channel-menu></app-channel-menu>
+        </div>
+            <div class="content-container">
+                <div class="chat-content">
+                <app-chat *ngIf="!globalVariables.isChatVisable"></app-chat>
+                <app-private-chat *ngIf="globalVariables.isChatVisable"></app-private-chat>
+                </div>
+                    <div class="thread-content" *ngIf="globalVariables.showThread">
+                        <app-thread></app-thread>
+                    </div>
+            </div>
+    </div>
+</section>

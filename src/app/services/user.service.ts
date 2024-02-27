@@ -12,7 +12,7 @@ export class UserService {
     return {
       name: user.name,
       email: user.email,
-      status: user.status,
+      active: user.active, //Alex 27.2.24--changed from status to active because it is only a boolean
       img: user.img
     };
   }

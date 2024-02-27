@@ -31,5 +31,9 @@ export class GlobalVariablesService {
     channelName: ''
   };
 
+
+  //this is for test purpose. It could be take over when working.
+  // variable is used in profile card and firebase-user.service.ts
+  activeID:string = 'gvmQbxpAqE8t1ftC2BOp'; // this is the id of guest user of testusers
   constructor() { }
 }

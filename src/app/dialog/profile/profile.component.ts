@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ButtonComponent } from 'app/button/button.component';
+import { FirebaseUserService } from 'app/firebase-services/firebase-user.service';
 import { InputfieldComponent } from 'app/inputfield/inputfield.component';
 import { GlobalVariablesService } from 'app/services/global-variables.service';
 
@@ -27,7 +28,9 @@ export class ProfileComponent {
   profileNameBuffer:string = '';
   emailBuffer:string = '';
 
+  firebaseService = inject(FirebaseUserService);
   globalVariables = inject(GlobalVariablesService);
+
   close() {
     this.globalVariables.showProfile = false;
   }
@@ -38,6 +41,7 @@ export class ProfileComponent {
 
   editProfile(){
     this.globalVariables.showEditProfile = true;
+    this.firebaseService.setActiveUserId(this.globalVariables.activeID);
   }
   cancelEdit(){
     this.profileNameBuffer = '';

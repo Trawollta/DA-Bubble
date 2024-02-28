@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { User } from 'app/models/user.class';
-import { Firestore, collection, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, collection, doc, setDoc, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +28,10 @@ export class FirebaseUserService {
       isActive: user.isActive,
       img: user.img
     };
+  }
+
+  async updateUserStatus(uid: string, isActive: boolean) {
+    const userDocRef = doc(this.firestore, `users/${uid}`);
+    await updateDoc(userDocRef, { isActive });
   }
 }

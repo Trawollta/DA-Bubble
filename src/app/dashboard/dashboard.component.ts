@@ -21,6 +21,9 @@ import { CommonModule } from '@angular/common';
 })
 export class DashboardComponent {
   globalVariables = inject(GlobalVariablesService);
+  constructor() {
+    this.globalVariables.login = false;
+  }
 
   toggleChannelMenu() {
     this.globalVariables.showChannelMenu = !this.globalVariables.showChannelMenu;

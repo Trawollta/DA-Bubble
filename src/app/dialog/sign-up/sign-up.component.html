@@ -17,11 +17,11 @@
                 <div class="hint">
                     <span *ngIf="name.invalid && name.touched">Bitte Vor- und Nachnamen eingeben.</span>
                 </div>
-                <app-inputfield #email="ngModel" name="email" id="email" [(ngModel)]="signUpUserData.email" [imgSize]="'16px'" [classes]="['login']" type="email" id="email" [required]="true" imgName="mail" placeholder="beispielname@email.com"></app-inputfield>
+                <app-inputfield #email="ngModel" name="email" id="email" [(ngModel)]="signUpUserData.email" [imgSize]="'16px'" [classes]="['login']" type="email" [required]="true" imgName="mail" placeholder="beispielname@email.com"></app-inputfield>
                 <div class="hint">
                     <span *ngIf="email.invalid && email.touched">Diese E-Mail-Adresse ist leider ungültig.</span>
                 </div>
-                <app-inputfield #password="ngModel" name="password" [(ngModel)]="signUpUserData.password" [imgSize]="'22px'" [classes]="['login']" type="password" imgName="lock" [required]="true" placeholder="Password"></app-inputfield>
+                <app-inputfield #password="ngModel" name="password" [(ngModel)]="signUpUserPassword" [imgSize]="'22px'" [classes]="['login']" type="password" imgName="lock" [required]="true" placeholder="Password"></app-inputfield>
                 <div class="hint">
                     <span *ngIf="password.invalid && password.touched">Bitte Passwort eingeben.</span>
                 </div>
@@ -70,7 +70,7 @@
         </div>
         <form #signupForm="ngForm" name="signup-form" (ngSubmit)="onSubmit()">
             <div class="file-upload-wrapper">
-                <input type="file" id="file-input" #fileInput hidden />
+                <input type="file" id="file-input" #fileInput hidden (change)="onFileSelected($event)" />
                 <span class="avatar-hint" id="file-name">eigenes Bild verwenden</span>
                 <app-button id="custom-button" type="button" [classes]="['secondary','noIcon']" caption="Datei hochladen" (click)="triggerFileInput()"></app-button>
             </div>

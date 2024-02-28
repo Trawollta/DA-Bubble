@@ -6,6 +6,7 @@ import { InputfieldComponent } from 'app/inputfield/inputfield.component';
 import { DialogComponent } from '../dialog.component';
 import { GlobalVariablesService } from 'app/services/global-variables.service';
 import { AuthService } from 'app/firebase-services/auth.service';
+import { FirebaseUserService } from 'app/firebase-services/firebase-user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,13 +19,15 @@ export class SignUpComponent {
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
   authService = inject(AuthService);
   globalVariables = inject(GlobalVariablesService);
-  signUpStep: string = "chooseAvatar";
+  userService = inject(FirebaseUserService);
+  signUpStep: string = "createAccount"; //createAccount | chooseAvatar
   selectedAvatar: string | undefined;
+  signUpUserPassword: string = "";
 
   signUpUserData = {
     name: "",
     email: "",
-    password: "",
+    isActive: false,
     img: ""
   }
 
@@ -57,16 +60,29 @@ export class SignUpComponent {
     this.selectedAvatar = img;
   }
 
+  onFileSelected(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.signUpUserData.img = e.target.result; // Speichert die Daten-URL im signUpUserData-Objekt
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   async onSubmit() {
-    const { email, password } = this.signUpUserData;
+    const email = this.signUpUserData.email;
+    const password = this.signUpUserPassword;
     try {
       const userCredential = await this.authService.register(email, password);
-      // Weitere Schritte nach erfolgreicher Registrierung, z.B. Benutzerdaten speichern
       console.log(userCredential);
-      // Optional: Avatar Bild hochladen und Benutzerprofil aktualisieren
+      const uid = userCredential.user.uid;
+      this.userService.addUser(uid, this.signUpUserData);
     } catch (error) {
       console.error("Registrierungsfehler:", error);
       // Fehlerbehandlung, z.B. Benachrichtigung anzeigen
     }
   }
 }
+

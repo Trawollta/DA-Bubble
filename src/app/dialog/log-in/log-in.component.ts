@@ -18,4 +18,8 @@ export class LogInComponent {
   redirectDashboard() {
     window.location.href = '/dashboard';
   }
+  logInUserData = {
+    email: "",
+    password: ""
+  }
 }

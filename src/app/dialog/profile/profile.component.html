@@ -17,7 +17,7 @@
 
                 <!-- area profile image -->
                 <div class="imgContainer">
-                    <img src="{{profile.img}}" alt="profile image">
+                    <img src="{{globalVariables.currentUser.img}}" alt="profile image">
                 </div>
             </div>
             <!-- form show or edit start -->
@@ -25,7 +25,7 @@
 
                 <!-- area show name -->
                 <div *ngIf="!globalVariables.showEditProfile" class="nameContainer">
-                    <h2>{{profile.profilename}}</h2>
+                    <h2>{{globalVariables.currentUser.name}}</h2>
                     <div class="editContainer" (click)="editProfile()">
                         <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/edit.svg" alt="edit profile">
                         <span *ngIf="globalVariables.desktop600">Bearbeiten</span>
@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="inputFieldContainer">
-                    <app-inputfield *ngIf="globalVariables.showEditProfile" [classes]="'noIcon standard'" type="text" placeholder="Dein Name hier"></app-inputfield>
+                    <app-inputfield *ngIf="globalVariables.showEditProfile" [classes]="'noIcon standard'" name='profileName'  [(ngModel)]="profileNameBuffer" type="text" placeholder="Dein Name hier"></app-inputfield>
                     <!-- <input type="text" placeholder="Dein Name hier"> -->
                 </div>
 
@@ -61,11 +61,11 @@
                         <h4>E-Mail-Adresse</h4>
                     </div>
                     <div *ngIf="!globalVariables.showEditProfile" class="mailAdressContainer">
-                        <a href="mailto:{{profile.email}}">{{profile.email}}</a>
+                        <a href="mailto:{{globalVariables.currentUser.email}}">{{globalVariables.currentUser.email}}</a>
                     </div>
                     <!-- area edit mail -->
                     <div *ngIf="globalVariables.showEditProfile" class="inputFieldContainer">
-                        <app-inputfield type="email" [classes]="'noIcon standard'" placeholder="Deine E-Mail hier"></app-inputfield>
+                        <app-inputfield type="email" [classes]="'noIcon standard'" name='email'  [(ngModel)]="emailBuffer" placeholder="Deine E-Mail hier"></app-inputfield>
                         <!-- <input type="email" placeholder="Deine E-Mail hier"> -->
                     </div>
                 </div>

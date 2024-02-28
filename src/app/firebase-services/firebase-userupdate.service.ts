@@ -15,7 +15,7 @@ export class FirebaseUserupdateService {
   globalVariablesService = inject(GlobalVariablesService);
 
   activeID: string = this.globalVariablesService.activeID;
-  activeUser: User = new User;
+  activeUser: User = new User; //das brauche ich nicht mehr. Ich habe das ersetzt durch currentUser in den globalen Variablen
 
   unsubSingleUser;
 
@@ -60,8 +60,11 @@ export class FirebaseUserupdateService {
       if (user.data()) {
         let newUser = new User(user.data());
         this.activeUser = newUser;
+        this.globalVariablesService.currentUser = newUser;
+        this.globalVariablesService.activeID = user.id;
       }
-      console.log('activeUser: ', this.activeUser);
+      console.log('activeUser: ', this.globalVariablesService.currentUser);
+      console.log('activeId: ', this.globalVariablesService.activeID);
     });
   }
 

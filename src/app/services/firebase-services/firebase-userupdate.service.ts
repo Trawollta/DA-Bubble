@@ -36,7 +36,7 @@ export class FirebaseUserupdateService {
   * @returns reference to collection 'user'
   */
   getUserRef() {
-    return collection(this.firestore, 'testusers');
+    return collection(this.firestore, 'users');
   }
 
   /**

@@ -33,6 +33,7 @@ export class LogInComponent {
       const userCredential = await this.authService.login(email, password);
       const uid = userCredential.user.uid;
       await this.userService.updateUserStatus(uid, true);
+      this.userService.updateCurrentUser(userCredential);
       this.router.navigate(['/dashboard']);
     } catch (error) {
     }
@@ -40,16 +41,16 @@ export class LogInComponent {
 
   async loginWithGoogle() {
     try {
-      const userData = await this.authService.loginWithGoogle();
-      if (userData) {
-        console.log("Erfolgreich mit Google angemeldet", userData);
-        await this.userService.addUser(userData.uid, {
-          name: userData.name,
-          email: userData.email,
+      const userCredential = await this.authService.loginWithGoogle();
+      if (userCredential) {
+        console.log("Erfolgreich mit Google angemeldet", userCredential);
+        await this.userService.addUser(userCredential.uid, {
+          name: userCredential.displayName,
+          email: userCredential.email,
           isActive: true,
-          img: '',
+          img: userCredential.photoURL
         });
-
+        this.userService.updateCurrentUser(userCredential);
         this.router.navigate(['/dashboard']);
       } else {
         console.error("Google-Anmeldung fehlgeschlagen.");

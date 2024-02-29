@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ProfileComponent } from 'app/dialog/profile/profile.component';
+import { FirebaseUserService } from 'app/firebase-services/firebase-user.service';
 import { GlobalFunctionsService } from 'app/services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/global-variables.service';
 
@@ -16,29 +17,29 @@ import { GlobalVariablesService } from 'app/services/global-variables.service';
 })
 export class HeaderMenuComponent {
 
-globalVariables = inject (GlobalVariablesService);
-globalFunctions = inject (GlobalFunctionsService);
+  globalVariables = inject(GlobalVariablesService);
+  globalFunctions = inject(GlobalFunctionsService);
+  private userService = inject(FirebaseUserService);
 
-login(){
-  this.globalVariables.login = true;
-    window.location.href = '';
-}
-
-openProfile(){
-  this.globalVariables.showProfile = true;
-}
-/* active: boolean = false;
-
-  menuClicked() {
-    this.active = !this.active;
-    if (this.active) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto'; 
-
+  login() {
+    this.userService.logout();
   }
 
-  stopPropagation(e:Event) {
-    e.stopPropagation();
-} */
+  openProfile() {
+    this.globalVariables.showProfile = true;
+  }
+  /* active: boolean = false;
   
+    menuClicked() {
+      this.active = !this.active;
+      if (this.active) document.body.style.overflow = 'hidden';
+      else document.body.style.overflow = 'auto'; 
+  
+    }
+  
+    stopPropagation(e:Event) {
+      e.stopPropagation();
+  } */
+
 
 }

@@ -1,8 +1,8 @@
 <section>
-    <div class="accountContainer" (click)="globalFunctions.menuClicked()">
-        <h3 *ngIf="globalVariables.desktop600">Frederik Beck</h3>
+    <div class="accountContainer" (click)="globalFunctions.menuProfileClicked()">
+        <h3 *ngIf="globalVariables.desktop600">{{globalVariables.currentUser.name}}</h3>
         <div class="avatarCon">
-            <img class="imgAvatar" src="assets/img/avatars/Frederik Beck.svg" alt="avatar">
+            <img class="imgAvatar" src={{globalVariables.currentUser.img}} alt="avatar">
             <img *ngIf="globalVariables.desktop600" class="imgArrow" src="assets/img/icons/keyboard_arrow_down.svg"
                 alt="arrow-down">
         </div>
@@ -10,10 +10,10 @@
 
     </div>
     <!-- <app-profile *ngIf="globalVariables.showProfile"></app-profile> -->
-    <div *ngIf="globalVariables.showMenu" class="openMenu" (click)="globalFunctions.menuClicked()">
+    <div *ngIf="globalVariables.showProfileMenu" class="openMenu" (click)="globalFunctions.menuProfileClicked()">
         <div class="outerContainer">
             <div class="innerContainer" (click)="globalFunctions.stopPropagation($event)">
-                <div class="closeContainer" (click)="globalFunctions.menuClicked()">
+                <div class="closeContainer" (click)="globalFunctions.menuProfileClicked()">
                     <div class="closeBar"></div>
                 </div>
                 <div class="menuOuterContainer">

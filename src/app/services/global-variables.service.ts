@@ -10,10 +10,14 @@ export class GlobalVariablesService {
   login: boolean = false;
   signup: boolean = false;
   accountAdjustment: boolean = false;
-  showProfile: boolean = false;
-  showMenu: boolean = false;
   showWriteMessage: boolean = false;
+
+  //flags for profile
+  showProfileMenu: boolean = false;
+  showProfile: boolean = false;
   showEditProfile: boolean = false;
+  isProfileOfCurrentUser: boolean = true;
+
   isChatVisable: boolean = true;
   userToChatWith: any = [];
   showThread: boolean = false;
@@ -37,9 +41,21 @@ currentUser={
   img: 'assets/img/avatars/avatar_3.svg',
   isActive: true
 } 
-
-  //this is for test purpose. It could be take over when working.
+//this is for test purpose. It could be take over when working.
   // variable is used in profile card and firebase-user.service.ts
   activeID:string = 'gvmQbxpAqE8t1ftC2BOp'; // this is the id of guest user of testusers
+
+  
   constructor() { }
+
+//eine Idee:
+//wir müssen die User überall mit der ID ansprechen und nur wenn wir den Namen brauchen holen wir ihn.
+//wir müssten also inern ausschließlich mit den IDs arbeiten und  nur wenn wir den Profilnamen anzeigen lassen wollen wird hier hin verwiesen.
+// dadurch können user auch den gleichen Namen haben.
+allUserIDs=[ 
+  {
+  userId: '',
+  userName: ''
+}];
+  
 }

@@ -21,9 +21,9 @@ export class GlobalFunctionsService {
   channel: boolean = false;
   adduser: boolean = false;
 
-  menuClicked() {
-    this.globalVariables.showMenu = !this.globalVariables.showMenu;
-    if (this.globalVariables.showMenu) document.body.style.overflow = 'hidden';
+  menuProfileClicked() {
+    this.globalVariables.showProfileMenu = !this.globalVariables.showProfileMenu;
+    if (this.globalVariables.showProfileMenu) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
 

@@ -21,12 +21,7 @@ import { GlobalVariablesService } from 'app/services/global-variables.service';
 })
 export class ProfileComponent {
 
-  profile = {
-    img: 'assets/img/avatars/Frederik Beck.svg',
-    profilename: 'Frederik Beck',
-    email: 'emil@beispiel.com',
-    online: true
-  }
+  
 
   profileNameBuffer:string = '';
   emailBuffer:string = '';
@@ -34,6 +29,14 @@ export class ProfileComponent {
   firebaseService = inject(FirebaseUserupdateService);
   globalVariables = inject(GlobalVariablesService);
 
+
+
+  profile = {
+    img: this.globalVariables.currentUser.img,
+    profilename: this.globalVariables.currentUser.name,
+    email: this.globalVariables.currentUser.email,
+    online: this.globalVariables.currentUser.isActive
+  } 
   close() {
     this.globalVariables.showProfile = false;
   }
@@ -46,7 +49,7 @@ export class ProfileComponent {
     this.profileNameBuffer = this.globalVariables.currentUser.name;
     this.emailBuffer = this.globalVariables.currentUser.email;
     this.globalVariables.showEditProfile = true;
-    this.firebaseService.setActiveUserId(this.globalVariables.activeID);
+    //this.firebaseService.setActiveUserId(this.globalVariables.activeID);
   }
 
   cancelEdit(){

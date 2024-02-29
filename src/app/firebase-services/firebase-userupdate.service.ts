@@ -15,7 +15,7 @@ export class FirebaseUserupdateService {
   globalVariablesService = inject(GlobalVariablesService);
 
   activeID: string = this.globalVariablesService.activeID;
-  activeUser: User = new User; //das brauche ich nicht mehr. Ich habe das ersetzt durch currentUser in den globalen Variablen
+  userProfileData: User = new User; //das brauche ich nicht mehr. Ich habe das ersetzt durch currentUser in den globalen Variablen
 
   unsubSingleUser;
 
@@ -57,13 +57,13 @@ export class FirebaseUserupdateService {
 
     return onSnapshot(this.getSingleUserRef(id), (user) => {
 
-      if (user.data()) {
+      if (user.data()&&this.globalVariablesService.currentUser.name != 'Guest') {
         let newUser = new User(user.data());
-        this.activeUser = newUser;
+        this.userProfileData = newUser;
         this.globalVariablesService.currentUser = newUser;
         this.globalVariablesService.activeID = user.id;
       }
-      console.log('activeUser: ', this.globalVariablesService.currentUser);
+      console.log('userProfileData: ', this.globalVariablesService.currentUser);
       console.log('activeId: ', this.globalVariablesService.activeID);
     });
   }
@@ -85,7 +85,7 @@ export class FirebaseUserupdateService {
 
  async setdata(){
 
-    await setDoc(doc(this.firestore, "users3", "ok"), this.toJson(this.activeUser));
+    await setDoc(doc(this.firestore, "users3", "ok"), this.toJson(this.userProfileData));
   }
 
   async updateData (){

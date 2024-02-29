@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { GlobalFunctionsService } from 'app/services/global-functions.service';
-import { GlobalVariablesService } from 'app/services/global-variables.service';
+import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { AddNewChannelComponent } from './add-new-channel/add-new-channel.component';
 
 @Component({
@@ -17,7 +17,7 @@ export class ChannelMenuComponent {
   allChannels: any = [];
   allUsers: any = [];
 
-  constructor(public globalFunctions: GlobalFunctionsService) {}
+  constructor(public globalFunctions: GlobalFunctionsService) { }
 
   openChannels() {
     let channelDiv = document.getElementById('channels');

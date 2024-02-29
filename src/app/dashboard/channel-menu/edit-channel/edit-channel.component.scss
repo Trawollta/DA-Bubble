@@ -1,0 +1,69 @@
+.Edit {
+    background-color: white;
+    z-index: 3;
+    max-width: 700px;
+    padding-left: 40px;
+    padding-right: 40px;
+    height: 100vh;
+}
+// @media screen and (min-width: 800px) {
+//     .overlay {
+//         background-color: white;
+//         z-index: 2;
+//         max-width: 700px;
+//         padding-left: 40px;
+//         padding-right: 40px;
+//         border-radius: 40px;
+//         height: 55vh;
+//     }
+// }
+
+ .Edit-content {
+     display:flex;
+     justify-content: center;
+     align-items:center;
+     position:absolute;
+    top: 0;
+    left:0;
+    width:100%;
+    height:100vh;
+    background-color: #0003;
+    z-index: 2;
+}
+
+.close-btn {
+    cursor:pointer;
+}
+
+.headline {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.top {
+    font-weight: 700;
+    font-size: 28px;
+}
+
+.about {
+    width: 100%;
+}
+
+.text {
+    font-weight: 400;
+    font-size: 16px;
+    text-align: left;
+}
+
+ h3 {
+     margin-top:20px;
+     font-weight: 700;
+     font-size: 20px;
+ }
+
+ .button-area {
+     display:flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+ }

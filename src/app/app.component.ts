@@ -2,12 +2,12 @@ import { Component, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { initializeApp } from 'firebase/app';
-import { ButtonComponent } from './button/button.component';
+import { ButtonComponent } from './shared/button/button.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { DialogComponent } from './dialog/dialog.component';
-import { GlobalVariablesService } from './services/global-variables.service';
-import { ProfileComponent } from './dialog/profile/profile.component';
-import { GlobalFunctionsService } from './services/global-functions.service';
+import { DialogComponent } from './shared/dialog/dialog.component';
+import { GlobalVariablesService } from './services/app-services/global-variables.service';
+import { ProfileComponent } from './profile/profile.component';
+import { GlobalFunctionsService } from './services/app-services/global-functions.service';
 import { AddNewChannelComponent } from './dashboard/channel-menu/add-new-channel/add-new-channel.component';
 import { AddContactsComponent } from './dashboard/channel-menu/add-contacts/add-contacts.component';
 import { PrivateChatComponent } from './dashboard/private-chat/private-chat.component';
@@ -26,14 +26,14 @@ import { PrivateChatComponent } from './dashboard/private-chat/private-chat.comp
     ProfileComponent,
     AddNewChannelComponent,
     AddContactsComponent,
-  PrivateChatComponent],
+    PrivateChatComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
 
   globalVariables = inject(GlobalVariablesService);
-  globalFunctions = inject (GlobalFunctionsService);
+  globalFunctions = inject(GlobalFunctionsService);
 
   title = 'da-bubble';
 

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class GlobalVariablesService {
-  
+
   desktop600: boolean = window.innerWidth > 600;
   desktop900: boolean = window.innerWidth > 900;
   login: boolean = false;
@@ -21,19 +21,20 @@ export class GlobalVariablesService {
   isChatVisable: boolean = true;
   userToChatWith: any = [];
   showThread: boolean = false;
-  showChannelMenu: boolean = true; 
+  showChannelMenu: boolean = true;
   showChannels: boolean = false;
   gotoChannel: any = [];
   isChannelVisible: boolean = true;
-  
-  openChannel:string='';
+
+  openChannel: string = '';
   channelData: {
     description: string;
     channelName: string;
   } = {
-    description: '',
-    channelName: ''
-  };
+      description: '',
+      channelName: ''
+    };
+
 
 currentUser={
   name: 'Guest',

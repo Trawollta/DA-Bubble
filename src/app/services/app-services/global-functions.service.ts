@@ -20,6 +20,8 @@ export class GlobalFunctionsService {
 
   channel: boolean = false;
   adduser: boolean = false;
+  editChannelOverlayOpen: boolean = false;
+  editChannel:boolean= false;
 
   menuProfileClicked() {
     this.globalVariables.showProfileMenu = !this.globalVariables.showProfileMenu;
@@ -34,15 +36,15 @@ export class GlobalFunctionsService {
   }
 
   closeOverlay() {
-    this.globalVariables.showProfile = false; 
-    this.channel = false; 
-    
+    this.globalVariables.showProfile = false;
+    this.channel = false;
+
   }
 
   closeUserOverlay() {
-    this.globalVariables.showProfile = false; 
-    this.adduser = false; 
-    
+    this.globalVariables.showProfile = false;
+    this.adduser = false;
+
   }
 
   openUserOverlay() {
@@ -52,31 +54,47 @@ export class GlobalFunctionsService {
   }
 
   toggleOverlays() {
-   // console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);
+    // console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);
     this.channel = false;
     this.adduser = true;
-   // console.log('input feld Channel: ', this.globalVariables.newChannel);
-   // console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);
+    // console.log('input feld Channel: ', this.globalVariables.newChannel);
+    // console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);
     document.body.style.overflow = 'hidden';
   }
+
+  openEditChannelOverlay() {
+ 
+    this.editChannelOverlayOpen = !this.editChannelOverlayOpen;
+    console.log('Overlay open state:', this.editChannelOverlayOpen);
+    if (this.editChannelOverlayOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+    
+  }
+
+  closeEditOverlay() {
+    this.editChannelOverlayOpen = false;
+    this.globalVariables.showProfile = false; 
+    document.body.style.overflow = 'auto';
+  }
+  
 
   openDirectMessageUser(user: any) {
     let userToChatWith = [user];
     this.globalVariables.userToChatWith = userToChatWith[0];
     this.globalVariables.isChatVisable = true;
-}
+  }
 
   openChannelList(channel: any) {
     this.globalVariables.openChannel = channel.channelName;
     this.globalVariables.isChannelVisible = true;
-}
+  }
 
   stopPropagation(e: Event) {
     e.stopPropagation();
   }
 
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore) { }
 
   // simple function to get data from firestore returns a collection
   getData(item: string) {
@@ -101,7 +119,7 @@ export class GlobalFunctionsService {
 
   // hab die Funktion geänder 26.2, Alex
   // function to add data to a Collection you choose
-  addData(goalCollection: string, input:any) { /* desc: string, , description: string */
+  addData(goalCollection: string, input: any) { /* desc: string, , description: string */
     //let toGo = description;
     let data = input;
     let dataCollection = collection(this.firestore, goalCollection);

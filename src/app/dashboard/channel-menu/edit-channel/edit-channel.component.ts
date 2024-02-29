@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component,inject, input } from '@angular/core';
-import { ButtonComponent } from 'app/button/button.component';
-import { InputfieldComponent } from 'app/inputfield/inputfield.component';
-import { GlobalFunctionsService } from 'app/services/global-functions.service';
-import { GlobalVariablesService } from 'app/services/global-variables.service';
+import { Component, inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { ButtonComponent } from 'app/shared/button/button.component';
+import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 
 @Component({
   selector: 'app-edit-channel',

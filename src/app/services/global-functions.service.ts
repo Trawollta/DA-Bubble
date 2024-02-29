@@ -20,6 +20,8 @@ export class GlobalFunctionsService {
 
   channel: boolean = false;
   adduser: boolean = false;
+  editChannelOverlayOpen: boolean = false;
+  editChannel:boolean= false;
 
   menuClicked() {
     this.globalVariables.showMenu = !this.globalVariables.showMenu;
@@ -59,6 +61,22 @@ export class GlobalFunctionsService {
    // console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);
     document.body.style.overflow = 'hidden';
   }
+
+  openEditChannelOverlay() {
+ 
+    this.editChannelOverlayOpen = !this.editChannelOverlayOpen;
+    console.log('Overlay open state:', this.editChannelOverlayOpen);
+    if (this.editChannelOverlayOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+    
+  }
+
+  closeEditOverlay() {
+    this.editChannelOverlayOpen = false;
+    this.globalVariables.showProfile = false; 
+    document.body.style.overflow = 'auto';
+  }
+  
 
   openDirectMessageUser(user: any) {
     let userToChatWith = [user];

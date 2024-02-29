@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class GlobalVariablesService {
-  
+
   desktop600: boolean = window.innerWidth > 600;
   desktop900: boolean = window.innerWidth > 900;
   login: boolean = false;
@@ -17,29 +17,29 @@ export class GlobalVariablesService {
   isChatVisable: boolean = true;
   userToChatWith: any = [];
   showThread: boolean = false;
-  showChannelMenu: boolean = true; 
+  showChannelMenu: boolean = true;
   showChannels: boolean = false;
   gotoChannel: any = [];
   isChannelVisible: boolean = true;
-  
-  openChannel:string='';
+
+  openChannel: string = '';
   channelData: {
     description: string;
     channelName: string;
   } = {
-    description: '',
-    channelName: ''
-  };
+      description: '',
+      channelName: ''
+    };
 
-currentUser={
-  name: 'Guest',
-  email: 'muster@mail.de',
-  img: 'assets/img/avatars/avatar_3.svg',
-  isActive: true
-} 
+  currentUser = {
+    name: 'Guest',
+    email: 'muster@mail.de',
+    img: 'assets/img/avatars/avatar_3.svg',
+    isActive: true
+  }
 
   //this is for test purpose. It could be take over when working.
   // variable is used in profile card and firebase-user.service.ts
-  activeID:string = 'gvmQbxpAqE8t1ftC2BOp'; // this is the id of guest user of testusers
+  activeID: string = 'gvmQbxpAqE8t1ftC2BOp'; // this is the id of guest user of testusers
   constructor() { }
 }

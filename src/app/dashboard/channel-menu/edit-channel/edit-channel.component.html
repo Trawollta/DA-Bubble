@@ -1,0 +1,35 @@
+<div class="Edit-content">
+
+    <div class="Edit" *ngIf="globalFunctions.editChannelOverlayOpen">
+        <div class="headline">
+            <div>
+            <span class="top"> Channel erstellen</span>
+            </div>
+                <div>
+                    <img (click)="globalFunctions.closeEditOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
+                </div>
+        </div>
+    <div class="about">
+        <span class="text">
+            Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
+            themenbezogen sein #marketing zum Beispiel.
+        </span>
+    </div>
+    
+    <div *ngFor="let channel of channels">
+      <p>{{ channel.name }}</p> <!-- Angenommen, deine Channels haben eine Eigenschaft 'name' -->
+      <p>{{ channel.description }}</p> <!-- Angenommen, deine Channels haben eine Eigenschaft 'description' -->
+    </div>
+    <input [(ngModel)]="globalVariables.channelData.channelName" placeholder="Channel-Name">
+    <input [(ngModel)]="globalVariables.channelData.description" placeholder="Beschreibung">
+    
+      <div class="button-area">
+        <app-button
+          [classes]="['primary']"
+          (clicked)="globalFunctions.toggleOverlays()"
+          caption="Erstellen"
+          imgPath=""
+        ></app-button>
+      </div>
+      </div>
+    </div>

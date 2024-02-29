@@ -1,17 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { InputfieldComponent } from '../../shared/inputfield/inputfield.component';
 import { CommonModule } from '@angular/common';
+import { EditChannelComponent } from '../channel-menu/edit-channel/edit-channel.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 
 @Component({
   selector: 'app-private-chat',
   standalone: true,
   templateUrl: './private-chat.component.html',
   styleUrl: './private-chat.component.scss',
-  imports: [InputfieldComponent, CommonModule]
+  imports: [InputfieldComponent, CommonModule, EditChannelComponent]
 })
 export class PrivateChatComponent {
   globalVariables = inject(GlobalVariablesService);
+  globalFunctions = inject(GlobalFunctionsService);
   currentUser: any;
 
 
@@ -27,11 +30,4 @@ export class PrivateChatComponent {
       emojiDiv.classList.add('d-none');
     }
   }
-
-  logFunction() {
-
-    console.log(this.globalVariables.userToChatWith.userName);
-
-  }
-
 }

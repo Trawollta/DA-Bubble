@@ -19,20 +19,15 @@ export class AuthService {
   }
 
   async logout() {
+
     return await signOut(this.auth);
   }
 
   async loginWithGoogle() {
     const provider = new GoogleAuthProvider();
     try {
-      const result = await signInWithPopup(this.auth, provider);
-      const user = result.user;
-      const userData = {
-        uid: user.uid,
-        name: user.displayName || '', // Standardwert '', falls displayName nicht vorhanden
-        email: user.email || '', // Standardwert '', falls email nicht vorhanden
-      };
-      return userData; // Benutzerdaten zurückgeben
+      const userCredential = await signInWithPopup(this.auth, provider);
+      return userCredential.user;
     } catch (error) {
       console.error("Fehler bei der Google-Anmeldung:", error);
       return null; // Im Fehlerfall null zurückgeben

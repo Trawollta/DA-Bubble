@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ButtonComponent } from 'app/button/button.component';
-import { InputfieldComponent } from 'app/inputfield/inputfield.component';
-import { DialogComponent } from '../dialog.component';
-import { GlobalVariablesService } from 'app/services/global-variables.service';
-import { AuthService } from 'app/firebase-services/auth.service';
-import { FirebaseUserService } from 'app/firebase-services/firebase-user.service';
+import { ButtonComponent } from 'app/shared/button/button.component';
+import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
+import { DialogComponent } from '../shared/dialog/dialog.component';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { AuthService } from 'app/services/firebase-services/auth.service';
+import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 
 @Component({
   selector: 'app-sign-up',

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { User } from '../models/user.class';
+import { User } from '../../models/user.class';
 import { Firestore, collection, addDoc, updateDoc, doc, setDoc, onSnapshot } from '@angular/fire/firestore';
-import { GlobalVariablesService } from 'app/services/global-variables.service';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 
 
 
@@ -72,32 +72,32 @@ export class FirebaseUserupdateService {
    * this function is used finally within the HTML to call the information of the clicked user
    * @param userId - the id of the user which should be called
    */
-  setActiveUserId(userId:string | undefined){
+  setActiveUserId(userId: string | undefined) {
     userId ? this.activeID = userId : this.activeID; // if a user id exist take this otherwhise the predefined one in gloablevariableservice
-  //brauche ich das hier?
-  //  this.globalVariablesService.activeID = this.activeID;
-    
-  console.log('aktive Id: ', this.activeID);
-  
-  this.getSingleUser(this.activeID)
+    //brauche ich das hier?
+    //  this.globalVariablesService.activeID = this.activeID;
+
+    console.log('aktive Id: ', this.activeID);
+
+    this.getSingleUser(this.activeID)
   }
 
 
- async setdata(){
+  async setdata() {
 
     await setDoc(doc(this.firestore, "users3", "ok"), this.toJson(this.activeUser));
   }
 
-  async updateData (){
+  async updateData() {
 
-    await updateDoc (doc(this.firestore, "users3", "ok"), this.buildJson());
+    await updateDoc(doc(this.firestore, "users3", "ok"), this.buildJson());
   }
-  
+
   // ich muss hier eine Möglichkeit schaffen, dass ich das Dokument updaten kann und dabei nur die Elemente angebe, die verändert werden sollen.
   // Ich könnte die Eingabe mit dem Wert aus der Datenbank vergleichen und es nur dann in das zu übertragende JSON einbauen, wenn der Wert unterschiedlich ist.
   // Ich will es nicht direkt ändern damit ich bei Abbruch die alten Werte noch habe. und erst ändere, wenn ich auf save klicke.
 
-  buildJson(): {} { 
+  buildJson(): {} {
     return {
       email: 'test@testmail.de',
     };

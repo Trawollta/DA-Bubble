@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { user } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
-import { ButtonComponent } from 'app/button/button.component';
-import { FirebaseUserupdateService } from 'app/firebase-services/firebase-userupdate.service';
-import { InputfieldComponent } from 'app/inputfield/inputfield.component';
-import { GlobalVariablesService } from 'app/services/global-variables.service';
+import { ButtonComponent } from 'app/shared/button/button.component';
+import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
+import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 
 @Component({
   selector: 'app-profile',
@@ -28,8 +28,8 @@ export class ProfileComponent {
     online: true
   }
 
-  profileNameBuffer:string = '';
-  emailBuffer:string = '';
+  profileNameBuffer: string = '';
+  emailBuffer: string = '';
 
   firebaseService = inject(FirebaseUserupdateService);
   globalVariables = inject(GlobalVariablesService);
@@ -42,20 +42,20 @@ export class ProfileComponent {
     this.globalVariables.showWriteMessage = true;
   }
 
-  editProfile(){
+  editProfile() {
     this.profileNameBuffer = this.globalVariables.currentUser.name;
     this.emailBuffer = this.globalVariables.currentUser.email;
     this.globalVariables.showEditProfile = true;
     this.firebaseService.setActiveUserId(this.globalVariables.activeID);
   }
 
-  cancelEdit(){
+  cancelEdit() {
     this.profileNameBuffer = '';
     this.emailBuffer = '';
     this.globalVariables.showEditProfile = false
   }
-  sumbitEdit(){
-    if(this.emailBuffer !== this.globalVariables.currentUser.email){
+  sumbitEdit() {
+    if (this.emailBuffer !== this.globalVariables.currentUser.email) {
       // für später: ich brauche ein Objekt, dass den geänderten Wert aufnimmt und falls auch der Name geändert wurde mit diesem zusammenfügen. und möglicherweise muss in das Objekt noch der neue Bildpfad rein, wenn es geändert wurde
     }
     //ich muss an updateData dann das Array übergeben

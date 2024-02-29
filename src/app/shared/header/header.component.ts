@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
-import { GlobalVariablesService } from 'app/services/global-variables.service';
-import { InputfieldComponent } from 'app/inputfield/inputfield.component';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 
 @Component({
   selector: 'app-header',

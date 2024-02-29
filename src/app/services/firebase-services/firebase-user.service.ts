@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { User } from 'app/models/user.class';
 import { Firestore, collection, doc, setDoc, updateDoc } from '@angular/fire/firestore';
-import { GlobalVariablesService } from 'app/services/global-variables.service';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';

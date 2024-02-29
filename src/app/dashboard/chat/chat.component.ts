@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { InputfieldComponent } from '../../inputfield/inputfield.component';
+import { InputfieldComponent } from '../../shared/inputfield/inputfield.component';
 import { CommonModule } from '@angular/common';
-import { GlobalVariablesService } from 'app/services/global-variables.service';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 
 @Component({
   selector: 'app-chat',
@@ -24,6 +24,6 @@ export class ChatComponent {
   }
 
   openAnswers() {
-    
+
   }
 }

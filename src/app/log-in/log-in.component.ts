@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { InputfieldComponent } from 'app/inputfield/inputfield.component';
-import { GlobalVariablesService } from 'app/services/global-variables.service';
-import { DialogComponent } from "../dialog.component";
-import { ButtonComponent } from 'app/button/button.component';
-import { AuthService } from 'app/firebase-services/auth.service';
-import { FirebaseUserService } from 'app/firebase-services/firebase-user.service';
+import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { DialogComponent } from "../shared/dialog/dialog.component";
+import { ButtonComponent } from 'app/shared/button/button.component';
+import { AuthService } from 'app/services/firebase-services/auth.service';
+import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { Router } from '@angular/router';
 
 @Component({

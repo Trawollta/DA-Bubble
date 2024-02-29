@@ -1,10 +1,10 @@
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
-import { GlobalFunctionsService } from 'app/services/global-functions.service';
-import { GlobalVariablesService } from 'app/services/global-variables.service';
-import { InputfieldComponent } from 'app/inputfield/inputfield.component';
-import { ButtonComponent } from 'app/button/button.component';
+import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
+import { ButtonComponent } from 'app/shared/button/button.component';
 import { FormsModule } from '@angular/forms';
 
 
@@ -15,8 +15,8 @@ import { FormsModule } from '@angular/forms';
     RouterLink,
     CommonModule,
     InputfieldComponent,
-     ButtonComponent,
-     FormsModule],
+    ButtonComponent,
+    FormsModule],
   templateUrl: './add-new-channel.component.html',
   styleUrl: './add-new-channel.component.scss',
 })
@@ -25,7 +25,7 @@ export class AddNewChannelComponent {
   globalFunctions = inject(GlobalFunctionsService);
 
   [x: string]: any;
-  constructor() {}
+  constructor() { }
 
 
 }

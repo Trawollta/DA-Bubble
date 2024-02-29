@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ProfileComponent } from 'app/dialog/profile/profile.component';
-import { FirebaseUserService } from 'app/firebase-services/firebase-user.service';
-import { GlobalFunctionsService } from 'app/services/global-functions.service';
-import { GlobalVariablesService } from 'app/services/global-variables.service';
+import { ProfileComponent } from 'app/profile/profile.component';
+import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 
 @Component({
   selector: 'app-header-menu',

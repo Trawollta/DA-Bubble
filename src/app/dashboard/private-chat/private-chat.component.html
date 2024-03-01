@@ -1,4 +1,4 @@
-<main *ngIf="globalVariables.isChatVisable">
+<main > <!-- *ngIf="globalVariables.isPrivatChatVisable" -->
   <section class="msg-header">
     <div class="topic-headline">
       
@@ -53,7 +53,7 @@
       <div class="info-area">
         <div class="info-area-wrapper">
           <p class="messagetime">12:50</p>
-          <p class="username">User</p>
+          <p class="username">"{{globalVariables.currentUser.name}}"</p>
         </div>
         <div class="speech-bubble-current-user" (click)="openEmojis()">
           <span class="speech-bubble-current-user-text">Hallo</span>
@@ -68,7 +68,9 @@
       </div>
     </div>
     <div class="user">
-      <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
+      <!-- <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" /> -->
+      <img src= "{{globalVariables.currentUser.img}}" alt="" />  
+ 
     </div>
   </section>
   <section>

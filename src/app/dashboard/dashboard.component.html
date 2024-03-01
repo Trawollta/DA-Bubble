@@ -8,8 +8,8 @@
         </div>
             <div class="content-container">
                 <div class="chat-content">
-                <app-chat *ngIf="!globalVariables.isChatVisable"></app-chat>
-                <app-private-chat *ngIf="globalVariables.isChatVisable"></app-private-chat>
+                <app-chat *ngIf="globalVariables.isChatVisable"></app-chat>
+                <app-private-chat *ngIf="globalVariables.isPrivatChatVisable"></app-private-chat>
                 </div>
                     <div class="thread-content" *ngIf="globalVariables.showThread">
                         <app-thread></app-thread>

@@ -19,6 +19,7 @@ export class GlobalVariablesService {
   isProfileOfCurrentUser: boolean = true;
 
   isChatVisable: boolean = true;
+  isPrivatChatVisable:boolean = false;
   userToChatWith: any = [];
   showThread: boolean = false;
   showChannelMenu: boolean = true;

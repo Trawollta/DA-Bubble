@@ -1,10 +1,14 @@
 @import "../../../styles.scss";
 main {
   background-color: $background;
+  
 }
 
 .channel-menu {
+  overflow: hidden;
+  height: 100%;
   max-width: 366px;
+ 
   max-height: 940px;
   //top: 115px;
  // left: 20px;
@@ -65,16 +69,21 @@ main {
   }
 }
 
+.contentSection{
+overflow: auto;
+height: calc(100% - 60px);
+}
 .all-channel {
   // max-width: 306px;
   display: fleX;
-  padding-top: 25px;
+  margin-top: 25px;
   flex-direction: column;
+ 
 }
 
 .direct-messages {
   // width: 306px;
-  height: 484px;
+  //height: 484px;
   gap: 25px;
 }
 
@@ -121,16 +130,17 @@ main {
   }
 }
 
-.channel-overview {
+/* .channel-overview {
   // width: 306px;
   gap: 13px;
-}
+ 
+} */
 
-.channel-overview-wrapper {
+/* .channel-overview-wrapper {
   // max-width: 306px;
   border-radius: 30px;
   gap: 15px;
-}
+} */
 
 .channel-arrow-dropdown {
   img:hover {
@@ -238,8 +248,10 @@ main {
 }
 
 .user-wrapper {
+  overflow: auto;
   // width: 306px;
-  height: 58px;
+  //height: 58px;
+  height: 93%;
   border-radius: 30px;
   display: flex;
   flex-direction: column;

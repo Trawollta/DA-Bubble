@@ -34,8 +34,8 @@ constructor(){
     this.userService.logout();
   }
 
-  openProfile() {
+ /*  openProfile() {
     this.globalVariables.showProfile = true;
   }
-
+ */
 }

@@ -2,10 +2,11 @@
   <section class="msg-header">
     <div class="topic-headline">
       
-      <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
+      <div class="headline" (click)="globalFunctions.openProfile()">
         <p></p>
-        <p>{{ globalVariables.userToChatWith.userName }}</p>
-        <p>{{ globalVariables.openChannel }}</p>
+        <img src="{{ globalVariables.userToChatWith.img }}" alt="">
+        <p>{{ globalVariables.userToChatWith.name }}</p>
+        <!-- <p>{{ globalVariables.openChannel }}</p> -->
 
         <img src="../../../assets/img/icons/keyboard_arrow_down.svg" alt="" />
       </div>
@@ -80,6 +81,5 @@
       placeholder="Deine Nachricht"
     ></app-inputfield>
   </section>
-  <app-edit-channel *ngIf="globalFunctions.editChannelOverlayOpen"></app-edit-channel>
 </main>
 

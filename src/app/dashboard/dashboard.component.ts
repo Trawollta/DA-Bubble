@@ -28,4 +28,6 @@ export class DashboardComponent {
   toggleChannelMenu() {
     this.globalVariables.showChannelMenu = !this.globalVariables.showChannelMenu;
   }
+
+  
 }

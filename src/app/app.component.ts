@@ -49,6 +49,7 @@ export class AppComponent {
   }
   setDesktopFlag() {
     this.globalVariables.desktop600 = window.innerWidth > 600;
+    this.globalVariables.desktop700 = window.innerWidth > 700;
     this.globalVariables.desktop900 = window.innerWidth > 900;
   }
 }

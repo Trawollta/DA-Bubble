@@ -21,7 +21,7 @@
                         <a>
                             <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/account_circle.svg"
                                 alt="avatarIcon">
-                            <span (click)="openProfile()">Profile </span>
+                            <span (click)="globalFunctions.openProfile()">Profile </span>
                         </a>
                         <a (click)="login()">
                             <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/logout.svg" alt="logoutIcon">

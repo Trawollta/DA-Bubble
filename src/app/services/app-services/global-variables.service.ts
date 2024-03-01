@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class GlobalVariablesService {
 
   desktop600: boolean = window.innerWidth > 600;
+  desktop700: boolean = window.innerWidth > 700;
   desktop900: boolean = window.innerWidth > 900;
   login: boolean = false;
   signup: boolean = false;
@@ -18,11 +19,17 @@ export class GlobalVariablesService {
   showEditProfile: boolean = false;
   isProfileOfCurrentUser: boolean = true;
 
+  showChannelMenu: boolean = true;
   isChatVisable: boolean = true;
   isPrivatChatVisable:boolean = false;
-  userToChatWith: any = [];
   showThread: boolean = false;
-  showChannelMenu: boolean = true;
+  
+  // userToChatWith: any = [];
+  userToChatWith={
+    name: '',
+    img: ''
+  };
+  
   showChannels: boolean = false;
   gotoChannel: any = [];
   isChannelVisible: boolean = true;

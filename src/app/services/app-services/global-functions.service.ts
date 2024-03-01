@@ -29,6 +29,10 @@ export class GlobalFunctionsService {
     else document.body.style.overflow = 'auto';
   }
 
+  openProfile() {
+    this.globalVariables.showProfile = true;
+  }
+
   openOverlay() {
     this.channel = !this.channel;
     if (this.channel) document.body.style.overflow = 'hidden';
@@ -64,7 +68,7 @@ export class GlobalFunctionsService {
 
   openEditChannelOverlay() {
  
-    this.editChannelOverlayOpen = !this.editChannelOverlayOpen;
+    this.editChannelOverlayOpen = true;//!this.editChannelOverlayOpen;
     console.log('Overlay open state:', this.editChannelOverlayOpen);
     if (this.editChannelOverlayOpen) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
@@ -79,9 +83,11 @@ export class GlobalFunctionsService {
   
 
   openDirectMessageUser(user: any) {
-    let userToChatWith = [user];
-    this.globalVariables.userToChatWith = userToChatWith[0];
-    this.globalVariables.isChatVisable = true;
+    //let userToChatWith = [user];
+    this.globalVariables.userToChatWith.name = user.name;
+    this.globalVariables.userToChatWith.img = user.img;
+    this.globalVariables.isPrivatChatVisable = true;
+    this.globalVariables.isChatVisable = false;
   }
 
   openChannelList(channel: any) {

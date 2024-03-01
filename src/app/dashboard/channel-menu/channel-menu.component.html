@@ -12,7 +12,7 @@
       />
     </div>
   </section>
-  <section>
+  <section class="contentSection">
     <div class="all-channel">
       <div class="channel-dialog">
         <div class="channel-header">
@@ -31,7 +31,7 @@
       <div class="channel-overview d-none" id="channels">
         <div class="channel-overview">
           <div class="channel-wrapper" *ngFor="let channel of allChannels" (click)="globalFunctions.openChannelList(channel)">
-            <p><span>#</span>{{ channel.channelName }}</p>
+            <p (click)="openChannelChat()"><span>#</span>{{ channel.channelName }}</p>
           </div>
           </div>
         </div>
@@ -62,9 +62,9 @@
         >
           <p>
             <img
-              src="../../../assets/img/avatars/Elias_Neumann.svg"
+              src="{{ user.img }}"
               alt="userImage"
-            />{{ user.userName }}
+            />{{ user.name }}
           </p>
         </div>
       </div>

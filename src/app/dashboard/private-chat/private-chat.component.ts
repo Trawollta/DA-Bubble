@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { InputfieldComponent } from '../../shared/inputfield/inputfield.component';
 import { CommonModule } from '@angular/common';
-import { EditChannelComponent } from '../channel-menu/edit-channel/edit-channel.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 
@@ -10,7 +9,7 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
   standalone: true,
   templateUrl: './private-chat.component.html',
   styleUrl: './private-chat.component.scss',
-  imports: [InputfieldComponent, CommonModule, EditChannelComponent]
+  imports: [InputfieldComponent, CommonModule, ]
 })
 export class PrivateChatComponent {
   globalVariables = inject(GlobalVariablesService);

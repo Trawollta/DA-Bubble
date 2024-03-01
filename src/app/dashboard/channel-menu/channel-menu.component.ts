@@ -39,6 +39,10 @@ export class ChannelMenuComponent {
 
   ngOnInit() {
     this.globalFunctions.getCollection('channels', this.allChannels);
-    this.globalFunctions.getCollection('user', this.allUsers);
+    this.globalFunctions.getCollection('users', this.allUsers);
+  }
+  openChannelChat(){
+    this.globalVariables.isChatVisable = true;
+    this.globalVariables.isPrivatChatVisable = false;
   }
 }

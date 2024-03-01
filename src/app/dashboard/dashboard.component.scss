@@ -1,21 +1,29 @@
-.content-container {
+/* .content-container {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+ // gap: 10px;
   width: 100%;
+} */
+.dashboard{
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 95px);
 }
-
-.channel-menu, .chat-content, .thread-content {
+/* .channel-menu, .chat-content, .thread-content {
+  
+  //min-width: 360px;
+ // height: 100%;
+ // margin-left:40px;
+} */
+.chat-content{
   flex: 1;
-  min-width: 360px;
-  height: 100%;
-  margin-left:40px;
 }
 
 .app-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
   width: 90%;
   margin-top: 20px;

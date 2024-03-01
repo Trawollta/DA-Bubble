@@ -3,7 +3,7 @@
         <div class="logoContainer">
             <img src="assets/img/icons/logo.svg" alt="logo">
             <h3>DABubble</h3>
-
+            <div class="btnChannelMenu" (click)="openChannels()" *ngIf="!globalVariables.desktop700 && !globalVariables.showChannelMenu">x</div>
         </div>
         <app-inputfield [optionClasses]="['search-icon']" [classes]="'searchBar'" *ngIf="globalVariables.desktop900" class="searchBarContainer" type="search" imgName="search" placeholder="Code learning durchsuchen"></app-inputfield>
         <!--   <div  *ngIf="globalVariables.desktop900" class="searchBarContainer">

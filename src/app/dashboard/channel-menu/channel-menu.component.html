@@ -1,5 +1,5 @@
 <main class="channel-menu">
-  <section class="header-wrapper">
+  <section class="header-wrapper" *ngIf="globalVariables.desktop700">
     <div class="left-header-menu">
       <img src="../../assets/img/icons/Workspace logo.svg" alt="" />
       <p class="header-text">Code Learning</p>
@@ -12,6 +12,8 @@
       />
     </div>
   </section>
+  <app-inputfield [optionClasses]="['search-icon']" [classes]="'searchBar'" *ngIf="!globalVariables.desktop700" class="searchBarContainer" type="search" imgName="search" placeholder="Code learning durchsuchen"></app-inputfield>
+      
   <section class="contentSection">
     <div class="all-channel">
       <div class="channel-dialog">
@@ -46,7 +48,7 @@
       </div>
     <div class="direct-messages">
       <div class="messages-wrapper">
-        <div class="channel-arrow-dropdown-sec" (click)="openDirectMessage()">
+        <div class="channel-arrow-dropdown" (click)="openDirectMessage()">
           <img src="../../../assets/img/icons/arrow_drop_down.svg" alt="" />
         </div>
         <div class="message-helper">
@@ -62,7 +64,7 @@
         >
           <p>
             <img
-              src="{{ user.img }}"
+              [src]="user.img"
               alt="userImage"
             />{{ user.name }}
           </p>

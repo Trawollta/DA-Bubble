@@ -1,15 +1,17 @@
 <main>
+  
+
   <section class="msg-header">
     <div class="topic-headline">
       <div class="headline"  (click)="globalFunctions.openEditChannelOverlay()">
         <p></p>
         <!-- <p>{{ globalVariables.userToChatWith.userName }}</p> -->
-        <p>{{ globalVariables.openChannel }}</p>
+        <p># {{ globalVariables.openChannel }}</p>
         <img src="../../../assets/img/icons/keyboard_arrow_down.svg" alt="" />
       </div>
     </div>
     <div class="active-contacts">
-      <div class="contact-row">
+      <div class="contact-row" *ngIf="globalVariables.desktop700">
         <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
         <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
         <p>3</p>
@@ -19,6 +21,7 @@
       </div>
     </div>
   </section>
+  <div class="contentContainer">
   <section></section>
   <!-- Message of others -->
   <section class="message">
@@ -78,5 +81,5 @@
   </section>
   
   <app-edit-channel *ngIf="globalFunctions.editChannelOverlayOpen"></app-edit-channel>
-
+</div>
 </main>

@@ -12,10 +12,11 @@ main {
   max-height: 940px;
   //top: 115px;
  // left: 20px;
-  //padding: 32px 30px 32px 30px;
+  padding: 32px 30px 32px 30px;
   border-radius: 30px;
   gap: 25px;
   background-color: white;
+  box-sizing: border-box;
  // position: absolute;
 }
 
@@ -32,6 +33,7 @@ main {
 
 .left-header-menu {
   display: flex;
+  align-items: center;
   // width: 250px;
   height: 60px;
   padding: 0px 20px 0px 0px;
@@ -42,9 +44,9 @@ main {
   font-size: 23px;
   font-weight: 700;
   line-height: 33px;
-  letter-spacing: 0em;
-  text-align: left;
-  position: relative;
+  // letter-spacing: 0em;
+  // text-align: left;
+  // position: relative;
   bottom: 8px;
 }
 
@@ -150,20 +152,20 @@ height: calc(100% - 60px);
   }
 }
 
-.channel-arrow-dropdown-sec {
+/* .channel-arrow-dropdown-sec {
+  @include dFlex();
   img {
     width: 30px;
-    height: 40px;
-    top: 0.5px;
-    left: 2px;
-    position: relative;
+    height: 40px; 
+    
+   
   }
   img:hover {
     cursor: pointer;
     background-color: #eceefe;
     border-radius: 40px;
   }
-}
+} */
 
 .channel-wrapper {
   display: flex;

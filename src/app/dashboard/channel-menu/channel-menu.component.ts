@@ -4,13 +4,19 @@ import { CommonModule } from '@angular/common';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { AddNewChannelComponent } from './add-new-channel/add-new-channel.component';
+import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 
 @Component({
   selector: 'app-channel-menu',
   standalone: true,
   templateUrl: './channel-menu.component.html',
   styleUrl: './channel-menu.component.scss',
-  imports: [RouterLink, CommonModule, AddNewChannelComponent],
+  imports: [
+    RouterLink,
+    CommonModule,
+    AddNewChannelComponent,
+    InputfieldComponent
+  ],
 })
 export class ChannelMenuComponent {
   globalVariables = inject(GlobalVariablesService);
@@ -41,7 +47,7 @@ export class ChannelMenuComponent {
     this.globalFunctions.getCollection('channels', this.allChannels);
     this.globalFunctions.getCollection('users', this.allUsers);
   }
-  openChannelChat(){
+  openChannelChat() {
     this.globalVariables.isChatVisable = true;
     this.globalVariables.isPrivatChatVisable = false;
   }

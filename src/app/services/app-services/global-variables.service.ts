@@ -19,8 +19,9 @@ export class GlobalVariablesService {
   showEditProfile: boolean = false;
   isProfileOfCurrentUser: boolean = true;
 
+  //flags for showing the dashboard main elements
   showChannelMenu: boolean = true;
-  isChatVisable: boolean = true;
+  isChatVisable: boolean = false;
   isPrivatChatVisable:boolean = false;
   showThread: boolean = false;
   

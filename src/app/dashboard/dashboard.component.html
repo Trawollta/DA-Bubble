@@ -7,7 +7,7 @@
             <app-channel-menu></app-channel-menu>
         </div>
         <!-- <div class="content-container"> -->
-        <div class="chat-content">
+        <div class="chat-content" *ngIf="globalVariables.isChatVisable || globalVariables.isPrivatChatVisable">
             <app-chat *ngIf="globalVariables.isChatVisable"></app-chat>
             <app-private-chat *ngIf="globalVariables.isPrivatChatVisable"></app-private-chat>
         </div>

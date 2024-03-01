@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject} from '@angular/core';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 
 @Component({
   selector: 'app-thread',
@@ -9,4 +10,10 @@ import { Component } from '@angular/core';
 })
 export class ThreadComponent {
 
+globalvariables = inject(GlobalVariablesService);
+
+  closeThread(){
+    this.globalvariables.showThread = false;
+    this.globalvariables.showChannelMenu = true;
+  }
 }

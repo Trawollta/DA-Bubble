@@ -24,6 +24,10 @@ export class DashboardComponent {
   constructor() {
     this.globalVariables.login = false;
   }
+  ngOnInit(){
+    this.globalVariables.isChatVisable = window.innerWidth > 700;
+    
+  }
 
   toggleChannelMenu() {
     this.globalVariables.showChannelMenu = !this.globalVariables.showChannelMenu;

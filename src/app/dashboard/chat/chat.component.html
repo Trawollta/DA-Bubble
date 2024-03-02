@@ -24,6 +24,8 @@
   <div class="contentContainer">
   <section></section>
   <!-- Message of others -->
+
+  <!-- das hier in eine eigene Komponente auslagern -->
   <section class="message">
     <div class="user">
       <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
@@ -49,6 +51,8 @@
     </div>
   </section>
   <!-- Message-Of-Current-User -->
+
+  <!-- das hier in eine eigene Komponente auslagern -->
   <section class="message-current-user">
     <div class="current-user-content">
       <div class="info-area">
@@ -69,10 +73,10 @@
       </div>
     </div>
     <div class="user">
-      <img src= "{{globalVariables.currentUser.img}}" alt="" />  <!-- "../../../assets/img/avatars/Elias_Neumann.svg" -->
+      <img [src]= "globalVariables.currentUser.img" alt="" />  <!-- "../../../assets/img/avatars/Elias_Neumann.svg" -->
     </div>
   </section>
-  <section>
+  <section class="inputfield">
     <app-inputfield
       [classes]="['standard']"
       type="text"

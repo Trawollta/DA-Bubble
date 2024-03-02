@@ -2,7 +2,7 @@
     <div class="accountContainer" (click)="globalFunctions.menuProfileClicked()">
         <h3 *ngIf="globalVariables.desktop600">{{globalVariables.currentUser.name}}</h3>
         <div class="avatarCon">
-            <img class="imgAvatar" src={{globalVariables.currentUser.img}} alt="avatar">
+            <img class="imgAvatar" [src]="globalVariables.currentUser.img" alt="avatar">
             <img *ngIf="globalVariables.desktop600" class="imgArrow" src="assets/img/icons/keyboard_arrow_down.svg"
                 alt="arrow-down">
         </div>

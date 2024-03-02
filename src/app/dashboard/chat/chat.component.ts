@@ -16,7 +16,7 @@ export class ChatComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
 
-
+ 
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');
     if (emojiDiv && emojiDiv.classList.contains('d-none')) {
@@ -29,5 +29,7 @@ export class ChatComponent {
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
+    if(window.innerWidth < 1100)
+    this.globalVariables.showChannelMenu = false;
   }
 }

@@ -3,14 +3,14 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 989px;
+  //max-width: 989px;
   width: 100%; 
   max-height: 940px;
   border-radius: 30px;
-  background-color: rgb(182, 116, 116);
+  background-color: $white;
   height: 100%;
   .contentContainer{
-    @include dFlex($fd:column, $ai:flex-end);
+    @include dFlex($fd:column, $ai:flex-end, $jc:space-between);
     margin: 18px 0;
     width: 90%;
     height: 100%;
@@ -30,6 +30,9 @@ main {
     align-items: center;
     box-shadow: 0px 2px 10px 0px #00000014;
     border-radius: 30px 30px 0 0;
+    @media screen and (min-width: 700px) {
+      height: 96px;
+    }
   }
   
   .topic-headline {
@@ -119,9 +122,7 @@ main {
   
   .info-area-wrapper {
     height: 25px;
-    gap: 50px;
-    display: flex;
-    align-items: center;
+    @include dFlex($g:20px, $jc:flex-start)
   }
   
   .username {
@@ -130,8 +131,7 @@ main {
     font-size: 18px;
     font-weight: 700;
     line-height: 25px;
-    letter-spacing: 0em;
-    text-align: left;
+ 
   }
   
   .messagetime {
@@ -140,9 +140,7 @@ main {
     font-size: 14px;
     font-weight: 400;
     line-height: 19px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #686868;
+    color: $text_grey;
   }
   
   .speech-bubble {
@@ -151,7 +149,7 @@ main {
     padding: 15px;
     border-radius: 0px 30px 30px 30px;
     gap: 8px;
-    background-color: #eceefe;
+    background-color: $background;
   }
   
   .speech-bubble-text {
@@ -176,7 +174,7 @@ main {
     line-height: 25px;
     letter-spacing: 0em;
     text-align: left;
-    color: #535af1;
+    color: $purple3;
   }
   
   .timestamp-time {
@@ -204,8 +202,6 @@ main {
   
   .message-current-user {
     height: 200px;
-    //top: 517px;
-   // padding: 10px 45px 10px 146px;
     gap: 30px;
     display: flex;
     justify-content: flex-end;
@@ -240,3 +236,6 @@ main {
     gap: 10px;
   }
   
+  .inputfield{
+    width: 100%;
+  }

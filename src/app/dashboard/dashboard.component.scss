@@ -1,34 +1,29 @@
-/* .content-container {
-  display: flex;
-  justify-content: space-between;
- // gap: 10px;
-  width: 100%;
-} */
-.dashboard{
+.dashboard {
   width: 100vw;
   display: flex;
   justify-content: center;
   height: calc(100vh - 95px);
   
-}
-/* .channel-menu, .chat-content, .thread-content {
-  
-  //min-width: 360px;
- // height: 100%;
- // margin-left:40px;
-} */
- .chat-content{
-  flex: 1;
-} 
+  .app-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+    width: 90%;
+    margin-top: 20px;
 
-.app-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 16px;
-  width: 90%;
-  margin-top: 20px;
+    .channel-menu {
+      flex: 0;
+    }
+
+    .chat-content {
+      flex: 1;
+    }
+  }
 }
+
+
+
 
 .menu-toggle-btn {
   display: flex;
@@ -48,7 +43,7 @@
 }
 
 .menu-toggle-btn:hover {
-  background: var(--purple1, rgb(68, 77, 242)); 
-  color: #fff; 
-  box-shadow: 0 0 15px var(--purple1, rgb(68, 77, 242)); 
+  background: var(--purple1, rgb(68, 77, 242));
+  color: #fff;
+  box-shadow: 0 0 15px var(--purple1, rgb(68, 77, 242));
 }

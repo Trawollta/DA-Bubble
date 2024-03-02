@@ -63,8 +63,8 @@ export class FirebaseUserupdateService {
         this.globalVariablesService.currentUser = newUser;
         this.globalVariablesService.activeID = user.id;
       }
-      console.log('userProfileData: ', this.globalVariablesService.currentUser);
-      console.log('activeId: ', this.globalVariablesService.activeID);
+      //console.log('userProfileData: ', this.globalVariablesService.currentUser);
+     // console.log('activeId: ', this.globalVariablesService.activeID);
     });
   }
 
@@ -77,7 +77,7 @@ export class FirebaseUserupdateService {
     //brauche ich das hier?
     //  this.globalVariablesService.activeID = this.activeID;
 
-    console.log('aktive Id: ', this.activeID);
+    //console.log('aktive Id: ', this.activeID);
 
     this.getSingleUser(this.activeID)
   }

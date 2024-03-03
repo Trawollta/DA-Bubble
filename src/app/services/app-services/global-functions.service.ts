@@ -95,7 +95,19 @@ export class GlobalFunctionsService {
   }
 
   openChannelList(channel: any) {
+    console.log(channel)
+    this.openChannelDescribe(channel)
     this.globalVariables.openChannel = channel.channelName;
+    this.globalVariables.isPrivatChatVisable = false;
+    if(!this.globalVariables.desktop700){
+      this.globalVariables.isChannelVisible = true;
+      this.globalVariables.showChannelMenu = false;
+    } else this.globalVariables.isChannelVisible = true;
+    
+  }
+
+  openChannelDescribe(desc: any) {
+    this.globalVariables.openChannelDesc = desc.description;
     this.globalVariables.isPrivatChatVisable = false;
     if(!this.globalVariables.desktop700){
       this.globalVariables.isChannelVisible = true;

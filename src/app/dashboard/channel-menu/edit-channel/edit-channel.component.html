@@ -20,8 +20,8 @@
       <p>{{ channel.name }}</p> <!-- Angenommen, deine Channels haben eine Eigenschaft 'name' -->
       <p>{{ channel.description }}</p> <!-- Angenommen, deine Channels haben eine Eigenschaft 'description' -->
     </div>
-    <input [(ngModel)]="globalVariables.channelData.channelName" placeholder="Channel-Name">
-    <input [(ngModel)]="globalVariables.channelData.description" placeholder="Beschreibung">
+    <input [(ngModel)]="globalVariables.channelData.channelName" placeholder="{{ globalVariables.openChannel }}">
+    <input [(ngModel)]="globalVariables.channelData.description" placeholder="{{ globalVariables.openChannelDesc }}">
     
       <div class="button-area">
         <app-button

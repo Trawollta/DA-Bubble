@@ -69,7 +69,7 @@ export class GlobalFunctionsService {
   openEditChannelOverlay() {
  
     this.editChannelOverlayOpen = true;//!this.editChannelOverlayOpen;
-    console.log('Overlay open state:', this.editChannelOverlayOpen);
+    //console.log('Overlay open state:', this.editChannelOverlayOpen);
     if (this.editChannelOverlayOpen) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
     
@@ -95,8 +95,8 @@ export class GlobalFunctionsService {
   }
 
   openChannelList(channel: any) {
-    console.log(channel)
-    this.openChannelDescribe(channel)
+   // console.log(channel);
+    this.openChannelDescribe(channel);
     this.globalVariables.openChannel = channel.channelName;
     this.globalVariables.isPrivatChatVisable = false;
     if(!this.globalVariables.desktop700){
@@ -126,7 +126,7 @@ export class GlobalFunctionsService {
   // simple function to get data from firestore returns a collection
   getData(item: string) {
     let dataCollection = collection(this.firestore, item);
-    console.log(dataCollection);
+   // console.log(dataCollection);
     return collectionData(dataCollection, { idField: 'id' });
   }
 

@@ -14,6 +14,10 @@ globalvariables = inject(GlobalVariablesService);
 
   closeThread(){
     this.globalvariables.showThread = false;
-    this.globalvariables.showChannelMenu = true;
+   // this.globalvariables.showChannelMenu = false;
+    let openChat: string = this.globalvariables.openChat;
+    
+    (this.globalvariables as any)[openChat] = true;
+    
   }
 }

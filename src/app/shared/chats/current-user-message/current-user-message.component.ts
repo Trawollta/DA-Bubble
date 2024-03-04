@@ -23,7 +23,12 @@ export class CurrentUserMessageComponent {
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
+    this.globalVariables.openChat = 'isChatVisable';
     if(window.innerWidth < 1100)
     this.globalVariables.showChannelMenu = false;
+    if (window.innerWidth < 700) {
+      this.globalVariables.showChannelMenu = false;
+      this.globalVariables.isChatVisable = false;
+    }
   }
 }

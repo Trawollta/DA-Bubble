@@ -47,10 +47,14 @@ export class AppComponent {
   onResize(event: Event): void {
     this.setDesktopFlag();
   }
+
+
   setDesktopFlag() {
-    this.globalVariables.desktop600 = window.innerWidth > 600;
-    this.globalVariables.desktop700 = window.innerWidth > 700;
-    this.globalVariables.desktop900 = window.innerWidth > 900;
-    this.globalVariables.isChatVisable = window.innerWidth > 700;
+    this.globalVariables.desktop600 = window.innerWidth >= 600;
+    this.globalVariables.desktop700 = window.innerWidth >= 700;
+    this.globalVariables.desktop900 = window.innerWidth >= 900;
+    this.globalVariables.isChatVisable = (window.innerWidth >= 700) && !this.globalVariables.isPrivatChatVisable;
+    this.globalVariables.isPrivatChatVisable = (window.innerWidth >= 700) && !this.globalVariables.isChatVisable;  
+  
   }
 }

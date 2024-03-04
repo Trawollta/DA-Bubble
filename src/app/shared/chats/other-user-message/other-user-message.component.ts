@@ -24,8 +24,13 @@ export class OtherUserMessageComponent {
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
-    if(window.innerWidth < 1100)
-    this.globalVariables.showChannelMenu = false;
+    this.globalVariables.openChat = 'isPrivatChatVisable';
+    if (window.innerWidth < 1100)
+      this.globalVariables.showChannelMenu = false;
+    if (window.innerWidth < 700) {
+      this.globalVariables.showChannelMenu = false;
+      this.globalVariables.isPrivatChatVisable = false;
+    }
   }
 
 }

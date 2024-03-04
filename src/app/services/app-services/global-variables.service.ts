@@ -24,6 +24,8 @@ export class GlobalVariablesService {
   isPrivatChatVisable: boolean = false;
   showThread: boolean = false;
 
+  openChat: string = ''; // used in openAnswers() to come back to the chat
+
   // userToChatWith: any = [];
   userToChatWith = {
     name: '',

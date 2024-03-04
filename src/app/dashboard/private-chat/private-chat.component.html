@@ -24,56 +24,9 @@
   </section>
   <section></section>
   <!-- Message of others -->
-  <section class="message">
-    <div class="user">
-      <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
-    </div>
-    <div class="info-area">
-      <div class="info-area-wrapper">
-        <p class="username">User</p>
-        <p class="messagetime">12:50</p>
-      </div>
-      <div class="speech-bubble" (click)="openEmojis()">
-        <span class="speech-bubble-text">TEXT FOR EXAMPLE</span>
-      </div>
-      <div id="emojis" class="emoji-div d-none">
-        <img src="../../../assets/img/reactions/done.svg" alt="" />
-        <img src="../../../assets/img/reactions/celebration.svg" alt="" />
-        <img src="../../../assets/img/reactions/rocket.svg" alt="" />
-        <img src="../../../assets/img/reactions/three_dots.svg" alt="" />
-      </div>
-      <div class="replie-wrapper">
-        <p class="replie-text" (click)="openAnswers()">1 Antworten</p>
-        <p class="timestamp-text">Letze Antwort Time</p>
-      </div>
-    </div>
-  </section>
+  <app-other-user-message></app-other-user-message>
   <!-- Message-Of-Current-User -->
-  <section class="message-current-user">
-    <div class="current-user-content">
-      <div class="info-area">
-        <div class="info-area-wrapper">
-          <p class="messagetime">12:50</p>
-          <p class="username">"{{globalVariables.currentUser.name}}"</p>
-        </div>
-        <div class="speech-bubble-current-user" (click)="openEmojis()">
-          <span class="speech-bubble-current-user-text">Hallo</span>
-        </div>
-        <div class="reaction-btn">
-          <img src="../../../assets/img/reactions/three_dots.svg" alt="" />
-        </div>
-        <div class="replie-wrapper">
-          <p class="replie-text" (click)="openAnswers()">1 Antworten</p>
-          <p class="timestamp-text">Letze Antwort Time</p>
-        </div>
-      </div>
-    </div>
-    <div class="user">
-      <!-- <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" /> -->
-      <img [src]= "globalVariables.currentUser.img" alt="" />  
- 
-    </div>
-  </section>
+  <app-current-user-message></app-current-user-message>
   <section>
     <app-inputfield
       [classes]="['standard']"

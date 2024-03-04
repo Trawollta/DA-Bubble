@@ -1,0 +1,23 @@
+<section class="message-current-user">
+    <div class="current-user-content">
+      <div class="info-area">
+        <div class="info-area-wrapper">
+          <p class="messagetime">12:50</p>
+          <p class="username">{{globalVariables.currentUser.name}}</p> 
+        </div>
+        <div class="speech-bubble-current-user" (click)="openEmojis()">
+          <span class="speech-bubble-current-user-text">Hallo</span>
+        </div>
+        <div class="reaction-btn">
+          <img src="../../../assets/img/reactions/three_dots.svg" alt="" /> 
+        </div>
+        <div class="replie-wrapper">
+          <p class="replie-text" (click)="openAnswers()">1 Antworten</p>
+          <p class="timestamp-text">Letze Antwort Time</p>
+        </div>
+      </div>
+    </div>
+    <div class="user">
+      <img [src]= "globalVariables.currentUser.img" alt="" />
+    </div>
+  </section>

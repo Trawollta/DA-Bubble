@@ -1,7 +1,7 @@
-<main > <!-- *ngIf="globalVariables.isPrivatChatVisable" -->
+<main> <!-- *ngIf="globalVariables.isPrivatChatVisable" -->
   <section class="msg-header">
     <div class="topic-headline">
-      
+
       <div class="headline" (click)="globalFunctions.openProfile()">
         <p></p>
         <img src="{{ globalVariables.userToChatWith.img }}" alt="">
@@ -22,17 +22,13 @@
       </div>
     </div>
   </section>
-  <section></section>
-  <!-- Message of others -->
-  <app-other-user-message></app-other-user-message>
-  <!-- Message-Of-Current-User -->
-  <app-current-user-message></app-current-user-message>
+  <div class="contentContainer"> 
+    <div class="messages">
+      <app-all-messages></app-all-messages>
+    </div>
+  </div>
   <section>
-    <app-inputfield
-      [classes]="['standard']"
-      type="text"
-      placeholder="Deine Nachricht"
-    ></app-inputfield>
+    <app-inputfield [classes]="['standard']" type="text" placeholder="Deine Nachricht"></app-inputfield>
   </section>
-</main>
 
+</main>

@@ -3,8 +3,7 @@ import { InputfieldComponent } from '../../shared/inputfield/inputfield.componen
 import { CommonModule } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
-import { OtherUserMessageComponent } from 'app/shared/chats/other-user-message/other-user-message.component';
-import { CurrentUserMessageComponent } from 'app/shared/chats/current-user-message/current-user-message.component';
+import { AllMessagesComponent } from 'app/shared/chats/all-messages/all-messages.component';
 
 @Component({
   selector: 'app-private-chat',
@@ -14,8 +13,7 @@ import { CurrentUserMessageComponent } from 'app/shared/chats/current-user-messa
   imports: [
     InputfieldComponent,
     CommonModule,
-    OtherUserMessageComponent,
-    CurrentUserMessageComponent
+    AllMessagesComponent
   ]
 })
 export class PrivateChatComponent {

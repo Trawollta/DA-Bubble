@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { EditChannelComponent } from '../channel-menu/edit-channel/edit-channel.component';
-import { OtherUserMessageComponent } from 'app/shared/chats/other-user-message/other-user-message.component';
-import { CurrentUserMessageComponent } from 'app/shared/chats/current-user-message/current-user-message.component';
+import { AllMessagesComponent } from 'app/shared/chats/all-messages/all-messages.component';
 
 @Component({
   selector: 'app-chat',
@@ -16,8 +15,7 @@ import { CurrentUserMessageComponent } from 'app/shared/chats/current-user-messa
     InputfieldComponent,
      CommonModule,
      EditChannelComponent,
-      OtherUserMessageComponent,
-      CurrentUserMessageComponent
+      AllMessagesComponent
     ],
 })
 export class ChatComponent {

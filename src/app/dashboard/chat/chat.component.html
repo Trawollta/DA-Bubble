@@ -1,9 +1,9 @@
 <main>
-  
+
 
   <section class="msg-header">
     <div class="topic-headline">
-      <div class="headline"  (click)="globalFunctions.openEditChannelOverlay()">
+      <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
         <p></p>
         <!-- <p>{{ globalVariables.userToChatWith.userName }}</p> -->
         <p># {{ globalVariables.openChannel }}</p>
@@ -22,23 +22,14 @@
     </div>
   </section>
   <div class="contentContainer">
-  <section></section>
-  <!-- Message of others -->
-
-  <!-- das hier in eine eigene Komponente auslagern -->
-  <app-other-user-message></app-other-user-message>
- <!-- Message-Of-Current-User -->
-
-  <!-- das hier in eine eigene Komponente auslagern -->
-  <app-current-user-message></app-current-user-message>
- <section class="inputfield">
-    <app-inputfield
-      [classes]="['standard']"
-      type="text"
-      placeholder="Deine Nachricht"
-    ></app-inputfield>
+    <div class="messages">
+      <app-all-messages></app-all-messages>
+    </div>
+  </div>
+  <section class="inputfield">
+    <app-inputfield [classes]="['standard']" type="text" placeholder="Deine Nachricht"></app-inputfield>
   </section>
-  
+
   <app-edit-channel *ngIf="globalFunctions.editChannelOverlayOpen"></app-edit-channel>
-</div>
+
 </main>

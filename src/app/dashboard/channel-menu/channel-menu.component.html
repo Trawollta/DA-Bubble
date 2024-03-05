@@ -19,7 +19,7 @@
       <div class="channel-dialog">
         <div class="channel-header">
           <div (click)="openChannels()" class="channel-arrow-dropdown">
-            <img src="../../assets/img/icons/arrow_drop_down.svg" alt="" />
+            <img id="channelMsgArrow" src="../../assets/img/icons/arrow_drop_down_default.svg" alt="" />
           </div>
           <div class="channel-headline-wrapper">
             <img src="../../../assets/img/icons/workspaces.svg" alt="" />
@@ -49,7 +49,7 @@
     <div class="direct-messages">
       <div class="messages-wrapper">
         <div class="channel-arrow-dropdown" (click)="openDirectMessage()">
-          <img src="../../../assets/img/icons/arrow_drop_down.svg" alt="" />
+          <img id="msgActiveArrow" src="./assets/img/icons/arrow_drop_down_default.svg" alt="" />
         </div>
         <div class="message-helper">
           <img src="../../../assets/img/icons/account_circle.svg" alt="" />

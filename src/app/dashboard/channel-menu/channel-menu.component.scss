@@ -158,10 +158,25 @@ main {
 } */
 
 .channel-arrow-dropdown {
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  cursor: pointer;
+  padding-bottom: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+  flex-direction: row;
+  &:hover {
+    color: rgb(83, 90, 241);
+    background-color: rgb(236, 238, 254);
+  }
   img:hover {
     cursor: pointer;
-    background-color: #eceefe;
     border-radius: 40px;
+    filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
+      brightness(93%) contrast(103%);
   }
 }
 

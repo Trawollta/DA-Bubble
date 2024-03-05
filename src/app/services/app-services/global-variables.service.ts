@@ -39,6 +39,7 @@ export class GlobalVariablesService {
 
   openChannel: string = 'Willkommen';
   openChannelDesc: string = '';
+  activeChatId: string = ''; // used to identify the releated chat
   channelData: {
     description: string;
     channelName: string;

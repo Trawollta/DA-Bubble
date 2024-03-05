@@ -130,6 +130,15 @@ main {
     width: 87px;
     height: 27px;
   }
+
+  &:hover {
+    color: #535af1;
+
+    img {
+      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
+        brightness(93%) contrast(103%);
+    }
+  }
 }
 
 .channel-add:hover {
@@ -186,12 +195,16 @@ main {
     line-height: 25px;
     letter-spacing: 0em;
     text-align: left;
-    width: 84px;
     height: 25px;
   }
 
   span {
     font-size: 18px;
+  }
+
+  :hover {
+    color: #535af1;
+    cursor: pointer;
   }
 }
 
@@ -270,6 +283,15 @@ main {
     width: 165px;
     height: 27px;
   }
+
+  &:hover {
+    color: #535af1;
+
+    img {
+      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
+        brightness(93%) contrast(103%);
+    }
+  }
 }
 
 .user-wrapper {
@@ -303,6 +325,11 @@ main {
 .user-detail {
   display: flex;
   align-items: center;
+
+  :hover {
+    color: #535af1;
+    cursor: pointer;
+  }
 }
 
 .d-none {

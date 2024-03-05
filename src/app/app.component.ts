@@ -10,7 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { GlobalFunctionsService } from './services/app-services/global-functions.service';
 import { AddNewChannelComponent } from './dashboard/channel-menu/add-new-channel/add-new-channel.component';
 import { AddContactsComponent } from './dashboard/channel-menu/add-contacts/add-contacts.component';
-import { PrivateChatComponent } from './dashboard/private-chat/private-chat.component';
+//import { PrivateChatComponent } from './dashboard/private-chat/private-chat.component';
 
 
 @Component({
@@ -25,8 +25,8 @@ import { PrivateChatComponent } from './dashboard/private-chat/private-chat.comp
     HeaderComponent,
     ProfileComponent,
     AddNewChannelComponent,
-    AddContactsComponent,
-    PrivateChatComponent],
+    AddContactsComponent
+    ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -53,8 +53,8 @@ export class AppComponent {
     this.globalVariables.desktop600 = window.innerWidth >= 600;
     this.globalVariables.desktop700 = window.innerWidth >= 700;
     this.globalVariables.desktop900 = window.innerWidth >= 900;
-    this.globalVariables.isChatVisable = (window.innerWidth >= 700) && !this.globalVariables.isPrivatChatVisable;
-    this.globalVariables.isPrivatChatVisable = (window.innerWidth >= 700) && !this.globalVariables.isChatVisable;  
+    this.globalVariables.isChatVisable = (window.innerWidth >= 700); // && !this.globalVariables.isPrivatChatVisable;
+   // this.globalVariables.isPrivatChatVisable = (window.innerWidth >= 700) && !this.globalVariables.isChatVisable;  
   
   }
 }

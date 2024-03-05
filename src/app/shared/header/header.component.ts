@@ -22,7 +22,7 @@ export class HeaderComponent {
   openChannels(){
     this.globalVariables.showChannelMenu = true;
     this.globalVariables.isChatVisable = false;
-  this.globalVariables.isPrivatChatVisable = false;
+  /* this.globalVariables.isPrivatChatVisable = false; */
   this.globalVariables.showThread = false;
   }
 

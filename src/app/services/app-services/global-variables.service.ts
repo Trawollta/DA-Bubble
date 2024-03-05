@@ -21,10 +21,11 @@ export class GlobalVariablesService {
   //flags for showing the dashboard main elements
   showChannelMenu: boolean = true;
   isChatVisable: boolean = false;
-  isPrivatChatVisable: boolean = false;
+ // isPrivatChatVisable: boolean = false;
   showThread: boolean = false;
 
   openChat: string = ''; // used in openAnswers() to come back to the chat
+  isUserChat: boolean = false; //used as flag to show in chat the header for user chat
 
   // userToChatWith: any = [];
   userToChatWith = {
@@ -36,7 +37,7 @@ export class GlobalVariablesService {
   gotoChannel: any = [];
   isChannelVisible: boolean = true;
 
-  openChannel: string = '';
+  openChannel: string = 'Willkommen';
   openChannelDesc: string = '';
   channelData: {
     description: string;

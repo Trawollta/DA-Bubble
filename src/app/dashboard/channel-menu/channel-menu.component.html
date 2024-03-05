@@ -26,21 +26,21 @@
             <p>Channels</p>
           </div>
         </div>
-        <div class="add-channel" (click)="this.globalFunctions.openOverlay()">
+        <div class="add-channel" (click)="globalFunctions.openOverlay()">
           <img src="../../../assets/img/icons/add.svg" alt="" />
         </div>
       </div>
       <div class="channel-overview d-none" id="channels">
         <div class="channel-overview">
-          <div class="channel-wrapper" *ngFor="let channel of allChannels" (click)="globalFunctions.openChannelList(channel)">
-            <p (click)="openChannelChat()"><span>#</span>{{ channel.channelName }}</p>
+          <div class="channel-wrapper" *ngFor="let channel of allChannels" (click)="openChannelList(channel)"> <!-- globalFunctions. -->
+            <p><span>#</span>{{ channel.channelName }}</p> <!--  (click)="openChannelChat()" -->
           </div>
           </div>
         </div>
         <div></div>
         <div></div>
       </div>
-      <div class="channel-add" (click)="this.globalFunctions.openOverlay()">
+      <div class="channel-add" (click)="globalFunctions.openOverlay()">
         <a class="menu-adder">
           <img src="../../../assets/img/icons/add_circle.svg" alt="" />
           <p>Channel hinzufügen</p>
@@ -60,8 +60,8 @@
         <div
           class="user-detail"
           *ngFor="let user of allUsers"
-          (click)="this.globalFunctions.openDirectMessageUser(user)"
-        >
+          (click)="openDirectMessageUser(user)" 
+        > <!-- this.globalFunctions. -->
           <p>
             <img
               [src]="user.img"

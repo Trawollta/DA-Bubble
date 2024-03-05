@@ -25,6 +25,9 @@ export class ChannelMenuComponent {
 
   constructor(public globalFunctions: GlobalFunctionsService) { }
 
+  /**
+   * this function just opens and close the menu for selecting a channel
+   */
   openChannels() {
     let channelDiv = document.getElementById('channels');
     if (channelDiv && channelDiv.classList.contains('d-none')) {
@@ -34,6 +37,9 @@ export class ChannelMenuComponent {
     }
   }
 
+    /**
+   * this function just opens and close the menu for selecting a user chat
+   */
   openDirectMessage() {
     let channelDiv = document.getElementById('directMessage');
     if (channelDiv && channelDiv.classList.contains('d-none')) {
@@ -47,8 +53,60 @@ export class ChannelMenuComponent {
     this.globalFunctions.getCollection('channels', this.allChannels);
     this.globalFunctions.getCollection('users', this.allUsers);
   }
-  openChannelChat() {
+ /*  openChannelChat() {
     this.globalVariables.isChatVisable = true;
     this.globalVariables.isPrivatChatVisable = false;
+  } */
+
+/**
+ * this funktion sets the flag to show the header for channels and take over information of the related channel object to global variables
+ * @param channel - object which contains information of selecet channel
+ */
+  openChannelList(channel: any) {
+    // console.log(channel);
+    // this.openChannelDescribe(channel.description);
+    this.globalVariables.isUserChat = false;
+     this.globalVariables.openChannelDesc = channel.description;
+     this.globalVariables.openChannel = channel.channelName;
+     this.showChat();
+    /*  this.globalVariables.isPrivatChatVisable = false;
+     if(!this.globalVariables.desktop700){
+       this.globalVariables.isChannelVisible = true;
+       this.globalVariables.showChannelMenu = false;
+     } else this.globalVariables.isChannelVisible = true; */
+     
+   }
+ 
+  /* openChannelDescribe(desc: string) {
+     this.globalVariables.openChannelDesc = desc;
+      this.globalVariables.isPrivatChatVisable = false;
+     if(!this.globalVariables.desktop700){
+       this.globalVariables.isChannelVisible = true;
+       this.globalVariables.showChannelMenu = false;
+     } else this.globalVariables.isChannelVisible = true; 
+     
+   }*/
+   openDirectMessageUser(user: any) {
+    //let userToChatWith = [user];
+    this.globalVariables.isUserChat = true;
+    this.globalVariables.userToChatWith.name = user.name;
+    this.globalVariables.userToChatWith.img = user.img;
+    this.showChat();
+   /*  this.globalVariables.isPrivatChatVisable = true;*/
+   /*  this.globalVariables.isChatVisable = true;
+    if(!this.globalVariables.desktop700){
+      //this.globalVariables.isPrivatChatVisable = true;
+      this.globalVariables.showChannelMenu = false;
+    } //else this.globalVariables.isPrivatChatVisable = true;  */
+  }
+
+  /**
+   * this function stets the flag for visability for chat
+   */
+  showChat(){
+    this.globalVariables.isChatVisable = true;
+    if(!this.globalVariables.desktop700){
+      this.globalVariables.showChannelMenu = false;
+    }  
   }
 }

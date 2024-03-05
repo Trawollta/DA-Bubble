@@ -29,7 +29,7 @@ export class OtherUserMessageComponent {
       this.globalVariables.showChannelMenu = false;
     if (window.innerWidth < 700) {
       this.globalVariables.showChannelMenu = false;
-      this.globalVariables.isPrivatChatVisable = false;
+      // this.globalVariables.isPrivatChatVisable = false;
     }
   }
 

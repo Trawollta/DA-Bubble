@@ -2,7 +2,6 @@
 
 main {
   background-color: $background;
-
 }
 
 .channel-menu {
@@ -22,7 +21,6 @@ main {
   }
 
   @media screen and (min-width: 900px) {
-
     width: 366px;
   }
 }
@@ -57,22 +55,19 @@ main {
   border-radius: 100px;
   cursor: pointer;
   padding-bottom: 4px;
-  
+
   @include dFlex();
-  
+
   &:hover {
     background-color: $background;
     color: $purple3;
 
     img {
-        filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
-
+      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
+        brightness(93%) contrast(103%);
     }
-  
-  } 
+  }
 }
-
-
 
 .contentSection {
   overflow: auto;
@@ -84,7 +79,6 @@ main {
   display: fleX;
   margin-top: 25px;
   flex-direction: column;
-
 }
 
 .direct-messages {
@@ -136,6 +130,10 @@ main {
     width: 87px;
     height: 27px;
   }
+}
+
+.channel-add:hover {
+  color: #535af1;
 }
 
 /* .channel-overview {
@@ -206,26 +204,39 @@ main {
 
   img:hover {
     cursor: pointer;
-    background-color: #eceefe;
     border-radius: 40px;
+    filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
+      brightness(93%) contrast(103%);
+  }
+  &:hover {
+    color: blue;
   }
 }
 
 .menu-adder {
   display: flex;
   flex-direction: row;
-  // width: 216px;
   height: 33px;
   padding: 4px 10px 4px 10px;
   gap: 10px;
   align-items: center;
-
   p {
     font-size: 18px;
     font-weight: 400;
     line-height: 25px;
     letter-spacing: 0em;
     text-align: left;
+  }
+  &:hover {
+    color: blue;
+    cursor: pointer;
+    img {
+      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
+        brightness(93%) contrast(103%);
+    }
+    p {
+      color: #535af1;
+    }
   }
 }
 

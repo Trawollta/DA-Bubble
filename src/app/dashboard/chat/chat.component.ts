@@ -5,18 +5,22 @@ import { GlobalVariablesService } from 'app/services/app-services/global-variabl
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { EditChannelComponent } from '../channel-menu/edit-channel/edit-channel.component';
 import { AllMessagesComponent } from 'app/shared/chats/all-messages/all-messages.component';
+import { AddContactsComponent } from '../channel-menu/add-contacts/add-contacts.component';
+import { AddToChannelComponent } from "../channel-menu/add-to-channel/add-to-channel.component";
 
 @Component({
-  selector: 'app-chat',
-  standalone: true,
-  templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss',
-  imports: [
-    InputfieldComponent,
-     CommonModule,
-     EditChannelComponent,
-      AllMessagesComponent
-    ],
+    selector: 'app-chat',
+    standalone: true,
+    templateUrl: './chat.component.html',
+    styleUrl: './chat.component.scss',
+    imports: [
+        InputfieldComponent,
+        CommonModule,
+        EditChannelComponent,
+        AllMessagesComponent,
+        AddContactsComponent,
+        AddToChannelComponent
+    ]
 })
 export class ChatComponent {
   globalVariables = inject(GlobalVariablesService);

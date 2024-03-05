@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { AllMessagesComponent } from 'app/shared/chats/all-messages/all-messages.component';
+import { AddToChannelComponent } from '../channel-menu/add-to-channel/add-to-channel.component';
 
 @Component({
   selector: 'app-private-chat',
@@ -13,7 +14,8 @@ import { AllMessagesComponent } from 'app/shared/chats/all-messages/all-messages
   imports: [
     InputfieldComponent,
     CommonModule,
-    AllMessagesComponent
+    AllMessagesComponent,
+    AddToChannelComponent
   ]
 })
 export class PrivateChatComponent {

@@ -16,18 +16,22 @@
         </span>
     </div>
     
-    <div *ngFor="let channel of channels">
-      <p>{{ channel.name }}</p> <!-- Angenommen, deine Channels haben eine Eigenschaft 'name' -->
-      <p>{{ channel.description }}</p> <!-- Angenommen, deine Channels haben eine Eigenschaft 'description' -->
-    </div>
-    <input [(ngModel)]="globalVariables.channelData.channelName" placeholder="{{ globalVariables.openChannel }}">
-    <input [(ngModel)]="globalVariables.channelData.description" placeholder="{{ globalVariables.openChannelDesc }}">
+    <!-- <div *ngFor="let channel of channels">
+      <p>{{ channel.name }}</p> 
+      <p>{{ channel.description }}</p> 
+    </div> -->
+    <app-inputfield [(ngModel)]="globalVariables.channelData.channelName" [classes]="['standard']"
+    type="text" placeholder="{{ globalVariables.openChannel }}"></app-inputfield>
+    <app-inputfield [(ngModel)]="globalVariables.channelData.description" [classes]="['standard']"
+    type="text" placeholder="{{ globalVariables.openChannelDesc }}"></app-inputfield>
     
+
+   
       <div class="button-area">
         <app-button
           [classes]="['primary']"
           (clicked)="globalFunctions.toggleOverlays()"
-          caption="Erstellen"
+          caption="speichern"
           imgPath=""
         ></app-button>
       </div>

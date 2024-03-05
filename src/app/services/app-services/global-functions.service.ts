@@ -20,6 +20,7 @@ export class GlobalFunctionsService {
 
   channel: boolean = false;
   adduser: boolean = false;
+  openReaction: boolean = false;
   editChannelOverlayOpen: boolean = false;
   editChannel:boolean= false;
 
@@ -53,6 +54,18 @@ export class GlobalFunctionsService {
 
   openUserOverlay() {
     this.adduser = !this.adduser;
+    if (this.adduser) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }
+
+  closeReactionDialog() {
+    this.globalVariables.showProfile = false;
+    this.adduser = false;
+
+  }
+
+  openReactionDialog() {
+    this.openReaction = !this.openReaction;
     if (this.adduser) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }

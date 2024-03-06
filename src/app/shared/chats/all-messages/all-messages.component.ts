@@ -5,12 +5,14 @@ import { ChatChannel } from 'app/models/chatChannel.class';
 import { ChatUsers } from 'app/models/chatUsers.class';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-all-messages',
   standalone: true,
   imports: [
+    CommonModule,
     OtherUserMessageComponent,
     CurrentUserMessageComponent
   ],

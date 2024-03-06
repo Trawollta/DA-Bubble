@@ -35,7 +35,7 @@ export class FirebaseChatService {
   * this function returns a reference of collection testusers
   * @returns reference to collection 'chatchannels'
   */
-    getUserRef() {
+    getchatChannelsRef() {
       return collection(this.firestore, 'chatchannels');
     }
 
@@ -44,8 +44,8 @@ export class FirebaseChatService {
    * @param docId - document which should read
    * @returns - returns a single document of collection 'user'
    */
-  getSingleUserRef(docId: string) {
-    return doc(this.getUserRef(), docId);
+  getSingleChatRef(docId: string) {
+    return doc(this.getchatChannelsRef(), docId);
   }
 
   /**
@@ -55,22 +55,28 @@ export class FirebaseChatService {
    */
   getChat(id: string) {
 
-    return onSnapshot(this.getSingleUserRef(id), (chat) => {
+    return onSnapshot(this.getSingleChatRef(id), (chat) => {
 
       if (chat.data()) {
         this.globalVariablesService.chatChannel = new ChatChannel(chat.data());
       console.log('aktueller chat', this.globalVariablesService.chatChannel);
-        /* let actualChat = new ChatChannel(chat.data());
-        console.log('aktueller chat', actualChat);
-         
-        actualChat.messages.forEach(message => {
-         this.chatChannel.messages.push(message); 
-        }); 
-        
-        console.log(this.chatChannel);*/
+      
       } 
     });
   }
 
+  addChat(relatedChannelId:string){
+    this.chatChannel.relatedChannelId = relatedChannelId;
+    let data = this.toJson();
+    //console.log('was steht im JSON: ',data);
+    return addDoc(this.getchatChannelsRef(), data);
+  }
+
+  toJson(): {} {
+    return {
+      messages: this.chatChannel.messages,
+      relatedChannelId: this.chatChannel.relatedChannelId
+    };
+  }
 
 }

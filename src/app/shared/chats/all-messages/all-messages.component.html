@@ -1,5 +1,10 @@
-<div class="allMessages">
+<div class="allMessages" >
 <!-- hier dürfte am Ende nix stehen. Die Elemente müssen per Javascript eingespielt werden mit einer Schleife -->
+<div *ngFor="let message of globalVariablesService.chatChannel.messages">
+    {{ message }}
+</div>
+
+
 
 <app-other-user-message></app-other-user-message>
       

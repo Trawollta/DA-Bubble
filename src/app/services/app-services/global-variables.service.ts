@@ -47,7 +47,7 @@ export class GlobalVariablesService {
   channelData = {
     description: '',
     channelName: '',
-    chatID: '',
+    chatId: '',
   };
 
   //variable for chats

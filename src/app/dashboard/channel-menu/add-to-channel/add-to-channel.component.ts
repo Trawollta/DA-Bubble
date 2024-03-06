@@ -29,7 +29,7 @@ export class AddToChannelComponent {
     this.globalVariables.openChannel.titel = this.globalVariables.channelData.channelName;
     this.globalVariables.channelData.channelName = '';
     this.globalVariables.channelData.description = '';
-    this.globalVariables.channelData.chatID = '';
+    this.globalVariables.channelData.chatId = '';
     this.globalFunctions.closeUserOverlay();
   }
 

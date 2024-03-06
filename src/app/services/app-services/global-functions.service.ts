@@ -103,40 +103,6 @@ export class GlobalFunctionsService {
   }
   
 
- /*  openDirectMessageUser(user: any) {
-    //let userToChatWith = [user];
-    this.globalVariables.userToChatWith.name = user.name;
-    this.globalVariables.userToChatWith.img = user.img;
-    this.globalVariables.isPrivatChatVisable = true;
-    this.globalVariables.isChatVisable = false;
-    if(!this.globalVariables.desktop700){
-      this.globalVariables.isPrivatChatVisable = true;
-      this.globalVariables.showChannelMenu = false;
-    } else this.globalVariables.isPrivatChatVisable = true;
-  } */
-
- /* openChannelList(channel: any) {
-   // console.log(channel);
-    this.openChannelDescribe(channel);
-    this.globalVariables.openChannel = channel.channelName;
-     this.globalVariables.isPrivatChatVisable = false;
-    if(!this.globalVariables.desktop700){
-      this.globalVariables.isChannelVisible = true;
-      this.globalVariables.showChannelMenu = false;
-    } else this.globalVariables.isChannelVisible = true; 
-    
-  }*/
-
- /*  openChannelDescribe(desc: any) {
-    this.globalVariables.openChannelDesc = desc.description;
-    this.globalVariables.isPrivatChatVisable = false;
-    if(!this.globalVariables.desktop700){
-      this.globalVariables.isChannelVisible = true;
-      this.globalVariables.showChannelMenu = false;
-    } else this.globalVariables.isChannelVisible = true; 
-    
-  }*/
-
   stopPropagation(e: Event) {
     e.stopPropagation();
   }

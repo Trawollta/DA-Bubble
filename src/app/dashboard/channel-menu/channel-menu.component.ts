@@ -89,37 +89,21 @@ export class ChannelMenuComponent {
     // console.log(channel);
     // this.openChannelDescribe(channel.description);
     this.globalVariables.isUserChat = false;
-    this.globalVariables.openChannelDesc = channel.description;
-    this.globalVariables.openChannel = channel.channelName;
+    this.globalVariables.openChannel.desc = channel.description;
+    this.globalVariables.openChannel.titel = channel.channelName;
+    this.globalVariables.openChannel.id = channel.id;
     this.showChat();
-    /*  this.globalVariables.isPrivatChatVisable = false;
-     if(!this.globalVariables.desktop700){
-       this.globalVariables.isChannelVisible = true;
-       this.globalVariables.showChannelMenu = false;
-     } else this.globalVariables.isChannelVisible = true; */
+   
   }
 
-  /* openChannelDescribe(desc: string) {
-     this.globalVariables.openChannelDesc = desc;
-      this.globalVariables.isPrivatChatVisable = false;
-     if(!this.globalVariables.desktop700){
-       this.globalVariables.isChannelVisible = true;
-       this.globalVariables.showChannelMenu = false;
-     } else this.globalVariables.isChannelVisible = true; 
-     
-   }*/
+  
   openDirectMessageUser(user: any) {
     //let userToChatWith = [user];
     this.globalVariables.isUserChat = true;
     this.globalVariables.userToChatWith.name = user.name;
     this.globalVariables.userToChatWith.img = user.img;
     this.showChat();
-    /*  this.globalVariables.isPrivatChatVisable = true;*/
-    /*  this.globalVariables.isChatVisable = true;
-    if(!this.globalVariables.desktop700){
-      //this.globalVariables.isPrivatChatVisable = true;
-      this.globalVariables.showChannelMenu = false;
-    } //else this.globalVariables.isPrivatChatVisable = true;  */
+   
   }
 
   /**

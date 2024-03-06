@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ChatChannel } from '../../models/chatChannel.class';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,7 @@ export class GlobalVariablesService {
   //flags for showing the dashboard main elements
   showChannelMenu: boolean = true;
   isChatVisable: boolean = false;
- // isPrivatChatVisable: boolean = false;
+  // isPrivatChatVisable: boolean = false;
   showThread: boolean = false;
 
   openChat: string = ''; // used in openAnswers() to come back to the chat
@@ -37,16 +38,23 @@ export class GlobalVariablesService {
   gotoChannel: any = [];
   isChannelVisible: boolean = true;
 
-  openChannel: string = 'Willkommen';
-  openChannelDesc: string = '';
-  activeChatId: string = ''; // used to identify the releated chat
-  channelData: {
-    description: string;
-    channelName: string;
-  } = {
+  openChannel = {
+    titel:  'Willkommen',
+    desc:  '',
+    id:  '',
+  }
+
+  channelData = {
     description: '',
     channelName: '',
+    chatID: '',
   };
+
+  //variable for chats
+  activeChatId: string = ''; // used to identify the releated chat
+  chatChannel: ChatChannel = new ChatChannel;
+
+
 
   currentUser = {
     name: 'Guest',
@@ -58,7 +66,7 @@ export class GlobalVariablesService {
   // variable is used in profile card and firebase-user.service.ts
   activeID: string = 'gvmQbxpAqE8t1ftC2BOp'; // this is the id of guest user of testusers
 
-  constructor() {}
+  constructor() { }
 
   //eine Idee:
   //wir müssen die User überall mit der ID ansprechen und nur wenn wir den Namen brauchen holen wir ihn.

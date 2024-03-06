@@ -20,7 +20,7 @@ export class EditChannelComponent {
   globalFunctions = inject(GlobalFunctionsService);
 
   ngOnInit(){
-    console.log(this.globalVariables.openChannel)
+    console.log(this.globalVariables.openChannel.titel)
     //this.globalFunctions.openChannelDescribe(desc);
     console.log(this.globalVariables.channelData)
   }

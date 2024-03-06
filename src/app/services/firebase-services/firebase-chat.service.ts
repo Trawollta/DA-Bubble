@@ -13,13 +13,13 @@ export class FirebaseChatService {
   globalVariablesService = inject(GlobalVariablesService);
 
   activeID: string = this.globalVariablesService.activeID;
-  activeChannel: string = 'Willkommen';
+  activeChannelId: string = 'NQMdt08FAcXbVroDLhvm'; //hier muss die ID des aktiven Channes übergeben werden
   chatChannel: ChatChannel = new ChatChannel;
 
   unsubChat;
 
   constructor() { 
-    this.unsubChat = this.getChat(this.activeChannel);
+    this.unsubChat = this.getChat(this.activeChannelId);
   }
 
 
@@ -58,10 +58,17 @@ export class FirebaseChatService {
     return onSnapshot(this.getSingleUserRef(id), (chat) => {
 
       if (chat.data()) {
-        let akualChat = new ChatChannel(chat.data());
-        this.chatChannel = akualChat;
-        console.log(this.chatChannel);
-      }
+        this.globalVariablesService.chatChannel = new ChatChannel(chat.data());
+      console.log('aktueller chat', this.globalVariablesService.chatChannel);
+        /* let actualChat = new ChatChannel(chat.data());
+        console.log('aktueller chat', actualChat);
+         
+        actualChat.messages.forEach(message => {
+         this.chatChannel.messages.push(message); 
+        }); 
+        
+        console.log(this.chatChannel);*/
+      } 
     });
   }
 

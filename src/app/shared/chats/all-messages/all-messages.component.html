@@ -1,12 +1,19 @@
 <div class="allMessages" >
 <!-- hier dürfte am Ende nix stehen. Die Elemente müssen per Javascript eingespielt werden mit einer Schleife -->
+<!-- <div *ngFor="let message of globalVariablesService.chatChannel.messages">
+    <div>
+        <p>Answer To: {{ message.answerto }}</p>
+        <p>Message: {{ message.message }}</p>
+        <p>Timestamp: {{ message.timestamp }}</p>
+        <p>User ID: {{ message.userId }}</p>
+    </div>
+</div> -->
 <div *ngFor="let message of globalVariablesService.chatChannel.messages">
-    {{ message }}
+    <app-other-user-message *ngIf="message.userId !== globalVariablesService.activeID" [message]="message"></app-other-user-message>
+    <app-current-user-message *ngIf="message.userId === globalVariablesService.activeID" [message]="message"></app-current-user-message>
 </div>
 
-
-
-<app-other-user-message></app-other-user-message>
+<!-- <app-other-user-message></app-other-user-message>
       
-<app-current-user-message></app-current-user-message>
+<app-current-user-message></app-current-user-message> -->
 </div>

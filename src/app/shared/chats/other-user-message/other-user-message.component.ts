@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 
 
@@ -12,6 +12,15 @@ import { GlobalVariablesService } from 'app/services/app-services/global-variabl
 export class OtherUserMessageComponent {
 
   globalVariables = inject(GlobalVariablesService);
+  @Input() message: any;
+
+  getUserName(){
+    // ich hole mir hier den Usernamen anhand der zur Vergfügung gestellten id
+  }
+
+  getDate(){
+     // ich hole mir hier den Usernamen anhand der zur Vergfügung timestamp
+  }
 
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');

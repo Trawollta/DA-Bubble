@@ -1,11 +1,11 @@
 export class ChatChannel {
     relatedChannelId: string;
-    messages: [{
+    messages: {
         answerto: string,
         message: string,
         timestamp: number,
-        userID: string
-    }]
+        userId: string
+    }[]
 
 
     constructor(obj?: any) {
@@ -16,5 +16,10 @@ export class ChatChannel {
             timestamp: 0,
             userId: ''
         }];
+        this.sortMessagesByTimestamp();
+    }
+    
+    sortMessagesByTimestamp() {
+        this.messages.sort((a, b) => a.timestamp - b.timestamp);
     }
 }

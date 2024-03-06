@@ -48,6 +48,8 @@ export class GlobalVariablesService {
     description: '',
     channelName: '',
     chatId: '',
+    /* owner: '',
+    allowedUser: ['id1', '1d2'] */
   };
 
   //variable for chats

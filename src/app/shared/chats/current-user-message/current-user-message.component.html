@@ -6,7 +6,7 @@
         <p class="username">{{ globalVariables.currentUser.name }}</p>
       </div>
       <div class="speech-bubble-current-user" (click)="openEmojis()">
-        <span class="speech-bubble-current-user-text">Hallo</span>
+        <span class="speech-bubble-current-user-text">{{ message.message}}</span>
       </div>
       <div class="reaction-btn" (click)="globaleFunctions.openReactionDialog()">
         <img src="../../../assets/img/reactions/three_dots.svg" alt="" />

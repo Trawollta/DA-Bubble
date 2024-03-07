@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
@@ -15,6 +15,7 @@ import { ReactionsComponent } from 'app/shared/reactions/reactions.component';
 export class CurrentUserMessageComponent {
   globalVariables = inject(GlobalVariablesService);
   globaleFunctions = inject(GlobalFunctionsService);
+  @Input() message: any;
 
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');

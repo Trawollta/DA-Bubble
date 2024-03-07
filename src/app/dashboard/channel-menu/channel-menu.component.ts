@@ -5,6 +5,8 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { AddNewChannelComponent } from './add-new-channel/add-new-channel.component';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
+import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+import { channel } from 'app/models/channel.class';
 
 @Component({
   selector: 'app-channel-menu',
@@ -20,10 +22,11 @@ import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component'
 })
 export class ChannelMenuComponent {
   globalVariables = inject(GlobalVariablesService);
+  firebaseChatService = inject(FirebaseChatService);
   allChannels: any = [];
   allUsers: any = [];
 
-  constructor(public globalFunctions: GlobalFunctionsService) {}
+  constructor(public globalFunctions: GlobalFunctionsService) { }
 
   /**
    * this function just opens and close the menu for selecting a channel
@@ -76,56 +79,35 @@ export class ChannelMenuComponent {
     this.globalFunctions.getCollection('channels', this.allChannels);
     this.globalFunctions.getCollection('users', this.allUsers);
   }
-  /*  openChannelChat() {
-    this.globalVariables.isChatVisable = true;
-    this.globalVariables.isPrivatChatVisable = false;
-  } */
+
 
   /**
    * this funktion sets the flag to show the header for channels and take over information of the related channel object to global variables
    * @param channel - object which contains information of selecet channel
    */
   openChannelList(channel: any) {
-    // console.log(channel);
-    // this.openChannelDescribe(channel.description);
     this.globalVariables.isUserChat = false;
-    this.globalVariables.openChannelDesc = channel.description;
-    this.globalVariables.openChannel = channel.channelName;
+    this.globalVariables.openChannel.desc = channel.description;
+    this.globalVariables.openChannel.titel = channel.channelName;
+    this.globalVariables.openChannel.id = channel.id;
+    this.globalVariables.openChannel.chatId = channel.chatId;
     this.showChat();
-    /*  this.globalVariables.isPrivatChatVisable = false;
-     if(!this.globalVariables.desktop700){
-       this.globalVariables.isChannelVisible = true;
-       this.globalVariables.showChannelMenu = false;
-     } else this.globalVariables.isChannelVisible = true; */
   }
 
-  /* openChannelDescribe(desc: string) {
-     this.globalVariables.openChannelDesc = desc;
-      this.globalVariables.isPrivatChatVisable = false;
-     if(!this.globalVariables.desktop700){
-       this.globalVariables.isChannelVisible = true;
-       this.globalVariables.showChannelMenu = false;
-     } else this.globalVariables.isChannelVisible = true; 
-     
-   }*/
+
   openDirectMessageUser(user: any) {
-    //let userToChatWith = [user];
     this.globalVariables.isUserChat = true;
     this.globalVariables.userToChatWith.name = user.name;
     this.globalVariables.userToChatWith.img = user.img;
     this.showChat();
-    /*  this.globalVariables.isPrivatChatVisable = true;*/
-    /*  this.globalVariables.isChatVisable = true;
-    if(!this.globalVariables.desktop700){
-      //this.globalVariables.isPrivatChatVisable = true;
-      this.globalVariables.showChannelMenu = false;
-    } //else this.globalVariables.isPrivatChatVisable = true;  */
+
   }
 
   /**
    * this function stets the flag for visability for chat
    */
   showChat() {
+    this.firebaseChatService.changeActiveChannel(this.globalVariables.openChannel.chatId);
     this.globalVariables.isChatVisable = true;
     if (!this.globalVariables.desktop700) {
       this.globalVariables.showChannelMenu = false;

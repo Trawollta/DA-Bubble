@@ -1,10 +1,11 @@
 @import "../../../../styles.scss";
 
 .message-current-user {
-  height: 200px;
+ // height: 200px;
   gap: 30px;
   display: flex;
   justify-content: flex-end;
+ 
 
   &:hover {
     background-color: #eceefe;
@@ -12,29 +13,29 @@
   }
 
   .current-user-content {
-    height: 180px;
+    //height: 180px;
     gap: 8px;
     display: flex;
 
     .info-area {
-      height: 142px;
+      //height: 142px;
       gap: 8px;
 
       .info-area-wrapper {
-        height: 25px;
+        //height: 25px;
         @include dFlex($g: 20px, $jc: flex-start);
 
         .username {
-          max-width: 100px;
-          max-height: 25px;
+         // max-width: 100px;
+         // max-height: 25px;
           font-size: 18px;
           font-weight: 700;
           line-height: 25px;
         }
 
         .messagetime {
-          max-width: 64px;
-          height: 19px;
+          //max-width: 64px;
+         // height: 19px;
           font-size: 14px;
           font-weight: 400;
           line-height: 19px;
@@ -43,14 +44,14 @@
       }
 
       .speech-bubble-current-user {
-        max-height: 105px;
+       // max-height: 105px;
         padding: 15px;
         border-radius: 30px 0px 30px 30px;
         gap: 8px;
         background-color: $purple2;
         .speech-bubble-current-user-text {
-          max-width: 698px;
-          max-height: 105px;
+         // max-width: 698px;
+         // max-height: 105px;
           padding: 15px;
           border-radius: 30px 0px 30px 30px;
           gap: 8px;

@@ -24,6 +24,7 @@ export class GlobalFunctionsService {
   editChannelOverlayOpen: boolean = false;
   editChannel:boolean= false;
   showContacts: boolean= false;
+  memberlist: boolean = false;
 
   menuProfileClicked() {
     this.globalVariables.showProfileMenu = !this.globalVariables.showProfileMenu;
@@ -89,6 +90,12 @@ export class GlobalFunctionsService {
     
   }
 
+  showMembers() {
+    this.memberlist = !this.memberlist;
+    if (this.memberlist) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }
+
   openAddContactsOverlay() {
     this.showContacts = true;
     console.log('Overlay should open now. showContacts:', this.showContacts);
@@ -101,41 +108,10 @@ export class GlobalFunctionsService {
     this.globalVariables.showProfile = false; 
     document.body.style.overflow = 'auto';
   }
+
+
   
-
- /*  openDirectMessageUser(user: any) {
-    //let userToChatWith = [user];
-    this.globalVariables.userToChatWith.name = user.name;
-    this.globalVariables.userToChatWith.img = user.img;
-    this.globalVariables.isPrivatChatVisable = true;
-    this.globalVariables.isChatVisable = false;
-    if(!this.globalVariables.desktop700){
-      this.globalVariables.isPrivatChatVisable = true;
-      this.globalVariables.showChannelMenu = false;
-    } else this.globalVariables.isPrivatChatVisable = true;
-  } */
-
- /* openChannelList(channel: any) {
-   // console.log(channel);
-    this.openChannelDescribe(channel);
-    this.globalVariables.openChannel = channel.channelName;
-     this.globalVariables.isPrivatChatVisable = false;
-    if(!this.globalVariables.desktop700){
-      this.globalVariables.isChannelVisible = true;
-      this.globalVariables.showChannelMenu = false;
-    } else this.globalVariables.isChannelVisible = true; 
-    
-  }*/
-
- /*  openChannelDescribe(desc: any) {
-    this.globalVariables.openChannelDesc = desc.description;
-    this.globalVariables.isPrivatChatVisable = false;
-    if(!this.globalVariables.desktop700){
-      this.globalVariables.isChannelVisible = true;
-      this.globalVariables.showChannelMenu = false;
-    } else this.globalVariables.isChannelVisible = true; 
-    
-  }*/
+  
 
   stopPropagation(e: Event) {
     e.stopPropagation();

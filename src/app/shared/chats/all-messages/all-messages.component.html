@@ -1,7 +1,11 @@
-<div class="allMessages">
-<!-- hier dürfte am Ende nix stehen. Die Elemente müssen per Javascript eingespielt werden mit einer Schleife -->
+<div class="allMessages" >
 
-<app-other-user-message></app-other-user-message>
-      
-<app-current-user-message></app-current-user-message>
+<div *ngFor="let message of globalVariablesService.chatChannel.messages" >
+    <app-other-user-message *ngIf="message.userId !== globalVariablesService.activeID && message.message != ''" [message]="message" (click)="GlobalFunctionsService.openReactionDialog()"></app-other-user-message>
+    
+    <app-current-user-message *ngIf="message.userId === globalVariablesService.activeID && message.message != ''" [message]="message"></app-current-user-message>
+    
+</div>
+
+
 </div>

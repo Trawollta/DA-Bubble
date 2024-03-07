@@ -6,23 +6,27 @@ import { ChatUsers } from 'app/models/chatUsers.class';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { CommonModule } from '@angular/common';
+import { ReactionsComponent } from "../../reactions/reactions.component";
+import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 
 
 @Component({
-  selector: 'app-all-messages',
-  standalone: true,
-  imports: [
-    CommonModule,
-    OtherUserMessageComponent,
-    CurrentUserMessageComponent
-  ],
-  templateUrl: './all-messages.component.html',
-  styleUrl: './all-messages.component.scss'
+    selector: 'app-all-messages',
+    standalone: true,
+    templateUrl: './all-messages.component.html',
+    styleUrl: './all-messages.component.scss',
+    imports: [
+        CommonModule,
+        OtherUserMessageComponent,
+        CurrentUserMessageComponent,
+        ReactionsComponent
+    ]
 })
 export class AllMessagesComponent {
 
   firebaseChatService = inject (FirebaseChatService);
   globalVariablesService = inject(GlobalVariablesService);
+  GlobalFunctionsService = inject(GlobalFunctionsService)
   chatChannel: ChatChannel = new ChatChannel;
   chatUsers: ChatUsers = new ChatUsers;
 

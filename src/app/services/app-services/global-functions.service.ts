@@ -24,6 +24,7 @@ export class GlobalFunctionsService {
   editChannelOverlayOpen: boolean = false;
   editChannel:boolean= false;
   showContacts: boolean= false;
+  memberlist: boolean = false;
 
   menuProfileClicked() {
     this.globalVariables.showProfileMenu = !this.globalVariables.showProfileMenu;
@@ -89,6 +90,12 @@ export class GlobalFunctionsService {
     
   }
 
+  showMembers() {
+    this.memberlist = !this.memberlist;
+    if (this.memberlist) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }
+
   openAddContactsOverlay() {
     this.showContacts = true;
     console.log('Overlay should open now. showContacts:', this.showContacts);
@@ -101,6 +108,9 @@ export class GlobalFunctionsService {
     this.globalVariables.showProfile = false; 
     document.body.style.overflow = 'auto';
   }
+
+
+  
   
 
   stopPropagation(e: Event) {

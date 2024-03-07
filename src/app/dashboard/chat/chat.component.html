@@ -1,6 +1,5 @@
 <main>
 
-
   <section class="msg-header" *ngIf="!globalVariables.isUserChat">
     <div class="topic-headline">
       <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
@@ -12,8 +11,10 @@
     </div>
     <div class="active-contacts">
       <div class="contact-row" *ngIf="globalVariables.desktop700">
+        <div (click)="globalFunctions.showMembers()">
         <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
         <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
+      </div>
       </div>
       <div class="add-contact" (click)="globalFunctions.openAddContactsOverlay()">
         <img src="../../../assets/img/icons/person_add.svg" alt="" />
@@ -55,6 +56,7 @@
     <app-inputfield [classes]="['standard']" type="text" placeholder="Deine Nachricht"></app-inputfield>
   </section>
 
+  <app-show-contacts *ngIf="globalFunctions.memberlist"></app-show-contacts>
   <app-add-to-channel *ngIf="globalFunctions.showContacts">></app-add-to-channel> 
   <app-edit-channel *ngIf="globalFunctions.editChannelOverlayOpen"></app-edit-channel>
 

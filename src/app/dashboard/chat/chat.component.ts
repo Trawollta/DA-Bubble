@@ -7,6 +7,7 @@ import { EditChannelComponent } from '../channel-menu/edit-channel/edit-channel.
 import { AllMessagesComponent } from 'app/shared/chats/all-messages/all-messages.component';
 import { AddContactsComponent } from '../channel-menu/add-contacts/add-contacts.component';
 import { AddToChannelComponent } from "../channel-menu/add-to-channel/add-to-channel.component";
+import { ShowContactsComponent } from '../channel-menu/show-contacts/show-contacts.component';
 
 @Component({
     selector: 'app-chat',
@@ -19,7 +20,8 @@ import { AddToChannelComponent } from "../channel-menu/add-to-channel/add-to-cha
         EditChannelComponent,
         AllMessagesComponent,
         AddContactsComponent,
-        AddToChannelComponent
+        AddToChannelComponent,
+        ShowContactsComponent
     ]
 })
 export class ChatComponent {

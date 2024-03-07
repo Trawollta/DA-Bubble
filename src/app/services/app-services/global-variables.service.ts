@@ -38,10 +38,20 @@ export class GlobalVariablesService {
   gotoChannel: any = [];
   isChannelVisible: boolean = true;
 
+  //this is the object for collecting message data from input field in chat
+  messageData = {
+    message: '',
+    answerto: '',
+    userId: '',
+    timestamp: 0
+  }
+
+  //this is the object for the active channel information. Used in channel-menu
   openChannel = {
     titel:  'Willkommen',
     desc:  '',
-    id:  '',
+    id:  'fsjWrBdDhpg1SvocXmxS',
+    chatId:'NQMdt08FAcXbVroDLhvm'
   }
 
   channelData = {

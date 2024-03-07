@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, addDoc, updateDoc, doc, setDoc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, updateDoc, doc, setDoc, onSnapshot, arrayUnion } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { ChatChannel } from '../../models/chatChannel.class';
 import { ChatUsers } from '../../models/chatUsers.class';
@@ -13,14 +13,14 @@ export class FirebaseChatService {
   globalVariablesService = inject(GlobalVariablesService);
 
   activeID: string = this.globalVariablesService.activeID;
-  activeChannelId: string = 'NQMdt08FAcXbVroDLhvm'; //hier muss die ID des aktiven Channes übergeben werden
+  activeChannelChatId: string = this.globalVariablesService.openChannel.chatId;
   chatChannel: ChatChannel = new ChatChannel;
-  
+
 
   unsubChat;
 
   constructor() {
-    this.unsubChat = this.getChat(this.activeChannelId);
+    this.unsubChat = this.getChat(this.activeChannelChatId);
   }
 
 
@@ -56,18 +56,33 @@ export class FirebaseChatService {
    */
   getChat(id: string) {
 
-    let chat = onSnapshot(this.getSingleChatRef(id), (chat) => {
+    let chatSnapshot = onSnapshot(this.getSingleChatRef(id), (chat) => {
       if (chat.data()) {
         this.globalVariablesService.chatChannel = new ChatChannel(chat.data());
-        //console.log('aktueller chat', this.globalVariablesService.chatChannel);
-
       }
-      console.log(this.groupMessagesByAnswerTo());
+      this.groupMessagesByAnswerTo();
+      //console.log(this.groupMessagesByAnswerTo());
     });
-    
-    return chat;
+    return chatSnapshot;
   }
 
+
+  /**
+   * this function unsubscribes the closed chat and subscribes the new chat
+   * @param newChannelId - new channel chat id
+   */
+  changeActiveChannel(newChannelChatId: string) {
+    if (this.unsubChat) this.unsubChat();
+    this.activeChannelChatId = newChannelChatId;
+    this.globalVariablesService.chatChannel = new ChatChannel();
+    this.unsubChat = this.getChat(this.activeChannelChatId);
+  }
+
+  /**
+   * this function creates a new chat for the new channel and take over the belonging channel id
+   * @param relatedChannelId - channel which is connected to the new chat
+   * @returns - addDoc element
+   */
   addChat(relatedChannelId: string) {
     this.chatChannel.relatedChannelId = relatedChannelId;
     let data = this.toJson();
@@ -88,18 +103,42 @@ export class FirebaseChatService {
    */
   groupMessagesByAnswerTo() {
     const groupedMessages: { [answerto: string]: any[] } = {};
-
     this.globalVariablesService.chatChannel.messages.forEach(message => {
       const answerTo = message.answerto;
-
       if (!groupedMessages[answerTo]) {
         groupedMessages[answerTo] = [message];
       } else {
         groupedMessages[answerTo].push(message);
       }
     });
-
     return groupedMessages;
   }
+
+
+  /**
+   * this function adds the new massage to the existing message array
+   * @param chatId - id of chat 
+   * @returns - 
+   */
+  sendMessage(chatId:string){
+    return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
+      messages: arrayUnion(this.newMessageToJson())
+  });
+  }
+
+  /**
+   * this function returns the json for storing them in firebase
+   * @returns - JSON with data
+   */
+  newMessageToJson(): {} {
+    return {
+      message: this.globalVariablesService.messageData.message,
+      userId: this.globalVariablesService.messageData.userId,
+      answerto: this.globalVariablesService.messageData.answerto,
+      timestamp: this.globalVariablesService.messageData.timestamp
+    };
+  }
+
+
 
 }

@@ -31,10 +31,11 @@ export class AllMessagesComponent {
   chatUsers: ChatUsers = new ChatUsers;
 
    ngOnInit(){
-    console.log('aktueller chat', this.globalVariablesService.chatChannel);
-    this.firebaseChatService.getChat('NQMdt08FAcXbVroDLhvm');
-    console.log('aktueller chat 2.Aufruf', this.globalVariablesService.chatChannel);
-    console.log(this.firebaseChatService.groupMessagesByAnswerTo());
+   // console.log('aktueller chat', this.globalVariablesService.chatChannel);
+  //  console.log('neue ID: ',this.globalVariablesService.openChannel.id);
+   // this.firebaseChatService.getChat(this.globalVariablesService.openChannel.id); //Id vom Willkommenchannel 'NQMdt08FAcXbVroDLhvm'
+   // console.log('aktueller chat 2.Aufruf', this.globalVariablesService.chatChannel);
+   // console.log(this.firebaseChatService.groupMessagesByAnswerTo());
   } 
 
 }

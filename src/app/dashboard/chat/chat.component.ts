@@ -8,6 +8,8 @@ import { AllMessagesComponent } from 'app/shared/chats/all-messages/all-messages
 import { AddContactsComponent } from '../channel-menu/add-contacts/add-contacts.component';
 import { AddToChannelComponent } from "../channel-menu/add-to-channel/add-to-channel.component";
 import { ShowContactsComponent } from '../channel-menu/show-contacts/show-contacts.component';
+import { FormsModule } from '@angular/forms';
+import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 
 @Component({
     selector: 'app-chat',
@@ -21,12 +23,14 @@ import { ShowContactsComponent } from '../channel-menu/show-contacts/show-contac
         AllMessagesComponent,
         AddContactsComponent,
         AddToChannelComponent,
-        ShowContactsComponent
+        ShowContactsComponent,
+        FormsModule
     ]
 })
 export class ChatComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
+  firebaseChatService = inject(FirebaseChatService);
   allUserMessages: string = '';
  
   openEmojis() {
@@ -43,5 +47,14 @@ export class ChatComponent {
     this.globalVariables.showThread = !this.globalVariables.showThread;
     if(window.innerWidth < 1100)
     this.globalVariables.showChannelMenu = false;
+  }
+
+  sendMessage(){
+    if(this.globalVariables.messageData.message !== ''){
+      this.globalVariables.messageData.userId = this.globalVariables.activeID;
+      this.globalVariables.messageData.timestamp = new Date().getTime();
+      this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId);
+      this.globalVariables.messageData.message='';
+    }
   }
 }

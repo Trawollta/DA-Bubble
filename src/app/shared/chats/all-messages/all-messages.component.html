@@ -2,9 +2,9 @@
 
 <div *ngFor="let message of globalVariablesService.chatChannel.messages" >
     <app-other-user-message *ngIf="message.userId !== globalVariablesService.activeID && message.message != ''" [message]="message" (click)="GlobalFunctionsService.openReactionDialog()"></app-other-user-message>
-    <app-reactions *ngIf="GlobalFunctionsService.openReaction"></app-reactions>
+    
     <app-current-user-message *ngIf="message.userId === globalVariablesService.activeID && message.message != ''" [message]="message"></app-current-user-message>
-    <app-reactions *ngIf="GlobalFunctionsService.openReaction"></app-reactions>
+    
 </div>
 
 

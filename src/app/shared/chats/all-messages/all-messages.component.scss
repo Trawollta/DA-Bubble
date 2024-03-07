@@ -1,7 +1,8 @@
 @import "../../../../styles.scss";
 .allMessages{
-    @include dFlex($fd:column, $ai:normal, $jc:space-between);
+    @include dFlex($fd:column, $ai:normal, $jc:space-between, $g:32px);
     height: 100%;
     width: 100%;
-    
+    padding-right: 16px;
+    box-sizing: border-box;
 }

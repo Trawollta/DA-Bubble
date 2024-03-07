@@ -2,8 +2,8 @@
   <div class="current-user-content">
     <div class="info-area">
       <div class="info-area-wrapper">
-        <p class="messagetime">12:50</p>
-        <p class="username">{{ globalVariables.currentUser.name }}</p>
+        <span class="messagetime">12:50</span>
+        <span class="username">{{ globalVariables.currentUser.name }}</span>
       </div>
       <div class="speech-bubble-current-user" (click)="openEmojis()">
         <span class="speech-bubble-current-user-text">{{ message.message}}</span>
@@ -13,8 +13,8 @@
       </div>
       <app-reactions *ngIf="globaleFunctions.openReaction"></app-reactions>
       <div class="replie-wrapper">
-        <p class="replie-text" (click)="openAnswers()">1 Antworten</p>
-        <p class="timestamp-text">Letze Antwort Time</p>
+        <span class="replie-text" (click)="openAnswers()">1 Antworten</span>
+        <span class="timestamp-text">Letze Antwort Time</span>
       </div>
     </div>
   </div>

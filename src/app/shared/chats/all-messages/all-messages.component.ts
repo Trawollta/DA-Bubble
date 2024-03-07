@@ -30,6 +30,7 @@ export class AllMessagesComponent {
     console.log('aktueller chat', this.globalVariablesService.chatChannel);
     this.firebaseChatService.getChat('NQMdt08FAcXbVroDLhvm');
     console.log('aktueller chat 2.Aufruf', this.globalVariablesService.chatChannel);
+    console.log(this.firebaseChatService.groupMessagesByAnswerTo());
   } 
 
 }

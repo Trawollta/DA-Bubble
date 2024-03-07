@@ -17,9 +17,12 @@ export class ChatChannel {
             userId: ''
         }];
         this.sortMessagesByTimestamp();
+        
     }
     
     sortMessagesByTimestamp() {
         this.messages.sort((a, b) => a.timestamp - b.timestamp);
     }
-}
+
+    
+    }

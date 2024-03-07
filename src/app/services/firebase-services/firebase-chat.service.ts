@@ -15,6 +15,7 @@ export class FirebaseChatService {
   activeID: string = this.globalVariablesService.activeID;
   activeChannelId: string = 'NQMdt08FAcXbVroDLhvm'; //hier muss die ID des aktiven Channes übergeben werden
   chatChannel: ChatChannel = new ChatChannel;
+  
 
   unsubChat;
 
@@ -55,13 +56,16 @@ export class FirebaseChatService {
    */
   getChat(id: string) {
 
-    return onSnapshot(this.getSingleChatRef(id), (chat) => {
+    let chat = onSnapshot(this.getSingleChatRef(id), (chat) => {
       if (chat.data()) {
         this.globalVariablesService.chatChannel = new ChatChannel(chat.data());
         //console.log('aktueller chat', this.globalVariablesService.chatChannel);
 
       }
+      console.log(this.groupMessagesByAnswerTo());
     });
+    
+    return chat;
   }
 
   addChat(relatedChannelId: string) {
@@ -76,6 +80,26 @@ export class FirebaseChatService {
       messages: this.chatChannel.messages,
       relatedChannelId: this.chatChannel.relatedChannelId
     };
+  }
+
+  /**
+   * returns chat grouped by answerto
+   * @returns chat grouped by answerto
+   */
+  groupMessagesByAnswerTo() {
+    const groupedMessages: { [answerto: string]: any[] } = {};
+
+    this.globalVariablesService.chatChannel.messages.forEach(message => {
+      const answerTo = message.answerto;
+
+      if (!groupedMessages[answerTo]) {
+        groupedMessages[answerTo] = [message];
+      } else {
+        groupedMessages[answerTo].push(message);
+      }
+    });
+
+    return groupedMessages;
   }
 
 }

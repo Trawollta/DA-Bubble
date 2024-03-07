@@ -12,7 +12,8 @@ app-button {
 section {
     @include dFlex($fd: column, $g: 30px);
     margin: 80px 20px;
-    width: 93%;
+    width: 82%;
+    padding: 0 50px;
 }
 
 header {
@@ -58,6 +59,11 @@ h2 {
 h3 {
     font-size: 30px;
     margin: 0;
+}
+
+.avatar-hint {
+    display: flex;
+    width: 100%;
 }
 
 .input-fields {
@@ -187,13 +193,41 @@ label {
     width: 85%;
 }
 
+.toast {
+    position: fixed;
+    right: 20px;
+    bottom: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    width: fit-content;
+    border: 1px solid $purple1;
+    border-radius: 30px 30px 0 30px;
+    background-color: $purple1;
+    color: white;
+}
+
 @media (max-height:830px) {
     section {
         margin: 20px 10px !important;
     }
 }
 
+@media (max-width: 750px) {
+    section {
+        padding: 0 30px;
+    }
+    h2 {
+        font-size: 35px;
+    }
+}
+
 @media (max-width: 660px) {
+    section {
+        width: 95%;
+        padding: 0 10px;
+    }
     h2 {
         font-size: 35px;
     }

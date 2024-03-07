@@ -11,7 +11,8 @@
             </div>
         </header>
         <div class="info">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</div>
-        <form #signupForm="ngForm" name="signup-form" (ngSubmit)="onSubmit()">
+        <!--form #signupForm="ngForm" name="signup-form" (ngSubmit)="onSubmit()"-->
+        <form #signupForm="ngForm" name="signup-form-step1">
             <div class="input-fields">
                 <app-inputfield #name="ngModel" name="name" id="name" [(ngModel)]="signUpUserData.name" [imgSize]="'22px'" [classes]="['login']" type="text" imgName="person" [required]="true" placeholder="Name und Nachname"></app-inputfield>
                 <div class="hint">
@@ -68,15 +69,18 @@
                 <img class="avatar-pic" [src]="img" (click)="selectAvatar(img)">
             </div>
         </div>
-        <form #signupForm="ngForm" name="signup-form" (ngSubmit)="onSubmit()">
+        <form #signupForm="ngForm" name="signup-form" (ngSubmit)="onSubmit($event)">
             <div class="file-upload-wrapper">
                 <input type="file" id="file-input" #fileInput hidden (change)="onFileSelected($event)" />
                 <span class="avatar-hint" id="file-name">eigenes Bild verwenden</span>
-                <app-button id="custom-button" type="button" [classes]="['secondary','noIcon']" caption="Datei hochladen" (click)="triggerFileInput()"></app-button>
+                <app-button id="custom-button" type="button" [classes]="['secondary','noIcon']" caption="Datei hochladen" (clicked)="triggerFileInput()"></app-button>
             </div>
             <div class="button-field">
                 <app-button *ngIf="signUpStep == 'chooseAvatar'" type="submit" [isDisabled]="signupForm.valid? false : true" [classes]="['primary','noIcon']" caption="Weiter"></app-button>
             </div>
         </form>
     </section>
+    <div data-aos="fade-left" *ngIf="toastService.showToast" class="toast">
+        <span>{{ toastService.message }}</span>
+    </div>
 </app-dialog>

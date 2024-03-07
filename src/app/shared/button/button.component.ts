@@ -11,6 +11,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ButtonComponent {
   @Input() caption: string = "";
   @Input() imgPath: string = "";
+  @Input() type: string = "";
   @Input() isDisabled: boolean = false;
   @Input() classes?: string | string[] = [];
 

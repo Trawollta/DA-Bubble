@@ -45,13 +45,15 @@ export class LogInComponent {
       const userCredential = await this.authService.loginWithGoogle();
       if (userCredential) {
         console.log("Erfolgreich mit Google angemeldet", userCredential);
+        const uid = userCredential.uid;
+        this.globalVariables.activeID = uid;
+        this.userService.updateCurrentUser(userCredential);
         await this.userService.addUser(userCredential.uid, {
           name: userCredential.displayName,
           email: userCredential.email,
           isActive: true,
           img: userCredential.photoURL
         });
-        this.userService.updateCurrentUser(userCredential);
         this.router.navigate(['/dashboard']);
       } else {
         console.error("Google-Anmeldung fehlgeschlagen.");

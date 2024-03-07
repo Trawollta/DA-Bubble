@@ -7,6 +7,10 @@ import { DialogComponent } from '../shared/dialog/dialog.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { AuthService } from 'app/services/firebase-services/auth.service';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+import { ToastService } from 'app/services/app-services/toast.service';
+import Aos from 'aos';
+import 'aos/dist/aos.css';
+import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,9 +23,11 @@ export class SignUpComponent {
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
   authService = inject(AuthService);
   globalVariables = inject(GlobalVariablesService);
+  globalFunctions = inject(GlobalFunctionsService);
   userService = inject(FirebaseUserService);
+  toastService = inject(ToastService);
   signUpStep: string = "createAccount"; //createAccount | chooseAvatar
-  selectedAvatar: string | undefined;
+  selectedAvatar: string = '';
   signUpUserPassword: string = "";
 
   signUpUserData = {
@@ -54,6 +60,7 @@ export class SignUpComponent {
   }
   ngAfterViewInit() {
     window.dispatchEvent(new Event('resize'));
+    Aos.init();
   }
 
   selectAvatar(img: string) {
@@ -61,27 +68,37 @@ export class SignUpComponent {
   }
 
   onFileSelected(event: any) {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
+    const file = event.target.files[0];
+    if (file) {
       const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.signUpUserData.img = e.target.result; // Speichert die Daten-URL im signUpUserData-Objekt
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        if (e.target && e.target.result !== null) {
+          if (e.target.result.toString().length > 1048487) {
+            this.toastService.showMessage('Bild darf nicht größer als 1MB sein.');
+          } else {
+            this.selectedAvatar = e.target.result as string;
+          }
+
+        }
       };
       reader.readAsDataURL(file);
     }
   }
 
-  async onSubmit() {
+  async onSubmit(event: any) {
+    console.log(event);
     const email = this.signUpUserData.email;
     const password = this.signUpUserPassword;
+    this.signUpUserData.img = this.selectedAvatar;
     try {
       const userCredential = await this.authService.register(email, password);
       console.log(userCredential);
       const uid = userCredential.user.uid;
       this.userService.addUser(uid, this.signUpUserData);
+      this.toastService.showMessage('Konto erfolgreich erstellt!');
     } catch (error) {
       console.error("Registrierungsfehler:", error);
-      // Fehlerbehandlung, z.B. Benachrichtigung anzeigen
+      this.toastService.showMessage('Email bereits registriert!');
     }
   }
 }

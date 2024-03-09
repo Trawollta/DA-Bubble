@@ -1,21 +1,74 @@
 import { Component, inject, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Firestore, doc, collection, onSnapshot, } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { ReactionsComponent } from 'app/shared/reactions/reactions.component';
+import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+import { User } from 'app/models/user.class';
+
 
 @Component({
   selector: 'app-current-user-message',
   standalone: true,
-  imports: [ReactionsComponent, CommonModule],
+  imports: [
+    ReactionsComponent,
+    CommonModule,
+    DatePipe
+  ],
   templateUrl: './current-user-message.component.html',
   styleUrl: './current-user-message.component.scss',
 })
 
+
+
 export class CurrentUserMessageComponent {
+
+  firestore: Firestore = inject(Firestore);
   globalVariables = inject(GlobalVariablesService);
-  globaleFunctions = inject(GlobalFunctionsService);
+  globalFunctions = inject(GlobalFunctionsService);
+  firebaseChatService = inject(FirebaseChatService);
+
   @Input() message: any;
+
+  postingTime: string | null = null;
+  user: User = new User;
+
+  unsubUser;
+  userId:string = 'guest';
+
+  constructor() {
+    this.unsubUser = this.getUser(this.userId);
+    
+  }
+
+  ngOnDestroy() {
+    this.unsubUser;
+  }
+
+
+  getUserRef(docId: string) {
+    return doc(collection(this.firestore, 'users'), docId);
+  }
+
+
+  getUser(id: string) {
+     onSnapshot(this.getUserRef(id), (user) => {
+      if(user.data()){
+        this.user = new User(user.data());
+      }
+    });
+    return 
+  }
+
+
+  ngOnInit() {
+    this.user = this.message.userId;
+    this.getUser(this.message.userId);
+    this.postingTime = this.message.timestamp;
+  }
+
+
 
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');

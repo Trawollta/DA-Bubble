@@ -1,11 +1,11 @@
 <section class="message">
     <div class="user">
-      <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
+      <img [src]= "user.img" alt="" />
     </div>
     <div class="info-area">
       <div class="info-area-wrapper">
-        <span class="username">User</span>
-        <span class="messagetime">12:50</span>
+        <span class="username">{{ user.name }}</span>
+        <span class="messagetime">{{ postingTime | date: 'dd.MM.YYYY H:mm:ss' }}</span>
       </div>
       <div class="speech-bubble" (click)="openEmojis()">
         <span class="speech-bubble-text">{{ message.message }}</span>

@@ -1,26 +1,68 @@
 import { Component, inject, Input } from '@angular/core';
+import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+import { Firestore, doc, collection, onSnapshot, } from '@angular/fire/firestore';
 
+
+import { User } from 'app/models/user.class';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-other-user-message',
   standalone: true,
-  imports: [],
+  imports: [
+    DatePipe
+  ],
   templateUrl: './other-user-message.component.html',
   styleUrl: './other-user-message.component.scss'
 })
+
+
 export class OtherUserMessageComponent {
 
+  firestore: Firestore = inject(Firestore);
   globalVariables = inject(GlobalVariablesService);
+  globalFunctions = inject(GlobalFunctionsService);
+  firebaseChatService = inject(FirebaseChatService);
   @Input() message: any;
 
-  getUserName(){
-    // ich hole mir hier den Usernamen anhand der zur Vergfügung gestellten id
+  postingTime: string | null = null;
+  user: User = new User;
+
+  unsubUser;
+  userId:string = 'guest';
+
+  constructor() {
+    this.unsubUser = this.getUser(this.userId);
+    
   }
 
-  getDate(){
-     // ich hole mir hier den Usernamen anhand der zur Vergfügung timestamp
+  ngOnDestroy() {
+    this.unsubUser;
   }
+
+  getUserRef(docId: string) {    
+    return doc(collection(this.firestore, 'users'), docId);
+  }
+
+
+  getUser(id: string) {
+     onSnapshot(this.getUserRef(id), (user) => {
+      if(user.data()){
+        this.user = new User(user.data());
+      }
+    });
+    return 
+  }
+
+
+  ngOnInit() {
+    this.user = this.message.userId;
+    this.getUser(this.message.userId);
+    this.postingTime = this.message.timestamp;
+  }
+
 
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');

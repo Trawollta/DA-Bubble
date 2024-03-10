@@ -8,5 +8,12 @@
   </section>
   <section class="message-container"></section>
   <!-- input marnie-->
-  <section></section>
+  <!-- container for all inputfield and controll elements -->
+  <section class="inputfield">
+    <app-inputfield [classes]="['standard']" type="text" placeholder="Deine Nachricht" [(ngModel)]="globalVariables.messageData.message"></app-inputfield>
+    <div class="controllElementsContainer">
+      <div class="moreControlls"></div>
+      <img src="assets/img/input-imgs/send.svg" alt="send button" (click)="sendMessage()">
+    </div>
+  </section>
 </main>

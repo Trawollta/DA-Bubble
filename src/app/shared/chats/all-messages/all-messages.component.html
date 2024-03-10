@@ -1,11 +1,31 @@
-<div class="allMessages" >
+<div class="allMessages">
+    <div class="dateBlockContainer" *ngFor="let message of globalVariablesService.chatChannel.messages">
+        <ng-container *ngIf="showDateBar(message.timestamp)">
+            <div class="newDate">
+                <div class="leftBar"></div>
+                <div class="dateContainer">
+                    <span *ngIf="getWeekDay(message.timestamp) === 'Heute'">
+                        {{ getWeekDay(message.timestamp) }}
+                    </span>
+                    <span *ngIf="getWeekDay(message.timestamp) !== 'Heute'">
+                        {{ getWeekDay(message.timestamp) }},
+                    </span>
+                    <span *ngIf="getWeekDay(message.timestamp) !== 'Heute'">
+                        {{ message.timestamp | date : 'dd.MM.YY'}}
+                    </span>
+                </div>
+                <div class="rightBar"></div>
+            </div>
+        </ng-container>
+        <div> 
+            <app-other-user-message *ngIf="message.userId !== globalVariablesService.activeID && message.message != ''"
+                [message]="message" (click)="GlobalFunctionsService.openReactionDialog()"></app-other-user-message>
 
-<div *ngFor="let message of globalVariablesService.chatChannel.messages" >
-    <app-other-user-message *ngIf="message.userId !== globalVariablesService.activeID && message.message != ''" [message]="message" (click)="GlobalFunctionsService.openReactionDialog()"></app-other-user-message>
-    
-    <app-current-user-message *ngIf="message.userId === globalVariablesService.activeID && message.message != ''" [message]="message"></app-current-user-message>
-    
-</div>
+            <app-current-user-message
+                *ngIf="message.userId === globalVariablesService.activeID && message.message != ''"
+                [message]="message"></app-current-user-message>
 
+        </div>
+    </div>
 
 </div>

@@ -1,5 +1,6 @@
 <main>
 
+   <!-- container for header it is a channel chat -->
   <section class="msg-header" *ngIf="!globalVariables.isUserChat">
     <div class="topic-headline">
       <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
@@ -21,10 +22,10 @@
     </div>
   </section>
 
+  <!-- container for header it is a user chat -->
   <section class="msg-header" *ngIf="globalVariables.isUserChat">
     <div class="topic-headline">
-
-      <div class="headline" (click)="globalFunctions.openProfile()">
+      <div class="headline" (click)="globalFunctions.openProfile()"> <!-- hier muss ich ddie User Variable übergeben -->
         <p></p>
         <img src="{{ globalVariables.userToChatWith.img }}" alt="">
         <p>{{ globalVariables.userToChatWith.name }}</p>
@@ -33,12 +34,14 @@
     </div>
   </section>
 
-
+<!-- container for all chat meassages -->
   <div class="contentContainer">
     <div class="messages">
       <app-all-messages></app-all-messages>
     </div>
   </div>
+
+<!-- container for all inputfield and controll elements -->
   <section class="inputfield">
     <app-inputfield [classes]="['standard']" type="text" placeholder="Deine Nachricht" [(ngModel)]="globalVariables.messageData.message"></app-inputfield>
     <div class="controllElementsContainer">
@@ -47,6 +50,7 @@
     </div>
   </section>
 
+   <!-- container popup elements -->
   <app-show-contacts *ngIf="globalFunctions.memberlist"></app-show-contacts>
   <app-add-to-channel *ngIf="globalFunctions.showContacts"></app-add-to-channel> 
   <app-edit-channel *ngIf="globalFunctions.editChannelOverlayOpen"></app-edit-channel>

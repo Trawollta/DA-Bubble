@@ -1,31 +1,31 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core'; 
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { user } from '@angular/fire/auth';
-
-
+import { ChannelMenuComponent } from '../channel-menu.component';
+import { User } from 'app/models/user.class';
+import { ChatChannel } from 'app/models/chatChannel.class';
 
 @Component({
   selector: 'app-show-contacts',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ChannelMenuComponent],
   templateUrl: './show-contacts.component.html',
-  styleUrl: './show-contacts.component.scss'
+  styleUrls: ['./show-contacts.component.scss'] // Fehlerkorrektur: styleUrls (plural) statt styleUrl
 })
-export class ShowContactsComponent {
+export class ShowContactsComponent  {
   allUsers: any = [];
 
-  globalFunctions = inject(GlobalFunctionsService);
-  globalVariables= inject (GlobalVariablesService)
+  // Services über DI (Dependency Injection) injizieren
 
-  openDirectMessageUser(user: any) {
-  let userToChatWith = [user];
-    this.globalVariables.isUserChat = true;
-    this.globalVariables.userToChatWith.name = user.name;
-    this.globalVariables.userToChatWith.img = user.img;
-   
-   
+
+  globalFunctions = inject(GlobalFunctionsService);
+  globalVariables = inject(GlobalVariablesService);
+
+  constructor() {
+    // Konstruktor bleibt für die Injektion leer, da wir die modernere inject-Methode verwenden
   }
 
-}
+
+  }
+

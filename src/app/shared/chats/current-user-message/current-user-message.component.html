@@ -2,8 +2,8 @@
   <div class="current-user-content">
     <div class="info-area">
       <div class="info-area-wrapper">
-        <span class="messagetime">12:50</span>
-        <span class="username">{{ globalVariables.currentUser.name }}</span>
+        <span class="messagetime">{{ postingTime | date: 'H:mm' }}</span>
+        <span class="username">{{ user.name }}</span>
       </div>
       <div class="speech-bubble-current-user" (click)="openEmojis()" (click)="globaleFunctions.openReactionDialog()">
         <span class="speech-bubble-current-user-text">{{ message.message}}</span>
@@ -13,9 +13,10 @@
         <span class="replie-text" (click)="openAnswers()">1 Antworten</span>
         <span class="timestamp-text">Letze Antwort Time</span>
       </div>
+
     </div>
   </div>
   <div class="user">
-    <img [src]="globalVariables.currentUser.img" alt="" />
+    <img [src]="user.img" alt="" />
   </div>
 </section>

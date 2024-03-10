@@ -53,6 +53,7 @@ export class ChatComponent {
     if(this.globalVariables.messageData.message !== ''){
       this.globalVariables.messageData.userId = this.globalVariables.activeID;
       this.globalVariables.messageData.timestamp = new Date().getTime();
+      this.globalVariables.messageData.answerto = '';
       this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId);
       this.globalVariables.messageData.message='';
     }

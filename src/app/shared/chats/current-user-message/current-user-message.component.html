@@ -5,11 +5,8 @@
         <span class="messagetime">12:50</span>
         <span class="username">{{ globalVariables.currentUser.name }}</span>
       </div>
-      <div class="speech-bubble-current-user" (click)="openEmojis()">
+      <div class="speech-bubble-current-user" (click)="openEmojis()" (click)="globaleFunctions.openReactionDialog()">
         <span class="speech-bubble-current-user-text">{{ message.message}}</span>
-      </div>
-      <div class="reaction-btn" (click)="globaleFunctions.openReactionDialog()">
-        <img src="../../../assets/img/reactions/three_dots.svg" alt="" />
       </div>
       <app-reactions *ngIf="globaleFunctions.openReaction"></app-reactions>
       <div class="replie-wrapper">

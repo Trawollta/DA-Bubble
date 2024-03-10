@@ -1,6 +1,6 @@
 <div class="allMessages">
     <div class="dateBlockContainer" *ngFor="let message of globalVariablesService.chatChannel.messages">
-        <ng-container *ngIf="shouldDisplayDate(message.timestamp)">
+        <ng-container *ngIf="showDateBar(message.timestamp)">
             <div class="newDate">
                 <div class="leftBar"></div>
                 <div class="dateContainer">

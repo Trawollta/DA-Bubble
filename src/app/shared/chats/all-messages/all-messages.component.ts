@@ -1,4 +1,4 @@
-import { Component, Input, LOCALE_ID, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { OtherUserMessageComponent } from 'app/shared/chats/other-user-message/other-user-message.component';
 import { CurrentUserMessageComponent } from 'app/shared/chats/current-user-message/current-user-message.component';
 import { ChatChannel } from 'app/models/chatChannel.class';
@@ -15,7 +15,7 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
   standalone: true,
   templateUrl: './all-messages.component.html',
   styleUrl: './all-messages.component.scss',
-  // providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],
+  
   imports: [
     CommonModule,
     OtherUserMessageComponent,
@@ -30,7 +30,7 @@ export class AllMessagesComponent {
   globalVariablesService = inject(GlobalVariablesService);
   GlobalFunctionsService = inject(GlobalFunctionsService);
 
-  //@Input() message: any;
+  
 
   chatChannel: ChatChannel = new ChatChannel;
   chatUsers: ChatUsers = new ChatUsers;
@@ -38,8 +38,9 @@ export class AllMessagesComponent {
 
   lastDisplayedDate: Date = new Date();
 
+  constructor(private changeDetector: ChangeDetectorRef){}
   ngOnInit() {
-
+    //this.lastDisplayedDate = new Date()
      if (this.globalVariablesService.chatChannel.messages.length > 0) {
       this.lastDisplayedDate = new Date(this.globalVariablesService.chatChannel.messages[0].timestamp);
     }
@@ -63,12 +64,17 @@ export class AllMessagesComponent {
    * @param messageTimestamp - timestamp of message
    * @returns - boolean
    */
-  shouldDisplayDate(messageTimestamp: number): boolean {
+  showDateBar(messageTimestamp: number): boolean {
     const displayDate = this.lastDisplayedDate.toLocaleDateString() !== new Date(messageTimestamp).toLocaleDateString();
-    if (displayDate) {
+    if (displayDate && messageTimestamp !=0) {
       this.lastDisplayedDate = new Date(messageTimestamp);
     }
     return displayDate;
+  }
+
+//this function avoids the ExpressionChangedAfterItHasBeenCheckedError in the developer Mode
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 
 }

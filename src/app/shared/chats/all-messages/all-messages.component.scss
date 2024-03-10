@@ -1,8 +1,46 @@
 @import "../../../../styles.scss";
-.allMessages{
-    @include dFlex($fd:column, $ai:normal, $jc:space-between, $g:32px);
+
+.allMessages {
+
     height: 100%;
     width: 100%;
-    padding-right: 16px;
-    box-sizing: border-box;
+
+    .dateBlockContainer {
+        width: 100%;
+        @include dFlex($fd: column, $ai: normal, $jc: space-between, $g: 32px);
+        padding-right: 16px;
+        box-sizing: border-box;
+        margin-top: 32px;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        .newDate {
+            width: 100%;
+            @include dFlex();
+
+            .leftBar {
+                height: 1px;
+                flex: 1;
+                background-color: $light_purple;
+            }
+
+            .dateContainer {
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 24px;
+                color: $black;
+                border: 1px solid $light_purple;
+                border-radius: 30px;
+                padding: 0 15px;
+            }
+
+            .rightBar {
+                height: 1px;
+                flex: 1;
+                background-color: $light_purple;
+            }
+        }
+    }
 }

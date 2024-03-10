@@ -2,7 +2,7 @@
   <div class="current-user-content">
     <div class="info-area">
       <div class="info-area-wrapper">
-        <span class="messagetime">{{ postingTime | date: 'dd.MM.YYYY H:mm:ss' }}</span>
+        <span class="messagetime">{{ postingTime | date: 'H:mm' }}</span>
         <span class="username">{{ user.name }}</span>
       </div>
       <div class="speech-bubble-current-user" (click)="openEmojis()">

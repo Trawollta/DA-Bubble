@@ -13,12 +13,18 @@
       alt=""
     />
   </div>
-  <div>
+  <div (click)="openEmojis()">
     <img
       class="reaction-icon"
       src="./assets/img/icons/add_reaction.svg"
       alt=""
     />
+    <div id="emoji-selector" class="emojis">
+      <div id="emoji-list">
+        <span class="emoji" *ngFor="let emoji of emojiList" (click)="showInInput(emoji)" >{{ emoji['character'] }}</span>
+      </div>
+    </div> 
+    
   </div>
   <div (click)="editMessage()">
     <img class="edit-icon" src="./assets/img/icons/comment.svg" alt="" />
@@ -28,8 +34,3 @@
   </div>
 </main>
 
-<div id="emoji-selector">
-  <div id="emoji-list">
-    <span class="emoji" *ngFor="let emoji of emojiList" (click)="showInInput(emoji)" >{{ emoji['character'] }}</span>
-  </div>
-</div> 

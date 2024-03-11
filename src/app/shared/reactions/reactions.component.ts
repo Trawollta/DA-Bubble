@@ -56,7 +56,18 @@ export class ReactionsComponent {
    */
   public showInInput(emoji: any): void {
     this.newEmoji.emit(emoji);
-    this.choosedEmoji = emoji.character; 
+    this.choosedEmoji = emoji.character;
     console.log(this.choosedEmoji);
+  }
+
+  openEmojis() {
+    const emojiDiv = document.getElementById('emoji-selector');
+    if (emojiDiv) {
+      if (emojiDiv.style.display === 'none') {
+        emojiDiv.style.display = 'flex';
+      } else {
+        emojiDiv.style.display = 'none';
+      }
+    }
   }
 }

@@ -66,13 +66,13 @@ main {
 }
 
 #emoji-selector {
-  display: flex;
   flex-direction: column;
   min-width: 350px;
   width: 350px;
   background-color: rgb(247, 247, 247);
   border-radius: 20px;
   border: 1px solid rgba(128, 128, 128, 0.232);
+  position: fixed;
 
   @media (max-width: 420px) {
     height: 250px;
@@ -124,4 +124,8 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.emojis {
+  display: none;
 }

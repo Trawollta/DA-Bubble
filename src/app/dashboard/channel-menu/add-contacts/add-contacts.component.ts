@@ -10,7 +10,7 @@ import { FirebaseCannelService } from 'app/services/firebase-services/firebase-c
 import { Observable, from, map, of, Subject} from 'rxjs';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { User } from 'app/models/user.class';
-import { Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { ChannelMenuComponent } from '../channel-menu.component';
 import { FormsModule } from '@angular/forms';
 
@@ -42,7 +42,7 @@ export class AddContactsComponent implements OnInit {
   allUsers: any = [];
   showCertainPeople: boolean = false;
 
-  selectedUserIds: string[] = [];
+  selectedUsers: any[] = [];
 
   isChecked: boolean[] = new Array(this.allUsers.length).fill(false);
 
@@ -64,7 +64,12 @@ export class AddContactsComponent implements OnInit {
 
   onChange(index: number) {
     this.isChecked[index] = !this.isChecked[index];
-    console.log('isChecked:', this.isChecked[index]);
+    if (this.isChecked[index]) {
+      this.selectedUsers.push(this.allUsers[index]);
+    } else {
+      this.selectedUsers = this.selectedUsers.filter((user, i) => i !== index);
+    }
+    console.log('selectedUsers:', this.selectedUsers);
   }
 
 
@@ -100,11 +105,32 @@ export class AddContactsComponent implements OnInit {
   }
 
 
-  addChannelwithChoosenMembers(){
-
+  async addChannelwithChoosenMembers() {
+    const selectedUserIds = this.selectedUsers.map(user => user.id);
+  
+    const newChannelData = {
+      channelName: this.globalVariables.channelData.channelName,
+      description: this.globalVariables.channelData.description,
+      members: selectedUserIds,
+    };
+  
+    try {
+      const docRef = await addDoc(collection(this.firestore, 'channels'), newChannelData);
+      console.log("Neuer Kanal erstellt mit ID:", docRef.id);
+      this.resetAndCloseOverlay();
+    } catch (error) {
+      console.error("Fehler beim Erstellen des Kanals:", error);
+    }
+  
   }
-
-
-
+  
+  resetAndCloseOverlay() {
+    this.globalVariables.channelData.channelName = '';
+    this.globalVariables.channelData.description = '';
+    this.selectedUsers = []; 
+    this.showCertainPeople = false; 
+    this.globalFunctions.closeUserOverlay(); 
+  }
+  
 
 }

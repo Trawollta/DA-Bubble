@@ -6,9 +6,9 @@ export class ChatChannel {
         timestamp: number,
         userId: string
     }[];
-    channelMember: {
+ /*    channelMember: {
         userId: string
-    }[];
+    }[]; */
 
     
 
@@ -22,9 +22,9 @@ export class ChatChannel {
             timestamp: 0,
             userId: ''
         }];
-        this.channelMember = obj && obj.channelMember ? obj.channelMember : [{
+       /*  this.channelMember = obj && obj.channelMember ? obj.channelMember : [{
             userId: ''
-        }]
+        }] */
         this.sortMessagesByTimestamp();
         
     }

@@ -5,6 +5,7 @@
   gap: 30px;
   display: flex;
   justify-content: flex-end;
+  position: relative;
  
 
   &:hover {
@@ -22,7 +23,7 @@
       gap: 8px;
 
       .info-area-wrapper {
-        //height: 25px;
+        justify-content: flex-end !important;
         @include dFlex($g: 20px, $jc: flex-start);
 
         .username {
@@ -113,6 +114,14 @@
       border-radius: 40px;
     }
   }
+}
+
+.reaction-field {
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .d-none {

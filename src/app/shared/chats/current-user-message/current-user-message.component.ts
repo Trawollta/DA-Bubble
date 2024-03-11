@@ -126,9 +126,8 @@ export class CurrentUserMessageComponent {
 
   @HostListener('document:click', ['$event'])
   onClick(event: any) {
-    // Überprüfen, ob der Klick außerhalb des app-reactions-Elements stattgefunden hat
     if (!this.elementRef.nativeElement.contains(event.target)) {
-      this.onCloseReactions(); // Schließe das app-reactions-Element
+      this.onCloseReactions(); 
     }
   }
 }

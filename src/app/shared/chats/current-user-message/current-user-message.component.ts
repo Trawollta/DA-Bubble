@@ -1,29 +1,25 @@
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Firestore, doc, collection, onSnapshot, } from '@angular/fire/firestore';
+import {
+  Firestore,
+  doc,
+  collection,
+  onSnapshot,
+} from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { ReactionsComponent } from 'app/shared/reactions/reactions.component';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { User } from 'app/models/user.class';
 
-
 @Component({
   selector: 'app-current-user-message',
   standalone: true,
-  imports: [
-    ReactionsComponent,
-    CommonModule,
-    DatePipe
-  ],
+  imports: [ReactionsComponent, CommonModule, DatePipe],
   templateUrl: './current-user-message.component.html',
   styleUrl: './current-user-message.component.scss',
 })
-
-
-
 export class CurrentUserMessageComponent {
-
   firestore: Firestore = inject(Firestore);
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
@@ -32,14 +28,13 @@ export class CurrentUserMessageComponent {
   @Input() message: any;
 
   postingTime: string | null = null;
-  user: User = new User;
+  user: User = new User();
 
   unsubUser;
   userId: string = 'guest';
 
-  constructor() {
+  constructor(private changeDetector: ChangeDetectorRef) {
     this.unsubUser = this.getUser(this.userId);
-
   }
 
   /**
@@ -50,10 +45,10 @@ export class CurrentUserMessageComponent {
   }
 
   /**
-    * thsi function returns the reference to the user doc
-    * @param docId - id of user
-    * @returns - referenz of document
-    */
+   * thsi function returns the reference to the user doc
+   * @param docId - id of user
+   * @returns - referenz of document
+   */
   getUserRef(docId: string) {
     return doc(collection(this.firestore, 'users'), docId);
   }
@@ -80,8 +75,6 @@ export class CurrentUserMessageComponent {
     this.postingTime = this.message.timestamp;
   }
 
-
-
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');
     if (emojiDiv && emojiDiv.classList.contains('d-none')) {
@@ -92,13 +85,12 @@ export class CurrentUserMessageComponent {
   }
 
   openAnswers() {
-    console.log('was ist in message current: ',this.message);
+    console.log('was ist in message current: ', this.message);
     this.globalVariables.showThread = !this.globalVariables.showThread;
     this.globalVariables.openChat = 'isChatVisable';
-    this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();
-    
-   
-    
+    this.globalVariables.messageData.answerto =
+      this.message.userId + '_' + this.message.timestamp.toString();
+
     if (window.innerWidth < 1100) this.globalVariables.showChannelMenu = false;
     if (window.innerWidth < 700) {
       this.globalVariables.showChannelMenu = false;
@@ -108,5 +100,9 @@ export class CurrentUserMessageComponent {
 
   openReactionDialog() {
     console.log('test');
+  }
+
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }

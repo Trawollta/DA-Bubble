@@ -8,7 +8,12 @@
       <div class="speech-bubble-current-user" (click)="openEmojis()" (click)="globalFunctions.openReactionDialog()">
         <span class="speech-bubble-current-user-text">{{ message.message}}</span>
       </div>
-      <app-reactions class="reaction-field" *ngIf="globalFunctions.openReaction"></app-reactions>
+      <app-reactions class="reaction-field" *ngIf="globalFunctions.openReaction">
+      </app-reactions>
+      <div>
+        <span>Test {{ globalVariables.choosedEmoji }}</span>
+      </div>
+      
       <div class="replie-wrapper">
         <span class="replie-text" (click)="openAnswers()">1 Antworten</span>
         <span class="timestamp-text">Letze Antwort Time</span>

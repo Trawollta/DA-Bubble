@@ -12,6 +12,7 @@ import { FirebaseUserService } from 'app/services/firebase-services/firebase-use
 import { User } from 'app/models/user.class';
 import { Firestore } from '@angular/fire/firestore';
 import { ChannelMenuComponent } from '../channel-menu.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-contacts',
@@ -21,7 +22,10 @@ import { ChannelMenuComponent } from '../channel-menu.component';
     CommonModule,
     InputfieldComponent,
     AddNewChannelComponent,
-    ChannelMenuComponent
+    ChannelMenuComponent,
+    
+    FormsModule
+
   ],
   templateUrl: './add-contacts.component.html',
   styleUrl: './add-contacts.component.scss'
@@ -38,6 +42,11 @@ export class AddContactsComponent implements OnInit {
   allUsers: any = [];
   showCertainPeople: boolean = false;
 
+  selectedUserIds: string[] = [];
+
+  isChecked: boolean[] = new Array(this.allUsers.length).fill(false);
+
+
 
   [x: string]: any;
   private searchTerms = new Subject<string>();
@@ -50,7 +59,12 @@ export class AddContactsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.globalFunctions.getCollection('users', this.allUsers); // Angenommen, `this.users` ist Ihre lokale Variable, die die Benutzerdaten speichert
+    this.globalFunctions.getCollection('users', this.allUsers); 
+  }
+
+  onChange(index: number) {
+    this.isChecked[index] = !this.isChecked[index];
+    console.log('isChecked:', this.isChecked[index]);
   }
 
 
@@ -83,6 +97,11 @@ export class AddContactsComponent implements OnInit {
     this.globalVariables.channelData.description = '';
     this.globalVariables.channelData.chatId = '';
     this.globalFunctions.closeUserOverlay();
+  }
+
+
+  addChannelwithChoosenMembers(){
+
   }
 
 

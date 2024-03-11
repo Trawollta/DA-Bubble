@@ -11,8 +11,9 @@
       <app-reactions class="reaction-field" *ngIf="globalFunctions.openReaction">
       </app-reactions>
       <div>
-        <span>Test {{ globalVariables.choosedEmoji }}</span>
+        <span *ngFor="let emoji of globalVariables.choosedEmoji">{{ emoji }}</span>
       </div>
+      
       
       <div class="replie-wrapper">
         <span class="replie-text" (click)="openAnswers()">1 Antworten</span>

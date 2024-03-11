@@ -51,15 +51,21 @@ export class ReactionsComponent {
   }
 
   /**
-   * Emits the choosen Emoji in newEmoji and sets it to choosedEmoji variable
+   * Put the Emoji into the choosedEmoji array
    * @param {string} emoji - The selected emoji.
    */
   public showInInput(emoji: any): void {
     this.newEmoji.emit(emoji);
-    this.choosedEmoji = emoji.character;
-    console.log(this.choosedEmoji);
+    if (!this.globaleVariable.choosedEmoji) {
+      this.globaleVariable.choosedEmoji = []; // Initialisiere choosedEmoji als Array, falls es noch nicht existiert
+    }
+    this.globaleVariable.choosedEmoji.push(emoji.character); // Füge das neue Emoji zu choosedEmoji hinzu
+    console.log(this.globaleVariable.choosedEmoji);
   }
 
+  /**
+   * Open and close Emoji Picker depend on style value.
+   */
   openEmojis() {
     const emojiDiv = document.getElementById('emoji-selector');
     if (emojiDiv) {

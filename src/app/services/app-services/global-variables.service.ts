@@ -76,7 +76,7 @@ export class GlobalVariablesService {
   // variable is used in profile card and firebase-user.service.ts
   activeID: string = 'guest'; // this is the id of guest user of testusers
 
-  choosedEmoji: any = []; // this is the emoji which is choosen in emoji-picker
+  choosedEmoji: any = ['😀', '😀']; // this is the emoji which is choosen in emoji-picker
 
   constructor() {}
 

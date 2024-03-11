@@ -5,13 +5,12 @@
         <span class="messagetime">{{ postingTime | date: 'H:mm' }}</span>
         <span class="username">{{ user.name }}</span>
       </div>
-      <div class="speech-bubble-current-user" (click)="openEmojis()" (click)="globalFunctions.openReactionDialog()">
+      <div class="speech-bubble-current-user" (click)="openEmojis()" (click)="onSelectMessage(message.id)">
         <span class="speech-bubble-current-user-text">{{ message.message}}</span>
       </div>
-      <app-reactions class="reaction-field" *ngIf="globalFunctions.openReaction">
-      </app-reactions>
-      <div>
-        <span *ngFor="let emoji of globalVariables.choosedEmoji">{{ emoji }}</span>
+        <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id"></app-reactions>
+      <div class="reaction-emojis">
+        <span class="reaction-emoji-field" *ngFor="let emoji of globalVariables.choosedEmoji">{{ emoji }}</span>
       </div>
       
       

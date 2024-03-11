@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  Input,
+} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import {
   Firestore,
@@ -24,6 +31,8 @@ export class CurrentUserMessageComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
+  openReaction: boolean = false;
+  selectedMessage: string = '';
 
   @Input() message: any;
 
@@ -33,7 +42,10 @@ export class CurrentUserMessageComponent {
   unsubUser;
   userId: string = 'guest';
 
-  constructor(private changeDetector: ChangeDetectorRef) {
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    private elementRef: ElementRef
+  ) {
     this.unsubUser = this.getUser(this.userId);
   }
 
@@ -98,11 +110,25 @@ export class CurrentUserMessageComponent {
     }
   }
 
-  openReactionDialog() {
-    console.log('test');
-  }
-
   ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();
+  }
+
+  onSelectMessage(message: string) {
+    this.selectedMessage = message;
+    this.openReaction = true;
+  }
+
+  onCloseReactions() {
+    this.openReaction = false;
+    this.selectedMessage = '';
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: any) {
+    // Überprüfen, ob der Klick außerhalb des app-reactions-Elements stattgefunden hat
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.onCloseReactions(); // Schließe das app-reactions-Element
+    }
   }
 }

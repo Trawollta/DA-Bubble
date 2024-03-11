@@ -24,26 +24,29 @@
             <label for="addCertainPeople">Bestimmte Leute hinzufügen</label>
           </div>
 
-                <div *ngIf="showCertainPeople" class="input-icon">
-                    <app-inputfield
-                      [classes]="['standard']"
-                      type="search" 
-                      placeholder="Mitglieder suchen"
-                    ></app-inputfield> 
-                  
-                    <ul>
-                      <li *ngFor="let user of allUsers">
-                        <input type="checkbox" [id]="user.id">
-                        <label [for]="user.id">{{ user.name }}</label>
-                      </li>
-                    </ul>
-                  </div>
+          <div *ngIf="showCertainPeople" class="input-icon">
+            <app-inputfield
+              [classes]="['standard']"
+              type="search" 
+              placeholder="Mitglieder suchen"
+            ></app-inputfield> 
+          
+            <ul class="user-list">
+              <li *ngFor="let user of allUsers">
+                <input type="checkbox" [id]="user.id">
+                <label [for]="user.id" class="user-label">
+                  <img [src]="user.img" alt="userImage" class="user-img">{{ user.name }}
+                </label>
+              </li>
+            </ul>
+          </div>
 
         <div class="button-area">
-            <app-button
+            <app-button 
             [classes]="['primary']"
             caption="Erstellen"
             imgPath=""
+            (click)="addNewChannel()"
             ></app-button>
         </div>
     </div>

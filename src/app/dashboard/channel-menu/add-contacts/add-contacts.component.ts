@@ -39,8 +39,6 @@ export class AddContactsComponent implements OnInit {
   showCertainPeople: boolean = false;
 
 
-  selectedUserIndexes: number[] = [];
-
   [x: string]: any;
   private searchTerms = new Subject<string>();
 
@@ -57,10 +55,7 @@ export class AddContactsComponent implements OnInit {
 
 
 
-
   async addNewChannel() {
-
-
 
     //add new chanel and return channelId
     await this.globalFunctions.addData('channels', this.globalVariables.channelData).then(response => {

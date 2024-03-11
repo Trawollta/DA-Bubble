@@ -90,6 +90,8 @@ export class OtherUserMessageComponent {
   openAnswers() {
     console.log('was ist in message: ',this.message);
     this.globalVariables.showThread = !this.globalVariables.showThread;
+    this.messageForThread();
+    console.log('was ist in messageThred bei OpenAnswer: ',this.globalVariables.messageThreadData);
     this.globalVariables.openChat = 'isPrivatChatVisable';
     this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();
   
@@ -100,6 +102,13 @@ export class OtherUserMessageComponent {
       this.globalVariables.showChannelMenu = false;
       this.globalVariables.isChatVisable = false;
     }
+  }
+
+  messageForThread(){
+    this.globalVariables.messageThreadData.message = this.message.message;
+    this.globalVariables.messageThreadData.answerto = this.message.answerto;
+    this.globalVariables.messageThreadData.userId = this.message.userId;
+    this.globalVariables.messageThreadData.timestamp = this.message.timestamp;
   }
 
 }

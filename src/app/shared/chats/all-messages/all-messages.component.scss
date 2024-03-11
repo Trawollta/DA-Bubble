@@ -10,16 +10,17 @@
         @include dFlex($fd: column, $ai: normal, $jc: space-between, $g: 32px);
         padding-right: 16px;
         box-sizing: border-box;
-        margin-top: 32px;
+       // margin-top: 32px;
 
         &:first-child {
-            margin-top: 0;
+            margin-top: -32px;
         }
 
         .newDate {
             width: 100%;
             @include dFlex();
-
+            margin-top: 32px;
+           
             .leftBar {
                 height: 1px;
                 flex: 1;

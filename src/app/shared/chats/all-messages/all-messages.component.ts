@@ -42,7 +42,7 @@ export class AllMessagesComponent {
 
   @Input() isChat: boolean = false;
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(private changeDetector: ChangeDetectorRef) { }
 
   //this function avoids the ExpressionChangedAfterItHasBeenCheckedError in the developer Mode
   ngAfterContentChecked(): void {
@@ -65,11 +65,8 @@ export class AllMessagesComponent {
    * @returns - weekday as string
    */
   getWeekDay(timestamp: number): string {
-    const today =
-      new Date(timestamp).toDateString() == new Date().toDateString();
-    return today
-      ? 'Heute'
-      : new Date(timestamp).toLocaleDateString('de-DE', { weekday: 'long' });
+    const today = new Date(timestamp).toDateString() == new Date().toDateString();
+    return today ? 'Heute' : new Date(timestamp).toLocaleDateString('de-DE', { weekday: 'long' });
   }
 
   /**
@@ -78,10 +75,12 @@ export class AllMessagesComponent {
    * @param messageTimestamp - timestamp of message
    * @returns - boolean
    */
-  showDateBar(messageTimestamp: number): boolean {
-    const displayDate =
-      this.lastDisplayedDate.toLocaleDateString() !==
-      new Date(messageTimestamp).toLocaleDateString();
+  showDateBar(messageTimestamp: number, answerTo: string): boolean {
+    let displayDate = false;
+    if(this.isChat){
+    displayDate=(this.lastDisplayedDate.toLocaleDateString() !== new Date(messageTimestamp).toLocaleDateString())
+      && answerTo == '';
+    }
     if (displayDate && messageTimestamp != 0) {
       this.lastDisplayedDate = new Date(messageTimestamp);
     }

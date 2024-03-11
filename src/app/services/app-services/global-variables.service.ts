@@ -45,6 +45,21 @@ export class GlobalVariablesService {
     userId: '',
     timestamp: 0,
   };
+   //this is the object for collecting message data from input field in thread
+   messageThreadData = {
+    message: '',
+    answerto: '',
+    userId: '',
+    timestamp: 0,
+  };
+    //this is the object for collecting message data for first message in thread 
+    messageThreadStart = {
+      message: '',
+      answerto: '',
+      userId: '',
+      timestamp: 0,
+    };
+
 
   //this is the object for the active channel information. Used in channel-menu
   openChannel = {

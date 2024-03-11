@@ -6,7 +6,7 @@
       <h2>Kontaktliste</h2>
       <div class="contacts-list">
         <!-- Dynamisch generierte Kontaktliste -->
-        <div class="contact-item" *ngFor="let user of allUsers" (click)="openDirectMessageUser(user)">
+        <div class="contact-item" *ngFor="let user of allUsers">
           <img src="{{user.img}}" alt="userImage" class="contact-img">
           <p class="contact-name">{{user.name}}</p>
         </div>

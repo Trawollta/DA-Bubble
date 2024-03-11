@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, addDoc, updateDoc, doc, setDoc, onSnapshot, arrayUnion } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, updateDoc, doc, collectionData, setDoc, onSnapshot, arrayUnion } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { ChatChannel } from '../../models/chatChannel.class';
 import { ChatUsers } from '../../models/chatUsers.class';
-
+import { User } from 'app/models/user.class';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +15,7 @@ export class FirebaseChatService {
   activeID: string = this.globalVariablesService.activeID;
   activeChannelChatId: string = this.globalVariablesService.openChannel.chatId;
   chatChannel: ChatChannel = new ChatChannel;
-
+  user: User = new User;
 
   unsubChat;
 
@@ -120,10 +120,10 @@ export class FirebaseChatService {
    * @param chatId - id of chat 
    * @returns - 
    */
-  sendMessage(chatId:string){
+  sendMessage(chatId: string) {
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
       messages: arrayUnion(this.newMessageToJson())
-  });
+    });
   }
 
   /**
@@ -138,7 +138,5 @@ export class FirebaseChatService {
       timestamp: this.globalVariablesService.messageData.timestamp
     };
   }
-
-
 
 }

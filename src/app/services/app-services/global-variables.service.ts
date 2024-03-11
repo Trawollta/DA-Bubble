@@ -43,16 +43,16 @@ export class GlobalVariablesService {
     message: '',
     answerto: '',
     userId: '',
-    timestamp: 0
-  }
+    timestamp: 0,
+  };
 
   //this is the object for the active channel information. Used in channel-menu
   openChannel = {
-    titel:  'Willkommen',
-    desc:  '',
-    id:  'fsjWrBdDhpg1SvocXmxS',
-    chatId:'NQMdt08FAcXbVroDLhvm'
-  }
+    titel: 'Willkommen',
+    desc: '',
+    id: 'fsjWrBdDhpg1SvocXmxS',
+    chatId: 'NQMdt08FAcXbVroDLhvm',
+  };
 
   channelData = {
     description: '',
@@ -64,9 +64,7 @@ export class GlobalVariablesService {
 
   //variable for chats
   activeChatId: string = ''; // used to identify the releated chat
-  chatChannel: ChatChannel = new ChatChannel;
-
-
+  chatChannel: ChatChannel = new ChatChannel();
 
   currentUser = {
     name: 'Guest',
@@ -76,9 +74,11 @@ export class GlobalVariablesService {
   };
   //this is for test purpose. It could be take over when working.
   // variable is used in profile card and firebase-user.service.ts
-  activeID: string = 'gvmQbxpAqE8t1ftC2BOp'; // this is the id of guest user of testusers
+  activeID: string = 'guest'; // this is the id of guest user of testusers
 
-  constructor() { }
+  choosedEmoji: any = ['😀', '😀']; // this is the emoji which is choosen in emoji-picker
+
+  constructor() {}
 
   //eine Idee:
   //wir müssen die User überall mit der ID ansprechen und nur wenn wir den Namen brauchen holen wir ihn.

@@ -1,11 +1,22 @@
+//import { User } from "./user.class";
 export class channel {
 
     channelName: string;
-    memberId: [];
+    description: string;
+    creator: string; 
+   // members: User[];
+    channelMember: {
+        userId: string
+    }[];
 
     constructor(obj?: any) {
         this.channelName = obj ? obj.channelName : '';
-        this.memberId = []; 
+        this.description = obj ? obj.description : '';
+        this.creator = obj ? obj.creator : ''; // hier kommt die active UserId rein
+        this.channelMember = obj && obj.channelMember ? obj.channelMember : [{
+            userId: ''
+        }]
+        //this.members = obj && obj.members ? obj.members.map((member: any) => new User(member)) : [];
 
     }
 }

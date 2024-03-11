@@ -88,13 +88,17 @@ export class OtherUserMessageComponent {
   }
 
   openAnswers() {
+    console.log('was ist in message: ',this.message);
     this.globalVariables.showThread = !this.globalVariables.showThread;
     this.globalVariables.openChat = 'isPrivatChatVisable';
+    this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();
+  
+
     if (window.innerWidth < 1100)
       this.globalVariables.showChannelMenu = false;
     if (window.innerWidth < 700) {
       this.globalVariables.showChannelMenu = false;
-      // this.globalVariables.isPrivatChatVisable = false;
+      this.globalVariables.isChatVisable = false;
     }
   }
 

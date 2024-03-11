@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, AfterContentChecked, Input } from '@angular/core';
 import { OtherUserMessageComponent } from 'app/shared/chats/other-user-message/other-user-message.component';
 import { CurrentUserMessageComponent } from 'app/shared/chats/current-user-message/current-user-message.component';
 import { ChatChannel } from 'app/models/chatChannel.class';
@@ -38,6 +38,8 @@ export class AllMessagesComponent {
 
   lastDisplayedDate: Date = new Date();
 
+  @Input() isChat:boolean = false;
+
   constructor(private changeDetector: ChangeDetectorRef){}
   ngOnInit() {
     //this.lastDisplayedDate = new Date()
@@ -76,5 +78,35 @@ export class AllMessagesComponent {
   ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();
   }
+
+  /**
+   * this function is for setting the conditions for showing all messages from current users which are not an answer
+   * @param message - object  
+   * @returns - boolean
+   */
+  meetContitionsCurrentUser(message:{ answerto: string; message: string; timestamp: number; userId: string; }){
+   // return (message.userId === this.globalVariablesService.activeID && message.message != '' && message.answerto =='');
+    let test:boolean = false;
+    if(this.isChat)
+    test=(message.userId === this.globalVariablesService.activeID && message.message != '' && message.answerto =='');
+  else test=false;
+    return test;
+ 
+ 
+  }
+
+    /**
+   * this function is for setting the conditions for showing all messages from other users which are not an answer
+   * @param message - object  
+   * @returns - boolean
+   */
+    meetContitionsOtherUser(message:{ answerto: string; message: string; timestamp: number; userId: string; }){
+      let test:boolean = false;
+      if(this.isChat)
+      test=(message.userId !== this.globalVariablesService.activeID && message.message != '' && message.answerto =='');
+    else test=false;
+      return test;
+    }
+  
 
 }

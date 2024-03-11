@@ -1,18 +1,6 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  HostListener,
-  inject,
-  Input,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, inject, Input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import {
-  Firestore,
-  doc,
-  collection,
-  onSnapshot,
-} from '@angular/fire/firestore';
+import { Firestore, doc, collection, onSnapshot } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { ReactionsComponent } from 'app/shared/reactions/reactions.component';
@@ -22,7 +10,11 @@ import { User } from 'app/models/user.class';
 @Component({
   selector: 'app-current-user-message',
   standalone: true,
-  imports: [ReactionsComponent, CommonModule, DatePipe],
+  imports: [
+    ReactionsComponent,
+    CommonModule,
+    DatePipe
+  ],
   templateUrl: './current-user-message.component.html',
   styleUrl: './current-user-message.component.scss',
 })
@@ -97,17 +89,23 @@ export class CurrentUserMessageComponent {
   }
 
   openAnswers() {
-    console.log('was ist in message current: ', this.message);
     this.globalVariables.showThread = !this.globalVariables.showThread;
+    this.fillInitialUserObj();
     this.globalVariables.openChat = 'isChatVisable';
-    this.globalVariables.messageData.answerto =
-      this.message.userId + '_' + this.message.timestamp.toString();
-
+    this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();
     if (window.innerWidth < 1100) this.globalVariables.showChannelMenu = false;
     if (window.innerWidth < 700) {
       this.globalVariables.showChannelMenu = false;
       this.globalVariables.isChatVisable = false;
     }
+  }
+
+  fillInitialUserObj() {
+    this.globalVariables.messageThreadStart.message = this.message.message;
+    this.globalVariables.messageThreadStart.userId = this.message.userId;
+    this.globalVariables.messageThreadStart.timestamp = this.message.timestamp;
+    this.globalVariables.messageThreadStart.userName = this.user.name;
+    this.globalVariables.messageThreadStart.img = this.user.img;
   }
 
   ngAfterContentChecked(): void {
@@ -127,7 +125,7 @@ export class CurrentUserMessageComponent {
   @HostListener('document:click', ['$event'])
   onClick(event: any) {
     if (!this.elementRef.nativeElement.contains(event.target)) {
-      this.onCloseReactions(); 
+      this.onCloseReactions();
     }
   }
 }

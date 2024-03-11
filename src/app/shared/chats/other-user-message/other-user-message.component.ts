@@ -87,28 +87,25 @@ export class OtherUserMessageComponent {
     }
   }
 
-  openAnswers() {
-    console.log('was ist in message: ',this.message);
-    this.globalVariables.showThread = !this.globalVariables.showThread;
-    this.messageForThread();
-    console.log('was ist in messageThred bei OpenAnswer: ',this.globalVariables.messageThreadData);
-    this.globalVariables.openChat = 'isPrivatChatVisable';
-    this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();
-  
 
-    if (window.innerWidth < 1100)
-      this.globalVariables.showChannelMenu = false;
+  openAnswers() {
+    this.globalVariables.showThread = !this.globalVariables.showThread;
+    this.fillInitialUserObj();
+    this.globalVariables.openChat = 'isChatVisable';
+    this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();
+    if (window.innerWidth < 1100) this.globalVariables.showChannelMenu = false;
     if (window.innerWidth < 700) {
       this.globalVariables.showChannelMenu = false;
       this.globalVariables.isChatVisable = false;
     }
   }
 
-  messageForThread(){
-    this.globalVariables.messageThreadData.message = this.message.message;
-    this.globalVariables.messageThreadData.answerto = this.message.answerto;
-    this.globalVariables.messageThreadData.userId = this.message.userId;
-    this.globalVariables.messageThreadData.timestamp = this.message.timestamp;
+  fillInitialUserObj() {
+    this.globalVariables.messageThreadStart.message = this.message.message;
+    this.globalVariables.messageThreadStart.userId = this.message.userId;
+    this.globalVariables.messageThreadStart.timestamp = this.message.timestamp;
+    this.globalVariables.messageThreadStart.userName = this.user.name;
+    this.globalVariables.messageThreadStart.img = this.user.img;
   }
 
 }

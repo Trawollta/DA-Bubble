@@ -7,9 +7,25 @@
     </div>
   </section>
   <section class="message-container">
-    <app-all-messages [isChat]="false"></app-all-messages>
+    <!-- first element -->
+    <div class="initialuser">
+      <div class="current-user-content">
+        <div class="info-area">
+          <div class="info-area-wrapper">
+            <span class="messagetime">{{ globalVariables.messageThreadStart.timestamp | date: 'H:mm' }}</span>
+            <span class="username">{{ globalVariables.messageThreadStart.userName }}</span>
+          </div>
+          <span class="speech-bubble-current-user-text">{{ globalVariables.messageThreadStart.message }}</span>
+        </div>
+      </div>
+      <div class="user">
+        <img [src]="globalVariables.messageThreadStart.img" alt="" />
+      </div>
+    </div>
+
     <div class="partingLine"></div>
-    <!-- <app-all-messages [isChat]="false"></app-all-messages> -->
+    <app-all-messages [isChat]="false"></app-all-messages>
+    
   </section>
   <!-- input marnie-->
   <!-- container for all inputfield and controll elements -->

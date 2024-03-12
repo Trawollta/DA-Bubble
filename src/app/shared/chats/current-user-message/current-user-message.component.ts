@@ -14,6 +14,7 @@ import {
   onSnapshot,
   updateDoc,
   arrayUnion,
+  arrayRemove
 } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
@@ -139,6 +140,15 @@ export class CurrentUserMessageComponent {
 
   log() {
     console.log(this.index);
+    console.log(this.remove(this.globalVariables.openChannel.chatId));
+    
+  }
+
+  remove(chatId: string) {
+    
+    return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
+      messages: arrayRemove(this.message),
+    });
   }
 
   updateEmoji(chatId: string) {

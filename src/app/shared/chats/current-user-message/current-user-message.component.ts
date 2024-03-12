@@ -141,10 +141,18 @@ export class CurrentUserMessageComponent {
     console.log(this.index);
   }
 
-  updateEmoji(chatId: string) {
-    console.log(this.message);
+  updateEmoji(chatId: string, messageIndex: number) {
+    console.log(this.globalVariables.messageData);
+    debugger;
+    const updatedEmojis = arrayUnion(this.firebaseChatService.newEmojiToJson());  
+    this.message.emojis = updatedEmojis;
+    console.log(this.message)
+    console.log(this.globalVariables.messageData); 
+
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
-      emojis: arrayUnion(this.firebaseChatService.newEmojiToJson()),
+      ['messages.' + messageIndex + '.emojis']: updatedEmojis,
     });
   }
+
+  
 }

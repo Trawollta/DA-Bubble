@@ -8,24 +8,31 @@
   </section>
   <section class="message-container">
     <!-- first element -->
-    <div class="initialuser">
-      <div class="current-user-content">
-        <div class="info-area">
-          <div class="info-area-wrapper">
-            <span class="messagetime">{{ globalVariables.messageThreadStart.timestamp | date: 'H:mm' }}</span>
-            <span class="username">{{ globalVariables.messageThreadStart.userName }}</span>
+    <div>
+      <div class="initialuserCurrent" [ngClass]="checkIfCurrentuser() ? '':'otherInitialUser'">
+        <div class="userContent">
+          <div class="info-area">
+            <div class="infoContainer" [ngClass]="checkIfCurrentuser() ? '':'otherInitialUser'">
+              <span class="messageTime">{{ globalVariables.messageThreadStart.timestamp | date: 'H:mm' }}</span>
+              <span class="userName">{{ globalVariables.messageThreadStart.userName }}</span>
+            </div>
+            <div class="speechBubble" [ngClass]="checkIfCurrentuser() ? '':'otherSpeachbubble'">
+              <span class="speech-bubble-current-user-text">{{ globalVariables.messageThreadStart.message }}</span>
+            </div>
           </div>
-          <span class="speech-bubble-current-user-text">{{ globalVariables.messageThreadStart.message }}</span>
         </div>
+        <div class="user">
+          <img [src]="globalVariables.messageThreadStart.img" alt="" />
+        </div>
+
       </div>
-      <div class="user">
-        <img [src]="globalVariables.messageThreadStart.img" alt="" />
+      <div class="partingLineContainer">
+        <div class="partingLineText">2 Antworten</div>
+        <div class="partingLine"></div>
       </div>
     </div>
-
-    <div class="partingLine"></div>
     <app-all-messages [isChat]="false"></app-all-messages>
-    
+
   </section>
   <!-- input marnie-->
   <!-- container for all inputfield and controll elements -->

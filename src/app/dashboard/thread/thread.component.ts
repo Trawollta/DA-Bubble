@@ -30,6 +30,10 @@ export class ThreadComponent {
 
 
 
+  checkIfCurrentuser(){
+    return this.globalVariables.messageThreadStart.userId == this.globalVariables.activeID;
+  }
+
   closeThread() {
     this.globalVariables.showThread = false;
     this.globalVariables.messageData.answerto = '';

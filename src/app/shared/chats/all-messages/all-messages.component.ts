@@ -37,6 +37,7 @@ export class AllMessagesComponent {
   chatChannel: ChatChannel = new ChatChannel();
   chatUsers: ChatUsers = new ChatUsers();
   postingTime: string | null = null;
+  index: number = 0;
 
   lastDisplayedDate: Date = new Date();
 
@@ -128,5 +129,9 @@ export class AllMessagesComponent {
         message.answerto == '';
     else test = false;
     return test;
+  }
+
+  logBefehl(i:number) {
+    console.log(i);
   }
 }

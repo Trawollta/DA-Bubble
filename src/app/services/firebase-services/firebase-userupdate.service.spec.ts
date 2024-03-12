@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UserupdateService } from './firebase-userupdate.service';
+import { FirebaseUserupdateService } from './firebase-userupdate.service';
 
 describe('UserupdateService', () => {
-  let service: UserupdateService;
+  let service: FirebaseUserupdateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(UserupdateService);
+    service = TestBed.inject(FirebaseUserupdateService);
   });
 
   it('should be created', () => {

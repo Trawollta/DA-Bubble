@@ -30,29 +30,25 @@
               type="search" 
               placeholder="Mitglieder suchen"
             ></app-inputfield> 
-
-            <div class="button-area">
-              <app-button 
-              [classes]="['primary']"
-              caption="Erstellen"
-              imgPath=""
-              (click)="addChannelwithChoosenMembers()"
-              ></app-button>
-          </div>
           
-          <ul class="user-list">
-            <li *ngFor="let user of allUsers; let i = index">
-              <input type="checkbox" [id]="user.id" [checked]="isChecked[i]" (change)="onChange(i)">
-              <label [for]="user.id" class="user-label">
-                <img [src]="user.img" alt="userImage" class="user-img">{{ user.name }}
-              </label>
-            </li>
-          </ul>
-
-          
+            <ul class="user-list">
+              <li *ngFor="let user of allUsers">
+                <input type="checkbox" [id]="user.id">
+                <label [for]="user.id" class="user-label">
+                  <img [src]="user.img" alt="userImage" class="user-img">{{ user.name }}
+                </label>
+              </li>
+            </ul>
           </div>
 
-     
+        <div class="button-area">
+            <app-button 
+            [classes]="['primary']"
+            caption="Erstellen"
+            imgPath=""
+            (click)="addNewChannel()"
+            ></app-button>
+        </div>
     </div>
     </div>
     </div>

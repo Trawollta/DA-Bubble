@@ -1,5 +1,5 @@
 <section class="message-current-user">
-  <div class="current-user-content">
+  <div class="current-user-content" (click)="log()">
     <div class="info-area">
       <div class="info-area-wrapper">
         <span class="messagetime">{{ postingTime | date: 'H:mm' }}</span>
@@ -10,7 +10,7 @@
       </div>
         <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id"></app-reactions>
       <div class="reaction-emojis">
-        <span class="reaction-emoji-field" *ngFor="let emoji of globalVariables.choosedEmoji">{{ emoji }}</span>
+        <span class="reaction-emoji-field"></span>
       </div>
       
       
@@ -22,6 +22,6 @@
     </div>
   </div>
   <div class="user">
-    <img [src]="user.img" alt="" />
+     <img [src]="user.img" alt="" />
   </div>
 </section>

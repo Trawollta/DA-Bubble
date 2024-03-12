@@ -64,7 +64,7 @@ export class ReactionsComponent {
       this.globaleVariable.messageData.emoji = []; 
     }
     this.globaleVariable.messageData.emoji.push({icon: emoji.character , userId: this.globaleVariable.activeID }); 
-    this.currentUserMessageComponent.updateEmoji(this.globaleVariable.openChannel.chatId);
+    this.currentUserMessageComponent.updateEmoji(this.globaleVariable.openChannel.chatId, this.currentUserMessageComponent.index);
 
   }
 

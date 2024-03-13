@@ -12,6 +12,6 @@ export class ToastService {
   showMessage(message: string) {
     this.message = message;
     this.showToast = true;
-    setTimeout(() => this.showToast = false, 3000); // Nach 3 Sekunden ausblenden
+    setTimeout(() => this.showToast = false, 2000);
   }
 }

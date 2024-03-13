@@ -11,11 +11,12 @@ import { ToastService } from 'app/services/app-services/toast.service';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
+import { GoBackButtonComponent } from 'app/shared/go-back-button/go-back-button.component';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [CommonModule, InputfieldComponent, ButtonComponent, FormsModule, DialogComponent],
+  imports: [CommonModule, InputfieldComponent, ButtonComponent, FormsModule, DialogComponent, GoBackButtonComponent],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
 })
@@ -50,13 +51,12 @@ export class SignUpComponent {
     this.fileInput!.nativeElement.click();
   }
 
-  goBack() {
-    this.globalVariables.signup = false;
-  }
-
   goChooseAvatar() {
     this.signUpStep = "chooseAvatar";
-    console.log(this.signUpUserData);
+  }
+
+  goCreateAccount() {
+    this.signUpStep = "createAccount";
   }
   ngAfterViewInit() {
     window.dispatchEvent(new Event('resize'));
@@ -65,6 +65,10 @@ export class SignUpComponent {
 
   selectAvatar(img: string) {
     this.selectedAvatar = img;
+  }
+
+  goToLogIn() {
+    this.globalVariables.signup = false;
   }
 
   onFileSelected(event: any) {
@@ -86,7 +90,6 @@ export class SignUpComponent {
   }
 
   async onSubmit(event: any) {
-    console.log(event);
     const email = this.signUpUserData.email;
     const password = this.signUpUserPassword;
     this.signUpUserData.img = this.selectedAvatar;
@@ -96,6 +99,7 @@ export class SignUpComponent {
       const uid = userCredential.user.uid;
       this.userService.addUser(uid, this.signUpUserData);
       this.toastService.showMessage('Konto erfolgreich erstellt!');
+      setTimeout(() => this.goToLogIn(), 2000);
     } catch (error) {
       console.error("Registrierungsfehler:", error);
       this.toastService.showMessage('Email bereits registriert!');

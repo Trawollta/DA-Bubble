@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, createUserWithEmailAndPassword, signInAnonymously, signInWithEmailAndPassword, signInWithPopup, signOut } from '@angular/fire/auth';
 import { User } from 'app/models/user.class';
 import { Firestore, collection, doc, setDoc } from '@angular/fire/firestore';
 
@@ -33,6 +33,17 @@ export class AuthService {
       return null; // Im Fehlerfall null zurückgeben
     }
   }
+
+  async loginAnonymously() {
+    try {
+      const userCredential = await signInAnonymously(this.auth);
+      return userCredential.user;
+    } catch (error) {
+      console.error("Fehler bei der anonymen Anmeldung:", error);
+      return null; // Im Fehlerfall null zurückgeben
+    }
+  }
+
 
   getUsersRef() {
     return collection(this.firestore, 'users');

@@ -63,7 +63,26 @@ export class LogInComponent {
     }
   }
 
-  redirectDashboard() {
-    window.location.href = '/dashboard';
+  async loginAsGuest() {
+    try {
+      const userCredential = await this.authService.loginAnonymously();
+      if (userCredential) {
+        console.log("Erfolgreich anonym angemeldet", userCredential);
+        const uid = userCredential.uid;
+        this.globalVariables.activeID = uid;
+        this.userService.updateCurrentUser(userCredential);
+        await this.userService.addUser(userCredential.uid, {
+          name: 'Gastinchen',
+          email: '',
+          isActive: true,
+          img: 'assets/img/avatars/avatar_1.svg'
+        });
+        this.router.navigate(['/dashboard']);
+      } else {
+        console.error("Anonyme Anmeldung fehlgeschlagen.");
+      }
+    } catch (error) {
+      console.error("Fehler bei der Verarbeitung der anonymen Anmeldung", error);
+    }
   }
 }

@@ -16,6 +16,7 @@ export class FirebaseUserService {
   private auth = inject(Auth);
   private router = inject(Router);
   constructor() { }
+
   getUsersRef() {
     return collection(this.firestore, 'users');
   }

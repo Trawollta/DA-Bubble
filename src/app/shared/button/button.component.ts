@@ -14,7 +14,6 @@ export class ButtonComponent {
   @Input() type: string = "";
   @Input() isDisabled: boolean = false;
   @Input() classes?: string | string[] = [];
-
   @Output() clicked = new EventEmitter<Event>();
 
   onClick() {

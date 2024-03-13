@@ -2,16 +2,13 @@
     <section *ngIf="signUpStep == 'createAccount'">
         <header>
             <div class="headline-wrapper">
-                <div class="go-back" (click)="goBack()">
-                    <div class="go-back-img"></div>
-                </div>
+                <app-go-back-button (clicked)="goToLogIn()"></app-go-back-button>
                 <div class="headline">
                     <h2>Konto erstellen</h2>
                 </div>
             </div>
         </header>
         <div class="info">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</div>
-        <!--form #signupForm="ngForm" name="signup-form" (ngSubmit)="onSubmit()"-->
         <form #signupForm="ngForm" name="signup-form-step1">
             <div class="input-fields">
                 <app-inputfield #name="ngModel" name="name" id="name" [(ngModel)]="signUpUserData.name" [imgSize]="'22px'" [classes]="['login']" type="text" imgName="person" [required]="true" placeholder="Name und Nachname"></app-inputfield>
@@ -53,15 +50,13 @@
     <section *ngIf="signUpStep == 'chooseAvatar'">
         <header>
             <div class="headline-wrapper">
-                <div class="go-back" (click)="goBack()">
-                    <div class="go-back-img"></div>
-                </div>
+                <app-go-back-button (clicked)="goCreateAccount()"></app-go-back-button>
                 <div class="headline">
                     <h2>Wähle deinen Avatar</h2>
                 </div>
             </div>
         </header>
-        <div class="avatar-img"><img [ngClass]="selectedAvatar? 'small' : 'big'" [src]="selectedAvatar || 'assets/img/avatars/avatar_0.svg'"></div>
+        <div class="avatar-img"><img [ngClass]="selectedAvatar? 'small' : 'big'" [src]="selectedAvatar || 'assets/img/avatars/default.svg'"></div>
         <h3 class="user-name">{{signUpUserData.name}}</h3>
         <span class="avatar-hint">Aus der Liste wählen</span>
         <div class="avatar-list">

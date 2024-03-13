@@ -1,7 +1,7 @@
 <div class="main-content">
   <div id="contactOverlay" class="overlay">
     <div class="overlay-content">
-      <span class="close-btn" (click)="globalFunctions.showMembers()"></span>
+      <span class="close-btn" (click)="globalFunctions.showMembers()" (click)="updateSelectedUsers()"></span>
       <h2>Channel-Mitglieder</h2>
       <div class="contacts-list">
         <!-- Durchlaufen der allUsers, um die Benutzerdaten anzuzeigen -->

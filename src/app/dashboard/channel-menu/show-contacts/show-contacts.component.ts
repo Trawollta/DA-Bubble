@@ -4,6 +4,8 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { ChannelMenuComponent } from '../channel-menu.component';
 import { AddContactsComponent } from '../add-contacts/add-contacts.component';
+import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+import { onSnapshot } from 'firebase/firestore';
 
 @Component({
   selector: 'app-show-contacts',
@@ -18,15 +20,28 @@ export class ShowContactsComponent implements OnInit {
   allUsers: any[] = []; 
 
   globalFunctions = inject(GlobalFunctionsService);
+  firebaseUserService = inject(FirebaseUserService)
 
-  constructor(public globalVariables: GlobalVariablesService) {}
+  constructor(private globalVariables: GlobalVariablesService) {
+    console.log(this.globalVariables)
+  }
 
   ngOnInit() {
     this.updateSelectedUsers();
+    console.log(this.getSingleUser(this.globalVariables.openChannel.id));    
+  }
+
+  getSingleUser(id: string) {
+    return onSnapshot(this.firebaseUserService.getSingleDocRef('channels', id), (channel) => {
+      if (channel.data()) {
+        console.log(channel.data());
+      }
+    });
   }
 
   updateSelectedUsers() {
     this.selectedUsers = this.allUsers.filter(user => this.selectedUserIds.includes(user.id));
+    console.log('id ist:' ,this.globalVariables.channelData);
   }
 
 }

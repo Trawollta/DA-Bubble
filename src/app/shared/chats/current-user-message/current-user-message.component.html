@@ -2,33 +2,60 @@
   <div class="current-user-content">
     <div class="info-area">
       <div class="info-area-wrapper">
-        <span class="messagetime">{{ postingTime | date: 'H:mm' }}</span>
+        <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
         <span class="username">{{ user.name }}</span>
       </div>
-      <div class="speech-bubble-current-user" (click)="openEmojis()" (click)="onSelectMessage(message.id)">
-        <span class="speech-bubble-current-user-text" *ngIf="!editMessage">{{ message.message}}</span>
+      <div
+        class="speech-bubble-current-user"
+        (click)="openEmojis()"
+        (click)="onSelectMessage(message.id)"
+      >
+        <span class="speech-bubble-current-user-text" *ngIf="!editMessage">{{
+          message.message
+        }}</span>
         <div class="edit" (click)="globalFunctions.stopPropagation($event)">
-        <app-inputfield type="text"  [(ngModel)]="message.message"  *ngIf="editMessage"></app-inputfield>
-          <img src="assets/img/icons/edit.svg" alt="" (click)="editOpen()" *ngIf="!editMessage">
-          <img src="assets/img/input-imgs/send.svg" alt="" *ngIf="editMessage" (click)="editSave()">
-          <img src="assets/img/icons/close.svg" alt="" *ngIf="editMessage" (click)="editClose()">
+          <app-inputfield
+            type="text"
+            [(ngModel)]="message.message"
+            *ngIf="editMessage"
+          ></app-inputfield>
+          <img
+            src="assets/img/icons/edit.svg"
+            alt=""
+            (click)="editOpen()"
+            *ngIf="!editMessage"
+          />
+          <img
+            src="assets/img/input-imgs/send.svg"
+            alt=""
+            *ngIf="editMessage"
+            (click)="editSave()"
+          />
+          <img
+            src="assets/img/icons/close.svg"
+            alt=""
+            *ngIf="editMessage"
+            (click)="editClose()"
+          />
         </div>
-        
       </div>
-        <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id" [message]="message"></app-reactions>
-      <div class="reaction-emojis">
-        <span class="reaction-emoji-field"></span>
+      <app-reactions
+        class="reaction-field"
+        *ngIf="openReaction && selectedMessage === message.id"
+        [message]="message"
+      ></app-reactions>
+
+      <div class="reaction-emojis" *ngFor="let emoji of msgEmojis">
+        <span class="reaction-emoji-field">{{ emoji.icon }}</span>
       </div>
-      
-      
+
       <div class="replie-wrapper">
         <span class="replie-text" (click)="openAnswers()">1 Antworten</span>
         <span class="timestamp-text">Letze Antwort Time</span>
       </div>
-
     </div>
   </div>
   <div class="user">
-     <img [src]="user.img" alt="" />
+    <img [src]="user.img" alt="" />
   </div>
 </section>

@@ -59,9 +59,11 @@ export class CurrentUserMessageComponent {
     emoji: [{ icon: '', userId: '' }],
   };
   editMessage: boolean = false;
+  msgEmojis: any[] = []; // Initialisieren Sie msgEmojis als leeres Array
 
   unsubUser;
   userId: string = 'guest';
+  reactions: any = this.originalMessage.emoji;
 
   constructor(
     private changeDetector: ChangeDetectorRef,

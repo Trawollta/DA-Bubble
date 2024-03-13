@@ -25,6 +25,7 @@ import { ChatChannel } from 'app/models/chatChannel.class';
 import { FormsModule } from '@angular/forms';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 
+
 @Component({
   selector: 'app-current-user-message',
   standalone: true,
@@ -53,7 +54,7 @@ export class CurrentUserMessageComponent {
     emoji: [{ icon: '', userId: '' }],
   };
   editMessage: boolean = false;
-  readonly originalMessage: any;
+  originalMessage: any;
 
   unsubUser;
   userId: string = 'guest';
@@ -64,7 +65,7 @@ export class CurrentUserMessageComponent {
   ) {
     this.unsubUser = this.getUser(this.userId);
     this.originalMessage = this.message;
-    console.log('was steht lokal in originalMessage: ', this.originalMessage);
+    console.log('orginal: ', this.originalMessage);
   }
 
   /**
@@ -155,7 +156,13 @@ export class CurrentUserMessageComponent {
 
   editOpen() {
     this.editMessage = true;
-
+    this.messageData.message = this.message.message;
+    this.messageData.answerto = this.message.answerto;
+    this.messageData.timestamp = this.message.timestamp;
+    this.messageData.userId = this.message.userId;
+    this.messageData.emoji = this.message.emoji;
+    
+    console.log('was steht lokal in messagData beim editOpen: ', this.messageData);
   }
 
   editClose() {
@@ -164,7 +171,7 @@ export class CurrentUserMessageComponent {
 
   editSave() {
 
-    console.log('was steht lokal in originalMessage: ', this.originalMessage);
+    console.log('was steht lokal in messagData beim Save: ', this.messageData);
     this.editMessage = false;
     this.globalVariables.messageData = this.message;
     this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId);
@@ -175,15 +182,15 @@ export class CurrentUserMessageComponent {
 
   log() {
     console.log(this.index);
-    //console.log(this.remove(this.globalVariables.openChannel.chatId));
+   // console.log(this.remove(this.globalVariables.openChannel.chatId));
 
   }
 
   remove(chatId: string) {
-    console.log('was steht lokal in message beim löschen: ', this.message);
-    console.log('was steht lokal in originalMessage beim löschen: ', this.originalMessage);
+    //console.log('was steht lokal in message beim löschen: ', this.message);
+     console.log('was steht lokal in messageData beim löschen: ', this.messageData);
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
-      messages: arrayRemove(this.originalMessage),
+      messages: arrayRemove(this.messageData),
     });
   }
 

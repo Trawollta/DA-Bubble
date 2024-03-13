@@ -100,14 +100,11 @@ export class AllMessagesComponent {
     userId: string;
   }) {
     // return (message.userId === this.globalVariablesService.activeID && message.message != '' && message.answerto =='');
-    let test: boolean = false;
+    let conditionTest: boolean = false;
     if (this.isChat)
-      test =
-        message.userId === this.globalVariablesService.activeID &&
-        message.message != '' &&
-        message.answerto == '';
-    else test = false;
-    return test;
+    conditionTest = message.userId == this.globalVariablesService.activeID && message.answerto == ''; /* message.message != '' && */
+    else conditionTest = false;
+    return conditionTest;
   }
 
   /**
@@ -121,14 +118,14 @@ export class AllMessagesComponent {
     timestamp: number;
     userId: string;
   }) {
-    let test: boolean = false;
+    let conditionTest: boolean = false;
     if (this.isChat)
-      test =
+    conditionTest =
         message.userId !== this.globalVariablesService.activeID &&
         message.message != '' &&
-        message.answerto == '';
-    else test = false;
-    return test;
+        message.answerto == ''; /* message.message != '' && */
+    else conditionTest = false;
+    return conditionTest;
   }
 
   logBefehl(i:number) {

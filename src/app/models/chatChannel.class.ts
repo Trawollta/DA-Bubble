@@ -10,32 +10,19 @@ export class ChatChannel {
       userId: string;
     }[];
   }[];
-  /*    channelMember: {
-        userId: string
-    }[]; */
+ 
 
   constructor(obj?: any) {
     this.relatedChannelId = obj ? obj.relatedChannelId : '';
-    this.messages =
-      obj && obj.messages
-        ? obj.messages
-        : [
+    this.messages = obj && obj.messages ? obj.messages : [
             {
               answerto: '',
               message: '',
               timestamp: 0,
               userId: '',
-              emoji: [
-                {
-                  icon: '',
-                  userId: '',
-                },
-              ],
+              emoji: [{icon: '', userId: '' },],
             },
           ];
-    /*  this.channelMember = obj && obj.channelMember ? obj.channelMember : [{
-            userId: ''
-        }] */
     this.sortMessagesByTimestamp();
   }
 

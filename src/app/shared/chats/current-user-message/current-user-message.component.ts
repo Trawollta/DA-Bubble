@@ -21,11 +21,14 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
 import { ReactionsComponent } from 'app/shared/reactions/reactions.component';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { User } from 'app/models/user.class';
+import { ChatChannel } from 'app/models/chatChannel.class';
+import { FormsModule } from '@angular/forms';
+import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 
 @Component({
   selector: 'app-current-user-message',
   standalone: true,
-  imports: [ReactionsComponent, CommonModule, DatePipe],
+  imports: [ReactionsComponent, CommonModule, DatePipe, FormsModule, InputfieldComponent],
   templateUrl: './current-user-message.component.html',
   styleUrl: './current-user-message.component.scss',
 })
@@ -42,6 +45,15 @@ export class CurrentUserMessageComponent {
 
   postingTime: string | null = null;
   user: User = new User();
+  messageData = {
+    message: '',
+    answerto: '',
+    userId: '',
+    timestamp: 0,
+    emoji: [{ icon: '', userId: '' }],
+  };
+  editMessage: boolean = false;
+  readonly originalMessage: any;
 
   unsubUser;
   userId: string = 'guest';
@@ -51,6 +63,8 @@ export class CurrentUserMessageComponent {
     private elementRef: ElementRef
   ) {
     this.unsubUser = this.getUser(this.userId);
+    this.originalMessage = this.message;
+    console.log('was steht lokal in originalMessage: ', this.originalMessage);
   }
 
   /**
@@ -89,6 +103,7 @@ export class CurrentUserMessageComponent {
     this.user = this.message.userId;
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
+
   }
 
   openEmojis() {
@@ -138,31 +153,54 @@ export class CurrentUserMessageComponent {
     }
   }
 
+  editOpen() {
+    this.editMessage = true;
+
+  }
+
+  editClose() {
+    this.editMessage = false;
+  }
+
+  editSave() {
+
+    console.log('was steht lokal in originalMessage: ', this.originalMessage);
+    this.editMessage = false;
+    this.globalVariables.messageData = this.message;
+    this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId);
+    this.remove(this.globalVariables.openChannel.chatId);
+
+
+  }
+
   log() {
     console.log(this.index);
-    console.log(this.remove(this.globalVariables.openChannel.chatId));
-    
+    //console.log(this.remove(this.globalVariables.openChannel.chatId));
+
   }
 
   remove(chatId: string) {
-    
+    console.log('was steht lokal in message beim löschen: ', this.message);
+    console.log('was steht lokal in originalMessage beim löschen: ', this.originalMessage);
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
-      messages: arrayRemove(this.message),
+      messages: arrayRemove(this.originalMessage),
     });
   }
 
+  //hier muss im Grunde nur das Array mit den Emojjies bearbeitet werden. 
+  // das Array wird dann this.global
   updateEmoji(chatId: string, messageIndex: number) {
     console.log(this.globalVariables.messageData);
     debugger;
-    const updatedEmojis = arrayUnion(this.firebaseChatService.newEmojiToJson());  
+    const updatedEmojis = arrayUnion(this.firebaseChatService.newEmojiToJson());
     this.message.emojis = updatedEmojis;
     console.log(this.message)
-    console.log(this.globalVariables.messageData); 
+    console.log(this.globalVariables.messageData);
 
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
       ['messages.' + messageIndex + '.emojis']: updatedEmojis,
     });
   }
 
-  
+
 }

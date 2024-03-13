@@ -6,7 +6,14 @@
         <span class="username">{{ user.name }}</span>
       </div>
       <div class="speech-bubble-current-user" (click)="openEmojis()" (click)="onSelectMessage(message.id)">
-        <span class="speech-bubble-current-user-text">{{ message.message}}</span>
+        <span class="speech-bubble-current-user-text" *ngIf="!editMessage">{{ message.message}}</span>
+        <div class="edit" (click)="globalFunctions.stopPropagation($event)">
+        <app-inputfield type="text"  [(ngModel)]="message.message"  *ngIf="editMessage"></app-inputfield>
+          <img src="assets/img/icons/edit.svg" alt="" (click)="editOpen()" *ngIf="!editMessage">
+          <img src="assets/img/input-imgs/send.svg" alt="" *ngIf="editMessage" (click)="editSave()">
+          <img src="assets/img/icons/close.svg" alt="" *ngIf="editMessage" (click)="editClose()">
+        </div>
+        
       </div>
         <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id"></app-reactions>
       <div class="reaction-emojis">

@@ -135,6 +135,7 @@ export class FirebaseChatService {
    * @returns - JSON with data
    */
   newMessageToJson(): {} {
+    console.log('was wird gesendet? ', this.globalVariablesService.messageData);
     return {
       message: this.globalVariablesService.messageData.message,
       userId: this.globalVariablesService.messageData.userId,

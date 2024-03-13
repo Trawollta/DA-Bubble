@@ -1,18 +1,14 @@
-
 <div class="main-content">
-  <div id="contactOverlay" class="overlay" *ngIf="globalFunctions.memberlist">
+  <div id="contactOverlay" class="overlay">
     <div class="overlay-content">
-      <span class="close-btn" onclick="toggleOverlay()">&times;</span>
-      <h2>Kontaktliste</h2>
+      <span class="close-btn" (click)="globalFunctions.showMembers()"></span>
+      <h2>Channel-Mitglieder</h2>
       <div class="contacts-list">
-        <!-- Dynamisch generierte Kontaktliste -->
-        <div class="contact-item" *ngFor="let user of allUsers">
-          <img src="{{user.img}}" alt="userImage" class="contact-img">
-          <p class="contact-name">{{user.name}}</p>
-        </div>
+        <!-- Durchlaufen der allUsers, um die Benutzerdaten anzuzeigen -->
+        <ul>
+          <li *ngFor="let user of selectedUsers">{{ user.name }}</li>
+        </ul>
+      </div>
       </div>
     </div>
   </div>
-
-</div>
-

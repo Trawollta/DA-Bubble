@@ -14,7 +14,7 @@ import {
   onSnapshot,
   updateDoc,
   arrayUnion,
-  arrayRemove
+  arrayRemove,
 } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
@@ -25,11 +25,16 @@ import { ChatChannel } from 'app/models/chatChannel.class';
 import { FormsModule } from '@angular/forms';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 
-
 @Component({
   selector: 'app-current-user-message',
   standalone: true,
-  imports: [ReactionsComponent, CommonModule, DatePipe, FormsModule, InputfieldComponent],
+  imports: [
+    ReactionsComponent,
+    CommonModule,
+    DatePipe,
+    FormsModule,
+    InputfieldComponent,
+  ],
   templateUrl: './current-user-message.component.html',
   styleUrl: './current-user-message.component.scss',
 })
@@ -46,7 +51,7 @@ export class CurrentUserMessageComponent {
 
   postingTime: string | null = null;
   user: User = new User();
-  messageData = {
+  originalMessage = {
     message: '',
     answerto: '',
     userId: '',
@@ -54,7 +59,6 @@ export class CurrentUserMessageComponent {
     emoji: [{ icon: '', userId: '' }],
   };
   editMessage: boolean = false;
-  originalMessage: any;
 
   unsubUser;
   userId: string = 'guest';
@@ -64,8 +68,6 @@ export class CurrentUserMessageComponent {
     private elementRef: ElementRef
   ) {
     this.unsubUser = this.getUser(this.userId);
-    this.originalMessage = this.message;
-    console.log('orginal: ', this.originalMessage);
   }
 
   /**
@@ -104,7 +106,6 @@ export class CurrentUserMessageComponent {
     this.user = this.message.userId;
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
-
   }
 
   openEmojis() {
@@ -156,13 +157,7 @@ export class CurrentUserMessageComponent {
 
   editOpen() {
     this.editMessage = true;
-    this.messageData.message = this.message.message;
-    this.messageData.answerto = this.message.answerto;
-    this.messageData.timestamp = this.message.timestamp;
-    this.messageData.userId = this.message.userId;
-    this.messageData.emoji = this.message.emoji;
-    
-    console.log('was steht lokal in messagData beim editOpen: ', this.messageData);
+    this.copyHelper();
   }
 
   editClose() {
@@ -170,44 +165,41 @@ export class CurrentUserMessageComponent {
   }
 
   editSave() {
-
-    console.log('was steht lokal in messagData beim Save: ', this.messageData);
     this.editMessage = false;
     this.globalVariables.messageData = this.message;
-    this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId);
+    this.firebaseChatService.sendMessage(
+      this.globalVariables.openChannel.chatId
+    );
     this.remove(this.globalVariables.openChannel.chatId);
-
-
-  }
-
-  log() {
-    console.log(this.index);
-   // console.log(this.remove(this.globalVariables.openChannel.chatId));
-
   }
 
   remove(chatId: string) {
-    //console.log('was steht lokal in message beim löschen: ', this.message);
-     console.log('was steht lokal in messageData beim löschen: ', this.messageData);
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
-      messages: arrayRemove(this.messageData),
+      messages: arrayRemove(this.originalMessage),
     });
   }
 
-  //hier muss im Grunde nur das Array mit den Emojjies bearbeitet werden. 
-  // das Array wird dann this.global
-  updateEmoji(chatId: string, messageIndex: number) {
-    console.log(this.globalVariables.messageData);
-    debugger;
-    const updatedEmojis = arrayUnion(this.firebaseChatService.newEmojiToJson());
-    this.message.emojis = updatedEmojis;
-    console.log(this.message)
-    console.log(this.globalVariables.messageData);
-
-    return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
-      ['messages.' + messageIndex + '.emojis']: updatedEmojis,
-    });
+  addEmoji() {
+    /* this.copyHelper(); */
+    this.globalVariables.messageData = this.message;
+    this.firebaseChatService.sendMessage(
+      this.globalVariables.openChannel.chatId
+    );
+    this.remove(this.globalVariables.openChannel.chatId);
   }
 
+  copyHelper() {
+    this.originalMessage.message = this.message.message;
+    this.originalMessage.answerto = this.message.answerto;
+    this.originalMessage.timestamp = this.message.timestamp;
+    this.originalMessage.userId = this.message.userId;
+    this.originalMessage.emoji = [];
 
+    this.message.emoji.forEach((element: any) => {
+      this.originalMessage.emoji.push({
+        icon: element.icon,
+        userId: element.userId,
+      });
+    });
+  }
 }

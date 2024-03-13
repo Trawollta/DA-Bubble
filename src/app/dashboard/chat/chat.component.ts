@@ -50,11 +50,11 @@ export class ChatComponent {
   }
 
   sendMessage(){
-    console.log(this.globalVariables.messageData.emoji)
     if(this.globalVariables.messageData.message !== ''){
       this.globalVariables.messageData.userId = this.globalVariables.activeID;
       this.globalVariables.messageData.timestamp = new Date().getTime();
       this.globalVariables.messageData.answerto = '';
+      this.globalVariables.messageData.emoji = [{icon: '', userId: ''}];
       this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId);
       this.globalVariables.messageData.message='';
     }

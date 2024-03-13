@@ -1,5 +1,5 @@
 <section class="message-current-user">
-  <div class="current-user-content" (click)="log()">
+  <div class="current-user-content">
     <div class="info-area">
       <div class="info-area-wrapper">
         <span class="messagetime">{{ postingTime | date: 'H:mm' }}</span>
@@ -15,7 +15,7 @@
         </div>
         
       </div>
-        <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id"></app-reactions>
+        <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id" [message]="message"></app-reactions>
       <div class="reaction-emojis">
         <span class="reaction-emoji-field"></span>
       </div>

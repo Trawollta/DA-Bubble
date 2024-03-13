@@ -77,6 +77,7 @@ export class AllMessagesComponent {
    * @returns - boolean
    */
   showDateBar(messageTimestamp: number, answerTo: string): boolean {
+    //debugger;
     let displayDate = false;
     if(this.isChat){
     displayDate=(this.lastDisplayedDate.toLocaleDateString() !== new Date(messageTimestamp).toLocaleDateString())

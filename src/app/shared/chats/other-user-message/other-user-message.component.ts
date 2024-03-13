@@ -90,6 +90,7 @@ export class OtherUserMessageComponent {
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
+    console.log(this.globalVariables.showThread);
     this.fillInitialUserObj();
     this.globalVariables.openChat = 'isChatVisable';
     this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();

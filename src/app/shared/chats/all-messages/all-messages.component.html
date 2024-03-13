@@ -1,29 +1,31 @@
 <div class="allMessages">
-    <div class="dateBlockContainer" *ngFor="let message of globalVariablesService.chatChannel.messages">
-        <ng-container *ngIf="showDateBar(message.timestamp) && message.answerto == ''">
-            <div class="newDate">
-                <div class="leftBar"></div>
-                <div class="dateContainer">
-                    <span *ngIf="getWeekDay(message.timestamp) === 'Heute'">
-                        {{ getWeekDay(message.timestamp) }}
-                    </span>
-                    <span *ngIf="getWeekDay(message.timestamp) !== 'Heute'">
-                        {{ getWeekDay(message.timestamp) }},
-                    </span>
-                    <span *ngIf="getWeekDay(message.timestamp) !== 'Heute'">
-                        {{ message.timestamp | date : 'dd.MM.YY'}}
-                    </span>
+    <div *ngFor="let message of globalVariablesService.chatChannel.messages; let i = index" >
+        <div class="dateBlockContainer">
+            <ng-container *ngIf="showDateBar(message.timestamp, message.answerto) && message.message != ''"> <!--  && message.answerto == ''" -->
+                <div class="newDate">
+                    <div class="leftBar"></div>
+                    <div class="dateContainer">
+                        <span *ngIf="getWeekDay(message.timestamp) === 'Heute'">
+                            {{ getWeekDay(message.timestamp) }}
+                        </span>
+                        <span *ngIf="getWeekDay(message.timestamp) !== 'Heute'">
+                            {{ getWeekDay(message.timestamp) }},
+                        </span>
+                        <span *ngIf="getWeekDay(message.timestamp) !== 'Heute'">
+                            {{ message.timestamp | date : 'dd.MM.YY'}}
+                        </span>
+                    </div>
+                    <div class="rightBar"></div>
                 </div>
-                <div class="rightBar"></div>
+            </ng-container>
+            <div>
+                <app-other-user-message *ngIf="meetContitionsOtherUser(message)" [message]="message" 
+                    (click)="GlobalFunctionsService.openReactionDialog()"></app-other-user-message>
+
+                <app-current-user-message *ngIf="meetContitionsCurrentUser(message)"
+                    [message]="message" [index]="i"></app-current-user-message>
+
             </div>
-        </ng-container>
-        <div>
-            <app-other-user-message *ngIf="meetContitionsOtherUser(message)" [message]="message"
-                (click)="GlobalFunctionsService.openReactionDialog()"></app-other-user-message>
-
-            <app-current-user-message *ngIf="meetContitionsCurrentUser(message)"
-                [message]="message"></app-current-user-message>
-
         </div>
     </div>
 

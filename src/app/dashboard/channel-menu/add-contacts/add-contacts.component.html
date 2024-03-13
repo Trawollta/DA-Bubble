@@ -30,6 +30,15 @@
               type="search" 
               placeholder="Mitglieder suchen"
             ></app-inputfield> 
+
+            <div class="button-area">
+              <app-button 
+              [classes]="['primary']"
+              caption="Erstellen"
+              imgPath=""
+              (click)="addChannelwithChoosenMembers()"
+              ></app-button>
+          </div>
           
             <ul class="user-list">
               <li *ngFor="let user of allUsers">
@@ -41,14 +50,7 @@
             </ul>
           </div>
 
-        <div class="button-area">
-            <app-button 
-            [classes]="['primary']"
-            caption="Erstellen"
-            imgPath=""
-            (click)="addNewChannel()"
-            ></app-button>
-        </div>
+  
     </div>
     </div>
     </div>

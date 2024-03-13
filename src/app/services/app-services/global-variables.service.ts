@@ -12,10 +12,12 @@ export class GlobalVariablesService {
   signup: boolean = false;
   accountAdjustment: boolean = false;
   showWriteMessage: boolean = false;
+  activeID: string = 'guest'; // this is the id of guest user of testusers
 
   //flags for profile
   showProfileMenu: boolean = false;
   showProfile: boolean = false;
+  ownprofile: boolean = true;
   showEditProfile: boolean = false;
   isProfileOfCurrentUser: boolean = true;
 
@@ -32,6 +34,9 @@ export class GlobalVariablesService {
   userToChatWith = {
     name: '',
     img: '',
+    email: '',
+    id: '',
+    isActive: false
   };
 
   showChannels: boolean = false;
@@ -44,6 +49,24 @@ export class GlobalVariablesService {
     answerto: '',
     userId: '',
     timestamp: 0,
+    emoji: [{ icon: '', userId: '' }],
+  };
+  //this is the object for collecting message data from input field in thread
+  messageThreadData = {
+    message: '',
+    answerto: '',
+    userId: '',
+    timestamp: 0,
+    emoji: [{ icon: '', userId: '' }],
+  };
+
+  //this is the object for collecting message data for first message in thread
+  messageThreadStart = {
+    message: '',
+    userId: '',
+    timestamp: 0,
+    userName: '',
+    img: '',
   };
 
   //this is the object for the active channel information. Used in channel-menu
@@ -66,17 +89,17 @@ export class GlobalVariablesService {
   activeChatId: string = ''; // used to identify the releated chat
   chatChannel: ChatChannel = new ChatChannel();
 
+  //this is for test purpose. It could be take over when working.
+  // variable is used in profile card and firebase-user.service.ts
   currentUser = {
     name: 'Guest',
     email: 'muster@mail.de',
     img: 'assets/img/avatars/avatar_3.svg',
     isActive: true,
   };
-  //this is for test purpose. It could be take over when working.
-  // variable is used in profile card and firebase-user.service.ts
-  activeID: string = 'guest'; // this is the id of guest user of testusers
 
-  choosedEmoji: any = ['😀', '😀']; // this is the emoji which is choosen in emoji-picker
+  choosedEmoji: any = { icon: '', userID: '' }; // this is the emoji which is choosen in emoji-picker
+  message: any;
 
   constructor() {}
 

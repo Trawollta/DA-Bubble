@@ -1,28 +1,36 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, addDoc, updateDoc, doc, collectionData, setDoc, onSnapshot, arrayUnion } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  updateDoc,
+  doc,
+  collectionData,
+  setDoc,
+  onSnapshot,
+  arrayUnion,
+} from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { ChatChannel } from '../../models/chatChannel.class';
 import { ChatUsers } from '../../models/chatUsers.class';
 import { User } from 'app/models/user.class';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FirebaseChatService {
-
   firestore: Firestore = inject(Firestore);
   globalVariablesService = inject(GlobalVariablesService);
 
   activeID: string = this.globalVariablesService.activeID;
   activeChannelChatId: string = this.globalVariablesService.openChannel.chatId;
-  chatChannel: ChatChannel = new ChatChannel;
-  user: User = new User;
+  chatChannel: ChatChannel = new ChatChannel();
+  user: User = new User();
 
   unsubChat;
 
   constructor() {
     this.unsubChat = this.getChat(this.activeChannelChatId);
   }
-
 
   /**
    * this function unsubscribes each function within
@@ -31,31 +39,29 @@ export class FirebaseChatService {
     this.unsubChat();
   }
 
-
   /**
-* this function returns a reference of collection testusers
-* @returns reference to collection 'chatchannels'
-*/
+   * this function returns a reference of collection testusers
+   * @returns reference to collection 'chatchannels'
+   */
   getchatChannelsRef() {
     return collection(this.firestore, 'chatchannels');
   }
 
   /**
- * this function returns the reference of the singe user with id... from collection testusers 
- * @param docId - document which should read
- * @returns - returns a single document of collection 'user'
- */
+   * this function returns the reference of the singe user with id... from collection testusers
+   * @param docId - document which should read
+   * @returns - returns a single document of collection 'user'
+   */
   getSingleChatRef(docId: string) {
     return doc(this.getchatChannelsRef(), docId);
   }
 
   /**
    * this function returns the user with id ... from collection testusers
-   * @param id - id of active channel 
+   * @param id - id of active channel
    * @returns - array with data of active user
    */
   getChat(id: string) {
-
     let chatSnapshot = onSnapshot(this.getSingleChatRef(id), (chat) => {
       if (chat.data()) {
         this.globalVariablesService.chatChannel = new ChatChannel(chat.data());
@@ -65,7 +71,6 @@ export class FirebaseChatService {
     });
     return chatSnapshot;
   }
-
 
   /**
    * this function unsubscribes the closed chat and subscribes the new chat
@@ -93,7 +98,7 @@ export class FirebaseChatService {
   toJson(): {} {
     return {
       messages: this.chatChannel.messages,
-      relatedChannelId: this.chatChannel.relatedChannelId
+      relatedChannelId: this.chatChannel.relatedChannelId,
     };
   }
 
@@ -103,7 +108,7 @@ export class FirebaseChatService {
    */
   groupMessagesByAnswerTo() {
     const groupedMessages: { [answerto: string]: any[] } = {};
-    this.globalVariablesService.chatChannel.messages.forEach(message => {
+    this.globalVariablesService.chatChannel.messages.forEach((message) => {
       const answerTo = message.answerto;
       if (!groupedMessages[answerTo]) {
         groupedMessages[answerTo] = [message];
@@ -114,15 +119,14 @@ export class FirebaseChatService {
     return groupedMessages;
   }
 
-
   /**
    * this function adds the new massage to the existing message array
-   * @param chatId - id of chat 
-   * @returns - 
+   * @param chatId - id of chat
+   * @returns -
    */
   sendMessage(chatId: string) {
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
-      messages: arrayUnion(this.newMessageToJson())
+      messages: arrayUnion(this.newMessageToJson()),
     });
   }
 
@@ -131,12 +135,19 @@ export class FirebaseChatService {
    * @returns - JSON with data
    */
   newMessageToJson(): {} {
+    console.log('was wird gesendet? ', this.globalVariablesService.messageData);
     return {
       message: this.globalVariablesService.messageData.message,
       userId: this.globalVariablesService.messageData.userId,
       answerto: this.globalVariablesService.messageData.answerto,
-      timestamp: this.globalVariablesService.messageData.timestamp
+      timestamp: this.globalVariablesService.messageData.timestamp,
+      emoji: this.globalVariablesService.messageData.emoji,
     };
   }
 
+  newEmojiToJson(): {} {
+    return {
+      emoji: this.globalVariablesService.messageData.emoji,
+    };
+  }
 }

@@ -25,7 +25,7 @@
   <!-- container for header it is a user chat -->
   <section class="msg-header" *ngIf="globalVariables.isUserChat">
     <div class="topic-headline">
-      <div class="headline" (click)="globalFunctions.openProfile()"> <!-- hier muss ich ddie User Variable übergeben -->
+      <div class="headline" (click)="globalFunctions.openProfile(false)"> <!-- hier muss ich ddie User Variable übergeben -->
         <p></p>
         <img src="{{ globalVariables.userToChatWith.img }}" alt="">
         <p>{{ globalVariables.userToChatWith.name }}</p>
@@ -43,7 +43,7 @@
 
 <!-- container for all inputfield and controll elements -->
   <section class="inputfield">
-    <app-inputfield [classes]="['standard']" type="text" placeholder="Deine Nachricht" [(ngModel)]="globalVariables.messageData.message"></app-inputfield>
+    <app-inputfield [classes]="['standard']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield>
     <div class="controllElementsContainer">
       <div class="moreControlls"></div>
       <img src="assets/img/input-imgs/send.svg" alt="send button" (click)="sendMessage()">

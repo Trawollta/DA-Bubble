@@ -21,7 +21,7 @@ import { GlobalVariablesService } from 'app/services/app-services/global-variabl
 })
 export class ProfileComponent {
 
-  
+
 
   profileNameBuffer: string = '';
   emailBuffer: string = '';
@@ -36,7 +36,7 @@ export class ProfileComponent {
     profilename: this.globalVariables.currentUser.name,
     email: this.globalVariables.currentUser.email,
     online: this.globalVariables.currentUser.isActive
-  } 
+  }
   close() {
     this.globalVariables.showProfile = false;
   }
@@ -46,8 +46,15 @@ export class ProfileComponent {
   }
 
   editProfile() {
-    this.profileNameBuffer = this.globalVariables.currentUser.name;
-    this.emailBuffer = this.globalVariables.currentUser.email;
+    if (this.globalVariables.ownprofile) {
+      this.profileNameBuffer = this.globalVariables.currentUser.name;
+      this.emailBuffer = this.globalVariables.currentUser.email;
+
+    } else {
+      this.profileNameBuffer = this.globalVariables.userToChatWith.name;
+      this.emailBuffer = this.globalVariables.userToChatWith.email;
+
+    }
     this.globalVariables.showEditProfile = true;
     //this.firebaseService.setActiveUserId(this.globalVariables.activeID);
   }

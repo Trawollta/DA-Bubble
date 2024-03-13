@@ -37,12 +37,13 @@ export class AllMessagesComponent {
   chatChannel: ChatChannel = new ChatChannel();
   chatUsers: ChatUsers = new ChatUsers();
   postingTime: string | null = null;
+  index: number = 0;
 
   lastDisplayedDate: Date = new Date();
 
   @Input() isChat: boolean = false;
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(private changeDetector: ChangeDetectorRef) { }
 
   //this function avoids the ExpressionChangedAfterItHasBeenCheckedError in the developer Mode
   ngAfterContentChecked(): void {
@@ -65,11 +66,8 @@ export class AllMessagesComponent {
    * @returns - weekday as string
    */
   getWeekDay(timestamp: number): string {
-    const today =
-      new Date(timestamp).toDateString() == new Date().toDateString();
-    return today
-      ? 'Heute'
-      : new Date(timestamp).toLocaleDateString('de-DE', { weekday: 'long' });
+    const today = new Date(timestamp).toDateString() == new Date().toDateString();
+    return today ? 'Heute' : new Date(timestamp).toLocaleDateString('de-DE', { weekday: 'long' });
   }
 
   /**
@@ -78,10 +76,13 @@ export class AllMessagesComponent {
    * @param messageTimestamp - timestamp of message
    * @returns - boolean
    */
-  showDateBar(messageTimestamp: number): boolean {
-    const displayDate =
-      this.lastDisplayedDate.toLocaleDateString() !==
-      new Date(messageTimestamp).toLocaleDateString();
+  showDateBar(messageTimestamp: number, answerTo: string): boolean {
+    //debugger;
+    let displayDate = false;
+    if(this.isChat){
+    displayDate=(this.lastDisplayedDate.toLocaleDateString() !== new Date(messageTimestamp).toLocaleDateString())
+      && answerTo == '';
+    }
     if (displayDate && messageTimestamp != 0) {
       this.lastDisplayedDate = new Date(messageTimestamp);
     }
@@ -100,14 +101,11 @@ export class AllMessagesComponent {
     userId: string;
   }) {
     // return (message.userId === this.globalVariablesService.activeID && message.message != '' && message.answerto =='');
-    let test: boolean = false;
+    let conditionTest: boolean = false;
     if (this.isChat)
-      test =
-        message.userId === this.globalVariablesService.activeID &&
-        message.message != '' &&
-        message.answerto == '';
-    else test = false;
-    return test;
+    conditionTest = message.userId == this.globalVariablesService.activeID && message.answerto == ''; /* message.message != '' && */
+    else conditionTest = false;
+    return conditionTest;
   }
 
   /**
@@ -121,13 +119,17 @@ export class AllMessagesComponent {
     timestamp: number;
     userId: string;
   }) {
-    let test: boolean = false;
+    let conditionTest: boolean = false;
     if (this.isChat)
-      test =
+    conditionTest =
         message.userId !== this.globalVariablesService.activeID &&
         message.message != '' &&
-        message.answerto == '';
-    else test = false;
-    return test;
+        message.answerto == ''; /* message.message != '' && */
+    else conditionTest = false;
+    return conditionTest;
+  }
+
+  logBefehl(i:number) {
+    console.log(i);
   }
 }

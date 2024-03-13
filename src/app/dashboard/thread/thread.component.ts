@@ -1,10 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Firestore, doc, collection, onSnapshot} from '@angular/fire/firestore';
 //import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { AllMessagesComponent } from 'app/shared/chats/all-messages/all-messages.component';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
+import { User } from 'app/models/user.class';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-thread',
@@ -12,16 +15,24 @@ import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component'
   imports: [
     InputfieldComponent,
     FormsModule,
-    AllMessagesComponent
+    AllMessagesComponent,
+    CommonModule,
+    DatePipe
   ],
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
 })
 export class ThreadComponent {
 
+  
   globalVariables = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
 
+
+
+  checkIfCurrentuser(){
+    return this.globalVariables.messageThreadStart.userId == this.globalVariables.activeID;
+  }
 
   closeThread() {
     this.globalVariables.showThread = false;

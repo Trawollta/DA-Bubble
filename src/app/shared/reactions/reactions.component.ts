@@ -1,6 +1,15 @@
-import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+import { CurrentUserMessageComponent } from '../chats/current-user-message/current-user-message.component';
 
 @Component({
   selector: 'app-reactions',
@@ -11,8 +20,11 @@ import { GlobalVariablesService } from 'app/services/app-services/global-variabl
 })
 export class ReactionsComponent {
   globaleVariable = inject(GlobalVariablesService);
+  firebaseChatService = inject(FirebaseChatService);
+  currentUserMessageComponent = inject(CurrentUserMessageComponent);
   editMessage() {}
   @Output() newEmoji = new EventEmitter<string>();
+  @Input() message: any;
 
   // Variable für das ausgewählte Emoji
   choosedEmoji: string = '';
@@ -55,12 +67,18 @@ export class ReactionsComponent {
    * @param {string} emoji - The selected emoji.
    */
   public showInInput(emoji: any): void {
+    this.currentUserMessageComponent.copyHelper();
     this.newEmoji.emit(emoji);
-    if (!this.globaleVariable.choosedEmoji) {
-      this.globaleVariable.choosedEmoji = []; // Initialisiere choosedEmoji als Array, falls es noch nicht existiert
+    if (this.message.emoji[0].icon === '') {
+      this.message.emoji[0].icon = emoji.character;
+      this.message.emoji[0].userId = this.globaleVariable.activeID;
+    } else {
+      this.message.emoji.push({
+        icon: emoji.character,
+        userId: this.globaleVariable.activeID,
+      });
     }
-    this.globaleVariable.choosedEmoji.push(emoji.character); // Füge das neue Emoji zu choosedEmoji hinzu
-    console.log(this.globaleVariable.choosedEmoji);
+    this.currentUserMessageComponent.addEmoji();
   }
 
   /**

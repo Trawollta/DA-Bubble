@@ -32,6 +32,7 @@ export class ChatComponent {
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
   allUserMessages: string = '';
+  newMessage = '';
  
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');
@@ -50,12 +51,16 @@ export class ChatComponent {
   }
 
   sendMessage(){
-    if(this.globalVariables.messageData.message !== ''){
+
+    if(this.newMessage !== ''){
       this.globalVariables.messageData.userId = this.globalVariables.activeID;
       this.globalVariables.messageData.timestamp = new Date().getTime();
       this.globalVariables.messageData.answerto = '';
+      this.globalVariables.messageData.message = this.newMessage;
+      this.globalVariables.messageData.emoji = [{icon: '', userId: ''}];
       this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId);
       this.globalVariables.messageData.message='';
+      this.newMessage = '';
     }
   }
 }

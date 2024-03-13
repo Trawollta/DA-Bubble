@@ -3,29 +3,47 @@ import { Component, inject, OnInit } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { ChannelMenuComponent } from '../channel-menu.component';
-import { User } from 'app/models/user.class';
-import { ChatChannel } from 'app/models/chatChannel.class';
+import { AddContactsComponent } from '../add-contacts/add-contacts.component';
+import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+import { onSnapshot } from 'firebase/firestore';
 
 @Component({
   selector: 'app-show-contacts',
   standalone: true,
-  imports: [CommonModule, ChannelMenuComponent],
+  imports: [CommonModule, ChannelMenuComponent, AddContactsComponent],
   templateUrl: './show-contacts.component.html',
-  styleUrls: ['./show-contacts.component.scss'] // Fehlerkorrektur: styleUrls (plural) statt styleUrl
+  styleUrls: ['./show-contacts.component.scss']
 })
-export class ShowContactsComponent  {
-  allUsers: any = [];
-
-  // Services über DI (Dependency Injection) injizieren
-
+export class ShowContactsComponent implements OnInit {
+  selectedUserIds: number[] = []; 
+  selectedUsers: any[] = [];
+  allUsers: any[] = []; 
 
   globalFunctions = inject(GlobalFunctionsService);
-  globalVariables = inject(GlobalVariablesService);
+  firebaseUserService = inject(FirebaseUserService)
 
-  constructor() {
-    // Konstruktor bleibt für die Injektion leer, da wir die modernere inject-Methode verwenden
+  constructor(private globalVariables: GlobalVariablesService) {
+    console.log(this.globalVariables)
   }
 
-
+  ngOnInit() {
+    this.updateSelectedUsers();
+    console.log(this.getSingleUser(this.globalVariables.openChannel.id));    
   }
+
+  getSingleUser(id: string) {
+    return onSnapshot(this.firebaseUserService.getSingleDocRef('channels', id), (channel) => {
+      if (channel.data()) {
+        console.log(channel.data());
+      }
+    });
+  }
+
+  updateSelectedUsers() {
+    this.selectedUsers = this.allUsers.filter(user => this.selectedUserIds.includes(user.id));
+    console.log('id ist:' ,this.globalVariables.channelData);
+  }
+
+}
+
 

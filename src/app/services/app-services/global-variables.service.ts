@@ -17,6 +17,7 @@ export class GlobalVariablesService {
   //flags for profile
   showProfileMenu: boolean = false;
   showProfile: boolean = false;
+  ownprofile: boolean = true;
   showEditProfile: boolean = false;
   isProfileOfCurrentUser: boolean = true;
 
@@ -33,6 +34,9 @@ export class GlobalVariablesService {
   userToChatWith = {
     name: '',
     img: '',
+    email: '',
+    id: '',
+    isActive: false
   };
 
   showChannels: boolean = false;

@@ -45,8 +45,12 @@
         [message]="message"
       ></app-reactions>
 
-      <div class="reaction-emojis" *ngFor="let emoji of msgEmojis">
-        <span class="reaction-emoji-field">{{ emoji.icon }}</span>
+      <div class="reaction-emojis">
+        <span
+          class="reaction-emoji-field"
+          *ngFor="let emoji of message.emoji"
+          >{{ emoji.icon }}</span
+        >
       </div>
 
       <div class="replie-wrapper">

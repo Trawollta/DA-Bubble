@@ -9,21 +9,36 @@ import {
 import { CommonModule } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+import {
+  Firestore,
+  arrayRemove,
+  doc,
+  updateDoc,
+} from '@angular/fire/firestore';
 /* import { CurrentUserMessageComponent } from '../chats/current-user-message/current-user-message.component'; */
 
 @Component({
   selector: 'app-reactions',
   standalone: true,
-  imports: [CommonModule, /* CurrentUserMessageComponent */],
+  imports: [CommonModule /* CurrentUserMessageComponent */],
   templateUrl: './reactions.component.html',
   styleUrl: './reactions.component.scss',
 })
 export class ReactionsComponent {
-  globaleVariable = inject(GlobalVariablesService);
+  firestore: Firestore = inject(Firestore);
+  globaleVariables = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
   editMessage() {}
   @Output() newEmoji = new EventEmitter<string>();
   @Input() message: any;
+
+  originalMessage = {
+    message: '',
+    answerto: '',
+    userId: '',
+    timestamp: 0,
+    emoji: [{ icon: '', userId: '' }],
+  };
 
   // Variable für das ausgewählte Emoji
   choosedEmoji: string = '';
@@ -66,18 +81,18 @@ export class ReactionsComponent {
    * @param {string} emoji - The selected emoji.
    */
   public showInInput(emoji: any): void {
-  /*   this.CurrentUserMessageComponent.copyHelper(); */
+    this.copyHelper();
     this.newEmoji.emit(emoji);
     if (this.message.emoji[0].icon === '') {
       this.message.emoji[0].icon = emoji.character;
-      this.message.emoji[0].userId = this.globaleVariable.activeID;
+      this.message.emoji[0].userId = this.globaleVariables.activeID;
     } else {
       this.message.emoji.push({
         icon: emoji.character,
-        userId: this.globaleVariable.activeID,
+        userId: this.globaleVariables.activeID,
       });
     }
-   /*  this.CurrentUserMessageComponent.addEmoji(); */
+    this.addEmoji();
   }
 
   /**
@@ -93,4 +108,42 @@ export class ReactionsComponent {
       }
     }
   }
+
+  addEmoji() {
+    this.globaleVariables.messageData = this.message;
+    console.log('messageData: ', this.message);
+    console.log(
+      'Globale Message Data info: ',
+      this.globaleVariables.messageData
+    );
+    this.firebaseChatService.sendMessage(
+      this.globaleVariables.openChannel.chatId
+    );
+    this.remove(this.globaleVariables.openChannel.chatId);
+  }
+
+  copyHelper() {
+    this.originalMessage.message = this.message.message;
+    this.originalMessage.answerto = this.message.answerto;
+    this.originalMessage.timestamp = this.message.timestamp;
+    this.originalMessage.userId = this.message.userId;
+    this.originalMessage.emoji = [];
+
+    this.message.emoji.forEach((element: any) => {
+      this.originalMessage.emoji.push({
+        icon: element.icon,
+        userId: element.userId,
+      });
+    });
+    console.log('originalMessage vom CopyHelper: ', this.originalMessage);
+    this.remove(this.globaleVariables.openChannel.chatId);
+  }
+
+  remove(chatId: string) {
+    console.log('remove: ', this.originalMessage);
+    return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
+      messages: arrayRemove(this.originalMessage),
+    });
+  }
+
 }

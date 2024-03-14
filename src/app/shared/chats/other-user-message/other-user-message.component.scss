@@ -1,89 +1,129 @@
 @import "../../../../styles.scss";
 .message {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-   margin: 0px 16px;
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  margin: 0px 16px;
+  position: relative;
 
-        img {
-            width: 50px;
-            height: 50px;
-            border-radius: 40px;
-        }
-  
+  &:hover {
+    background-color: #eceefe;
+    cursor: pointer;
+    .speech-bubble {
+        background-color: white !important;
+    }
+  }
 
-    .info-area {
-        gap: 8px;
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 40px;
+  }
 
-        .info-area-wrapper {
-            @include dFlex($g: 20px, $jc: flex-start);
+  .info-area {
+    gap: 8px;
 
-            .username {
-                font-size: 18px;
-                font-weight: 700;
-                line-height: 25px;
+    .info-area-wrapper {
+      @include dFlex($g: 20px, $jc: flex-start);
 
-            }
+      .username {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 25px;
+      }
 
-            .messagetime {
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 19px;
-                color: $text_grey;
-            }
-
-        }
-
-        .speech-bubble {
-            padding: 15px;
-            border-radius: 0px 30px 30px 30px;
-            gap: 8px;
-            background-color: $background;
-
-            .speech-bubble-text {
-                font-size: 17px;
-                font-weight: 400;
-                line-height: 23px;
-                letter-spacing: 0em;
-                text-align: left;
-            }
-        }
-
-        .emoji-div {
-            display: flex;
-            max-width: 100px;
-            padding: 3px 15px 3px 20px;
-            border-radius: 25px 25px 0px 25px;
-            border: 1px;
-            gap: 5px;
-            img{
-                height: 15px;
-                width: auto;
-            }
-        }
-        .replie-wrapper {
-            gap: 20px;
-            display: flex;
-            flex-direction: row;
-            .replie-text {
-                font-size: 16px;
-                font-weight: 400;
-                line-height: 25px;
-                text-align: left;
-                color: $purple3;
-              }
-              .timestamp-time {
-                font-size: 12px;
-                font-weight: 400;
-                line-height: 19px;
-                letter-spacing: 0em;
-                text-align: left;
-                display: flex;
-              }
-          }
+      .messagetime {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 19px;
+        color: $text_grey;
+      }
     }
 
+    .speech-bubble {
+      padding: 15px;
+      border-radius: 0px 30px 30px 30px;
+      gap: 8px;
+      background-color: $background;
+
+      .speech-bubble-text {
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 23px;
+        letter-spacing: 0em;
+        text-align: left;
+      }
+    }
+
+    .emoji-div {
+      display: flex;
+      max-width: 100px;
+      padding: 3px 15px 3px 20px;
+      border-radius: 25px 25px 0px 25px;
+      border: 1px;
+      gap: 5px;
+      img {
+        height: 15px;
+        width: auto;
+      }
+    }
+    .replie-wrapper {
+      gap: 20px;
+      display: flex;
+      flex-direction: row;
+      .replie-text {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 25px;
+        text-align: left;
+        color: $purple3;
+        &:hover {
+          cursor: pointer;
+          font-weight: 700;
+          font-size: 18px;
+          line-height: 24.55px;
+        }
+      }
+      .timestamp-time {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 19px;
+        letter-spacing: 0em;
+        text-align: left;
+        display: flex;
+      }
+    }
+  }
+}
+
+.reaction-field {
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.reaction-emojis {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 5px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.reaction-emoji-field {
+  display: flex;
+  width: 40px;
+  height: 20px;
+  border: 1px solid rgba(173, 176, 217, 1);
+  align-items: center;
+  border-radius: 10px;
+  &:hover {
+    border-color: rgba(68, 77, 242, 1);
+  }
 }
 .d-none {
-    display: none;
-  }
+  display: none;
+}

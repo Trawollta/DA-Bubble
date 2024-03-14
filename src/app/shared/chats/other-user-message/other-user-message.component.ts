@@ -73,7 +73,6 @@ export class OtherUserMessageComponent {
 
   }
 
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //diese beiden funktionen sollen mir nur helfen zu verstehen
   //sie werden wieder entfernt
    getUser2(id: string){
@@ -85,7 +84,6 @@ export class OtherUserMessageComponent {
     console.log('otherUserId: ', this.message.userId);
     console.log('otherUser: ', docSnap.data() );
   } 
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   /**
    * this function calls function getUser() for providing userdata for the post
@@ -127,6 +125,11 @@ export class OtherUserMessageComponent {
     this.globalVariables.messageThreadStart.timestamp = this.message.timestamp;
     this.globalVariables.messageThreadStart.userName = this.user.name;
     this.globalVariables.messageThreadStart.img = this.user.img;
+  }
+
+  onSelectMessage(message: string) {
+    this.selectedMessage = message;
+    this.openReaction = true;
   }
 
 }

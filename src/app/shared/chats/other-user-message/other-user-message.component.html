@@ -10,7 +10,11 @@
       <span class="username">{{ user.name }}</span>
       <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
     </div>
-    <div class="speech-bubble" (click)="openEmojis()">
+    <div
+      class="speech-bubble"
+      (click)="openEmojis()"
+      (click)="onSelectMessage(message.id)"
+    >
       <span class="speech-bubble-text">{{ message.message }}</span>
     </div>
     <app-reactions
@@ -18,6 +22,11 @@
       *ngIf="openReaction && selectedMessage === message.id"
       [message]="message"
     ></app-reactions>
+    <div class="reaction-emojis">
+      <span class="reaction-emoji-field" *ngFor="let emoji of message.emoji">{{
+        emoji.icon
+      }}</span>
+    </div>
     <div class="replie-wrapper">
       <div class="replie-text" (click)="openAnswers()">2 Antworten</div>
       <span class="timestamp-text">Letze Antwort Time</span>

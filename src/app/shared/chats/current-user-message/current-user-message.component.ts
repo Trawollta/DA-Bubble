@@ -63,7 +63,7 @@ export class CurrentUserMessageComponent {
 
   unsubUser;
   userId: string = 'guest';
-  reactions: any = this.originalMessage.emoji;
+  /* reactions: any = this.originalMessage.emoji; */
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -105,10 +105,6 @@ export class CurrentUserMessageComponent {
    * this function calls function getUser() for providing userdata for the post
    */
   ngOnInit() {
-    //console.log(this.user);
-    //debugger;
-    //this.user = this.message.userId;
-    //console.log(this.user);
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
   }
@@ -184,15 +180,6 @@ export class CurrentUserMessageComponent {
     });
   }
 
-  addEmoji() {
-    /* this.copyHelper(); */
-    this.globalVariables.messageData = this.message;
-    this.firebaseChatService.sendMessage(
-      this.globalVariables.openChannel.chatId
-    );
-    this.remove(this.globalVariables.openChannel.chatId);
-  }
-
   copyHelper() {
     this.originalMessage.message = this.message.message;
     this.originalMessage.answerto = this.message.answerto;
@@ -206,5 +193,10 @@ export class CurrentUserMessageComponent {
         userId: element.userId,
       });
     });
+    console.log('originalMessage vom CopyHelper: ', this.originalMessage);
+  }
+  calculateUserCount(emoji:any ): number {
+    console.log('emoji: ', emoji);
+    return emoji.userId.length;
   }
 }

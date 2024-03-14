@@ -22,7 +22,7 @@ export class ShowContactsComponent implements OnInit {
   globalFunctions = inject(GlobalFunctionsService);
   firebaseUserService = inject(FirebaseUserService)
 
-  constructor(private globalVariables: GlobalVariablesService) {
+  constructor(public globalVariables: GlobalVariablesService) {
     console.log(this.globalVariables)
   }
 
@@ -34,7 +34,8 @@ export class ShowContactsComponent implements OnInit {
   getSingleUser(id: string) {
     return onSnapshot(this.firebaseUserService.getSingleDocRef('channels', id), (channel) => {
       if (channel.data()) {
-        console.log(channel.data());
+        console.log(channel.data()!['members']);
+        channel.data()!['members'].forEach((user: string) => this.selectedUsers.push(this.firebaseUserService.getSingleDocRef('users',user)));
       }
     });
   }

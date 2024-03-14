@@ -5,20 +5,20 @@
   transform: translate(-50%, -50%);
   width: 80%; /* oder eine spezifische Breite */
   max-width: 500px; /* Maximalbreite für größere Bildschirme */
-  background: white; /* Hintergrundfarbe des Overlays */
+  background: white; 
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Schatten für das Overlay */
-  z-index: 1000; /* Stellt sicher, dass das Overlay über anderen Elementen angezeigt wird */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  z-index: 1000; 
   display: flex;
   flex-direction: column;
-  align-items: center; /* Zentriert den Inhalt vertikal im Overlay */
+  align-items: center; 
 }
 
 .overlay-content {
-  width: 100%; /* Nutzt die gesamte Breite des Overlays */
+  width: 100%; 
+  height: 500px;
 }
 
-/* Ihre bestehenden Stile */
 .contact-list {
   display: flex;
   flex-direction: column;

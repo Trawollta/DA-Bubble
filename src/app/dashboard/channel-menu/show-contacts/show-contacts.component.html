@@ -1,14 +1,12 @@
-<div class="main-content">
-  <div id="contactOverlay" class="overlay">
-    <div class="overlay-content">
-      <span class="close-btn" (click)="globalFunctions.showMembers()" (click)="updateSelectedUsers()"></span>
-      <h2>Channel-Mitglieder</h2>
-      <div class="contacts-list">
-        <!-- Durchlaufen der allUsers, um die Benutzerdaten anzuzeigen -->
-        <ul>
-          <li *ngFor="let user of selectedUsers">{{ user.name }}</li>
-        </ul>
-      </div>
+<div class="overlay" id="contactOverlay">
+  <div class="overlay-content">
+    <span class="close-btn">Close</span>
+    <h2>Channel-Mitglieder</h2>
+    <div class="contact-list">
+      <div class="contact-item" *ngFor="let user of selectedUsers">
+        <img [src]="user.img" alt="user image" class="contact-img">
+        <span class="contact-name">{{ user.name }}</span>
       </div>
     </div>
   </div>
+</div>

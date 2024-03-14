@@ -78,6 +78,8 @@ export class GlobalVariablesService {
     chatId: 'NQMdt08FAcXbVroDLhvm',
   };
 
+
+  //Das wird glaube ich nicht mehr gebraucht
   channelData = {
     description: '',
     channelName: '',

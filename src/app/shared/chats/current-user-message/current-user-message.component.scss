@@ -104,8 +104,9 @@
 }
 
 .reaction-field {
-  display: flex;
-  justify-content: flex-start;
+  @include dFlex($jc:flex-start, $fd:column, $ai:flex-start);
+ // display: flex;
+ // justify-content: flex-start;
   position: absolute;
   top: 0;
   left: 0;

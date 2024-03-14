@@ -75,7 +75,7 @@ export class OtherUserMessageComponent {
 
   //diese beiden funktionen sollen mir nur helfen zu verstehen
   //sie werden wieder entfernt
-   getUser2(id: string){
+  /*  getUser2(id: string){
     return getDoc(this.getUserRef(id));
   } 
 
@@ -83,7 +83,7 @@ export class OtherUserMessageComponent {
     const docSnap = await this.getUser2(this.message.userId);
     console.log('otherUserId: ', this.message.userId);
     console.log('otherUser: ', docSnap.data() );
-  } 
+  }  */
 
   /**
    * this function calls function getUser() for providing userdata for the post

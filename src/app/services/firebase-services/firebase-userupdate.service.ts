@@ -63,8 +63,7 @@ export class FirebaseUserupdateService {
         this.globalVariablesService.currentUser = newUser;
         this.globalVariablesService.activeID = user.id;
       }
-      //console.log('userProfileData: ', this.globalVariablesService.currentUser);
-     // console.log('activeId: ', this.globalVariablesService.activeID);
+   
     });
   }
 
@@ -73,41 +72,37 @@ export class FirebaseUserupdateService {
    * @param userId - the id of the user which should be called
    */
   setActiveUserId(userId: string | undefined) {
-    userId ? this.activeID = userId : this.activeID; // if a user id exist take this otherwhise the predefined one in gloablevariableservice
-    //brauche ich das hier?
-    //  this.globalVariablesService.activeID = this.activeID;
-
-    //console.log('aktive Id: ', this.activeID);
-
+    userId ? this.activeID = userId : this.activeID; 
     this.getSingleUser(this.activeID)
   }
 
-// never in use
-  /* async setdata() {
 
-    await setDoc(doc(this.firestore, "users", this.activeID), this.toJson(this.userProfileData));
-  } */
-
-  async updateData(data:{ [key: string]: any; }) {
-
-    await updateDoc(doc(this.firestore, "users", this.activeID), data);
+/**
+ * this funktion updates the element 
+ * @param data -Json
+ */
+  async updateData(data:{ [x: string]: any; }) {
+      await updateDoc(doc(this.firestore, "users", this.activeID), data);
   }
 
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/**
+ * this function returns the data of the user. This is no obserable.
+ * @param id -id of user
+ * @returns data of user
+ */
    async getUserData(id: string){
     const docSnap = await getDoc(this.getSingleUserRef(id));
     return docSnap.data();
   } 
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  
+// erst mal auskommentiert
 
-
-
-  toJson(user: User): {} {
+  /* toJson(user: User): {} {
     return {
       name: user.name,
       email: user.email,
       isActive: user.isActive, //Alex 27.2.24--changed from status to active because it is only a boolean
       img: user.img
     };
-  }
+  } */
 }

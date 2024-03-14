@@ -18,8 +18,6 @@
                 <!-- area profile image -->
                 <div class="imgContainer">
                     <img [src]="profile.img" alt="profile image">
-                     <!-- <img *ngIf="globalVariables.ownprofile" [src]="globalVariables.currentUser.img" alt="profile image"> -->
-                    <!-- <img *ngIf="!globalVariables.ownprofile" [src]="globalVariables.userToChatWith.img" alt="profile image"> -->
                 </div>
             </div>
             <!-- form show or edit start -->
@@ -28,8 +26,6 @@
                 <!-- area show name -->
                 <div *ngIf="!globalVariables.showEditProfile" class="nameContainer">
                     <h2>{{profile.name}}</h2>
-                    <!-- <h2 *ngIf="globalVariables.ownprofile">{{globalVariables.currentUser.name}}</h2> -->
-                    <!-- <h2 *ngIf="!globalVariables.ownprofile">{{globalVariables.userToChatWith.name}}</h2> -->
                     <div class="editContainer" *ngIf="globalVariables.ownprofile" (click)="editProfile()">
                         <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/edit.svg" alt="edit profile">
                         <span *ngIf="globalVariables.desktop600">Bearbeiten</span>
@@ -66,9 +62,7 @@
                     </div>
                     <div *ngIf="!globalVariables.showEditProfile" class="mailAdressContainer">
                         <a  href="mailto:{{profile.email}}">{{profile.email}}</a>
-                       <!--  <a *ngIf="globalVariables.ownprofile" href="mailto:{{globalVariables.currentUser.email}}">{{globalVariables.currentUser.email}}</a>
-                        <a *ngIf="!globalVariables.ownprofile" href="mailto:{{globalVariables.userToChatWith.email}}">{{globalVariables.userToChatWith.email}}</a>
-                    --> </div>
+                       <!--  --></div>
                     <!-- area edit mail -->
                     <div *ngIf="globalVariables.showEditProfile" class="inputFieldContainer">
                         <app-inputfield type="email" [classes]="'noIcon standard'" name='email'  [(ngModel)]="emailBuffer" placeholder="Deine E-Mail hier"></app-inputfield>
@@ -76,7 +70,8 @@
                     </div>
                 </div>
                 <!-- area button write message -->
-                <app-button *ngIf="!globalVariables.showEditProfile" [classes]="['primary']" (clicked)="openMessage()"
+                <div class="messageBtn" *ngIf="!globalVariables.showEditProfile && globalVariables.ownprofile"></div>
+                <app-button class="messageBtn" *ngIf="!globalVariables.showEditProfile && !globalVariables.ownprofile" [classes]="['primary']" (clicked)="openMessage()"
                     caption="Nachricht" imgPath="assets/img/icons/mode_comment.svg"></app-button>
                 <!-- area button cancel or submit change -->
                 <div *ngIf="globalVariables.showEditProfile" class="btnContainer">

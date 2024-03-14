@@ -52,23 +52,14 @@ async ngOnInit(){
   }
 
   openMessage() {
-    this.globalVariables.showWriteMessage = true;
+   // this.globalVariables.showWriteMessage = true;
   }
 
   editProfile() {
     this.nameBuffer = this.profile.name;
       this.emailBuffer = this.profile.email;
-   /*  if (this.globalVariables.ownprofile) {
-      this.profileNameBuffer = this.globalVariables.currentUser.name;
-      this.emailBuffer = this.globalVariables.currentUser.email;
-
-    } else {
-      this.profileNameBuffer = this.globalVariables.userToChatWith.name;
-      this.emailBuffer = this.globalVariables.userToChatWith.email;
-
-    } */
     this.globalVariables.showEditProfile = true;
-    //this.firebaseService.setActiveUserId(this.globalVariables.activeID);
+
   }
 
   cancelEdit() {
@@ -76,24 +67,22 @@ async ngOnInit(){
     this.emailBuffer = '';
     this.globalVariables.showEditProfile = false
   }
-  sumbitEdit() {
-    if (this.emailBuffer !== this.profile.email) {
-      // für später: ich brauche ein Objekt, dass den geänderten Wert aufnimmt und falls auch der Name geändert wurde mit diesem zusammenfügen. und möglicherweise muss in das Objekt noch der neue Bildpfad rein, wenn es geändert wurde
-    }
-    //ich muss an updateData dann das Array übergeben
-    this.firebaseService.updateData(this.data);
+
+
+ async sumbitEdit() {
+    this.firebaseService.updateData(this.data());
+    const userData = await this.firebaseService.getUserData(this.globalVariables.profileUserId);
+    this.profile = new User(userData);
+    this.cancelEdit();
   }
 
-    // ich muss hier eine Möglichkeit schaffen, dass ich das Dokument updaten kann und dabei nur die Elemente angebe, die verändert werden sollen.
-  // Ich könnte die Eingabe mit dem Wert aus der Datenbank vergleichen und es nur dann in das zu übertragende JSON einbauen, wenn der Wert unterschiedlich ist.
-  // Ich will es nicht direkt ändern damit ich bei Abbruch die alten Werte noch habe. und erst ändere, wenn ich auf save klicke.
-
-  data() {
+ 
+  data():{} {
     const nameChanged = this.nameBuffer !== this.profile.name;
     const emailChanged = this.emailBuffer !== this.profile.email;
     const data: { [key: string]: any } = {};
     if(nameChanged) data['name'] = this.nameBuffer;
-    if(emailChanged) data['email'] = this.emailBuffer;
+    if(emailChanged) data['email'] = this.emailBuffer; // ich brauche noche eine Prüfung, ob die E-Mailadresse ok ist
     
     return data;
   }

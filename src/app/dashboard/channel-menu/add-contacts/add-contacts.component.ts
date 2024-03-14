@@ -77,26 +77,21 @@ export class AddContactsComponent implements OnInit {
   async addNewChannel() {
 
     //add new chanel and return channelId
-    await this.globalFunctions.addData('channels', this.globalVariables.channelData).then(response => {
-      this.addedChannelId = response.id;
+    await this.globalFunctions.addData('channels', this.addChannelwithChoosenMembers() ).then(response => {
+      this.addedChannelId = response.id; 
     }).catch(error => {
       console.error('Fehler beim Hinzufügen des Kanals:', error);
     });
-   // console.log('channel added: ', this.addedChannelId);
+   
     // add new chat and save channelID in it and return chatId
-
     await this.firebaseChatService.addChat(this.addedChannelId).then(response => {
       this.addedChatId = response.id;
     }).catch(error => {
       console.error('Fehler beim Hinzufügen des Chats:', error);
     });
-   // console.log('chat added: ', this.addedChatId);
-
     //add chatId to channel
     await this.firebaseChannelService.updateChannel(this.addedChannelId, { chatId: this.addedChatId });
 
-    // hier benötige ich noch eine Funktion, die einen Chat erstellt. In diesen Chat speichere ich die 
-    // von diesem Chat
     this.globalVariables.openChannel.titel = this.globalVariables.channelData.channelName;
     this.globalVariables.channelData.channelName = '';
     this.globalVariables.channelData.description = '';
@@ -105,23 +100,17 @@ export class AddContactsComponent implements OnInit {
   }
 
 
-  async addChannelwithChoosenMembers() {
+  addChannelwithChoosenMembers() {
     const selectedUserIds = this.selectedUsers.map(user => user.id);
-  
+    console.log('this.selectedUsers: ', this.selectedUsers);
     const newChannelData = {
       channelName: this.globalVariables.channelData.channelName,
       description: this.globalVariables.channelData.description,
+      chatId: '',
       members: selectedUserIds,
     };
-  
-    try {
-      const docRef = await addDoc(collection(this.firestore, 'channels'), newChannelData);
-      console.log("Neuer Kanal erstellt mit ID:", docRef.id);
-      this.resetAndCloseOverlay();
-    } catch (error) {
-      console.error("Fehler beim Erstellen des Kanals:", error);
-    }
-  
+    console.log('newChannelData: ', newChannelData);
+    return newChannelData;
   }
   
   resetAndCloseOverlay() {

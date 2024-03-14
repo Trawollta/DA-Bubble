@@ -33,11 +33,10 @@ export class GlobalFunctionsService {
   }
 
   openProfile(ownProfile:boolean, userId:string) {
-    console.log(userId);
-    console.log(this.globalVariables.userToChatWith);
     this.globalVariables.profileUserId = userId;
     this.globalVariables.ownprofile = ownProfile ? true : false;
     this.globalVariables.showProfile = true;
+    console.log('this.globalVariables.ownprofile: ',this.globalVariables.ownprofile)
   }
 
   openOverlay() {

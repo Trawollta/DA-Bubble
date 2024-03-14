@@ -170,6 +170,7 @@ export class CurrentUserMessageComponent {
     this.firebaseChatService.sendMessage(
       this.globalVariables.openChannel.chatId
     );
+    if(this.originalMessage.message !== this.message.message)
     this.remove(this.globalVariables.openChannel.chatId);
   }
 

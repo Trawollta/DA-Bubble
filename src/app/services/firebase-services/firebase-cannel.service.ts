@@ -10,11 +10,11 @@ export class FirebaseCannelService {
 
   constructor() { }
 
- 
 
   updateChannel(channelId:string, item: any){
     //debugger;
     const docRef = doc(this.firestore, 'channels', channelId);
     return updateDoc(docRef, item);
   }
+  
 }

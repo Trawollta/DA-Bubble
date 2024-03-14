@@ -63,7 +63,6 @@ export class CurrentUserMessageComponent {
 
   unsubUser;
   userId: string = 'guest';
-  /* reactions: any = this.originalMessage.emoji; */
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -193,10 +192,12 @@ export class CurrentUserMessageComponent {
         userId: element.userId,
       });
     });
-    console.log('originalMessage vom CopyHelper: ', this.originalMessage);
   }
-  calculateUserCount(emoji:any ): number {
-    console.log('emoji: ', emoji);
-    return emoji.userId.length;
+
+  addUserIdToEmoji(emoji:any) {
+    let test = 'hallo';
+    emoji.userIds += ',' + test;
+    console.log(emoji.userIds);
   }
+
 }

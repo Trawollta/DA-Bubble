@@ -46,21 +46,21 @@
       ></app-reactions>
 
       <div class="reaction-emojis">
-        <span
-          class="reaction-emoji-field"
-          *ngFor="let emoji of message.emoji"
-          >{{ emoji.icon }} <span class="user-count">{{ calculateUserCount(emoji) }}</span>
-          </span
-        >
+        <span class="reaction-emoji-field" *ngFor="let emoji of message.emoji" (click)="addUserIdToEmoji(emoji)">
+          {{ emoji.icon }}
+        </span>
       </div>
-
+      
       <div class="replie-wrapper">
         <span class="replie-text" (click)="openAnswers()">1 Antworten</span>
         <span class="timestamp-text">Letze Antwort Time</span>
       </div>
     </div>
   </div>
-  <div class="user" (click)="globalFunctions.openProfile(true, globalVariables.activeID)">
+  <div
+    class="user"
+    (click)="globalFunctions.openProfile(true, globalVariables.activeID)"
+  >
     <img [src]="user.img" alt="" />
   </div>
 </section>

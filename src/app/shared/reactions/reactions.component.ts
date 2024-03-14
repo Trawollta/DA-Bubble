@@ -111,11 +111,6 @@ export class ReactionsComponent {
 
   addEmoji() {
     this.globaleVariables.messageData = this.message;
-    console.log('messageData: ', this.message);
-    console.log(
-      'Globale Message Data info: ',
-      this.globaleVariables.messageData
-    );
     this.firebaseChatService.sendMessage(
       this.globaleVariables.openChannel.chatId
     );
@@ -135,15 +130,12 @@ export class ReactionsComponent {
         userId: element.userId,
       });
     });
-    console.log('originalMessage vom CopyHelper: ', this.originalMessage);
     this.remove(this.globaleVariables.openChannel.chatId);
   }
 
   remove(chatId: string) {
-    console.log('remove: ', this.originalMessage);
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
       messages: arrayRemove(this.originalMessage),
     });
   }
-
 }

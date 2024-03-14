@@ -96,7 +96,7 @@ export class AddContactsComponent implements OnInit {
     this.globalVariables.channelData.channelName = '';
     this.globalVariables.channelData.description = '';
     this.globalVariables.channelData.chatId = '';
-    this.globalFunctions.closeUserOverlay();
+    this.globalFunctions.closeAddContactsOverlay();
   }
 
 
@@ -118,7 +118,7 @@ export class AddContactsComponent implements OnInit {
     this.globalVariables.channelData.description = '';
     this.selectedUsers = []; 
     this.showCertainPeople = false; 
-    this.globalFunctions.closeUserOverlay(); 
+    this.globalFunctions.closeAddContactsOverlay(); 
   }
   
 

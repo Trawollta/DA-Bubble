@@ -31,7 +31,7 @@ export class AddToChannelComponent {
     this.globalVariables.channelData.channelName = '';
     this.globalVariables.channelData.description = '';
     this.globalVariables.channelData.chatId = '';
-    this.globalFunctions.closeUserOverlay();
+    this.globalFunctions.closeAddContactsOverlay();
   }
 
 }

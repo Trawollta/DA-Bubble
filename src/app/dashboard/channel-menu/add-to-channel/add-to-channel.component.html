@@ -2,19 +2,19 @@
 
     <div class="overlay" *ngIf="globalFunctions.showContacts">
         <div class="headline">
-    <div>
-        <span class="top"> Leute hinzufuegen</span>
-        </div>
-        <div>
-        <img (click)="globalFunctions.closeUserOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
-        </div>
+            <div>
+                <span class="top"> Leute hinzufuegen</span>
+            </div>
+                <div>
+                    <img (click)="globalFunctions.closeAddContactsOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
+            </div>
 
-        <app-inputfield
-        [classes]="['standard']"
-        type="search" 
-        placeholder="Mitglieder suchen"
-      ></app-inputfield> 
     </div>
+    <app-inputfield
+    [classes]="['standard']"
+    type="search" 
+    placeholder="Mitglieder suchen"
+  ></app-inputfield> 
     <div class="add">
      
         <div class="button-area">

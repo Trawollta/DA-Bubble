@@ -1,12 +1,17 @@
-<div class="overlay" id="contactOverlay">
-  <div class="overlay-content">
-    <span class="close-btn">Close</span>
-    <h2>Channel-Mitglieder</h2>
+<div class="overlay">
+  <div class="headline">
+    <div>
+      <span class="top"> Channel-Mitglieder</span>
+    </div>
+      <div>
+        <img (click)="globalFunctions.closeMembers()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
+      </div>
+  </div>
     <div class="contact-list">
       <div class="contact-item" *ngFor="let user of selectedUsers">
         <img [src]="user.img" alt="user image" class="contact-img">
         <span class="contact-name">{{ user.name }}</span>
       </div>
     </div>
-  </div>
 </div>
+

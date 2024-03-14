@@ -51,12 +51,6 @@ export class GlobalFunctionsService {
 
   }
 
-  closeUserOverlay() {
-    this.globalVariables.showProfile = false;
-    this.adduser = false;
-
-  }
-
   openUserOverlay() {
     this.adduser = !this.adduser;
     if (this.adduser) document.body.style.overflow = 'hidden';
@@ -99,12 +93,27 @@ export class GlobalFunctionsService {
     else document.body.style.overflow = 'auto';
   }
 
+  closeMembers() {
+    this.memberlist = false;
+    if (this.memberlist) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }
+
+
+
   openAddContactsOverlay() {
     this.showContacts = true;
     console.log('Overlay should open now. showContacts:', this.showContacts);
     if (this.showContacts) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
 }
+
+  closeAddContactsOverlay() {
+    this.showContacts = false;
+    document.body.style.overflow = 'auto'; 
+    console.log('Overlay closed');
+  }
+
 
   closeEditOverlay() {
     this.editChannelOverlayOpen = false;

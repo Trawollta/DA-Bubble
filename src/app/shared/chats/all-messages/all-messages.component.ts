@@ -76,15 +76,21 @@ export class AllMessagesComponent {
    * @param messageTimestamp - timestamp of message
    * @returns - boolean
    */
-  showDateBar(messageTimestamp: number, answerTo: string): boolean {
+  showDateBar(messageTimestamp: number, answerTo: string, index: number): boolean {
+    //debugger;
     let displayDate = false;
-    if(this.isChat){
-    displayDate=(this.lastDisplayedDate.toLocaleDateString() !== new Date(messageTimestamp).toLocaleDateString())
-      && answerTo == '';
+    if (this.isChat) {
+      if (index == 0)
+        displayDate = true;
+      else {
+        displayDate = (this.lastDisplayedDate.toLocaleDateString() !== new Date(messageTimestamp).toLocaleDateString())
+          && answerTo == '';
+      }
     }
     if (displayDate && messageTimestamp != 0) {
       this.lastDisplayedDate = new Date(messageTimestamp);
     }
+
     return displayDate;
   }
 
@@ -102,7 +108,7 @@ export class AllMessagesComponent {
     // return (message.userId === this.globalVariablesService.activeID && message.message != '' && message.answerto =='');
     let conditionTest: boolean = false;
     if (this.isChat)
-    conditionTest = message.userId == this.globalVariablesService.activeID && message.answerto == ''; /* message.message != '' && */
+      conditionTest = message.userId == this.globalVariablesService.activeID && message.answerto == ''; /* message.message != '' && */
     else conditionTest = false;
     return conditionTest;
   }
@@ -120,7 +126,7 @@ export class AllMessagesComponent {
   }) {
     let conditionTest: boolean = false;
     if (this.isChat)
-    conditionTest =
+      conditionTest =
         message.userId !== this.globalVariablesService.activeID &&
         message.message != '' &&
         message.answerto == ''; /* message.message != '' && */
@@ -128,7 +134,7 @@ export class AllMessagesComponent {
     return conditionTest;
   }
 
-  logBefehl(i:number) {
+  logBefehl(i: number) {
     console.log(i);
   }
 }

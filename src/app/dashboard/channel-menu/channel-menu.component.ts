@@ -96,9 +96,13 @@ export class ChannelMenuComponent {
 
 
   openDirectMessageUser(user: any) {
+    console.log(user);
     this.globalVariables.isUserChat = true;
     this.globalVariables.userToChatWith.name = user.name;
     this.globalVariables.userToChatWith.img = user.img;
+    this.globalVariables.userToChatWith.email = user.email;
+    this.globalVariables.userToChatWith.id = user.id;
+    this.globalVariables.userToChatWith.isActive = user.isActive;
     this.showChat();
 
   }

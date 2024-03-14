@@ -2,7 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
-import { Firestore, doc, collection, onSnapshot, } from '@angular/fire/firestore';
+import { Firestore, doc, collection, onSnapshot, getDoc } from '@angular/fire/firestore';
 
 
 import { User } from 'app/models/user.class';
@@ -68,11 +68,26 @@ export class OtherUserMessageComponent {
 
   }
 
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //diese beiden funktionen sollen mir nur helfen zu verstehen
+  //sie werden wieder entfernt
+   getUser2(id: string){
+    return getDoc(this.getUserRef(id));
+  } 
+
+   async getUser2WithColsolelLog(){
+    const docSnap = await this.getUser2(this.message.userId);
+    console.log('otherUserId: ', this.message.userId);
+    console.log('otherUser: ', docSnap.data() );
+  } 
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
   /**
    * this function calls function getUser() for providing userdata for the post
    */
-  ngOnInit() {
-    this.user = this.message.userId;
+  async ngOnInit() {
+    //this.user = this.message.userId; //not needed, wrong code
+    //this.getUser2WithColsolelLog(); //for testings
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
   }
@@ -90,6 +105,7 @@ export class OtherUserMessageComponent {
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
+    console.log(this.globalVariables.showThread);
     this.fillInitialUserObj();
     this.globalVariables.openChat = 'isChatVisable';
     this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();

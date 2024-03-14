@@ -1,6 +1,6 @@
 <section>
-    <div class="cardOuterContainer">
-        <div class="card">
+    <div class="cardOuterContainer" [ngClass]="{ 'cardCurrentUser': globalVariables.ownprofile }">
+        <div class="card ">
             <div class="content">
 
                 <!-- area head show name -->
@@ -17,7 +17,8 @@
 
                 <!-- area profile image -->
                 <div class="imgContainer">
-                    <img [src]="globalVariables.currentUser.img" alt="profile image">
+                    <img *ngIf="globalVariables.ownprofile" [src]="globalVariables.currentUser.img" alt="profile image">
+                    <img *ngIf="!globalVariables.ownprofile" [src]="globalVariables.userToChatWith.img" alt="profile image">
                 </div>
             </div>
             <!-- form show or edit start -->
@@ -25,7 +26,8 @@
 
                 <!-- area show name -->
                 <div *ngIf="!globalVariables.showEditProfile" class="nameContainer">
-                    <h2>{{globalVariables.currentUser.name}}</h2>
+                    <h2 *ngIf="globalVariables.ownprofile">{{globalVariables.currentUser.name}}</h2>
+                    <h2 *ngIf="!globalVariables.ownprofile">{{globalVariables.userToChatWith.name}}</h2>
                     <div class="editContainer" (click)="editProfile()">
                         <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/edit.svg" alt="edit profile">
                         <span *ngIf="globalVariables.desktop600">Bearbeiten</span>
@@ -61,7 +63,8 @@
                         <h4>E-Mail-Adresse</h4>
                     </div>
                     <div *ngIf="!globalVariables.showEditProfile" class="mailAdressContainer">
-                        <a href="mailto:{{globalVariables.currentUser.email}}">{{globalVariables.currentUser.email}}</a>
+                        <a *ngIf="globalVariables.ownprofile" href="mailto:{{globalVariables.currentUser.email}}">{{globalVariables.currentUser.email}}</a>
+                        <a *ngIf="!globalVariables.ownprofile" href="mailto:{{globalVariables.userToChatWith.email}}">{{globalVariables.userToChatWith.email}}</a>
                     </div>
                     <!-- area edit mail -->
                     <div *ngIf="globalVariables.showEditProfile" class="inputFieldContainer">

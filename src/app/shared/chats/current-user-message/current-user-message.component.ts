@@ -105,7 +105,10 @@ export class CurrentUserMessageComponent {
    * this function calls function getUser() for providing userdata for the post
    */
   ngOnInit() {
-    this.user = this.message.userId;
+    //console.log(this.user);
+    //debugger;
+    //this.user = this.message.userId;
+    //console.log(this.user);
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
   }

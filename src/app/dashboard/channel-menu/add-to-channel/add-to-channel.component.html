@@ -8,21 +8,20 @@
         <div>
         <img (click)="globalFunctions.closeUserOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
         </div>
+
+        <app-inputfield
+        [classes]="['standard']"
+        type="search" 
+        placeholder="Mitglieder suchen"
+      ></app-inputfield> 
     </div>
     <div class="add">
-        <div class="checkbox-container">
-            <input type="checkbox" id="addAllMembers" name="addMembers" value="all">
-            <label for="addAllMembers">Alle Mitglieder hinzufügen</label>
-        </div>
-        <div class="checkbox-container">
-            <input type="checkbox" id="addCertainPeople" name="addMembers" value="certain">
-            <label for="addCertainPeople">Bestimmte Leute hinzufügen</label>
-        </div>
+     
         <div class="button-area">
             <app-button
             [classes]="['primary']"
             (clicked)="addNewChannel()"
-            caption="Erstellen"
+            caption="Hinzufügen"
             imgPath=""
             ></app-button>
         </div>

@@ -6,13 +6,14 @@ import { NgModel } from '@angular/forms';
 import { ButtonComponent } from 'app/shared/button/button.component';
 import { AddContactsComponent } from '../add-contacts/add-contacts.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 
 
 @Component({
   selector: 'app-add-to-channel',
   standalone: true,
   imports: [
-    CommonModule, ButtonComponent, AddContactsComponent
+    CommonModule, ButtonComponent, AddContactsComponent, InputfieldComponent
   ],
   templateUrl: './add-to-channel.component.html',
   styleUrl: './add-to-channel.component.scss'

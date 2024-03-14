@@ -1,25 +1,26 @@
 <section class="message">
-    <div class="user" (click)="globalFunctions.openProfile(false, message.userId)">
-      <img [src]= "user.img" alt="" />
+  <div
+    class="user"
+    (click)="globalFunctions.openProfile(false, message.userId)"
+  >
+    <img [src]="user.img" alt="" />
+  </div>
+  <div class="info-area">
+    <div class="info-area-wrapper">
+      <span class="username">{{ user.name }}</span>
+      <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
     </div>
-    <div class="info-area">
-      <div class="info-area-wrapper">
-        <span class="username">{{ user.name }}</span>
-        <span class="messagetime">{{ postingTime | date: 'H:mm' }}</span>
-      </div>
-      <div class="speech-bubble" (click)="openEmojis()">
-        <span class="speech-bubble-text">{{ message.message }}</span>
-      </div>
-      <div id="emojis" class="emoji-div d-none">
-        <img src="../../../assets/img/reactions/done.svg" alt="" />
-        <img src="../../../assets/img/reactions/celebration.svg" alt="" />
-        <img src="../../../assets/img/reactions/rocket.svg" alt="" />
-        <img src="../../../assets/img/reactions/three_dots.svg" alt="" />
-      </div>
-      <div class="replie-wrapper">
-        <div class="replie-text" (click)="openAnswers()">2 Antworten</div>
-        <span class="timestamp-text">Letze Antwort Time</span>
-      </div>
+    <div class="speech-bubble" (click)="openEmojis()">
+      <span class="speech-bubble-text">{{ message.message }}</span>
     </div>
-  </section>
-
+    <app-reactions
+      class="reaction-field"
+      *ngIf="openReaction && selectedMessage === message.id"
+      [message]="message"
+    ></app-reactions>
+    <div class="replie-wrapper">
+      <div class="replie-text" (click)="openAnswers()">2 Antworten</div>
+      <span class="timestamp-text">Letze Antwort Time</span>
+    </div>
+  </div>
+</section>

@@ -9,19 +9,18 @@ import {
 import { CommonModule } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
-import { CurrentUserMessageComponent } from '../chats/current-user-message/current-user-message.component';
+/* import { CurrentUserMessageComponent } from '../chats/current-user-message/current-user-message.component'; */
 
 @Component({
   selector: 'app-reactions',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, /* CurrentUserMessageComponent */],
   templateUrl: './reactions.component.html',
   styleUrl: './reactions.component.scss',
 })
 export class ReactionsComponent {
   globaleVariable = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
-  currentUserMessageComponent = inject(CurrentUserMessageComponent);
   editMessage() {}
   @Output() newEmoji = new EventEmitter<string>();
   @Input() message: any;
@@ -67,7 +66,7 @@ export class ReactionsComponent {
    * @param {string} emoji - The selected emoji.
    */
   public showInInput(emoji: any): void {
-    this.currentUserMessageComponent.copyHelper();
+  /*   this.CurrentUserMessageComponent.copyHelper(); */
     this.newEmoji.emit(emoji);
     if (this.message.emoji[0].icon === '') {
       this.message.emoji[0].icon = emoji.character;
@@ -78,7 +77,7 @@ export class ReactionsComponent {
         userId: this.globaleVariable.activeID,
       });
     }
-    this.currentUserMessageComponent.addEmoji();
+   /*  this.CurrentUserMessageComponent.addEmoji(); */
   }
 
   /**

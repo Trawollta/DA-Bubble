@@ -6,16 +6,19 @@ import { Firestore, doc, collection, onSnapshot, getDoc } from '@angular/fire/fi
 
 
 import { User } from 'app/models/user.class';
-import { DatePipe } from '@angular/common';
+import { DatePipe, CommonModule } from '@angular/common';
+import { ReactionsComponent } from "../../reactions/reactions.component";
 
 @Component({
-  selector: 'app-other-user-message',
-  standalone: true,
-  imports: [
-    DatePipe
-  ],
-  templateUrl: './other-user-message.component.html',
-  styleUrl: './other-user-message.component.scss'
+    selector: 'app-other-user-message',
+    standalone: true,
+    templateUrl: './other-user-message.component.html',
+    styleUrl: './other-user-message.component.scss',
+    imports: [
+        DatePipe,
+        ReactionsComponent,
+        CommonModule
+    ]
 })
 
 
@@ -25,6 +28,8 @@ export class OtherUserMessageComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
+  openReaction: boolean = false;
+  selectedMessage: string = '';
   @Input() message: any;
 
   postingTime: string | null = null;

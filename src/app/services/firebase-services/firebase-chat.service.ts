@@ -9,6 +9,7 @@ import {
   setDoc,
   onSnapshot,
   arrayUnion,
+  arrayRemove
 } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { ChatChannel } from '../../models/chatChannel.class';
@@ -25,6 +26,14 @@ export class FirebaseChatService {
   activeChannelChatId: string = this.globalVariablesService.openChannel.chatId;
   chatChannel: ChatChannel = new ChatChannel();
   user: User = new User();
+
+  removeEmptyData = {
+    message: '',
+    answerto: '',
+    userId: '',
+    timestamp: 0,
+    emoji: [{ icon: '', userId: '' }],
+  }; 
 
   unsubChat;
 
@@ -125,6 +134,13 @@ export class FirebaseChatService {
    * @returns -
    */
   sendMessage(chatId: string) {
+    //das hier erst einmal zum Test rein, ich brauche hier noch eine Abfrage, ob das erste Element überhaput leer ist
+    // es entsteht als Platzhalter beim erstellen des Channels. 
+    // Auch hier die Frage, wird dieser Platzhalter überhaupt gebraucht.
+    // Die Frage kläre ich, sobald das Channelerstellen funktioniert
+    updateDoc(doc(this.firestore, 'chatchannels', chatId), {
+      messages: arrayRemove(this.removeEmptyData),
+    });
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
       messages: arrayUnion(this.newMessageToJson()),
     });

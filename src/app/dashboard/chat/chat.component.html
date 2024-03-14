@@ -25,7 +25,7 @@
   <!-- container for header it is a user chat -->
   <section class="msg-header" *ngIf="globalVariables.isUserChat">
     <div class="topic-headline">
-      <div class="headline" (click)="globalFunctions.openProfile(false)"> <!-- hier muss ich ddie User Variable übergeben -->
+      <div class="headline" (click)="globalFunctions.openProfile(false, this.globalVariables.userToChatWith.id)"> 
         <p></p>
         <img src="{{ globalVariables.userToChatWith.img }}" alt="">
         <p>{{ globalVariables.userToChatWith.name }}</p>

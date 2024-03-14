@@ -20,6 +20,7 @@ export class GlobalVariablesService {
   ownprofile: boolean = true;
   showEditProfile: boolean = false;
   isProfileOfCurrentUser: boolean = true;
+  profileUserId: string = '';
 
   //flags for showing the dashboard main elements
   showChannelMenu: boolean = true;

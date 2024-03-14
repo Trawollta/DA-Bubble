@@ -59,7 +59,7 @@
       </div>
     </div>
   </div>
-  <div class="user">
+  <div class="user" (click)="globalFunctions.openProfile(true, globalVariables.activeID)">
     <img [src]="user.img" alt="" />
   </div>
 </section>

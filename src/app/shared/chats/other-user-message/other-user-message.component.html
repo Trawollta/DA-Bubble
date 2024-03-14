@@ -1,5 +1,5 @@
 <section class="message">
-    <div class="user">
+    <div class="user" (click)="globalFunctions.openProfile(false, message.userId)">
       <img [src]= "user.img" alt="" />
     </div>
     <div class="info-area">

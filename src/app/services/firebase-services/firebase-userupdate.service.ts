@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { User } from '../../models/user.class';
-import { Firestore, collection, addDoc, updateDoc, doc, setDoc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc,getDoc, updateDoc, doc, setDoc, onSnapshot } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 
 
@@ -82,26 +82,25 @@ export class FirebaseUserupdateService {
     this.getSingleUser(this.activeID)
   }
 
+// never in use
+  /* async setdata() {
 
-  async setdata() {
+    await setDoc(doc(this.firestore, "users", this.activeID), this.toJson(this.userProfileData));
+  } */
 
-    await setDoc(doc(this.firestore, "users3", "ok"), this.toJson(this.userProfileData));
+  async updateData(data:{ [key: string]: any; }) {
+
+    await updateDoc(doc(this.firestore, "users", this.activeID), data);
   }
 
-  async updateData() {
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   async getUserData(id: string){
+    const docSnap = await getDoc(this.getSingleUserRef(id));
+    return docSnap.data();
+  } 
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    await updateDoc(doc(this.firestore, "users3", "ok"), this.buildJson());
-  }
 
-  // ich muss hier eine Möglichkeit schaffen, dass ich das Dokument updaten kann und dabei nur die Elemente angebe, die verändert werden sollen.
-  // Ich könnte die Eingabe mit dem Wert aus der Datenbank vergleichen und es nur dann in das zu übertragende JSON einbauen, wenn der Wert unterschiedlich ist.
-  // Ich will es nicht direkt ändern damit ich bei Abbruch die alten Werte noch habe. und erst ändere, wenn ich auf save klicke.
-
-  buildJson(): {} {
-    return {
-      email: 'test@testmail.de',
-    };
-  }
 
   toJson(user: User): {} {
     return {

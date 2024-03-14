@@ -32,8 +32,10 @@ export class GlobalFunctionsService {
     else document.body.style.overflow = 'auto';
   }
 
-  openProfile(ownProfile:boolean) {
+  openProfile(ownProfile:boolean, userId:string) {
+    console.log(userId);
     console.log(this.globalVariables.userToChatWith);
+    this.globalVariables.profileUserId = userId;
     this.globalVariables.ownprofile = ownProfile ? true : false;
     this.globalVariables.showProfile = true;
   }

@@ -18,6 +18,8 @@ export class GlobalFunctionsService {
   globalVariables = inject(GlobalVariablesService);
 
 
+  //Sollte dieser Teil nicht in globalvariables stehen?
+  
   channel: boolean = false;
   adduser: boolean = false;
   openReaction: boolean = false;

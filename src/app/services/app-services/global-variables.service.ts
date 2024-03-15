@@ -25,7 +25,6 @@ export class GlobalVariablesService {
   //flags for showing the dashboard main elements
   showChannelMenu: boolean = true;
   isChatVisable: boolean = false;
-  // isPrivatChatVisable: boolean = false;
   showThread: boolean = false;
 
   openChat: string = ''; // used in openAnswers() to come back to the chat
@@ -79,7 +78,7 @@ export class GlobalVariablesService {
   };
 
 
-  //Das wird glaube ich nicht mehr gebraucht
+  //wird in edit-channel.component, add-contacts.component und add-to-channel.component verwendet
   channelData = {
     description: '',
     channelName: '',
@@ -110,10 +109,10 @@ export class GlobalVariablesService {
   //wir müssen die User überall mit der ID ansprechen und nur wenn wir den Namen brauchen holen wir ihn.
   //wir müssten also inern ausschließlich mit den IDs arbeiten und  nur wenn wir den Profilnamen anzeigen lassen wollen wird hier hin verwiesen.
   // dadurch können user auch den gleichen Namen haben.
-  allUserIDs = [
+ /*  allUserIDs = [
     {
       userId: '',
       userName: '',
     },
-  ];
+  ]; */
 }

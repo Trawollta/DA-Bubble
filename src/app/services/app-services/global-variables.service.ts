@@ -22,6 +22,15 @@ export class GlobalVariablesService {
   isProfileOfCurrentUser: boolean = true;
   profileUserId: string = '';
 
+// insert from globalfunctions
+  channel: boolean = false;
+  adduser: boolean = false;
+  openReaction: boolean = false;
+  editChannelOverlayOpen: boolean = false;
+  editChannel: boolean = false;
+  showContacts: boolean = false;
+  memberlist: boolean = false;
+
   //flags for showing the dashboard main elements
   showChannelMenu: boolean = true;
   isChatVisable: boolean = false;

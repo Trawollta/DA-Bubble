@@ -19,16 +19,6 @@ export class GlobalFunctionsService {
   globalVariables = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
 
-  //Sollte dieser Teil nicht in globalvariables stehen?
-
-  channel: boolean = false;
-  adduser: boolean = false;
-  openReaction: boolean = false;
-  editChannelOverlayOpen: boolean = false;
-  editChannel: boolean = false;
-  showContacts: boolean = false;
-  memberlist: boolean = false;
-
 
 
   openProfile(ownProfile: boolean, userId: string) {
@@ -46,39 +36,39 @@ export class GlobalFunctionsService {
   }
 
   openChannelOverlay() {
-    this.channel = !this.channel;
-    if (this.channel) document.body.style.overflow = 'hidden';
+    this.globalVariables.channel = !this.globalVariables.channel;
+    if (this.globalVariables.channel) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
 
   openEditChannelOverlay() {
-    this.editChannelOverlayOpen = true;
-    if (this.editChannelOverlayOpen) document.body.style.overflow = 'hidden';
+    this.globalVariables.editChannelOverlayOpen = true;
+    if (this.globalVariables.editChannelOverlayOpen) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
 
   openUserOverlay() {
-    this.adduser = !this.adduser;
-    if (this.adduser) document.body.style.overflow = 'hidden';
+    this.globalVariables.adduser = !this.globalVariables.adduser;
+    if (this.globalVariables.adduser) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
 
   openReactionDialog() {
-    this.openReaction = !this.openReaction;
-    if (this.adduser) document.body.style.overflow = 'hidden';
+    this.globalVariables.openReaction = !this.globalVariables.openReaction;
+    if (this.globalVariables.adduser) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
 
   openAddContactsOverlay() {
-    this.showContacts = true;
-    console.log('Overlay should open now. showContacts:', this.showContacts);
-    if (this.showContacts) document.body.style.overflow = 'hidden';
+    this.globalVariables.showContacts = true;
+    console.log('Overlay should open now. showContacts:', this.globalVariables.showContacts);
+    if (this.globalVariables.showContacts) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
 
   showMembers() {
-    this.memberlist = !this.memberlist;
-    if (this.memberlist) document.body.style.overflow = 'hidden';
+    this.globalVariables.memberlist = !this.globalVariables.memberlist;
+    if (this.globalVariables.memberlist) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
 
@@ -88,22 +78,22 @@ export class GlobalFunctionsService {
 
   closeChannelOverlay() {
     this.globalVariables.showProfile = false;
-    this.channel = false;
+    this.globalVariables.channel = false;
   }
 
   closeReactionDialog() {
     this.globalVariables.showProfile = false;
-    this.adduser = false;
+    this.globalVariables.adduser = false;
   }
 
   closeEditOverlay() {
-    this.editChannelOverlayOpen = false;
+    this.globalVariables.editChannelOverlayOpen = false;
     //this.globalVariables.showProfile = false; // warum wird hier die Variable für das Profil gesetzt?
     document.body.style.overflow = 'auto';
   }
 
   closeAddContactsOverlay() {
-    this.showContacts = false;
+    this.globalVariables.showContacts = false;
     document.body.style.overflow = 'auto';
     console.log('Overlay closed');
   }
@@ -111,8 +101,8 @@ export class GlobalFunctionsService {
 
   //diese close funktion weicht etwas ab von den anderen
   closeMembers() {
-    this.memberlist = false;
-    if (this.memberlist) document.body.style.overflow = 'hidden';
+    this.globalVariables.memberlist = false;
+    if (this.globalVariables.memberlist) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
 
@@ -121,8 +111,8 @@ export class GlobalFunctionsService {
 
   toggleOverlays() {
     // console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);
-    this.channel = false;
-    this.adduser = true;
+    this.globalVariables.channel = false;
+    this.globalVariables.adduser = true;
     // console.log('input feld Channel: ', this.globalVariables.newChannel);
     // console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);
     document.body.style.overflow = 'hidden';

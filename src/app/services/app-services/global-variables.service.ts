@@ -49,7 +49,7 @@ export class GlobalVariablesService {
     answerto: '',
     userId: '',
     timestamp: 0,
-    emoji: [{ icon: '', userId: '' }],
+    emoji: [{ icon: '', userId: '' , iconId: '' }],
   };
   //this is the object for collecting message data from input field in thread
   messageThreadData = {
@@ -57,7 +57,7 @@ export class GlobalVariablesService {
     answerto: '',
     userId: '',
     timestamp: 0,
-    emoji: [{ icon: '', userId: '' }],
+    emoji: [{ icon: '', userId: '', iconId: '' }],
   };
 
   //this is the object for collecting message data for first message in thread

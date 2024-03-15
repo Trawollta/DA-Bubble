@@ -59,7 +59,7 @@ export class ChatComponent {
       this.globalVariables.messageData.timestamp = new Date().getTime();
       this.globalVariables.messageData.answerto = '';
       this.globalVariables.messageData.message = this.newMessage;
-      this.globalVariables.messageData.emoji = [{icon: '', userId: ''}];
+      this.globalVariables.messageData.emoji = [{icon: '', userId: '', iconId: ''}];
       this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId);
       this.globalVariables.messageData.message='';
       this.newMessage = '';

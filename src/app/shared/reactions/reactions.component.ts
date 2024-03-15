@@ -15,6 +15,7 @@ import {
   doc,
   updateDoc,
 } from '@angular/fire/firestore';
+import { consumerPollProducersForChange } from '@angular/core/primitives/signals';
 /* import { CurrentUserMessageComponent } from '../chats/current-user-message/current-user-message.component'; */
 
 @Component({
@@ -37,7 +38,7 @@ export class ReactionsComponent {
     answerto: '',
     userId: '',
     timestamp: 0,
-    emoji: [{ icon: '', userId: '' }],
+    emoji: [{ icon: '', userId: '', iconId: '' }],
   };
 
   // Variable für das ausgewählte Emoji
@@ -82,19 +83,32 @@ export class ReactionsComponent {
    */
   public showInInput(emoji: any): void {
     this.copyHelper();
+    console.log(emoji)
     this.newEmoji.emit(emoji);
     if (this.message.emoji[0].icon === '') {
       this.message.emoji[0].icon = emoji.character;
       this.message.emoji[0].userId = this.globaleVariables.activeID;
+      this.message.emoji[0].iconId = emoji.codePoint
     } else {
-      this.message.emoji.push({
-        icon: emoji.character,
-        userId: this.globaleVariables.activeID,
-      });
+      let existingEmoji = this.message.emoji.find((e: any) => e.iconId === emoji.codePoint);
+      console.log(existingEmoji)
+      debugger;
+  
+      if (existingEmoji) {
+        existingEmoji.userId  += ', ' + this.globaleVariables.activeID;
+      } else {
+        this.message.emoji.push({
+          icon: emoji.character,
+          userId: this.globaleVariables.activeID,
+          iconId: emoji.codePoint
+        });
+      }
     }
     this.addEmoji();
   }
-
+  
+  
+  
   /**
    * Open and close Emoji Picker depend on style value.
    */
@@ -111,6 +125,7 @@ export class ReactionsComponent {
 
   addEmoji() {
     this.globaleVariables.messageData = this.message;
+    console.log('Das ist die Nachricht die hochgeladen wird: ', this.message );
     this.firebaseChatService.sendMessage(
       this.globaleVariables.openChannel.chatId
     );
@@ -128,6 +143,7 @@ export class ReactionsComponent {
       this.originalMessage.emoji.push({
         icon: element.icon,
         userId: element.userId,
+        iconId: element.iconId,
       });
     });
     this.remove(this.globaleVariables.openChannel.chatId);

@@ -47,7 +47,7 @@
 
       <div class="reaction-emojis">
         <span class="reaction-emoji-field" *ngFor="let emoji of message.emoji" (click)="addUserIdToEmoji(emoji)">
-          {{ emoji.icon }}
+          {{ emoji.icon }} ({{ emoji.userId }})
         </span>
       </div>
       

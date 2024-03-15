@@ -93,7 +93,7 @@ export class GlobalFunctionsService {
   }
 
   closeAddContactsOverlay() {
-    this.globalVariables.showContacts = false;
+    this.globalVariables.adduser = false;
     document.body.style.overflow = 'auto';
     console.log('Overlay closed');
   }

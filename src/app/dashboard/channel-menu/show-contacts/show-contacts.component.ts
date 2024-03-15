@@ -15,7 +15,7 @@ import { onSnapshot } from 'firebase/firestore';
   styleUrls: ['./show-contacts.component.scss']
 })
 export class ShowContactsComponent implements OnInit {
-  selectedUserIds: number[] = []; 
+  selectedUserIds: string[] = []; 
   selectedUsers: any[] = [];
   allUsers: any[] = []; 
 
@@ -27,24 +27,30 @@ export class ShowContactsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateSelectedUsers();
-    console.log(this.getSingleUser(this.globalVariables.openChannel.id));    
+    this.getChannelMembers(this.globalVariables.openChannel.id);
   }
 
-  getSingleUser(id: string) {
-    return onSnapshot(this.firebaseUserService.getSingleDocRef('channels', id), (channel) => {
-      if (channel.data()) {
-        console.log(channel.data()!['members']);
-        channel.data()!['members'].forEach((user: string) => this.selectedUsers.push(this.firebaseUserService.getSingleDocRef('users',user)));
+  getChannelMembers(channelId: string) {
+    const channelRef = this.firebaseUserService.getSingleDocRef('channels', channelId);
+    onSnapshot(channelRef, (snapshot) => {
+      const channelData = snapshot.data();
+      if (channelData && channelData['members']) {
+        this.selectedUserIds = channelData['members'];
+        this.fetchUsersDetails(this.selectedUserIds);
       }
     });
   }
 
-  updateSelectedUsers() {
-    this.selectedUsers = this.allUsers.filter(user => this.selectedUserIds.includes(user.id));
-    console.log('id ist:' ,this.globalVariables.channelData);
+  fetchUsersDetails(userIds: string[]) {
+    this.selectedUsers = []; // Reset the array to ensure it's clean before adding new users
+    userIds.forEach(userId => {
+      const userRef = this.firebaseUserService.getSingleDocRef('users', userId);
+      onSnapshot(userRef, (userSnapshot) => {
+        if (userSnapshot.exists()) {
+          this.selectedUsers.push(userSnapshot.data());
+        }
+      });
+    });
+
   }
-
 }
-
-

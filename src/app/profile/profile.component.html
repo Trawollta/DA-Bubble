@@ -71,7 +71,7 @@
                 </div>
                 <!-- area button write message -->
                 <div class="messageBtn" *ngIf="!globalVariables.showEditProfile && globalVariables.ownprofile"></div>
-                <app-button class="messageBtn" *ngIf="!globalVariables.showEditProfile && !globalVariables.ownprofile" [classes]="['primary']" (clicked)="openMessage()"
+                <app-button class="messageBtn" *ngIf="!globalVariables.showEditProfile && !globalVariables.ownprofile" [classes]="['primary']" (clicked)="globalFunctions.openDirectMessageUser(profile)"
                     caption="Nachricht" imgPath="assets/img/icons/mode_comment.svg"></app-button>
                 <!-- area button cancel or submit change -->
                 <div *ngIf="globalVariables.showEditProfile" class="btnContainer">

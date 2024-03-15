@@ -60,7 +60,7 @@
         <div
           class="user-detail"
           *ngFor="let user of allUsers"
-          (click)="openDirectMessageUser(user)" 
+          (click)="this.globalFunctions.openDirectMessageUser(user)" 
         > <!-- this.globalFunctions. -->
           <p>
             <img

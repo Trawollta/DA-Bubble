@@ -7,6 +7,7 @@ import { FirebaseUserupdateService } from 'app/services/firebase-services/fireba
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { User } from 'app/models/user.class';
+import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 
 @Component({
   selector: 'app-profile',
@@ -29,6 +30,7 @@ export class ProfileComponent {
 
   firebaseService = inject(FirebaseUserupdateService);
   globalVariables = inject(GlobalVariablesService);
+  globalFunctions = inject(GlobalFunctionsService);
 
 
 
@@ -36,11 +38,11 @@ export class ProfileComponent {
     img: this.globalVariables.currentUser.img,
     name: this.globalVariables.currentUser.name, 
     email: this.globalVariables.currentUser.email,
-    isActive: this.globalVariables.currentUser.isActive 
+    isActive: this.globalVariables.currentUser.isActive
   }
 
 async ngOnInit(){
- // console.log('Aufruf des Profile. UserId:', this.globalVariables.profileUserId);
+  console.log('Aufruf des Profile. UserId:', this.globalVariables.profileUserId);
   const userData = await this.firebaseService.getUserData(this.globalVariables.profileUserId);
   //console.log('userData bei Ini: ', userData);
   this.profile = new User(userData);

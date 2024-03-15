@@ -91,11 +91,11 @@ export class ChannelMenuComponent {
     this.globalVariables.openChannel.titel = channel.channelName;
     this.globalVariables.openChannel.id = channel.id;
     this.globalVariables.openChannel.chatId = channel.chatId;
-    this.showChat();
+    this.globalFunctions.showChat();
   }
 
 
-  openDirectMessageUser(user: any) {
+ /*  openDirectMessageUser(user: any) {
     console.log(user);
     this.globalVariables.isUserChat = true;
     this.globalVariables.userToChatWith.name = user.name;
@@ -105,16 +105,16 @@ export class ChannelMenuComponent {
     this.globalVariables.userToChatWith.isActive = user.isActive;
     this.showChat();
 
-  }
+  } */
 
   /**
    * this function stets the flag for visability for chat
    */
-  showChat() {
+/*   showChat() {
     this.firebaseChatService.changeActiveChannel(this.globalVariables.openChannel.chatId);
     this.globalVariables.isChatVisable = true;
     if (!this.globalVariables.desktop700) {
       this.globalVariables.showChannelMenu = false;
     }
-  }
+  } */
 }

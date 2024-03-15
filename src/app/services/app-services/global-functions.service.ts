@@ -10,16 +10,17 @@ import {
   onSnapshot,
   updateDoc,
 } from '@angular/fire/firestore';
+import { FirebaseChatService } from '../firebase-services/firebase-chat.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalFunctionsService {
   globalVariables = inject(GlobalVariablesService);
-
+  firebaseChatService = inject(FirebaseChatService);
 
   //Sollte dieser Teil nicht in globalvariables stehen?
-  
+
   channel: boolean = false;
   adduser: boolean = false;
   openReaction: boolean = false;
@@ -28,7 +29,7 @@ export class GlobalFunctionsService {
   showContacts: boolean = false;
   memberlist: boolean = false;
 
- 
+
 
   openProfile(ownProfile: boolean, userId: string) {
     this.globalVariables.profileUserId = userId;
@@ -43,7 +44,7 @@ export class GlobalFunctionsService {
     if (this.globalVariables.showProfileMenu) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
-  
+
   openChannelOverlay() {
     this.channel = !this.channel;
     if (this.channel) document.body.style.overflow = 'hidden';
@@ -108,7 +109,7 @@ export class GlobalFunctionsService {
   }
 
 
-//diese close funktion weicht etwas ab von den anderen
+  //diese close funktion weicht etwas ab von den anderen
   closeMembers() {
     this.memberlist = false;
     if (this.memberlist) document.body.style.overflow = 'hidden';
@@ -126,20 +127,6 @@ export class GlobalFunctionsService {
     // console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);
     document.body.style.overflow = 'hidden';
   }
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
 
 
   stopPropagation(e: Event) {
@@ -178,4 +165,37 @@ export class GlobalFunctionsService {
     let dataCollection = collection(this.firestore, goalCollection);
     return addDoc(dataCollection, data);
   }
+
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //functions to change the chat start
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  /**
+   * this function fills the usterToChatWith with all nessecary information and 
+   * @param user - object - contains all user information
+   */
+  openDirectMessageUser(user: any) {
+    console.log(user);
+    this.globalVariables.isUserChat = true;
+    this.globalVariables.userToChatWith.name = user.name;
+    this.globalVariables.userToChatWith.img = user.img;
+    this.globalVariables.userToChatWith.email = user.email;
+    user.id ? this.globalVariables.userToChatWith.id = user.id : this.globalVariables.profileUserId;
+    this.globalVariables.userToChatWith.isActive = user.isActive;
+    this.showChat();
+
+  }
+
+  /**
+ * this function stets the flag for visability for chat
+ */
+  showChat() {
+    this.firebaseChatService.changeActiveChannel(this.globalVariables.openChannel.chatId);
+    this.globalVariables.isChatVisable = true;
+    if (!this.globalVariables.desktop700) {
+      this.globalVariables.showChannelMenu = false;
+    }
+  }
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //functions to change the chat end
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 }

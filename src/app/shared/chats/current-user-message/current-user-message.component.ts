@@ -170,8 +170,8 @@ export class CurrentUserMessageComponent {
     this.firebaseChatService.sendMessage(
       this.globalVariables.openChannel.chatId
     );
-    if(this.originalMessage.message !== this.message.message)
-    this.remove(this.globalVariables.openChannel.chatId);
+    if (this.originalMessage.message !== this.message.message)
+      this.remove(this.globalVariables.openChannel.chatId);
   }
 
   remove(chatId: string) {
@@ -195,10 +195,17 @@ export class CurrentUserMessageComponent {
     });
   }
 
-  addUserIdToEmoji(emoji:any) {
+  addUserIdToEmoji(emoji: any) {
     let test = 'hallo';
     emoji.userIds += ',' + test;
     console.log(emoji.userIds);
   }
 
+  emojiCount(emoji: any) {
+    let inputString = emoji;
+    const values = inputString.substring(1, inputString.length - 1).split(',').map((value:string) => value.trim());
+    const count = values.length;
+    return count;
+    
+  }
 }

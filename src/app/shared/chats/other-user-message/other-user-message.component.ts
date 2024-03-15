@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, Input } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
@@ -38,7 +38,7 @@ export class OtherUserMessageComponent {
   unsubUser;
   userId: string = 'guest';
 
-  constructor() {
+  constructor( private elementRef: ElementRef) {
     this.unsubUser = this.getUser(this.userId);
 
   }
@@ -130,6 +130,18 @@ export class OtherUserMessageComponent {
   onSelectMessage(message: string) {
     this.selectedMessage = message;
     this.openReaction = true;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: any) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.onCloseReactions();
+    }
+  }
+
+  onCloseReactions() {
+    this.openReaction = false;
+    this.selectedMessage = '';
   }
 
 }

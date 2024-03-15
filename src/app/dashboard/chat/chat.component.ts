@@ -44,6 +44,8 @@ export class ChatComponent {
   }
   
 
+  
+
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
     if(window.innerWidth < 1100)

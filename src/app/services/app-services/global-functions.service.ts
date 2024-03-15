@@ -22,33 +22,36 @@ export class GlobalFunctionsService {
   adduser: boolean = false;
   openReaction: boolean = false;
   editChannelOverlayOpen: boolean = false;
-  editChannel:boolean= false;
-  showContacts: boolean= false;
+  editChannel: boolean = false;
+  showContacts: boolean = false;
   memberlist: boolean = false;
 
+ 
+
+  openProfile(ownProfile: boolean, userId: string) {
+    this.globalVariables.profileUserId = userId;
+    this.globalVariables.ownprofile = ownProfile ? true : false;
+    this.globalVariables.showProfile = true;
+    console.log('this.globalVariables.ownprofile: ', this.globalVariables.ownprofile)
+  }
+
+  //Diese openOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
   menuProfileClicked() {
     this.globalVariables.showProfileMenu = !this.globalVariables.showProfileMenu;
     if (this.globalVariables.showProfileMenu) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
-
-  openProfile(ownProfile:boolean, userId:string) {
-    this.globalVariables.profileUserId = userId;
-    this.globalVariables.ownprofile = ownProfile ? true : false;
-    this.globalVariables.showProfile = true;
-    console.log('this.globalVariables.ownprofile: ',this.globalVariables.ownprofile)
-  }
-
-  openOverlay() {
+  
+  openChannelOverlay() {
     this.channel = !this.channel;
     if (this.channel) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
 
-  closeOverlay() {
-    this.globalVariables.showProfile = false;
-    this.channel = false;
-
+  openEditChannelOverlay() {
+    this.editChannelOverlayOpen = true;
+    if (this.editChannelOverlayOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
   }
 
   openUserOverlay() {
@@ -57,17 +60,61 @@ export class GlobalFunctionsService {
     else document.body.style.overflow = 'auto';
   }
 
-  closeReactionDialog() {
-    this.globalVariables.showProfile = false;
-    this.adduser = false;
-
-  }
-
   openReactionDialog() {
     this.openReaction = !this.openReaction;
     if (this.adduser) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
+
+  openAddContactsOverlay() {
+    this.showContacts = true;
+    console.log('Overlay should open now. showContacts:', this.showContacts);
+    if (this.showContacts) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }
+
+  showMembers() {
+    this.memberlist = !this.memberlist;
+    if (this.memberlist) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }
+
+
+
+  //Diese CloseOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
+
+  closeChannelOverlay() {
+    this.globalVariables.showProfile = false;
+    this.channel = false;
+  }
+
+  closeReactionDialog() {
+    this.globalVariables.showProfile = false;
+    this.adduser = false;
+  }
+
+  closeEditOverlay() {
+    this.editChannelOverlayOpen = false;
+    //this.globalVariables.showProfile = false; // warum wird hier die Variable für das Profil gesetzt?
+    document.body.style.overflow = 'auto';
+  }
+
+  closeAddContactsOverlay() {
+    this.showContacts = false;
+    document.body.style.overflow = 'auto';
+    console.log('Overlay closed');
+  }
+
+
+//diese close funktion weicht etwas ab von den anderen
+  closeMembers() {
+    this.memberlist = false;
+    if (this.memberlist) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }
+
+
+
 
   toggleOverlays() {
     // console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);
@@ -78,52 +125,20 @@ export class GlobalFunctionsService {
     document.body.style.overflow = 'hidden';
   }
 
-  openEditChannelOverlay() {
- 
-    this.editChannelOverlayOpen = true;//!this.editChannelOverlayOpen;
-    //console.log('Overlay open state:', this.editChannelOverlayOpen);
-    if (this.editChannelOverlayOpen) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
-    
-  }
-
-  showMembers() {
-    this.memberlist = !this.memberlist;
-    if (this.memberlist) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
-  }
-
-  closeMembers() {
-    this.memberlist = false;
-    if (this.memberlist) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
-  }
-
-
-
-  openAddContactsOverlay() {
-    this.showContacts = true;
-    console.log('Overlay should open now. showContacts:', this.showContacts);
-    if (this.showContacts) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
-}
-
-  closeAddContactsOverlay() {
-    this.showContacts = false;
-    document.body.style.overflow = 'auto'; 
-    console.log('Overlay closed');
-  }
-
-
-  closeEditOverlay() {
-    this.editChannelOverlayOpen = false;
-    this.globalVariables.showProfile = false; 
-    document.body.style.overflow = 'auto';
-  }
 
 
   
-  
+
+
+
+
+
+
+
+
+
+
+
 
   stopPropagation(e: Event) {
     e.stopPropagation();
@@ -135,7 +150,7 @@ export class GlobalFunctionsService {
   // simple function to get data from firestore returns a collection
   getData(item: string) {
     let dataCollection = collection(this.firestore, item);
-   // console.log(dataCollection);
+    // console.log(dataCollection);
     return collectionData(dataCollection, { idField: 'id' });
   }
 

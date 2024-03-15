@@ -31,7 +31,7 @@ export class ChannelMenuComponent {
   /**
    * this function just opens and close the menu for selecting a channel
    */
-  openChannels() {
+  openChannelMenu() {
     const channelMsg = document.getElementById(
       'channelMsgArrow'
     ) as HTMLImageElement | null;
@@ -54,7 +54,7 @@ export class ChannelMenuComponent {
   /**
    * this function just opens and close the menu for selecting a user chat
    */
-  openDirectMessage() {
+  openDirectMessageMenu() {
     const arrowMsg = document.getElementById(
       'msgActiveArrow'
     ) as HTMLImageElement | null;

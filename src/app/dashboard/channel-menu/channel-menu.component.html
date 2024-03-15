@@ -18,7 +18,7 @@
     <div class="all-channel">
       <div class="channel-dialog">
         <div class="channel-header">
-          <div (click)="openChannels()" class="channel-arrow-dropdown">
+          <div (click)="openChannelMenu()" class="channel-arrow-dropdown">
             <img id="channelMsgArrow" src="../../assets/img/icons/arrow_drop_down_default.svg" alt="" />
           </div>
           <div class="channel-headline-wrapper">
@@ -26,7 +26,7 @@
             <p>Channels</p>
           </div>
         </div>
-        <div class="add-channel" (click)="globalFunctions.openOverlay()">
+        <div class="add-channel" (click)="globalFunctions.openChannelOverlay()">
           <img src="../../../assets/img/icons/add.svg" alt="" />
         </div>
       </div>
@@ -40,7 +40,7 @@
         <div></div>
         <div></div>
       </div>
-      <div class="channel-add" (click)="globalFunctions.openOverlay()">
+      <div class="channel-add" (click)="globalFunctions.openChannelOverlay()">
         <a class="menu-adder">
           <img src="../../../assets/img/icons/add_circle.svg" alt="" />
           <p>Channel hinzufügen</p>
@@ -48,7 +48,7 @@
       </div>
     <div class="direct-messages">
       <div class="messages-wrapper">
-        <div class="channel-arrow-dropdown" (click)="openDirectMessage()">
+        <div class="channel-arrow-dropdown" (click)="openDirectMessageMenu()">
           <img id="msgActiveArrow" src="./assets/img/icons/arrow_drop_down_default.svg" alt="" />
         </div>
         <div class="message-helper">

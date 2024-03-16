@@ -9,16 +9,22 @@ import { User } from 'app/models/user.class';
 import { DatePipe, CommonModule } from '@angular/common';
 import { ReactionsComponent } from "../../reactions/reactions.component";
 
+interface Emoji {
+  icon: string,
+  iconId: string,
+  userId: string,
+}
+
 @Component({
-    selector: 'app-other-user-message',
-    standalone: true,
-    templateUrl: './other-user-message.component.html',
-    styleUrl: './other-user-message.component.scss',
-    imports: [
-        DatePipe,
-        ReactionsComponent,
-        CommonModule
-    ]
+  selector: 'app-other-user-message',
+  standalone: true,
+  templateUrl: './other-user-message.component.html',
+  styleUrl: './other-user-message.component.scss',
+  imports: [
+    DatePipe,
+    ReactionsComponent,
+    CommonModule
+  ]
 })
 
 
@@ -32,16 +38,21 @@ export class OtherUserMessageComponent {
   selectedMessage: string = '';
   @Input() message: any;
 
+
+  emojiArray: Emoji[] = [];
   postingTime: string | null = null;
   user: User = new User;
 
   unsubUser;
   userId: string = 'guest';
 
-  constructor( private elementRef: ElementRef) {
+
+
+  constructor(private elementRef: ElementRef) {
     this.unsubUser = this.getUser(this.userId);
 
   }
+
 
   /**
    * this function unsubscribes the containing content
@@ -73,17 +84,6 @@ export class OtherUserMessageComponent {
 
   }
 
-  //diese beiden funktionen sollen mir nur helfen zu verstehen
-  //sie werden wieder entfernt
-  /*  getUser2(id: string){
-    return getDoc(this.getUserRef(id));
-  } 
-
-   async getUser2WithColsolelLog(){
-    const docSnap = await this.getUser2(this.message.userId);
-    console.log('otherUserId: ', this.message.userId);
-    console.log('otherUser: ', docSnap.data() );
-  }  */
 
   /**
    * this function calls function getUser() for providing userdata for the post
@@ -157,10 +157,23 @@ export class OtherUserMessageComponent {
 
   emojiCount(emoji: any) {
     let inputString = emoji;
-    const values = inputString.substring(1, inputString.length - 1).split(',').map((value:string) => value.trim());
+    const values = inputString.substring(1, inputString.length - 1).split(',').map((value: string) => value.trim());
     const count = values.length;
     return count;
-    
+
+  }
+
+  test(emojiArray: Emoji[]) {
+    const groupedByIconId = new Map<string, Emoji[]>();
+
+    emojiArray.forEach(emoji => {
+      if (!groupedByIconId.has(emoji.iconId)) {
+        groupedByIconId.set(emoji.iconId, []);
+      }
+      groupedByIconId.get(emoji.iconId)!.push(emoji);
+    });
+
+    console.log(groupedByIconId);
   }
 
 }

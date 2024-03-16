@@ -19,24 +19,6 @@
             [(ngModel)]="message.message"
             *ngIf="globalVariables.editMessage"
           ></app-inputfield>
-          <img
-            src="assets/img/icons/edit.svg"
-            alt=""
-            (click)="editOpen()"
-            *ngIf="!globalVariables.editMessage"
-          />
-          <img
-            src="assets/img/input-imgs/send.svg"
-            alt=""
-            *ngIf="globalVariables.editMessage"
-            (click)="editSave()"
-          />
-          <img
-            src="assets/img/icons/close.svg"
-            alt=""
-            *ngIf="globalVariables.editMessage"
-            (click)="editClose()"
-          />
         </div>
       </div>
       <app-reactions

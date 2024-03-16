@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { FormsModule } from '@angular/forms';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import {
   Firestore,
@@ -20,7 +21,7 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
 @Component({
   selector: 'app-reactions',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './reactions.component.html',
   styleUrl: './reactions.component.scss',
 })
@@ -154,7 +155,19 @@ export class ReactionsComponent {
 
   editOpen() {
     this.globaleVariables.editMessage = true;
-    /* this.copyHelper(); */
+    this.originalMessage.message = this.message.message;
+    this.originalMessage.answerto = this.message.answerto;
+    this.originalMessage.timestamp = this.message.timestamp;
+    this.originalMessage.userId = this.message.userId;
+    this.originalMessage.emoji = [];
+
+    this.message.emoji.forEach((element: any) => {
+      this.originalMessage.emoji.push({
+        icon: element.icon,
+        userId: element.userId,
+        iconId: element.iconId,
+      });
+    });
   }
 
   editClose() {

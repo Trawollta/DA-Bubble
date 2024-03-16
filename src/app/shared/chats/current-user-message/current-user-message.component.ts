@@ -205,9 +205,6 @@ export class CurrentUserMessageComponent {
       }
     }
   }
-  
-  
-  
 
   emojiCount(emoji: any) {
     let inputString = emoji;

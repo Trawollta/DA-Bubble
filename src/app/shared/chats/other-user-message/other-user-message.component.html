@@ -23,9 +23,9 @@
       [message]="message"
     ></app-reactions>
     <div class="reaction-emojis">
-      <span class="reaction-emoji-field" *ngFor="let emoji of message.emoji">{{
-        emoji.icon
-      }}</span>
+      <span class="reaction-emoji-field" *ngFor="let emoji of message.emoji" (click)="addUserIdToEmoji(emoji)">
+        {{ emoji.icon }} {{ emojiCount(emoji.userId) }}
+      </span>
     </div>
     <div class="replie-wrapper">
       <div class="replie-text" (click)="openAnswers()">2 Antworten</div>

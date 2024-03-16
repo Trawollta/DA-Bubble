@@ -144,4 +144,23 @@ export class OtherUserMessageComponent {
     this.selectedMessage = '';
   }
 
+  addUserIdToEmoji(emoji: any): void {
+    if (emoji) {
+      console.log(emoji.userId);
+      if (emoji.userId.includes(this.globalVariables.activeID)) {
+        emoji.userId = emoji.userId.replace(new RegExp(this.globalVariables.activeID + ',? ?', 'g'), '');
+      } else {
+        emoji.userId += ', ' + this.globalVariables.activeID;
+      }
+    }
+  }
+
+  emojiCount(emoji: any) {
+    let inputString = emoji;
+    const values = inputString.substring(1, inputString.length - 1).split(',').map((value:string) => value.trim());
+    const count = values.length;
+    return count;
+    
+  }
+
 }

@@ -1,35 +1,53 @@
 <main>
-  <div>
+  <div *ngIf="!globaleVariables.editMessage == true">
     <img
       class="hands-icon"
       src="./assets/img/icons/emoji _person raising both hands in celebration_.svg"
       alt=""
     />
   </div>
-  <div>
+  <div *ngIf="!globaleVariables.editMessage == true">
     <img
       class="check-icon"
       src="./assets/img/icons/emoji _white heavy check mark_.svg"
       alt=""
     />
   </div>
-  <div (click)="openEmojis()">
+  <div (click)="openEmojis()" *ngIf="!globaleVariables.editMessage == true">
     <img
       class="reaction-icon"
       src="./assets/img/icons/add_reaction.svg"
       alt=""
     />
   </div>
-    
-    
-  
-  <div (click)="editMessage()">
+  <div *ngIf="globaleVariables.editMessage == true" >
+    <img
+    src="assets/img/input-imgs/send.svg"
+    alt=""
+    *ngIf="globaleVariables.editMessage"
+    (click)="editSave()"
+  />
+  <img
+    src="assets/img/icons/close.svg"
+    alt=""
+    *ngIf="globaleVariables.editMessage"
+    (click)="editClose()"
+  />
+  </div>
+  <div
+    (click)="this.editOpen()"
+    *ngIf="globaleVariables.activeID == this.message.userId"
+  >
     <img class="edit-icon" src="./assets/img/icons/comment.svg" alt="" />
   </div>
 </main>
 <div id="emoji-selector" class="emojis">
   <div id="emoji-list">
-    <span class="emoji" *ngFor="let emoji of emojiList" (click)="showInInput(emoji)" >{{ emoji['character'] }} </span>
+    <span
+      class="emoji"
+      *ngFor="let emoji of emojiList"
+      (click)="showInInput(emoji)"
+      >{{ emoji["character"] }}
+    </span>
   </div>
-</div> 
-
+</div>

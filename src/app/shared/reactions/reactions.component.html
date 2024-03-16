@@ -20,10 +20,7 @@
       alt=""
     />
   </div>
-    
-    
-  
-  <div (click)="editMessage()">
+  <div (click)="this.editOpen()" *ngIf="globaleVariables.activeID == this.message.userId">
     <img class="edit-icon" src="./assets/img/icons/comment.svg" alt="" />
   </div>
 </main>

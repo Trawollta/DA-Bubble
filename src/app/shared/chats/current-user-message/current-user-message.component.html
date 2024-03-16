@@ -17,24 +17,24 @@
           <app-inputfield
             type="text"
             [(ngModel)]="message.message"
-            *ngIf="editMessage"
+            *ngIf="globalVariables.editMessage"
           ></app-inputfield>
           <img
             src="assets/img/icons/edit.svg"
             alt=""
             (click)="editOpen()"
-            *ngIf="!editMessage"
+            *ngIf="!globalVariables.editMessage"
           />
           <img
             src="assets/img/input-imgs/send.svg"
             alt=""
-            *ngIf="editMessage"
+            *ngIf="globalVariables.editMessage"
             (click)="editSave()"
           />
           <img
             src="assets/img/icons/close.svg"
             alt=""
-            *ngIf="editMessage"
+            *ngIf="globalVariables.editMessage"
             (click)="editClose()"
           />
         </div>

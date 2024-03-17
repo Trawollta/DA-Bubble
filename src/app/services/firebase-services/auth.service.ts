@@ -19,7 +19,6 @@ export class AuthService {
   }
 
   async logout() {
-
     return await signOut(this.auth);
   }
 

@@ -72,7 +72,7 @@ export class LogInComponent {
         this.globalVariables.activeID = uid;
         this.userService.updateCurrentUser(userCredential);
         await this.userService.addUser(userCredential.uid, {
-          name: 'Gastinchen',
+          name: 'Gast',
           email: '',
           isActive: true,
           img: 'assets/img/avatars/avatar_1.svg'

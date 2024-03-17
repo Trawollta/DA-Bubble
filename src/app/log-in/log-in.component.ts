@@ -34,7 +34,7 @@ export class LogInComponent {
       const uid = userCredential.user.uid;
       this.globalVariables.activeID = uid;
       await this.userService.updateUserStatus(uid, true);
-      this.userService.updateCurrentUser(userCredential);
+      this.userService.updateCurrentUser(uid);
       this.router.navigate(['/dashboard']);
     } catch (error) {
     }
@@ -47,7 +47,7 @@ export class LogInComponent {
         console.log("Erfolgreich mit Google angemeldet", userCredential);
         const uid = userCredential.uid;
         this.globalVariables.activeID = uid;
-        this.userService.updateCurrentUser(userCredential);
+        this.userService.updateCurrentUser(uid);
         await this.userService.addUser(userCredential.uid, {
           name: userCredential.displayName,
           email: userCredential.email,
@@ -70,7 +70,7 @@ export class LogInComponent {
         console.log("Erfolgreich anonym angemeldet", userCredential);
         const uid = userCredential.uid;
         this.globalVariables.activeID = uid;
-        this.userService.updateCurrentUser(userCredential);
+        this.userService.updateCurrentUser(uid);
         await this.userService.addUser(userCredential.uid, {
           name: 'Gast',
           email: '',

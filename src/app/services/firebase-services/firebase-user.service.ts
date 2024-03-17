@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { User } from 'app/models/user.class';
-import { Firestore, collection, doc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection, doc, setDoc, updateDoc, onSnapshot } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
@@ -25,6 +25,11 @@ export class FirebaseUserService {
     return doc(collection(this.firestore, colId), docId);
   }
 
+
+  getSingleUserRef(docId: string) {
+    return doc(this.getUsersRef(), docId);
+  }
+
   async addUser(uid: string, userData: any) {
     await setDoc(doc(this.firestore, "users", uid), this.getCleanJson(userData));
   }
@@ -42,12 +47,15 @@ export class FirebaseUserService {
     const userDocRef = doc(this.firestore, `users/${uid}`);
     await updateDoc(userDocRef, { isActive });
   }
+  updateCurrentUser(uid: string) {
+    return onSnapshot(this.getSingleUserRef(uid), (user) => {
+      if (user.data()) {
+        let logedInUser = new User(user.data());
+        this.globalVariables.currentUser = logedInUser;
+        this.globalVariables.activeID = user.id;
+      }
 
-  updateCurrentUser(userCredential: any) {
-    this.globalVariables.currentUser.name = userCredential.displayName;
-    this.globalVariables.currentUser.email = userCredential.email;
-    this.globalVariables.currentUser.isActive = true;
-    this.globalVariables.currentUser.img = userCredential.photoURL;
+    });
   }
 
   async logout() {

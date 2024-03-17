@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { User } from '../../models/user.class';
-import { Firestore, collection, addDoc,getDoc, updateDoc, doc, setDoc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getDoc, updateDoc, doc, setDoc, onSnapshot } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 
 
@@ -57,13 +57,12 @@ export class FirebaseUserupdateService {
 
     return onSnapshot(this.getSingleUserRef(id), (user) => {
 
-      if (user.data()&&this.globalVariablesService.currentUser.name != 'Guest') {
+      if (user.data() && this.globalVariablesService.currentUser.name != 'Guest') {
         let newUser = new User(user.data());
-        this.userProfileData = newUser;
         this.globalVariablesService.currentUser = newUser;
         this.globalVariablesService.activeID = user.id;
       }
-   
+
     });
   }
 
@@ -72,30 +71,30 @@ export class FirebaseUserupdateService {
    * @param userId - the id of the user which should be called
    */
   setActiveUserId(userId: string | undefined) {
-    userId ? this.activeID = userId : this.activeID; 
+    userId ? this.activeID = userId : this.activeID;
     this.getSingleUser(this.activeID)
   }
 
 
-/**
- * this funktion updates the element 
- * @param data -Json
- */
-  async updateData(data:{ [x: string]: any; }) {
-      await updateDoc(doc(this.firestore, "users", this.activeID), data);
+  /**
+   * this funktion updates the element 
+   * @param data -Json
+   */
+  async updateData(data: { [x: string]: any; }) {
+    await updateDoc(doc(this.firestore, "users", this.activeID), data);
   }
 
-/**
- * this function returns the data of the user. This is no obserable.
- * @param id -id of user
- * @returns data of user
- */
-   async getUserData(id: string){
+  /**
+   * this function returns the data of the user. This is no obserable.
+   * @param id -id of user
+   * @returns data of user
+   */
+  async getUserData(id: string) {
     const docSnap = await getDoc(this.getSingleUserRef(id));
     return docSnap.data();
-  } 
-  
-// erst mal auskommentiert
+  }
+
+  // erst mal auskommentiert
 
   /* toJson(user: User): {} {
     return {

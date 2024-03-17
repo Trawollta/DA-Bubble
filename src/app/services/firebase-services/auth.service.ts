@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth, GoogleAuthProvider, createUserWithEmailAndPassword, signInAnonymously, signInWithEmailAndPassword, signInWithPopup, signOut } from '@angular/fire/auth';
 import { User } from 'app/models/user.class';
-import { Firestore, collection, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, collection, doc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'

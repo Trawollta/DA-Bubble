@@ -205,6 +205,7 @@ export class CurrentUserMessageComponent {
         userId: element.userId,
       });
     });
+    console.log('current original Message: ', this.originalMessage);
   }
 
   addUserIdToEmoji(emoji: any): void {

@@ -144,6 +144,8 @@ export class ReactionsComponent {
         iconId: element.iconId,
       });
     });
+    console.log('in reactions original Message: ', this.originalMessage);
+  
     this.remove(this.globaleVariables.openChannel.chatId);
   }
 

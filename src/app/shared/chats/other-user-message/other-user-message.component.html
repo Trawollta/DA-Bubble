@@ -1,8 +1,5 @@
 <section class="message">
-  <div
-    class="user"
-    (click)="globalFunctions.openProfile(false, message.userId)"
-  >
+  <div class="user" (click)="globalFunctions.openProfile(false, message.userId)">
     <img [src]="user.img" alt="" />
   </div>
   <div class="info-area">
@@ -10,26 +7,22 @@
       <span class="username">{{ user.name }}</span>
       <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
     </div>
-    <div
-      class="speech-bubble"
-      (click)="openEmojis()"
-      (click)="onSelectMessage(message.id)"
-    >
+    <div class="speech-bubble" (click)="openEmojis()" (click)="onSelectMessage(message.id)">
       <span class="speech-bubble-text">{{ message.message }}</span>
     </div>
-    <app-reactions
-      class="reaction-field"
-      *ngIf="openReaction && selectedMessage === message.id"
-      [message]="message"
-    ></app-reactions>
-    <div class="reaction-emojis" > 
+    <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id"
+      [message]="message"></app-reactions>
+    <div class="reaction-emojis">
       <span class="reaction-emoji-field" *ngFor="let emoji of message.emoji" (click)="addUserIdToEmoji(emoji)">
-        {{ emoji.icon }} {{ emojiCount(emoji.userId) }} 
+        {{ emoji.icon }} {{ emojiCount(emoji.userId) }}
       </span>
     </div>
-    <div class="replie-wrapper">
-      <div class="replie-text" (click)="openAnswers()">2 Antworten</div>
-      <span class="timestamp-text" (click)="test(message.emoji)">Letze Antwort Time</span>
+    <div *ngIf="!isThread" class="replie-wrapper">
+      <div  class="replie-text" (click)="openAnswers()">
+        <span *ngIf="answercount !== 0">{{ answercount }}</span><span> Antwort</span><span
+          *ngIf="answercount !== 1">en</span>
+      </div>
+      <span  *ngIf="answercount !== 0" class="timestamp-text" (click)="test(message.emoji)">Letzte Antwort: {{ lastAnswerTime | date : "dd.MM.YY H:mm" }}</span>
     </div>
   </div>
 </section>

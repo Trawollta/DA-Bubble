@@ -48,6 +48,7 @@ export class CurrentUserMessageComponent {
 
   @Input() message: any;
   @Input() index: any;
+  @Input() isThread: boolean = false;
 
   postingTime: string | null = null;
   user: User = new User();
@@ -63,6 +64,9 @@ export class CurrentUserMessageComponent {
 
   unsubUser;
   userId: string = 'guest';
+  answerKey: string = '';
+  answercount: number = 0;
+  lastAnswerTime: number = 0;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -106,6 +110,12 @@ export class CurrentUserMessageComponent {
   ngOnInit() {
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
+    this.answerKey = this.message.userId + '_' + this.message.timestamp.toString();
+    let filteredMessages = this.globalVariables.chatChannel.messages.filter(message => message.answerto === this.answerKey)
+    this.answercount = filteredMessages.length;
+    if(filteredMessages.length > 0 && filteredMessages[filteredMessages.length - 1].timestamp)
+    this.lastAnswerTime = filteredMessages[filteredMessages.length - 1].timestamp;
+    
   }
 
   openEmojis() {
@@ -119,6 +129,8 @@ export class CurrentUserMessageComponent {
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
+    this.globalVariables.answerKey = this.answerKey;
+    this.globalVariables.answerCount = this.answercount;
     this.fillInitialUserObj();
     this.globalVariables.openChat = 'isChatVisable';
     this.globalVariables.messageData.answerto =
@@ -197,7 +209,7 @@ export class CurrentUserMessageComponent {
 
   addUserIdToEmoji(emoji: any): void {
     if (emoji) {
-      console.log(emoji.userId);
+     // console.log(emoji.userId);
       if (emoji.userId.includes(this.globalVariables.activeID)) {
         emoji.userId = emoji.userId.replace(new RegExp(this.globalVariables.activeID + ',? ?', 'g'), '');
       } else {

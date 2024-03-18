@@ -42,6 +42,7 @@ export class AllMessagesComponent {
   lastDisplayedDate: Date = new Date();
 
   @Input() isChat: boolean = false;
+  @Input() isThread: boolean = false;
 
   constructor(private changeDetector: ChangeDetectorRef) { }
 
@@ -57,6 +58,15 @@ export class AllMessagesComponent {
         this.globalVariablesService.chatChannel.messages[0].timestamp
       );
     }
+  }
+
+  filterMessages() {
+    let messages = this.globalVariablesService.chatChannel.messages;
+   // console.log('messages: ', this.globalVariablesService.chatChannel.messages);
+   // console.log('filtered messages: ', this.globalVariablesService.chatChannel.messages.filter(message => message.answerto === this.globalVariablesService.answerKey));
+    const channelChat = messages.filter(message => message.answerto === '');
+    const threadChat = messages.filter(message => message.answerto === this.globalVariablesService.answerKey);
+    return this.isThread ? threadChat : channelChat;
   }
 
   /**
@@ -79,7 +89,7 @@ export class AllMessagesComponent {
   showDateBar(messageTimestamp: number, answerTo: string, index: number): boolean {
     //debugger;
     let displayDate = false;
-    if (this.isChat) {
+    if (this.isChat || this.isThread) {
       if (index == 0)
         displayDate = true;
       else {
@@ -109,27 +119,38 @@ export class AllMessagesComponent {
     let conditionTest: boolean = false;
     if (this.isChat)
       conditionTest = message.userId == this.globalVariablesService.activeID && message.answerto == ''; /* message.message != '' && */
-    else conditionTest = false;
-    return conditionTest;
-  }
+      else if (this.isThread){
+        conditionTest =
+          message.userId === this.globalVariablesService.activeID &&
+          message.message != '' &&
+          message.answerto === this.globalVariablesService.answerKey; 
+          //debugger;
+      }
+        
+      else conditionTest = false;
+      return conditionTest;
+    }
 
   /**
    * this function is for setting the conditions for showing all messages from other users which are not an answer
    * @param message - object
    * @returns - boolean
    */
-  meetContitionsOtherUser(message: {
-    answerto: string;
-    message: string;
-    timestamp: number;
-    userId: string;
-  }) {
+  meetContitionsOtherUser(message: { answerto: string; message: string; timestamp: number; userId: string; }) {
     let conditionTest: boolean = false;
     if (this.isChat)
       conditionTest =
         message.userId !== this.globalVariablesService.activeID &&
         message.message != '' &&
-        message.answerto == ''; /* message.message != '' && */
+        message.answerto == ''; 
+    else if (this.isThread){
+      conditionTest =
+        message.userId !== this.globalVariablesService.activeID &&
+        message.message != '' &&
+        message.answerto === this.globalVariablesService.answerKey; 
+       // debugger;
+    }
+      
     else conditionTest = false;
     return conditionTest;
   }

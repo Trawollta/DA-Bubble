@@ -75,8 +75,8 @@ export class FirebaseChatService {
       if (chat.data()) {
         this.globalVariablesService.chatChannel = new ChatChannel(chat.data());
       }
-      this.groupMessagesByAnswerTo();
-      //console.log(this.groupMessagesByAnswerTo());
+      //this.groupMessagesByAnswerTo();
+      //console.log('Grupierter chat: ',this.globalVariablesService.chatChannel);
     });
     return chatSnapshot;
   }

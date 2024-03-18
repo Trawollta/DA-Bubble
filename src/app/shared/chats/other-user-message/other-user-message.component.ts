@@ -37,7 +37,7 @@ export class OtherUserMessageComponent {
   openReaction: boolean = false;
   selectedMessage: string = '';
   @Input() message: any;
-
+  @Input() isThread: boolean = false;
 
   emojiArray: Emoji[] = [];
   postingTime: string | null = null;
@@ -45,7 +45,9 @@ export class OtherUserMessageComponent {
 
   unsubUser;
   userId: string = 'guest';
-
+  answerKey: string = '';
+  answercount: number = 0;
+  lastAnswerTime: number = 0;
 
 
   constructor(private elementRef: ElementRef) {
@@ -89,10 +91,15 @@ export class OtherUserMessageComponent {
    * this function calls function getUser() for providing userdata for the post
    */
   async ngOnInit() {
-    //this.user = this.message.userId; //not needed, wrong code
-    //this.getUser2WithColsolelLog(); //for testings
+  
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
+    this.answerKey = this.message.userId + '_' + this.message.timestamp.toString();
+    let filteredMessages = this.globalVariables.chatChannel.messages.filter(message => message.answerto === this.answerKey)
+    this.answercount = filteredMessages.length;
+    if(filteredMessages.length > 0 && filteredMessages[filteredMessages.length - 1].timestamp)
+    this.lastAnswerTime = filteredMessages[filteredMessages.length - 1].timestamp;
+    
   }
 
 
@@ -108,7 +115,9 @@ export class OtherUserMessageComponent {
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
-    console.log(this.globalVariables.showThread);
+    //console.log('showThread: ',this.globalVariables.showThread);
+    this.globalVariables.answerKey = this.answerKey;
+    this.globalVariables.answerCount = this.answercount;
     this.fillInitialUserObj();
     this.globalVariables.openChat = 'isChatVisable';
     this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();
@@ -146,7 +155,7 @@ export class OtherUserMessageComponent {
 
   addUserIdToEmoji(emoji: any): void {
     if (emoji) {
-      console.log(emoji.userId);
+      //console.log(emoji.userId);
       if (emoji.userId.includes(this.globalVariables.activeID)) {
         emoji.userId = emoji.userId.replace(new RegExp(this.globalVariables.activeID + ',? ?', 'g'), '');
       } else {
@@ -173,7 +182,7 @@ export class OtherUserMessageComponent {
       groupedByIconId.get(emoji.iconId)!.push(emoji);
     });
 
-    console.log(groupedByIconId);
+    //console.log(groupedByIconId);
   }
 
 }

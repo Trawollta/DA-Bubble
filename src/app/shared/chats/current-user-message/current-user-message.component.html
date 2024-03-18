@@ -5,44 +5,34 @@
         <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
         <span class="username">{{ user.name }}</span>
       </div>
-      <div
-        class="speech-bubble-current-user"
-        (click)="openEmojis()"
-        (click)="onSelectMessage(message.id)"
-      >
+      <div class="speech-bubble-current-user" (click)="openEmojis()" (click)="onSelectMessage(message.id)">
         <span class="speech-bubble-current-user-text" *ngIf="!editMessage">{{
           message.message
-        }}</span>
+          }}</span>
         <div class="edit" (click)="globalFunctions.stopPropagation($event)">
-          <app-inputfield
-            type="text"
-            [(ngModel)]="message.message"
-            *ngIf="globalVariables.editMessage"
-          ></app-inputfield>
+          <app-inputfield type="text" [(ngModel)]="message.message"
+            *ngIf="globalVariables.editMessage"></app-inputfield>
         </div>
       </div>
-      <app-reactions
-        class="reaction-field"
-        *ngIf="openReaction && selectedMessage === message.id"
-        [message]="message"
-      ></app-reactions>
+      <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id"
+        [message]="message"></app-reactions>
 
       <div class="reaction-emojis">
         <span class="reaction-emoji-field" *ngFor="let emoji of message.emoji" (click)="addUserIdToEmoji(emoji)">
           {{ emoji.icon }} {{ emojiCount(emoji.userId) }}
         </span>
       </div>
-      
-      <div class="replie-wrapper">
-        <span class="replie-text" (click)="openAnswers()">1 Antworten</span>
-        <span class="timestamp-text">Letze Antwort Time</span>
+
+      <div *ngIf="!isThread" class="replie-wrapper">
+        <div class="replie-text" (click)="openAnswers()">
+          <span *ngIf="answercount !== 0">{{ answercount }}</span><span> Antwort</span><span
+          *ngIf="answercount !== 1">en</span>
+        </div>
+        <span   *ngIf="answercount !== 0" class="timestamp-text">Letzte Antwort: {{ lastAnswerTime | date : "dd.MM.YY H:mm" }}</span>
       </div>
     </div>
   </div>
-  <div
-    class="user"
-    (click)="globalFunctions.openProfile(true, globalVariables.activeID)"
-  >
+  <div class="user" (click)="globalFunctions.openProfile(true, globalVariables.activeID)">
     <img [src]="user.img" alt="" />
   </div>
 </section>

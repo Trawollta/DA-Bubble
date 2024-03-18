@@ -68,6 +68,9 @@ export class GlobalVariablesService {
     timestamp: 0,
     emoji: [{ icon: '', userId: '', iconId: '' }],
   };
+  //for filtering the thread
+  answerKey: string = '';
+  answerCount: number = 0;
 
   //this is the object for collecting message data for first message in thread
   messageThreadStart = {

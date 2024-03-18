@@ -27,11 +27,15 @@
 
       </div>
       <div class="partingLineContainer">
-        <div class="partingLineText">2 Antworten</div>
+        <div *ngIf="globalVariables.answerCount !== 0" class="partingLineText">{{ globalVariables.answerCount }} 
+          <span> Antwort</span>
+          <span
+          *ngIf="globalVariables.answerCount !== 1">en</span>
+        </div>
         <div class="partingLine"></div>
       </div>
     </div>
-    <app-all-messages [isChat]="false"></app-all-messages>
+    <app-all-messages [isChat]="false" [isThread]="true"></app-all-messages>
 
   </section>
   <!-- input marnie-->

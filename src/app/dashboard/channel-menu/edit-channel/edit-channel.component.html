@@ -1,39 +1,38 @@
 <div class="Edit-content">
-
-    <div class="Edit" *ngIf="globalVariables.editChannelOverlayOpen">
-        <div class="headline">
-            <div>
-            <span class="top"> Channel erstellen</span>
-            </div>
-                <div>
-                    <img (click)="globalFunctions.closeEditOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
-                </div>
-        </div>
+  <div class="overlay" *ngIf="globalVariables.editChannelOverlayOpen">
+    <div class="headline">
+      <div>
+        <!-- Dynamischer Titel basierend auf dem Modus -->
+        <span class="top">{{ globalVariables.isEditingChannel ? 'Channel bearbeiten' : 'Channel erstellen' }}</span>
+      </div>
+      <div>
+        <img (click)="globalFunctions.closeEditOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="Schließen">
+      </div>
+    </div>
     <div class="about">
-        <span class="text">
-            Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
-            themenbezogen sein #marketing zum Beispiel.
-        </span>
+      <span class="text">
+        Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein, z.B. #marketing.
+      </span>
     </div>
-    
-    <!-- <div *ngFor="let channel of channels">
-      <p>{{ channel.name }}</p> 
-      <p>{{ channel.description }}</p> 
-    </div> -->
-    <app-inputfield [(ngModel)]="globalVariables.channelData.channelName" [classes]="['standard']"
-    type="text" placeholder="{{ globalVariables.openChannel.titel }}"></app-inputfield>
-    <app-inputfield [(ngModel)]="globalVariables.channelData.description" [classes]="['standard']"
-    type="text" placeholder="{{ globalVariables.openChannel.desc }}"></app-inputfield>
-    
 
-   
-      <div class="button-area">
-        <app-button
-          [classes]="['primary']"
-          (clicked)="globalFunctions.toggleOverlays()"
-          caption="speichern"
-          imgPath=""
-        ></app-button>
-      </div>
-      </div>
+    <!-- Inputfelder für Channel-Name und Beschreibung -->
+    <div class=" editName-area">
+    <app-inputfield [(ngModel)]="globalVariables.channelData.channelName" [classes]="['standard']"
+    type="text" placeholder="Channel-Name eingeben"></app-inputfield>
+    <button class="edit">bearbeiten</button>
+  </div>
+  <div class=" editName-area">
+    <app-inputfield [(ngModel)]="globalVariables.channelData.description" [classes]="['standard']"
+    type="text" placeholder="Beschreibung eingeben"></app-inputfield>
+    <button class="edit">bearbeiten</button>
     </div>
+
+    <div class="button-area">
+      <app-button
+        [classes]="['primary']"
+        caption="{{ globalVariables.isEditingChannel ? 'Änderungen speichern' : 'Channel erstellen' }}"
+        imgPath=""
+      ></app-button>
+    </div>
+  </div>
+</div>

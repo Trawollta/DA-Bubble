@@ -25,9 +25,9 @@ export class AddNewChannelComponent {
   globalFunctions = inject(GlobalFunctionsService);
 
   [x: string]: any;
-  constructor() { }
 
-
+  
 }
+
 
 

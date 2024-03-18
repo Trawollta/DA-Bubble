@@ -2,6 +2,7 @@
 
   <div class="overlay" *ngIf="globalVariables.channel">
     <div class="headline">
+     
       <div>
         <span class="top"> Channel erstellen</span>
       </div>
@@ -24,7 +25,7 @@
       <img src="" />
       <!-- <input type="text" #newChannel="ngModel" [(ngModel)]="globalVariables.channelData.channelName"> -->
       <app-inputfield
-       [(ngModel)]="globalVariables.channelData.channelName"
+        [(ngModel)]="globalVariables.channelData.channelName"
         [classes]="['standard']"
         type="text" 
         placeholder="Kooperationsprojekte"
@@ -52,6 +53,7 @@
         caption="Erstellen"
         imgPath=""
       ></app-button>
+
     </div>
     </div>
   </div>

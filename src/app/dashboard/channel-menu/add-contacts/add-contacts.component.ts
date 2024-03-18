@@ -6,7 +6,7 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { AddNewChannelComponent } from '../add-new-channel/add-new-channel.component';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
-import { FirebaseCannelService } from 'app/services/firebase-services/firebase-cannel.service';
+import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { Observable, from, map, of, Subject} from 'rxjs';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { User } from 'app/models/user.class';
@@ -35,7 +35,7 @@ export class AddContactsComponent implements OnInit {
   globalVariables = inject(GlobalVariablesService);
   // globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
-  firebaseChannelService = inject(FirebaseCannelService);
+  firebaseChannelService = inject(FirebaseChannelService);
 
   addedChannelId: string = '';
   addedChatId: string = '';

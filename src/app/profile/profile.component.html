@@ -62,7 +62,7 @@
                     </div>
                     <div *ngIf="!globalVariables.showEditProfile" class="mailAdressContainer">
                         <a  href="mailto:{{profile.email}}">{{profile.email}}</a>
-                       <!--  --></div>
+                        <!--  --></div>
                     <!-- area edit mail -->
                     <div *ngIf="globalVariables.showEditProfile" class="inputFieldContainer">
                         <app-inputfield type="email" [classes]="'noIcon standard'" name='email'  [(ngModel)]="emailBuffer" placeholder="Deine E-Mail hier"></app-inputfield>

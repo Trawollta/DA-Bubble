@@ -4,7 +4,7 @@ import { Firestore, collection, addDoc, updateDoc, doc, setDoc, onSnapshot } fro
 @Injectable({
   providedIn: 'root'
 })
-export class FirebaseCannelService {
+export class FirebaseChannelService {
 
   firestore: Firestore = inject(Firestore);
 

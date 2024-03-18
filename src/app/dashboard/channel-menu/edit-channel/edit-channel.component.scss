@@ -1,10 +1,11 @@
-.Edit {
+.overlay {
     background-color: white;
     z-index: 3;
     max-width: 700px;
     padding-left: 40px;
     padding-right: 40px;
-    height: 100vh;
+    height: 75vh;
+    border-radius: 0px 30px 30px 30px;
 }
 // @media screen and (min-width: 800px) {
 //     .overlay {
@@ -18,11 +19,11 @@
 //     }
 // }
 
- .Edit-content {
-     display:flex;
-     justify-content: center;
-     align-items:center;
-     position:absolute;
+.Edit-content {
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    position:absolute;
     top: 0;
     left:0;
     width:100%;
@@ -56,14 +57,23 @@
     text-align: left;
 }
 
- h3 {
-     margin-top:20px;
-     font-weight: 700;
-     font-size: 20px;
- }
+h3 {
+    margin-top:20px;
+    font-weight: 700;
+    font-size: 20px;
+}
 
- .button-area {
-     display:flex;
+.button-area {
+    display:flex;
     justify-content: flex-end;
     margin-top: 20px;
- }
+}
+
+.editName-area {
+    display:flex;
+    justify-content: center;
+}
+
+.edit {
+    
+}

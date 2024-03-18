@@ -16,6 +16,7 @@ import { FirebaseChatService } from '../firebase-services/firebase-chat.service'
   providedIn: 'root',
 })
 export class GlobalFunctionsService {
+  
   globalVariables = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
 
@@ -192,5 +193,11 @@ export class GlobalFunctionsService {
   }
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //functions to change the chat end
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  async updateData(collectionPath: string, docId: string, data: Partial<any>): Promise<void> {
+    const docRef = doc(this.firestore, collectionPath, docId);
+    await updateDoc(docRef, data);
+  }
+
 }

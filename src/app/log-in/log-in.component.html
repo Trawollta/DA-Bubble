@@ -4,7 +4,7 @@
             <h2>Anmeldung</h2>
         </header>
         <div class="info">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</div>
-        <form #logInForm="ngForm" name="login-form" (ngSubmit)="onSubmit()">
+        <form #logInForm="ngForm" name="login-form" (ngSubmit)="logInWithEmailAndPassword()">
             <div class="input-fields">
                 <app-inputfield #email="ngModel" name="email" id="email" [(ngModel)]="logInUserData.email" [required]="true" [imgSize]="'16px'" [classes]="['login']" type="email" id="email" imgName="mail" placeholder="beispielname@email.com"></app-inputfield>
                 <app-inputfield #password="ngModel" name="password" [(ngModel)]="logInUserData.password" [required]="true" [imgSize]="'22px'" [classes]="['login']" type="password" imgName="lock" placeholder="Password"></app-inputfield>

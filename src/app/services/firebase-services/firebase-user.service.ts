@@ -47,6 +47,7 @@ export class FirebaseUserService {
     const userDocRef = doc(this.firestore, `users/${uid}`);
     await updateDoc(userDocRef, { isActive });
   }
+
   updateCurrentUser(uid: string) {
     return onSnapshot(this.getSingleUserRef(uid), (user) => {
       if (user.data()) {
@@ -54,7 +55,6 @@ export class FirebaseUserService {
         this.globalVariables.currentUser = logedInUser;
         this.globalVariables.activeID = user.id;
       }
-
     });
   }
 

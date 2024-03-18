@@ -27,7 +27,7 @@ export class LogInComponent {
     password: ""
   }
 
-  async onSubmit() {
+  async logInWithEmailAndPassword() {
     const { email, password } = this.logInUserData;
     try {
       const userCredential = await this.authService.login(email, password);
@@ -65,22 +65,9 @@ export class LogInComponent {
 
   async loginAsGuest() {
     try {
-      const userCredential = await this.authService.loginAnonymously();
-      if (userCredential) {
-        console.log("Erfolgreich anonym angemeldet", userCredential);
-        const uid = userCredential.uid;
-        this.globalVariables.activeID = uid;
-        this.userService.updateCurrentUser(uid);
-        await this.userService.addUser(userCredential.uid, {
-          name: 'Gast',
-          email: '',
-          isActive: true,
-          img: 'assets/img/avatars/avatar_1.svg'
-        });
-        this.router.navigate(['/dashboard']);
-      } else {
-        console.error("Anonyme Anmeldung fehlgeschlagen.");
-      }
+      this.logInUserData.email = "gastderdabubble@da-bubble.gast";
+      this.logInUserData.password = "gast00";
+      this.logInWithEmailAndPassword();
     } catch (error) {
       console.error("Fehler bei der Verarbeitung der anonymen Anmeldung", error);
     }

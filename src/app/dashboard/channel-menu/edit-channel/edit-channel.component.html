@@ -1,38 +1,37 @@
-<div class="Edit-content">
-  <div class="overlay" *ngIf="globalVariables.editChannelOverlayOpen">
+<div class="Edit-content" *ngIf="globalVariables.editChannelOverlayOpen">
+  <div class="overlay">
     <div class="headline">
       <div>
-        <!-- Dynamischer Titel basierend auf dem Modus -->
-        <span class="top">{{ globalVariables.isEditingChannel ? 'Channel bearbeiten' : 'Channel erstellen' }}</span>
+        <span class="top">Channel bearbeiten</span>
       </div>
       <div>
         <img (click)="globalFunctions.closeEditOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="Schließen">
       </div>
     </div>
     <div class="about">
-      <span class="text">
-        Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein, z.B. #marketing.
-      </span>
+      <span class="text">Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein, z.B. #marketing.</span>
     </div>
 
-    <!-- Inputfelder für Channel-Name und Beschreibung -->
-    <div class=" editName-area">
-    <app-inputfield [(ngModel)]="globalVariables.channelData.channelName" [classes]="['standard']"
-    type="text" placeholder="Channel-Name eingeben"></app-inputfield>
-    <button class="edit">bearbeiten</button>
-  </div>
-  <div class=" editName-area">
-    <app-inputfield [(ngModel)]="globalVariables.channelData.description" [classes]="['standard']"
-    type="text" placeholder="Beschreibung eingeben"></app-inputfield>
-    <button class="edit">bearbeiten</button>
+    <div class="editName-area">
+      <label for="channelName">Channel name:</label>
+      <app-inputfield id="channelName" [(ngModel)]="globalVariables.channelData.channelName" [classes]="['standard']" type="text"></app-inputfield>
+      <button>Bearbeiten</button>
+    </div>
+
+    <!-- Description Input -->
+    <div class="editName-area">
+      <label for="description">Beschreibung:</label>
+      <app-inputfield id="description" [(ngModel)]="globalVariables.channelData.description" [classes]="['standard']" type="text"></app-inputfield>
+      <button>Bearbeiten</button>
+    </div>
+
+    <div class="editName-area">
+      <label for="createdBy">Erstellt von:</label>
+      <app-inputfield id="createdBy" [classes]="['standard']" type="text"></app-inputfield>
     </div>
 
     <div class="button-area">
-      <app-button
-        [classes]="['primary']"
-        caption="{{ globalVariables.isEditingChannel ? 'Änderungen speichern' : 'Channel erstellen' }}"
-        imgPath=""
-      ></app-button>
+      <app-button [classes]="['primary']" caption="{{ globalVariables.isEditingChannel ? 'Änderungen speichern' : 'Channel erstellen' }}" imgPath=""></app-button>
     </div>
   </div>
 </div>

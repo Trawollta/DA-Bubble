@@ -19,6 +19,7 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgForm } from '@a
 })
 export class InputfieldComponent implements OnInit, ControlValueAccessor {
 
+  @Input() readonly: boolean = false;
   @Input() type: string = "";
   @Input() id: string = "";
   @Input() placeholder: string = "";

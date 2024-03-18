@@ -19,6 +19,8 @@ export class EditChannelComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
 
+
+
   ngOnInit(){
     console.log(this.globalVariables.openChannel.titel)
     //this.globalFunctions.openChannelDescribe(desc);
@@ -64,4 +66,7 @@ export class EditChannelComponent {
 
     return data;
   }
+
+
+  enableEdit (){}
 }

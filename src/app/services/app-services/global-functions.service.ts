@@ -46,10 +46,12 @@ export class GlobalFunctionsService {
   }
 
   openEditChannelOverlay() {
+    this.globalVariables.channelData.channelName = this.globalVariables.openChannel.titel;
+    this.globalVariables.channelData.description = this.globalVariables.openChannel.desc;
+    
+    this.globalVariables.isEditingChannel = true;
+    
     this.globalVariables.editChannelOverlayOpen = true;
-    if (this.globalVariables.editChannelOverlayOpen)
-      document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
   }
 
   openUserOverlay() {

@@ -34,11 +34,12 @@
     (click)="editClose()"
   />
   </div>
-  <div
+  <div class="tooltip"
     (click)="this.editOpen()"
     *ngIf="globaleVariables.activeID == this.message.userId"
   >
     <img class="edit-icon" src="./assets/img/icons/comment.svg" alt="" />
+      <span class="tooltiptext">Nachricht bearbeiten</span>
   </div>
 </main>
 <div id="emoji-selector" class="emojis">

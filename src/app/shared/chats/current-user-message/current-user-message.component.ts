@@ -57,7 +57,7 @@ export class CurrentUserMessageComponent {
     answerto: '',
     userId: '',
     timestamp: 0,
-    emoji: [{ icon: '', userId: '' }],
+    emoji: [{ icon: '', userId: [] as any[],  iconId: '' }],
   };
   editMessage: boolean = false;
   msgEmojis: any[] = []; // Initialisieren Sie msgEmojis als leeres Array
@@ -202,7 +202,8 @@ export class CurrentUserMessageComponent {
     this.message.emoji.forEach((element: any) => {
       this.originalMessage.emoji.push({
         icon: element.icon,
-        userId: element.userId,
+        userId: [element.userId],
+        iconId: element.iconId,
       });
     });
     console.log('current original Message: ', this.originalMessage);
@@ -210,7 +211,6 @@ export class CurrentUserMessageComponent {
 
   addUserIdToEmoji(emoji: any): void {
     if (emoji) {
-     // console.log(emoji.userId);
       if (emoji.userId.includes(this.globalVariables.activeID)) {
         emoji.userId = emoji.userId.replace(new RegExp(this.globalVariables.activeID + ',? ?', 'g'), '');
       } else {
@@ -219,11 +219,13 @@ export class CurrentUserMessageComponent {
     }
   }
 
-  emojiCount(emoji: any) {
-    let inputString = emoji;
-    const values = inputString.substring(1, inputString.length - 1).split(',').map((value:string) => value.trim());
+  emojiCount(emoji: any): number {
+    if (!emoji || !emoji.userId || !Array.isArray(emoji.userId)) {
+        return 0; // Rückgabe von 0, wenn das Emoji-Objekt oder das userId-Array nicht vorhanden oder nicht korrekt ist
+    }
+    const values = emoji.userId.map((value: any) => String(value).trim()); // Konvertieren in Strings und Trimmen
     const count = values.length;
     return count;
-    
-  }
+}
+
 }

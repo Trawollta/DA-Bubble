@@ -168,13 +168,14 @@ export class OtherUserMessageComponent {
     
   }
 
-  emojiCount(emoji: any) {
-    let inputString = emoji;
-    const values = inputString.substring(1, inputString.length - 1).split(',').map((value: string) => value.trim());
+  emojiCount(emoji: any): number {
+    if (!emoji || !emoji.userId || !Array.isArray(emoji.userId)) {
+        return 0; // Rückgabe von 0, wenn das Emoji-Objekt oder das userId-Array nicht vorhanden oder nicht korrekt ist
+    }
+    const values = emoji.userId.map((value: any) => String(value).trim()); // Konvertieren in Strings und Trimmen
     const count = values.length;
     return count;
-
-  }
+}
 
   test(emojiArray: Emoji[]) {
     const groupedByIconId = new Map<string, Emoji[]>();
@@ -186,7 +187,7 @@ export class OtherUserMessageComponent {
       groupedByIconId.get(emoji.iconId)!.push(emoji);
     });
 
-    //console.log(groupedByIconId);
+    console.log(groupedByIconId);
   }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -197,7 +198,7 @@ export class OtherUserMessageComponent {
     answerto: '',
     userId: '',
     timestamp: 0,
-    emoji: [{ icon: '', userId: '', iconId: '' }],
+    emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
   };
 
   copyHelper() {
@@ -210,7 +211,7 @@ export class OtherUserMessageComponent {
     this.message.emoji.forEach((element: any) => {
       this.originalMessage.emoji.push({
         icon: element.icon,
-        userId: element.userId,
+        userId: [element.userId],
         iconId: element.iconId,
       });
     }); 

@@ -20,7 +20,7 @@ export class ChatChannel {
               message: '',
               timestamp: 0,
               userId: '',
-              emoji: [{icon: '', userId: '' },],
+              emoji: [{icon: '', userId: [] as any[], iconId: '' },],
             },
           ];
     this.sortMessagesByTimestamp();

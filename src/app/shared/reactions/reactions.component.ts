@@ -38,7 +38,7 @@ export class ReactionsComponent {
     answerto: '',
     userId: '',
     timestamp: 0,
-    emoji: [{ icon: '', userId: '', iconId: '' }],
+    emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
   };
 
   // Variable für das ausgewählte Emoji
@@ -92,18 +92,21 @@ export class ReactionsComponent {
       this.message.emoji[0].iconId = emoji.codePoint;
     } else {
       let existingEmoji = this.message.emoji.find(
-        (e: any) => e.iconId === emoji.codePoint
+          (e: any) => e.iconId === emoji.codePoint
       );
       if (existingEmoji) {
-        existingEmoji.userId += ', ' + this.globaleVariables.activeID;
+          if (!Array.isArray(existingEmoji.userId)) {
+              existingEmoji.userId = [existingEmoji.userId];
+          }
+          existingEmoji.userId.push(this.globaleVariables.activeID);
       } else {
-        this.message.emoji.push({
-          icon: emoji.character,
-          userId: this.globaleVariables.activeID,
-          iconId: emoji.codePoint,
-        });
+          this.message.emoji.push({
+              icon: emoji.character,
+              userId: [this.globaleVariables.activeID],
+              iconId: emoji.codePoint,
+          });
       }
-    }
+  }
     this.addEmoji();
   }
 
@@ -140,13 +143,12 @@ export class ReactionsComponent {
     this.message.emoji.forEach((element: any) => {
       this.originalMessage.emoji.push({
         icon: element.icon,
-        userId: element.userId,
+        userId: [element.userId],
         iconId: element.iconId,
       });
     });
     console.log('in reactions original Message: ', this.originalMessage);
-  
-    this.remove(this.globaleVariables.openChannel.chatId);
+      this.remove(this.globaleVariables.openChannel.chatId); 
   }
 
   remove(chatId: string) {
@@ -166,7 +168,7 @@ export class ReactionsComponent {
     this.message.emoji.forEach((element: any) => {
       this.originalMessage.emoji.push({
         icon: element.icon,
-        userId: element.userId,
+        userId: [element.userId],
         iconId: element.iconId,
       });
     });

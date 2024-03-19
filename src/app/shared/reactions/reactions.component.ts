@@ -188,3 +188,4 @@ export class ReactionsComponent {
       this.remove(this.globaleVariables.openChannel.chatId);
   }
 }
+

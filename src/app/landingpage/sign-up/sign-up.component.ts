@@ -3,7 +3,7 @@ import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from 'app/shared/button/button.component';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
-import { DialogComponent } from '../shared/dialog/dialog.component';
+import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { AuthService } from 'app/services/firebase-services/auth.service';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
@@ -12,6 +12,7 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GoBackButtonComponent } from 'app/shared/go-back-button/go-back-button.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,6 +28,7 @@ export class SignUpComponent {
   globalFunctions = inject(GlobalFunctionsService);
   userService = inject(FirebaseUserService);
   toastService = inject(ToastService);
+  private router = inject(Router);
   signUpStep: string = "createAccount"; //createAccount | chooseAvatar
   selectedAvatar: string = '';
   signUpUserPassword: string = "";
@@ -67,10 +69,6 @@ export class SignUpComponent {
     this.selectedAvatar = img;
   }
 
-  goToLogIn() {
-    this.globalVariables.signup = false;
-  }
-
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -82,7 +80,6 @@ export class SignUpComponent {
           } else {
             this.selectedAvatar = e.target.result as string;
           }
-
         }
       };
       reader.readAsDataURL(file);
@@ -99,7 +96,7 @@ export class SignUpComponent {
       const uid = userCredential.user.uid;
       this.userService.addUser(uid, this.signUpUserData);
       this.toastService.showMessage('Konto erfolgreich erstellt!');
-      setTimeout(() => this.goToLogIn(), 2000);
+      setTimeout(() => this.router.navigate(['/']), 2000);
     } catch (error) {
       console.error("Registrierungsfehler:", error);
       this.toastService.showMessage('Email bereits registriert!');

@@ -210,7 +210,6 @@ export class CurrentUserMessageComponent {
 
   addUserIdToEmoji(emoji: any): void {
     if (emoji) {
-     // console.log(emoji.userId);
       if (emoji.userId.includes(this.globalVariables.activeID)) {
         emoji.userId = emoji.userId.replace(new RegExp(this.globalVariables.activeID + ',? ?', 'g'), '');
       } else {

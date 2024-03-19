@@ -2,7 +2,7 @@
     <section *ngIf="signUpStep == 'createAccount'">
         <header>
             <div class="headline-wrapper">
-                <app-go-back-button (clicked)="goToLogIn()"></app-go-back-button>
+                <app-go-back-button></app-go-back-button>
                 <div class="headline">
                     <h2>Konto erstellen</h2>
                 </div>
@@ -50,7 +50,7 @@
     <section *ngIf="signUpStep == 'chooseAvatar'">
         <header>
             <div class="headline-wrapper">
-                <app-go-back-button (clicked)="goCreateAccount()"></app-go-back-button>
+                <app-go-back-button [goTo]="'onClick'" (clicked)="goCreateAccount()"></app-go-back-button>
                 <div class="headline">
                     <h2>Wähle deinen Avatar</h2>
                 </div>

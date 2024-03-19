@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { DialogComponent } from "../shared/dialog/dialog.component";
+import { DialogComponent } from "../../shared/dialog/dialog.component";
 import { ButtonComponent } from 'app/shared/button/button.component';
 import { AuthService } from 'app/services/firebase-services/auth.service';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
@@ -71,5 +71,9 @@ export class LogInComponent {
     } catch (error) {
       console.error("Fehler bei der Verarbeitung der anonymen Anmeldung", error);
     }
+  }
+
+  goToSendMail() {
+    this.router.navigate(['/request-new-password']);
   }
 }

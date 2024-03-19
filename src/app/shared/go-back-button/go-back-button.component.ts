@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Location, CommonModule } from '@angular/common';
 
 @Component({
@@ -10,6 +10,7 @@ import { Location, CommonModule } from '@angular/common';
 })
 export class GoBackButtonComponent {
   @Output() clicked = new EventEmitter<Event>();
+  @Input() goTo: string = "back";
 
   constructor(private location: Location) { }
 

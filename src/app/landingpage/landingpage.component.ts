@@ -5,6 +5,7 @@ import { ButtonComponent } from 'app/shared/button/button.component';
 import { LogInComponent } from "./log-in/log-in.component";
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { SignUpComponent } from 'app/landingpage/sign-up/sign-up.component';
+import { FooterComponent } from 'app/shared/footer/footer.component';
 
 @Component({
   selector: 'app-landingpage',
@@ -16,6 +17,7 @@ import { SignUpComponent } from 'app/landingpage/sign-up/sign-up.component';
     ButtonComponent,
     LogInComponent,
     SignUpComponent,
+    FooterComponent,
     RouterOutlet,
     RouterLink]
 })
@@ -28,11 +30,5 @@ export class LangingpageComponent {
 
   goToSignUp() {
     this.router.navigate(['/sign-up']);
-  }
-  goToImprint() {
-    this.router.navigate(['/imprint']);
-  }
-  goToPrivacyPolicy() {
-    this.router.navigate(['/privacypolicy']);
   }
 }

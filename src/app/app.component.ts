@@ -11,6 +11,7 @@ import { AddNewChannelComponent } from './dashboard/channel-menu/add-new-channel
 import { AddContactsComponent } from './dashboard/channel-menu/add-contacts/add-contacts.component';
 import { Auth } from '@angular/fire/auth';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+import { FooterComponent } from './shared/footer/footer.component';
 //import { PrivateChatComponent } from './dashboard/private-chat/private-chat.component';
 
 
@@ -24,6 +25,7 @@ import { FirebaseUserService } from 'app/services/firebase-services/firebase-use
     ButtonComponent,
     DialogComponent,
     HeaderComponent,
+    FooterComponent,
     ProfileComponent,
     AddNewChannelComponent,
     AddContactsComponent

@@ -2,36 +2,51 @@
   <div class="overlay">
     <div class="headline">
       <div>
-        <span class="top">Channel bearbeiten</span>
+        <span class="top">#{{ globalVariables.channelData.channelName }}</span>
       </div>
       <div>
         <img (click)="globalFunctions.closeEditOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="Schließen">
       </div>
     </div>
-    <div class="about">
-      <span class="text">Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein, z.B. #marketing.</span>
-    </div>
-
-    <div class="editName-area">
-      <label for="channelName">Channel name:</label>
-      <app-inputfield id="channelName" [(ngModel)]="globalVariables.channelData.channelName" [classes]="['standard']" type="text"></app-inputfield>
-      <button>Bearbeiten</button>
-    </div>
 
     <!-- Description Input -->
-    <div class="editName-area">
-      <label for="description">Beschreibung:</label>
-      <app-inputfield id="description" [(ngModel)]="globalVariables.channelData.description" [classes]="['standard']" type="text"></app-inputfield>
-      <button>Bearbeiten</button>
+    <div class="border">
+      <div class="editName-area">
+        <div class="first-row">
+          <label for="channelName" class="label">Channel name:</label>
+          <button class="edit-btn" (click)="toggleEdit('channelName')">
+            {{ editMode.channelName ? 'Speichern' : 'Bearbeiten' }}
+          </button>
+        </div>
+        <div *ngIf="!editMode.channelName" class="channel-name-display">#{{ globalVariables.channelData.channelName }}</div>
+        <app-inputfield *ngIf="editMode.channelName" [(ngModel)]="globalVariables.channelData.channelName" [classes]="['standard']" type="text"></app-inputfield>
+      </div>
     </div>
 
-    <div class="editName-area">
-      <label for="createdBy">Erstellt von:</label>
-      <app-inputfield id="createdBy" [classes]="['standard']" type="text"></app-inputfield>
-    </div>
+    <!-- Bereich für die Beschreibung -->
+    <div class="border">
+      <div class="editName-area">
+        <div class="first-row">
+          <label for="description">Beschreibung:</label>
+          <button class="edit-btn" (click)="toggleEdit('channelName')">
+            {{ editMode.channelName ? 'Speichern' : 'Bearbeiten' }}
+          </button>
+        </div>
+          <div *ngIf="!editMode.description">{{ globalVariables.channelData.description }}</div>
+            <app-inputfield *ngIf="editMode.description" [(ngModel)]="globalVariables.channelData.description" [classes]="['standard']" type="text"></app-inputfield>
 
-    <div class="button-area">
-      <app-button [classes]="['primary']" caption="{{ globalVariables.isEditingChannel ? 'Änderungen speichern' : 'Channel erstellen' }}" imgPath=""></app-button>
+            <div class="line">
+              
+            </div>
+    
+                <div class="creator">
+                  <label>Erstellt von:</label>
+                  <div>{{profile.name}}</div>
+                </div>
+        </div>
     </div>
+          <div class="button-area">
+            <app-button [classes]="['primary']" caption="{{ globalVariables.isEditingChannel ? 'Channel verlassen' : 'Channel erstellen' }}" imgPath=""></app-button>
+          </div>
   </div>
 </div>

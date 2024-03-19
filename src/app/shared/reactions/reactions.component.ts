@@ -84,6 +84,7 @@ export class ReactionsComponent {
    */
   public showInInput(emoji: any): void {
     this.copyHelper();
+    /* this.editOpen() */
     console.log(emoji);
     this.newEmoji.emit(emoji);
     if (this.message.emoji[0].icon === '') {
@@ -143,12 +144,12 @@ export class ReactionsComponent {
     this.message.emoji.forEach((element: any) => {
       this.originalMessage.emoji.push({
         icon: element.icon,
-        userId: [element.userId],
+        userId: this.helper(element),
         iconId: element.iconId,
       });
     });
     console.log('in reactions original Message: ', this.originalMessage);
-      this.remove(this.globaleVariables.openChannel.chatId); 
+    this.remove(this.globaleVariables.openChannel.chatId); 
   }
 
   remove(chatId: string) {
@@ -168,11 +169,50 @@ export class ReactionsComponent {
     this.message.emoji.forEach((element: any) => {
       this.originalMessage.emoji.push({
         icon: element.icon,
-        userId: [element.userId],
+        userId: this.helper(element),
         iconId: element.iconId,
       });
     });
+    /* console.log('in reactions original Message: ', this.originalMessage); */
   }
+
+  helper(element:any ) {
+    console.log('helper: ', element);
+    console.log('helper ID: ', this.globaleVariables.activeID);
+    let userIdAsArray = [this.globaleVariables.activeID];
+    this.getEmojiUserId(element, userIdAsArray);
+    debugger;
+    console.log('das kommt raus :' , userIdAsArray)
+    return userIdAsArray
+  }
+
+  getEmojiUserId(element: any, userIdAsArray: any[]) {
+    let userIds = element.userId;
+    if (Array.isArray(userIds)) {
+        userIds.forEach((userId: any) => {
+            // check if ID is already inside
+            const index = userIdAsArray.indexOf(userId);
+            if (index !== -1) {
+                // on exist delete
+                userIdAsArray.splice(index, 1);
+            } else {
+                // when not add
+                userIdAsArray.push(userId);
+            }
+        });
+    } else {
+        // check if ID is already inside
+        const index = userIdAsArray.indexOf(userIds);
+        if (index !== -1) {
+            // on exist delete
+            userIdAsArray.splice(index, 1);
+        } else {
+            // on exist delete
+            userIdAsArray.push(userIds);
+        }
+    }
+}
+
 
   editClose() {
     this.globaleVariables.editMessage = false;

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { User } from 'app/models/user.class';
-import { Firestore, collection, doc, setDoc, updateDoc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, doc, setDoc, updateDoc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
@@ -69,4 +69,14 @@ export class FirebaseUserService {
       this.router.navigate(['/']);
     }
   }
+
+    /**
+   * this function returns the data of the user. This is no obserable.
+   * @param id -id of user
+   * @returns data of user
+   */
+    async getUserData(id: string) {
+      const docSnap = await getDoc(this.getSingleUserRef(id));
+      return docSnap.data();
+    }
 }

@@ -21,6 +21,7 @@ export class ShowContactsComponent implements OnInit {
 
   globalFunctions = inject(GlobalFunctionsService);
   firebaseUserService = inject(FirebaseUserService)
+  GlobalVariablesService = inject (GlobalVariablesService)
 
   constructor(public globalVariables: GlobalVariablesService) {
     console.log(this.globalVariables)
@@ -51,6 +52,19 @@ export class ShowContactsComponent implements OnInit {
         }
       });
     });
-
   }
+
+
+    openOtherContactsOverlay() {
+      this.globalVariables.showContacts = true;
+      this.globalFunctions.closeMembers();
+      
 }
+
+closeMembers() {
+  // Setze die Variable, die das "Show Contacts"-Overlay steuert, auf false
+  this.globalVariables.memberlist = false;
+}
+}
+
+

@@ -144,7 +144,7 @@ export class ReactionsComponent {
     this.originalMessage.emoji = [];
 
     this.message.emoji.forEach((element: any) => {
-      const updatedEmoji = this.helper(element); 
+      let updatedEmoji = this.helper(element); 
       this.originalMessage.emoji.push(updatedEmoji);
     });
     /* this.remove(this.globaleVariables.openChannel.chatId); */
@@ -167,7 +167,7 @@ export class ReactionsComponent {
     this.message.emoji.forEach((element: any) => {
       this.originalMessage.emoji.push({
         icon: element.icon,
-        userId: this.helper(element),
+        userId: this.helper(element.userId),
         iconId: element.iconId,
       });
     });
@@ -178,15 +178,21 @@ export class ReactionsComponent {
    * @param element
    * @returns
    */
-  helper(element: any) {
-    if (element && element.userId) {
-      const activeID = this.globaleVariables.activeID;
-      if (!element.userId.includes(activeID)) {
-        element.userId.push(activeID);
-      }
+  helper(element: any): any {
+    if (element) {
+        const activeID = this.globaleVariables.activeID;
+        if (!element.userId.includes(activeID)) {
+            element.userId.push(activeID);
+        }
     }
-    return element;
-  }
+    return {
+        icon: element.icon,
+        userId: element.userId,
+        iconId: element.iconId
+    };
+}
+
+
 
   getEmojiUserId(element: any, userIdAsArray: any[]) {
     let userIds = element.userId;

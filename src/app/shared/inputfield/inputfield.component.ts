@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgForm } from '@angular/forms';
 
 
@@ -28,10 +28,16 @@ export class InputfieldComponent implements OnInit, ControlValueAccessor {
   @Input() imgName: string = "";
   @Input() imgSize: string = "";
   @Input() required: boolean = false;
+  @Output() inputChange = new EventEmitter<string>();
   imgActive: string = "";
-  value: string = ''; 
+  value: string = '';
   private onChange: (value: string) => void = () => { };
   private onTouched: () => void = () => { };
+
+  onInputChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.inputChange.emit(value);
+  }
 
   writeValue(value: any): void {
     if (value !== undefined) {

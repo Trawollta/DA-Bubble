@@ -169,13 +169,8 @@ export class OtherUserMessageComponent {
   }
 
   emojiCount(emoji: any): number {
-    if (!emoji || !emoji.userId || !Array.isArray(emoji.userId)) {
-        return 0; // Rückgabe von 0, wenn das Emoji-Objekt oder das userId-Array nicht vorhanden oder nicht korrekt ist
-    }
-    const values = emoji.userId.map((value: any) => String(value).trim()); // Konvertieren in Strings und Trimmen
-    const count = values.length;
-    return count;
-}
+    return emoji.userId.length;
+  }
 
   test(emojiArray: Emoji[]) {
     const groupedByIconId = new Map<string, Emoji[]>();

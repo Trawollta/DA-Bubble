@@ -189,7 +189,7 @@ export class GlobalFunctionsService {
       this.globalVariables.openChannel.chatId
     );
     this.globalVariables.isChatVisable = true;
-    if (!this.globalVariables.desktop700) {
+    if (!this.globalVariables.desktop800) {
       this.globalVariables.showChannelMenu = false;
     }
   }
@@ -206,7 +206,7 @@ export class GlobalFunctionsService {
 
   showDashboardElement(screenWidth:number){
     if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;
-    else this.globalVariables.showChannelMenu = true;
+    else if(window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
   }
 
 }

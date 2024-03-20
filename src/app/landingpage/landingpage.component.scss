@@ -26,14 +26,6 @@
     }
 }
 
-.footer {
-    @include dFlex($g: 20px);
-    position: absolute;
-    bottom: 2px;
-    left: 0;
-    right: 0;
-}
-
 @media (max-width: 800px) {
     .login-header-left {
         position: absolute;

@@ -9,10 +9,6 @@
             <app-button [classes]="['purpel-border','noIcon']" (clicked)="goToSignUp()" caption="Konto erstellen"></app-button>
         </div>
     </div>
-    <app-log-in *ngIf="globalVariables.login && !globalVariables.signup"></app-log-in>
-    <app-sign-up *ngIf="globalVariables.login && globalVariables.signup"></app-sign-up>
-    <div class="footer">
-        <app-button [classes]="['purpel-border','noIcon']" caption="Impressum"></app-button>
-        <app-button [classes]="['purpel-border','noIcon']" caption="Datenschutz"></app-button>
-    </div>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
 </section>

@@ -1,3 +1,6 @@
-<div class="go-back" (click)="onClick()">
+<div *ngIf="goTo=='onClick'" class="go-back" (click)="onClick()">
+    <div class="go-back-img"></div>
+</div>
+<div *ngIf="goTo=='back'" class="go-back" (click)="goBack()">
     <div class="go-back-img"></div>
 </div>

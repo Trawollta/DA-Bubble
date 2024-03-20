@@ -13,7 +13,7 @@ export class GlobalVariablesService {
   login: boolean = false;
   signup: boolean = false;
   accountAdjustment: boolean = false;
- 
+
   activeID: string = 'guest'; // this is the id of guest user of testusers
 
   //flags for profile

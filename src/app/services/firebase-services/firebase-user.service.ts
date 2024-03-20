@@ -35,7 +35,7 @@ export class FirebaseUserService {
   }
 
   searchUsersByName(searchTerm: string): Observable<any[]> {
-    const q = query(this.getUsersRef(), where('name', '==', searchTerm));
+    const q = query(this.getUsersRef(), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
     return from(getDocs(q).then(querySnapshot => {
       const users: any = [];
       querySnapshot.forEach((doc) => {

@@ -13,6 +13,8 @@ import { User } from 'app/models/user.class';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { ChannelMenuComponent } from '../channel-menu.component';
 import { FormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-add-contacts',
@@ -46,6 +48,8 @@ export class AddContactsComponent implements OnInit {
 
   isChecked: boolean[] = new Array(this.allUsers.length).fill(false);
 
+  filteredUsers: any[] = []; 
+
 
 
   [x: string]: any;
@@ -60,6 +64,21 @@ export class AddContactsComponent implements OnInit {
 
   ngOnInit(): void {
     this.globalFunctions.getCollection('users', this.allUsers); 
+    this.setupSearch();
+  }
+
+  setupSearch() {
+    this.searchTerms.pipe(
+      debounceTime(300), // Verzögere die Ausführung um 300 ms
+      distinctUntilChanged(), // Führe nur aus, wenn sich der Wert geändert hat
+      switchMap((term: string) => this.userService.searchUsersByName(term))
+    ).subscribe(users => {
+      this.filteredUsers = users; // 'filteredUsers' soll die gefilterten Benutzer für die Anzeige halten
+    });
+  }
+
+  search(term: string): void {
+    this.searchTerms.next(term);
   }
 
   onChange(index: number) {
@@ -82,7 +101,6 @@ export class AddContactsComponent implements OnInit {
     }).catch(error => {
       console.error('Fehler beim Hinzufügen des Kanals:', error);
     });
-   
     // add new chat and save channelID in it and return chatId
     await this.firebaseChatService.addChat(this.addedChannelId).then(response => {
       this.addedChatId = response.id;

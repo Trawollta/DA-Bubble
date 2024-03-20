@@ -185,11 +185,13 @@ export class GlobalFunctionsService {
    * this function stets the flag for visability for chat
    */
   showChat() {
+    this.globalVariables.showThread = false;
+    console.log('möp');
     this.firebaseChatService.changeActiveChannel(
       this.globalVariables.openChannel.chatId
     );
     this.globalVariables.isChatVisable = true;
-    if (!this.globalVariables.desktop700) {
+    if (!this.globalVariables.desktop800) {
       this.globalVariables.showChannelMenu = false;
     }
   }
@@ -200,6 +202,13 @@ export class GlobalFunctionsService {
   async updateData(collectionPath: string, docId: string, data: Partial<any>): Promise<void> {
     const docRef = doc(this.firestore, collectionPath, docId);
     await updateDoc(docRef, data);
+  }
+
+
+
+  showDashboardElement(screenWidth:number){
+    if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;
+    else if(window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
   }
 
 }

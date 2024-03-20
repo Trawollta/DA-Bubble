@@ -1,14 +1,19 @@
 @import "../../../styles.scss";
 
 main {
-  min-width: 300px;
-  width: 300px;
+  
+  width: auto;
+  max-width: 600px;
   /* das hier muss ich später noch anpassen, damit es dynamischer wird */
   max-height: 940px;
   height: 100%;
   border-radius: 30px;
   background-color: $white;
-  @include dFlex($fd: column, $jc: space-between)
+  @include dFlex($fd: column, $jc: space-between);
+
+  @media screen and (min-width: 700px) {
+    min-width: 350px;
+  }
 }
 
 .thread-header {

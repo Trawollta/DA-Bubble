@@ -8,6 +8,7 @@ import { AllMessagesComponent } from 'app/shared/chats/all-messages/all-messages
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { User } from 'app/models/user.class';
 import { CommonModule, DatePipe } from '@angular/common';
+import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 
 @Component({
   selector: 'app-thread',
@@ -26,6 +27,7 @@ export class ThreadComponent {
 
   
   globalVariables = inject(GlobalVariablesService);
+  globalFunction = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
 
 
@@ -38,6 +40,11 @@ export class ThreadComponent {
     this.globalVariables.showThread = false;
     this.globalVariables.messageData.answerto = '';
     this.globalVariables.isChatVisable = true;
+    this.globalFunction.showDashboardElement(1200);
+    if (window.innerWidth < 800) {
+      this.globalVariables.showChannelMenu = false;
+      this.globalVariables.isChatVisable = true;
+    }
   }
 
 

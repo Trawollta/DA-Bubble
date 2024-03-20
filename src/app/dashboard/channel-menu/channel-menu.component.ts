@@ -32,9 +32,7 @@ export class ChannelMenuComponent {
    * this function just opens and close the menu for selecting a channel
    */
   openChannelMenu() {
-    const channelMsg = document.getElementById(
-      'channelMsgArrow'
-    ) as HTMLImageElement | null;
+    const channelMsg = document.getElementById('channelMsgArrow') as HTMLImageElement | null;
     let channelDiv = document.getElementById('channels');
     if (channelDiv) {
       if (channelDiv.classList.contains('d-none')) {
@@ -85,8 +83,8 @@ export class ChannelMenuComponent {
    * this funktion sets the flag to show the header for channels and take over information of the related channel object to global variables
    * @param channel - object which contains information of selecet channel
    */
-  openChannelList(channel: any) {
-    this.globalVariables.isUserChat = false;
+  openChannel(channel: any) {
+   // this.globalVariables.isUserChat = false;
     this.globalVariables.openChannel.desc = channel.description;
     this.globalVariables.openChannel.titel = channel.channelName;
     this.globalVariables.openChannel.id = channel.id;

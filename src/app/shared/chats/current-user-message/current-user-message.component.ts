@@ -57,7 +57,7 @@ export class CurrentUserMessageComponent {
     answerto: '',
     userId: '',
     timestamp: 0,
-    emoji: [{ icon: '', userId: [] as any[],  iconId: '' }],
+    emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
   };
   editMessage: boolean = false;
   msgEmojis: any[] = []; // Initialisieren Sie msgEmojis als leeres Array
@@ -113,9 +113,9 @@ export class CurrentUserMessageComponent {
     this.answerKey = this.message.userId + '_' + this.message.timestamp.toString();
     let filteredMessages = this.globalVariables.chatChannel.messages.filter(message => message.answerto === this.answerKey)
     this.answercount = filteredMessages.length;
-    if(filteredMessages.length > 0 && filteredMessages[filteredMessages.length - 1].timestamp)
-    this.lastAnswerTime = filteredMessages[filteredMessages.length - 1].timestamp;
-    
+    if (filteredMessages.length > 0 && filteredMessages[filteredMessages.length - 1].timestamp)
+      this.lastAnswerTime = filteredMessages[filteredMessages.length - 1].timestamp;
+
   }
 
   openEmojis() {
@@ -133,10 +133,9 @@ export class CurrentUserMessageComponent {
     this.globalVariables.answerCount = this.answercount;
     this.fillInitialUserObj();
     this.globalVariables.openChat = 'isChatVisable';
-    this.globalVariables.messageData.answerto =
-      this.message.userId + '_' + this.message.timestamp.toString();
-    if (window.innerWidth < 1100) this.globalVariables.showChannelMenu = false;
-    if (window.innerWidth < 700) {
+    this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();
+    this.globalFunctions.showDashboardElement(1200);
+    if (window.innerWidth < 800) {
       this.globalVariables.showChannelMenu = false;
       this.globalVariables.isChatVisable = false;
     }
@@ -210,22 +209,26 @@ export class CurrentUserMessageComponent {
   }
 
   addUserIdToEmoji(emoji: any): void {
-    if (emoji) {
-      if (emoji.userId.includes(this.globalVariables.activeID)) {
-        emoji.userId = emoji.userId.replace(new RegExp(this.globalVariables.activeID + ',? ?', 'g'), '');
-      } else {
-        emoji.userId += ', ' + this.globalVariables.activeID;
-      }
+    debugger;
+    if (emoji && emoji.userId && Array.isArray(emoji.userId)) {
+        const activeID = this.globalVariables.activeID;
+        if (emoji.userId.includes(activeID)) {
+            emoji.userId = emoji.userId.filter((id: any) => id !== activeID);
+        } else {
+            emoji.userId.push(activeID);
+        }
     }
-  }
+}
+
+
 
   emojiCount(emoji: any): number {
     if (!emoji || !emoji.userId || !Array.isArray(emoji.userId)) {
-        return 0; // Rückgabe von 0, wenn das Emoji-Objekt oder das userId-Array nicht vorhanden oder nicht korrekt ist
+      return 0; // Rückgabe von 0, wenn das Emoji-Objekt oder das userId-Array nicht vorhanden oder nicht korrekt ist
     }
     const values = emoji.userId.map((value: any) => String(value).trim()); // Konvertieren in Strings und Trimmen
     const count = values.length;
     return count;
-}
+  }
 
 }

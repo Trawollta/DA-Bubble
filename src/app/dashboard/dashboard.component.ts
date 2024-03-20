@@ -25,7 +25,7 @@ export class DashboardComponent {
     this.globalVariables.login = false;
   }
   ngOnInit(){
-    this.globalVariables.isChatVisable = window.innerWidth > 700;
+    this.globalVariables.isChatVisable = window.innerWidth > 800;
     
   }
 

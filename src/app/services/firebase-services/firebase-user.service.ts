@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { User } from 'app/models/user.class';
-import { Firestore, collection, doc, setDoc, updateDoc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, doc, setDoc, updateDoc, onSnapshot, getDocs, query, where } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
+import { Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +26,23 @@ export class FirebaseUserService {
     return doc(collection(this.firestore, colId), docId);
   }
 
-
   getSingleUserRef(docId: string) {
     return doc(this.getUsersRef(), docId);
   }
 
   async addUser(uid: string, userData: any) {
     await setDoc(doc(this.firestore, "users", uid), this.getCleanJson(userData));
+  }
+
+  searchUsersByName(searchTerm: string): Observable<any[]> {
+    const q = query(this.getUsersRef(), where('name', '==', searchTerm));
+    return from(getDocs(q).then(querySnapshot => {
+      const users: any = [];
+      querySnapshot.forEach((doc) => {
+        users.push(doc.data());
+      });
+      return users;
+    }));
   }
 
   getCleanJson(user: User): {} {

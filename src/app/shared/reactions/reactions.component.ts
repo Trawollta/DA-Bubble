@@ -147,7 +147,7 @@ export class ReactionsComponent {
       let updatedEmoji = this.helper(element); 
       this.originalMessage.emoji.push(updatedEmoji);
     });
-    /* this.remove(this.globaleVariables.openChannel.chatId); */
+    this.remove(this.globaleVariables.openChannel.chatId);
   }
 
   remove(chatId: string) {
@@ -190,8 +190,7 @@ export class ReactionsComponent {
         userId: element.userId,
         iconId: element.iconId
     };
-}
-
+  }
 
 
   getEmojiUserId(element: any, userIdAsArray: any[]) {

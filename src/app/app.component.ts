@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
 
 
   //der Eventlistener ist nur nötig, wenn man die Bildschirmgröße live ändern will
-  //aber wir können hier feste Breakpoints festlegen und können so die Screenbeiten anpassen ohne die Werte in den jeweiligen SCSS Fisles zu suchen
+  //aber wir können hier feste Breakpoints festlegen und können so die Screenbeiten anpassen ohne die Werte in den jeweiligen SCSS Files zu suchen
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
     this.setDesktopFlag();
@@ -61,9 +61,51 @@ export class AppComponent implements OnInit {
 
 
   setDesktopFlag() {
+    this.globalVariables.desktop500 = window.innerWidth >= 500;
     this.globalVariables.desktop600 = window.innerWidth >= 600;
     this.globalVariables.desktop700 = window.innerWidth >= 700;
+    this.globalVariables.desktop800 = window.innerWidth >= 800;
     this.globalVariables.desktop900 = window.innerWidth >= 900;
+    //till screen width 700 only one element should be visable
+    if (window.innerWidth < 800) {
+      // Wenn die Bildschirmgröße unter 700px liegt
+      if (this.globalVariables.showThread) {
+          // Wenn showThread true ist, sollen die anderen beiden Elemente false sein
+          this.globalVariables.showChannelMenu = false;
+          this.globalVariables.isChatVisable = false;
+      } else if (this.globalVariables.isChatVisable) {
+          // Wenn showThread false ist und isChatVisable true ist, soll showChannelMenu false sein
+          this.globalVariables.showChannelMenu = false;
+          this.globalVariables.isChatVisable = true;
+      } else {
+          // Wenn showThread false ist und isChatVisable false ist, soll showChannelMenu true sein
+          this.globalVariables.showChannelMenu = true;
+          this.globalVariables.isChatVisable = false;
+      }
+  } else {
+      // Wenn die Bildschirmgröße größer oder gleich 700px ist
+      this.globalVariables.showChannelMenu = true;
+      this.globalVariables.isChatVisable = true;
+  }
+
+  this.globalFunctions.showDashboardElement(1200);
+  /*  if(this.globalVariables.showThread && this.globalVariables.isChatVisable && window.innerWidth < 1100){
+    this.globalVariables.showChannelMenu = false;
+  }  */
+    /*  this.globalVariables.showChannelMenu =!(window.innerWidth < 700 && (this.globalVariables.isChatVisable || this.globalVariables.showThread));
+     this.globalVariables.isChatVisable =!(window.innerWidth < 700 && (!this.globalVariables.showThread || !this.globalVariables.showChannelMenu));
+
+     // if screen width > 700 show chat
+    this.globalVariables.isChatVisable = window.innerWidth >= 700 && this.globalVariables.showChannelMenu;
+
+    //till screen width 1200 only two Elements should be visable
+     this.globalVariables.showChannelMenu =!(window.innerWidth < 1200 && (this.globalVariables.isChatVisable && this.globalVariables.showThread)); */
+     //
+     //this.globalVariables.showChannelMenu =!(this.globalVariables.showThread && window.innerWidth < 700);
+     console.log('channelVisable: ', this.globalVariables.showChannelMenu);
+     console.log('isChatVisable: ', this.globalVariables.isChatVisable);
+     console.log('showThread: ', this.globalVariables.showThread);
+     console.log('desktop700: ', window.innerWidth < 700);
     // this.globalVariables.isChatVisable = (window.innerWidth >= 700); // && !this.globalVariables.isPrivatChatVisable;
     // this.globalVariables.isPrivatChatVisable = (window.innerWidth >= 700) && !this.globalVariables.isChatVisable;  
 

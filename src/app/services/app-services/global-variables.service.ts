@@ -5,8 +5,10 @@ import { ChatChannel } from '../../models/chatChannel.class';
   providedIn: 'root',
 })
 export class GlobalVariablesService {
+  desktop500: boolean = window.innerWidth > 500;
   desktop600: boolean = window.innerWidth > 600;
   desktop700: boolean = window.innerWidth > 700;
+  desktop800: boolean = window.innerWidth > 800;
   desktop900: boolean = window.innerWidth > 900;
   login: boolean = false;
   signup: boolean = false;

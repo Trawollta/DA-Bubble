@@ -18,7 +18,7 @@
         [message]="message"></app-reactions>
 
       <div class="reaction-emojis">
-        <span class="reaction-emoji-field" *ngFor="let emoji of message.emoji" (click)="addUserIdToEmoji(emoji)">
+        <span class="reaction-emoji-field" *ngFor="let emoji of message.emoji"(click)="addUserIdToEmoji(emoji)">
           {{ emoji.icon }} {{ emojiCount(emoji.userId) }}
         </span>
       </div>

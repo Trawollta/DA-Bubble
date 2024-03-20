@@ -10,15 +10,16 @@ main {
   max-height: 940px;
   padding: 16px 30px 32px 30px;
   border-radius: 30px;
-  gap: 25px;
+  //gap: 25px;
   background-color: white;
   box-sizing: border-box;
   width: 90dvw;
+  max-width: 500px;
 
-  @media screen and (min-width: 700px) {
+   @media screen and (min-width: 800px) {
     max-width: 366px;
     width: auto;
-  }
+  } 
 
   @media screen and (min-width: 900px) {
     width: 366px;

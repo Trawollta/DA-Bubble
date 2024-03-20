@@ -185,6 +185,8 @@ export class GlobalFunctionsService {
    * this function stets the flag for visability for chat
    */
   showChat() {
+    this.globalVariables.showThread = false;
+    console.log('möp');
     this.firebaseChatService.changeActiveChannel(
       this.globalVariables.openChannel.chatId
     );

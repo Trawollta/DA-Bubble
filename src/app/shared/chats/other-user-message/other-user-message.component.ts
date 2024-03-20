@@ -122,7 +122,7 @@ export class OtherUserMessageComponent {
     this.fillInitialUserObj();
     this.globalVariables.openChat = 'isChatVisable';
     this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();
-    if (window.innerWidth < 1100) this.globalVariables.showChannelMenu = false;
+    this.globalFunctions.showDashboardElement(1200);
     if (window.innerWidth < 700) {
       this.globalVariables.showChannelMenu = false;
       this.globalVariables.isChatVisable = false;

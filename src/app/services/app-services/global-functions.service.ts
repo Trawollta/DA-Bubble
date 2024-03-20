@@ -202,4 +202,11 @@ export class GlobalFunctionsService {
     await updateDoc(docRef, data);
   }
 
+
+
+  showDashboardElement(screenWidth:number){
+    if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;
+    else this.globalVariables.showChannelMenu = true;
+  }
+
 }

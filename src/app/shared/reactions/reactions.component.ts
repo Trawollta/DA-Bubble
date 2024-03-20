@@ -85,7 +85,6 @@ export class ReactionsComponent {
   public showInInput(emoji: any): void {
     this.copyHelper();
     /* this.editOpen() */
-    console.log(emoji);
     this.newEmoji.emit(emoji);
     if (this.message.emoji[0].icon === '') {
       this.message.emoji[0].icon = emoji.character;
@@ -93,21 +92,21 @@ export class ReactionsComponent {
       this.message.emoji[0].iconId = emoji.codePoint;
     } else {
       let existingEmoji = this.message.emoji.find(
-          (e: any) => e.iconId === emoji.codePoint
+        (e: any) => e.iconId === emoji.codePoint
       );
       if (existingEmoji) {
-          if (!Array.isArray(existingEmoji.userId)) {
-              existingEmoji.userId = [existingEmoji.userId];
-          }
-          existingEmoji.userId.push(this.globaleVariables.activeID);
+        if (!Array.isArray(existingEmoji.userId)) {
+          existingEmoji.userId = [existingEmoji.userId];
+        }
+        existingEmoji.userId.push(this.globaleVariables.activeID);
       } else {
-          this.message.emoji.push({
-              icon: emoji.character,
-              userId: [this.globaleVariables.activeID],
-              iconId: emoji.codePoint,
-          });
+        this.message.emoji.push({
+          icon: emoji.character,
+          userId: [this.globaleVariables.activeID],
+          iconId: emoji.codePoint,
+        });
       }
-  }
+    }
     this.addEmoji();
   }
 
@@ -126,8 +125,11 @@ export class ReactionsComponent {
   }
 
   addEmoji() {
-    this.globaleVariables.messageData = this.message;
-    console.log('Das ist die Nachricht die hochgeladen wird: ', this.message);
+    this.globaleVariables.messageData = this.originalMessage;
+    console.log(
+      'Das ist die Nachricht die hochgeladen wird: ',
+      this.originalMessage
+    );
     this.firebaseChatService.sendMessage(
       this.globaleVariables.openChannel.chatId
     );
@@ -142,14 +144,10 @@ export class ReactionsComponent {
     this.originalMessage.emoji = [];
 
     this.message.emoji.forEach((element: any) => {
-      this.originalMessage.emoji.push({
-        icon: element.icon,
-        userId: this.helper(element),
-        iconId: element.iconId,
-      });
+      const updatedEmoji = this.helper(element); 
+      this.originalMessage.emoji.push(updatedEmoji);
     });
-    console.log('in reactions original Message: ', this.originalMessage);
-    this.remove(this.globaleVariables.openChannel.chatId); 
+    /* this.remove(this.globaleVariables.openChannel.chatId); */
   }
 
   remove(chatId: string) {
@@ -173,46 +171,49 @@ export class ReactionsComponent {
         iconId: element.iconId,
       });
     });
-    /* console.log('in reactions original Message: ', this.originalMessage); */
   }
 
-  helper(element:any ) {
-    console.log('helper: ', element);
-    console.log('helper ID: ', this.globaleVariables.activeID);
-    let userIdAsArray = [this.globaleVariables.activeID];
-    this.getEmojiUserId(element, userIdAsArray);
-    debugger;
-    console.log('das kommt raus :' , userIdAsArray)
-    return userIdAsArray
+  /**
+   * diese funktion sollte vergleichen, hinzufügen
+   * @param element
+   * @returns
+   */
+  helper(element: any) {
+    if (element && element.userId) {
+      const activeID = this.globaleVariables.activeID;
+      if (!element.userId.includes(activeID)) {
+        element.userId.push(activeID);
+      }
+    }
+    return element;
   }
 
   getEmojiUserId(element: any, userIdAsArray: any[]) {
     let userIds = element.userId;
     if (Array.isArray(userIds)) {
-        userIds.forEach((userId: any) => {
-            // check if ID is already inside
-            const index = userIdAsArray.indexOf(userId);
-            if (index !== -1) {
-                // on exist delete
-                userIdAsArray.splice(index, 1);
-            } else {
-                // when not add
-                userIdAsArray.push(userId);
-            }
-        });
-    } else {
+      userIds.forEach((userId: any) => {
         // check if ID is already inside
-        const index = userIdAsArray.indexOf(userIds);
+        const index = userIdAsArray.indexOf(userId);
         if (index !== -1) {
-            // on exist delete
-            userIdAsArray.splice(index, 1);
+          // on exist delete
+          userIdAsArray.splice(index, 1);
         } else {
-            // on exist delete
-            userIdAsArray.push(userIds);
+          // when not add
+          userIdAsArray.push(userId);
         }
+      });
+    } else {
+      // check if ID is already inside
+      const index = userIdAsArray.indexOf(userIds);
+      if (index !== -1) {
+        // on exist delete
+        userIdAsArray.splice(index, 1);
+      } else {
+        // on exist delete
+        userIdAsArray.push(userIds);
+      }
     }
-}
-
+  }
 
   editClose() {
     this.globaleVariables.editMessage = false;
@@ -228,4 +229,3 @@ export class ReactionsComponent {
       this.remove(this.globaleVariables.openChannel.chatId);
   }
 }
-

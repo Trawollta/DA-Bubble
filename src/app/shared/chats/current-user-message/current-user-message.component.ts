@@ -209,14 +209,18 @@ export class CurrentUserMessageComponent {
   }
 
   addUserIdToEmoji(emoji: any): void {
-    if (emoji) {
-      if (emoji.userId.includes(this.globalVariables.activeID)) {
-        emoji.userId = emoji.userId.replace(new RegExp(this.globalVariables.activeID + ',? ?', 'g'), '');
-      } else {
-        emoji.userId += ', ' + this.globalVariables.activeID;
-      }
+    debugger;
+    if (emoji && emoji.userId && Array.isArray(emoji.userId)) {
+        const activeID = this.globalVariables.activeID;
+        if (emoji.userId.includes(activeID)) {
+            emoji.userId = emoji.userId.filter((id: any) => id !== activeID);
+        } else {
+            emoji.userId.push(activeID);
+        }
     }
-  }
+}
+
+
 
   emojiCount(emoji: any): number {
     if (!emoji || !emoji.userId || !Array.isArray(emoji.userId)) {

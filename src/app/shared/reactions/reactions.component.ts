@@ -125,10 +125,10 @@ export class ReactionsComponent {
   }
 
   addEmoji() {
-    this.globaleVariables.messageData = this.originalMessage;
+    this.globaleVariables.messageData = this.message;
     console.log(
       'Das ist die Nachricht die hochgeladen wird: ',
-      this.originalMessage
+      this.message
     );
     this.firebaseChatService.sendMessage(
       this.globaleVariables.openChannel.chatId

@@ -65,7 +65,7 @@ main {
 }
 
 .message-container {
-  @include dFlex($fd: column);
+  @include dFlex($fd: column, $ai: stretch);
   height: 100%;
  //flex: 1;
   margin: 16px 0;

@@ -2,29 +2,31 @@
 
 .message-current-user {
   // height: 200px;
-  gap: 30px;
+  @include dFlex($g: 30px, $jc: flex-end, $ai: normal);
+  /* gap: 30px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end; */
   position: relative;
-  margin: 16px 16px;
+  //margin: 16px 16px;
 
   &:hover {
-    background-color: #eceefe;
+    background-color: $background;
     cursor: pointer;
   }
 
   .current-user-content {
     //height: 180px;
-    gap: 8px;
-    display: flex;
+    @include dFlex($g: 8px);
+   /*  gap: 8px;
+    display: flex; */
 
     .info-area {
       //height: 142px;
-      gap: 8px;
+      //gap: 8px;
 
       .info-area-wrapper {
-        justify-content: flex-end !important;
-        @include dFlex($g: 20px, $jc: flex-start);
+        //justify-content: flex-end !important;
+        @include dFlex($g: 20px, $jc: flex-end);
 
         .username {
           font-size: 18px;
@@ -42,14 +44,15 @@
 
       .speech-bubble-current-user {
         padding: 15px;
+        box-sizing: border-box;
         border-radius: 30px 0px 30px 30px;
-        gap: 8px;
+        //gap: 8px;
         background-color: $purple2;
-        .speech-bubble-current-user-text {
-          padding: 15px;
-          border-radius: 30px 0px 30px 30px;
-          gap: 8px;
-        }
+        /* .speech-bubble-current-user-text {
+         // padding: 15px;
+        //  border-radius: 30px 0px 30px 30px;
+         // gap: 8px;
+        } */
       }
 
       .reaction-btn {
@@ -60,9 +63,10 @@
       }
       .replie-wrapper {
         max-height: 25px;
-        gap: 20px;
+        @include dFlex($g: 20px, $fd: row, $jc: flex-start);
+       /*  gap: 20px;
         display: flex;
-        flex-direction: row;
+        flex-direction: row; */
 
         .replie-text {
           font-size: 16px;
@@ -71,22 +75,19 @@
           letter-spacing: 0em;
           text-align: left;
           color: $purple3;
+          width: 100px;
 
           &:hover {
             cursor: pointer;
             font-weight: 700;
-            font-size: 18px;
-            line-height: 24.55px;
           }
         }
 
-        .timestamp-time {
+        .timestamp-text {
           font-size: 12px;
           font-weight: 400;
-          line-height: 19px;
-          letter-spacing: 0em;
-          text-align: left;
-          display: flex;
+          /* text-align: left;
+          display: flex; */
         }
       }
     }
@@ -113,23 +114,26 @@
 }
 
 .reaction-emojis {
-  display: flex;
+  @include dFlex($jc:flex-start);
+  /* display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: flex-end; */
   gap: 5px;
   padding-top: 10px;
   padding-bottom: 5px;
 }
 
 .reaction-emoji-field {
-  display: flex;
+  @include dFlex();
+  /* align-items: center;
+  display: flex; */
   width: 40px;
   height: 20px;
-  border: 1px solid rgba(173, 176, 217, 1);
-  align-items: center;
+  border: 1px solid $light_purple;
+  
   border-radius: 10px;
   &:hover {
-    border-color: rgba(68, 77, 242, 1);
+    border-color: $purple1;
   }
 }
 

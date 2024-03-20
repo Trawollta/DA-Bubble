@@ -68,6 +68,7 @@ export class AppComponent implements OnInit {
     this.globalVariables.desktop700 = window.innerWidth >= 700;
     this.globalVariables.desktop800 = window.innerWidth >= 800;
     this.globalVariables.desktop900 = window.innerWidth >= 900;
+    this.globalVariables.desktop1200 = window.innerWidth >= 1200;
     this.showDasbordElement800();
     this.globalFunctions.showDashboardElement(1200);
    

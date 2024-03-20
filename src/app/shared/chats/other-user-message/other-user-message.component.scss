@@ -3,7 +3,7 @@
   display: flex;
   gap: 20px;
   width: 100%;
-  margin: 0px 16px;
+ // margin: 0px 16px;
   position: relative;
 
   &:hover {
@@ -21,7 +21,7 @@
   }
 
   .info-area {
-    gap: 8px;
+    //gap: 8px;
 
     .info-area-wrapper {
       @include dFlex($g: 20px, $jc: flex-start);
@@ -42,8 +42,9 @@
 
     .speech-bubble {
       padding: 15px;
+      box-sizing: border-box;
       border-radius: 0px 30px 30px 30px;
-      gap: 8px;
+      //gap: 8px;
       background-color: $background;
 
       .speech-bubble-text {
@@ -68,29 +69,31 @@
       }
     }
     .replie-wrapper {
-      gap: 20px;
+      @include dFlex($g:20px, $jc: flex-start);
+      //margin: 0 10px;
+      /*g ap: 20px;
       display: flex;
-      flex-direction: row;
+      flex-direction: row; */
       .replie-text {
         font-size: 16px;
         font-weight: 400;
         line-height: 25px;
         text-align: left;
         color: $purple3;
+        width: 100px;
+       
         &:hover {
           cursor: pointer;
           font-weight: 700;
-          font-size: 18px;
-          line-height: 24.55px;
+          /* font-size: 16px;
+          line-height: 24.55px; */
         }
       }
-      .timestamp-time {
+      .timestamp-text {
         font-size: 12px;
         font-weight: 400;
-        line-height: 19px;
-        letter-spacing: 0em;
-        text-align: left;
-        display: flex;
+       /*  text-align: left;
+        display: flex; */
       }
     }
   }

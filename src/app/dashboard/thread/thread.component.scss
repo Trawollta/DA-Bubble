@@ -1,9 +1,11 @@
 @import "../../../styles.scss";
 
 main {
-  
-  width: auto;
-  max-width: 600px;
+
+ /*  width: auto;
+  max-width: 600px; */
+  width: 90dvw;
+ 
   /* das hier muss ich später noch anpassen, damit es dynamischer wird */
   max-height: 940px;
   height: 100%;
@@ -11,14 +13,15 @@ main {
   background-color: $white;
   @include dFlex($fd: column, $jc: space-between);
 
-  @media screen and (min-width: 700px) {
-    min-width: 350px;
+  @media screen and (min-width: 800px) {
+    max-width: 366px;
+    width: auto;
   }
 }
 
 .thread-header {
-  max-width: 485px;
-  max-height: 104px;
+  //max-width: 485px;
+  //max-height: 104px;
 
   justify-content: space-between;
   display: flex;
@@ -62,9 +65,19 @@ main {
 }
 
 .message-container {
-  flex: 1;
-  margin: 16px 16px;
+  @include dFlex($fd: column);
+  height: 100%;
+ //flex: 1;
+  margin: 16px 0;
   overflow: hidden;
+  width: 90%;
+
+  .allMessages {
+    overflow-y: auto;
+    flex: 1;
+   // height: calc(100% - 50px);
+    display: block;
+  }
 
   .initialuserCurrent {
     @include dFlex($g: 15px, $jc: flex-end, $ai: flex-start);
@@ -75,7 +88,7 @@ main {
         gap: 8px;
 
         .infoContainer {
-          
+
           @include dFlex($g: 20px, $jc: flex-end);
 
           .userName {
@@ -91,6 +104,7 @@ main {
             color: $text_grey;
           }
         }
+
         .speechBubble {
           padding: 15px;
           border-radius: 20px 0px 20px 20px;
@@ -103,13 +117,15 @@ main {
 
   .partingLineContainer {
     width: 100%;
-    @include dFlex($g:20px, $jc:space-between);
-    .partingLineText{
+    @include dFlex($g: 20px, $jc: space-between);
+
+    .partingLineText {
       font-size: 18px;
       line-height: 24px;
       font-weight: 400;
       color: $light_purple
     }
+
     .partingLine {
       flex: 1;
       border: solid 1px $light_purple;
@@ -117,10 +133,11 @@ main {
   }
 }
 
-.otherInitialUser{
- flex-direction: row-reverse !important;
+.otherInitialUser {
+  flex-direction: row-reverse !important;
 }
-.otherSpeachbubble{
+
+.otherSpeachbubble {
   border-radius: 0px 20px 20px 20px !important;
   background-color: $background !important;
 }

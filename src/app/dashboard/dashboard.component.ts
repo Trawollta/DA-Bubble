@@ -31,6 +31,8 @@ export class DashboardComponent {
 
   toggleChannelMenu() {
     this.globalVariables.showChannelMenu = !this.globalVariables.showChannelMenu;
+    if(this.globalVariables.desktop800 && !this.globalVariables.desktop1200)
+    this.globalVariables.showThread = !this.globalVariables.showThread;
   }
 
   

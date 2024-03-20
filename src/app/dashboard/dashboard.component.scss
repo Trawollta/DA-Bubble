@@ -1,14 +1,18 @@
+@import "../../styles.scss";
+
 .dashboard {
   width: 100vw;
-  display: flex;
-  justify-content: center;
+  @include dFlex($ai:normal);
+ /*  display: flex;
+  justify-content: center; */
   height: calc(100vh - 145px);
   
   .app-container {
-    display: flex;
+    @include dFlex($g:16px, $ai:normal);
+    /* display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 16px;
+    gap: 16px; */
     width: 90%;
     margin-top: 20px;
 
@@ -17,7 +21,10 @@
     }
 
     .chat-content {
-      flex: 1;
+      flex: 2;
+    }
+    .thread-content{
+      flex:1;
     }
   }
 }
@@ -26,24 +33,28 @@
 
 
 .menu-toggle-btn {
-  display: flex;
+  @include dFlex($jc:flex-start);
+  /* display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 0px;
+  gap: 0px; */
   position: fixed;
   left: -88px;
   bottom: 30%;
   transform: rotate(270deg);
   border-radius: 0 0 30px 30px;
-  background: var(--White, #fff);
-  box-shadow: 4px 4px 7px #0003;
+  background: $white;
+  // background: var(--White, #fff);
+  box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.2);
   padding: 12px;
   cursor: pointer;
   z-index: 1;
 }
 
 .menu-toggle-btn:hover {
-  background: var(--purple1, rgb(68, 77, 242));
-  color: #fff;
-  box-shadow: 0 0 15px var(--purple1, rgb(68, 77, 242));
+  // background: var(--purple1, #444df2);
+  background: $purple1;
+  color: $white;
+  // box-shadow: 0 0 15px var(--purple1, #444df2);
+ // box-shadow: 0 0 15px $purple1;
 }

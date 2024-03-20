@@ -24,10 +24,10 @@ export class GlobalFunctionsService {
     this.globalVariables.profileUserId = userId;
     this.globalVariables.ownprofile = ownProfile ? true : false;
     this.globalVariables.showProfile = true;
-    console.log(
+ /*    console.log(
       'this.globalVariables.ownprofile: ',
       this.globalVariables.ownprofile
-    );
+    ); */
   }
 
   //Diese openOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
@@ -68,10 +68,10 @@ export class GlobalFunctionsService {
 
   openAddContactsOverlay() {
     this.globalVariables.showContacts = true;
-    console.log(
+    /* console.log(
       'Overlay should open now. showContacts:',
       this.globalVariables.showContacts
-    );
+    ); */
     if (this.globalVariables.showContacts)
       document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
@@ -105,7 +105,7 @@ export class GlobalFunctionsService {
   closeAddContactsOverlay() {
     this.globalVariables.showContacts = false;
     document.body.style.overflow = 'auto';
-    console.log('Overlay closed');
+    // console.log('Overlay closed');
   }
 
   //diese close funktion weicht etwas ab von den anderen
@@ -169,7 +169,7 @@ export class GlobalFunctionsService {
    * @param user - object - contains all user information
    */
   openDirectMessageUser(user: any) {
-    console.log(user);
+    // console.log(user);
     this.globalVariables.isUserChat = true;
     this.globalVariables.userToChatWith.name = user.name;
     this.globalVariables.userToChatWith.img = user.img;
@@ -186,7 +186,6 @@ export class GlobalFunctionsService {
    */
   showChat() {
     this.globalVariables.showThread = false;
-    console.log('möp');
     this.firebaseChatService.changeActiveChannel(
       this.globalVariables.openChannel.chatId
     );

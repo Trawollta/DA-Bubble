@@ -16,7 +16,7 @@ import { FirebaseChatService } from '../firebase-services/firebase-chat.service'
   providedIn: 'root',
 })
 export class GlobalFunctionsService {
-  
+
   globalVariables = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
 
@@ -24,10 +24,10 @@ export class GlobalFunctionsService {
     this.globalVariables.profileUserId = userId;
     this.globalVariables.ownprofile = ownProfile ? true : false;
     this.globalVariables.showProfile = true;
- /*    console.log(
-      'this.globalVariables.ownprofile: ',
-      this.globalVariables.ownprofile
-    ); */
+    /*    console.log(
+         'this.globalVariables.ownprofile: ',
+         this.globalVariables.ownprofile
+       ); */
   }
 
   //Diese openOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
@@ -48,9 +48,9 @@ export class GlobalFunctionsService {
   openEditChannelOverlay() {
     this.globalVariables.channelData.channelName = this.globalVariables.openChannel.titel;
     this.globalVariables.channelData.description = this.globalVariables.openChannel.desc;
-    
+
     this.globalVariables.isEditingChannel = true;
-    
+
     this.globalVariables.editChannelOverlayOpen = true;
   }
 
@@ -129,36 +129,19 @@ export class GlobalFunctionsService {
     e.stopPropagation();
   }
 
-  constructor(private firestore: Firestore) {}
-
-  // simple function to get data from firestore returns a collection
-  getData(item: string) {
-    let dataCollection = collection(this.firestore, item);
-    // console.log(dataCollection);
-    return collectionData(dataCollection, { idField: 'id' });
-  }
-
-  // function to get data from firebase and save it into an local Array
-  getCollection(item: string, targetArray: any) {
-    const collectionReference = collection(this.firestore, item);
-    onSnapshot(collectionReference, (querySnapshot) => {
-      targetArray.length = 0;
-      querySnapshot.forEach((doc) => {
-        let docData = doc.data();
-        docData['id'] = doc.id;
-        targetArray.push(docData);
-      });
-    });
-  }
-
-  // hab die Funktion geänder 26.2, Alex
-  // function to add data to a Collection you choose
-  addData(goalCollection: string, input: any) {
-    /* desc: string, , description: string */
-    //let toGo = description;
-    let data = input;
-    let dataCollection = collection(this.firestore, goalCollection);
-    return addDoc(dataCollection, data);
+  /**
+ * this function provides all relevant information for the answer section
+ */
+  getAnswerInfo(message: any): { answerCount: number, lastAnswerTime: number, answerKey: string } {
+    let answerInfo = { answerCount: 0, lastAnswerTime: 0, answerKey: '' };
+    answerInfo.answerKey = message.userId + '_' + message.timestamp.toString();
+    let filteredMessages = this.globalVariables.chatChannel.messages.filter(
+      (message) => message.answerto === answerInfo.answerKey
+    );
+    answerInfo.answerCount = filteredMessages.length;
+    if (filteredMessages.length > 0 && filteredMessages[filteredMessages.length - 1].timestamp)
+      answerInfo.lastAnswerTime = filteredMessages[filteredMessages.length - 1].timestamp;
+    return answerInfo;
   }
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -198,6 +181,42 @@ export class GlobalFunctionsService {
   //functions to change the chat end
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+  constructor(private firestore: Firestore) { }
+
+  // simple function to get data from firestore returns a collection
+  getData(item: string) {
+    let dataCollection = collection(this.firestore, item);
+    return collectionData(dataCollection, { idField: 'id' });
+  }
+
+  // function to get data from firebase and save it into an local Array
+  getCollection(item: string, targetArray: any) {
+    const collectionReference = collection(this.firestore, item);
+    onSnapshot(collectionReference, (querySnapshot) => {
+      targetArray.length = 0;
+      querySnapshot.forEach((doc) => {
+        let docData = doc.data();
+        docData['id'] = doc.id;
+        targetArray.push(docData);
+      });
+    });
+  }
+
+  // hab die Funktion geänder 26.2, Alex
+  // function to add data to a Collection you choose
+  addData(goalCollection: string, input: any) {
+    /* desc: string, , description: string */
+    //let toGo = description;
+    let data = input;
+    let dataCollection = collection(this.firestore, goalCollection);
+    return addDoc(dataCollection, data);
+  }
+
+
+
+  //warum existiert hier eine Firebasefunktion?
+  //Alle Firebasefunktionen sollten in einem Firebaseservice sein
   async updateData(collectionPath: string, docId: string, data: Partial<any>): Promise<void> {
     const docRef = doc(this.firestore, collectionPath, docId);
     await updateDoc(docRef, data);
@@ -205,9 +224,9 @@ export class GlobalFunctionsService {
 
 
 
-  showDashboardElement(screenWidth:number){
+  showDashboardElement(screenWidth: number) {
     if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;
-    else if(window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
+    else if (window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
   }
 
 }

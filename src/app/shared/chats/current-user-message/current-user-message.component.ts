@@ -110,8 +110,25 @@ export class CurrentUserMessageComponent {
   ngOnInit() {
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
-    this.answerKey =
-      this.message.userId + '_' + this.message.timestamp.toString();
+    this.fillAnswerVariables();
+  }
+
+  /**
+   * this function gets all information needed for answers
+   */
+  fillAnswerVariables(){
+    let answerInfo = this.globalFunctions.getAnswerInfo(this.message);
+    this.lastAnswerTime = answerInfo.lastAnswerTime;
+    this.answercount = answerInfo.answerCount;
+    this.answerKey = answerInfo.answerKey;
+  }
+
+  /**
+   * this function providesall relevant information for the answer section
+   */
+/*   getAnswerInfo(message:any){
+    this.answerKey = message.userId + '_' + message.timestamp.toString();
+    console.log('lokale Variable: ',this.answerKey);
     let filteredMessages = this.globalVariables.chatChannel.messages.filter(
       (message) => message.answerto === this.answerKey
     );
@@ -122,7 +139,7 @@ export class CurrentUserMessageComponent {
     )
       this.lastAnswerTime =
         filteredMessages[filteredMessages.length - 1].timestamp;
-  }
+  } */
 
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');
@@ -173,7 +190,7 @@ export class CurrentUserMessageComponent {
     }
   }
 
-  editOpen() {
+/*   editOpen() {
     this.editMessage = true;
     this.copyHelper();
   }
@@ -188,7 +205,7 @@ export class CurrentUserMessageComponent {
     this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
     if (this.originalMessage.message !== this.message.message)
       this.remove(this.globalVariables.openChannel.chatId);
-  }
+  } */
 
   remove(chatId: string) {
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {

@@ -43,6 +43,7 @@ export class GlobalVariablesService {
 
   openChat: string = ''; // used in openAnswers() to come back to the chat
   isUserChat: boolean = false; //used as flag to show in chat the header for user chat
+  answerChatKey: string = ''; //used by open chat between 2 members and contains the chat key
 
   // userToChatWith: any = [];
   userToChatWith = {

@@ -95,12 +95,17 @@ export class OtherUserMessageComponent {
   
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
-    this.answerKey = this.message.userId + '_' + this.message.timestamp.toString();
-    let filteredMessages = this.globalVariables.chatChannel.messages.filter(message => message.answerto === this.answerKey)
-    this.answercount = filteredMessages.length;
-    if(filteredMessages.length > 0 && filteredMessages[filteredMessages.length - 1].timestamp)
-    this.lastAnswerTime = filteredMessages[filteredMessages.length - 1].timestamp;
-    
+    this.fillAnswerVariables();
+  }
+
+  /**
+   * this function gets all information needed for answers
+   */
+  fillAnswerVariables(){
+    let answerInfo = this.globalFunctions.getAnswerInfo(this.message);
+    this.lastAnswerTime = answerInfo.lastAnswerTime;
+    this.answercount = answerInfo.answerCount;
+    this.answerKey = answerInfo.answerKey;
   }
 
 
@@ -118,6 +123,7 @@ export class OtherUserMessageComponent {
     this.globalVariables.showThread = !this.globalVariables.showThread;
     //console.log('showThread: ',this.globalVariables.showThread);
     this.globalVariables.answerKey = this.answerKey;
+    console.log('answerKex: ', this.answerKey);
     this.globalVariables.answerCount = this.answercount;
     this.fillInitialUserObj();
     this.globalVariables.openChat = 'isChatVisable';

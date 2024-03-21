@@ -14,7 +14,7 @@
       [message]="message"></app-reactions>
     <div class="reaction-emojis">
       <span class="reaction-emoji-field" *ngFor="let emoji of message.emoji" (click)="addUserIdToEmoji(emoji)">
-        {{ emoji.icon }} {{ emojiCount(emoji.userId) }}
+        {{ emoji.icon }} {{ emojiCount(emoji) }}
       </span>
     </div>
     <div *ngIf="!isThread" class="replie-wrapper">

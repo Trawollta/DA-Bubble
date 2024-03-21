@@ -95,12 +95,17 @@ export class OtherUserMessageComponent {
   
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
-    this.answerKey = this.message.userId + '_' + this.message.timestamp.toString();
-    let filteredMessages = this.globalVariables.chatChannel.messages.filter(message => message.answerto === this.answerKey)
-    this.answercount = filteredMessages.length;
-    if(filteredMessages.length > 0 && filteredMessages[filteredMessages.length - 1].timestamp)
-    this.lastAnswerTime = filteredMessages[filteredMessages.length - 1].timestamp;
-    
+    this.fillAnswerVariables();
+  }
+
+  /**
+   * this function gets all information needed for answers
+   */
+  fillAnswerVariables(){
+    let answerInfo = this.globalFunctions.getAnswerInfo(this.message);
+    this.lastAnswerTime = answerInfo.lastAnswerTime;
+    this.answercount = answerInfo.answerCount;
+    this.answerKey = answerInfo.answerKey;
   }
 
 
@@ -118,6 +123,7 @@ export class OtherUserMessageComponent {
     this.globalVariables.showThread = !this.globalVariables.showThread;
     //console.log('showThread: ',this.globalVariables.showThread);
     this.globalVariables.answerKey = this.answerKey;
+    console.log('answerKex: ', this.answerKey);
     this.globalVariables.answerCount = this.answercount;
     this.fillInitialUserObj();
     this.globalVariables.openChat = 'isChatVisable';
@@ -169,13 +175,8 @@ export class OtherUserMessageComponent {
   }
 
   emojiCount(emoji: any): number {
-    if (!emoji || !emoji.userId || !Array.isArray(emoji.userId)) {
-        return 0; // Rückgabe von 0, wenn das Emoji-Objekt oder das userId-Array nicht vorhanden oder nicht korrekt ist
-    }
-    const values = emoji.userId.map((value: any) => String(value).trim()); // Konvertieren in Strings und Trimmen
-    const count = values.length;
-    return count;
-}
+    return emoji.userId.length;
+  }
 
   test(emojiArray: Emoji[]) {
     const groupedByIconId = new Map<string, Emoji[]>();
@@ -227,9 +228,7 @@ export class OtherUserMessageComponent {
   addEmoji() {
     this.globalVariables.messageData = this.message;
     console.log('Das ist die Nachricht die hochgeladen wird: ', this.message);
-    this.firebaseChatService.sendMessage(
-      this.globalVariables.openChannel.chatId
-    );
+    this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
     this.remove(this.globalVariables.openChannel.chatId);
   }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -39,6 +39,12 @@
               (click)="addNewChannel()"
               ></app-button>
           </div>
+
+          <ul class="user-list">
+            <li *ngFor="let user of filteredUsers; let i = index">
+              <!-- Benutzeranzeige -->
+            </li>
+          </ul>
           
             <ul class="user-list">
               <li *ngFor="let user of allUsers; let i =index"  >

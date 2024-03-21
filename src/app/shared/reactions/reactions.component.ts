@@ -130,9 +130,7 @@ export class ReactionsComponent {
       'Das ist die Nachricht die hochgeladen wird: ',
       this.message
     );
-    this.firebaseChatService.sendMessage(
-      this.globaleVariables.openChannel.chatId
-    );
+    this.firebaseChatService.sendMessage(this.globaleVariables.openChannel.chatId, 'chatchannels');
     this.remove(this.globaleVariables.openChannel.chatId);
   }
 
@@ -147,7 +145,7 @@ export class ReactionsComponent {
       let updatedEmoji = this.helper(element); 
       this.originalMessage.emoji.push(updatedEmoji);
     });
-    /* this.remove(this.globaleVariables.openChannel.chatId); */
+    this.remove(this.globaleVariables.openChannel.chatId);
   }
 
   remove(chatId: string) {
@@ -190,8 +188,7 @@ export class ReactionsComponent {
         userId: element.userId,
         iconId: element.iconId
     };
-}
-
+  }
 
 
   getEmojiUserId(element: any, userIdAsArray: any[]) {
@@ -229,7 +226,7 @@ export class ReactionsComponent {
     this.globaleVariables.editMessage = false;
     this.globaleVariables.messageData = this.message;
     this.firebaseChatService.sendMessage(
-      this.globaleVariables.openChannel.chatId
+      this.globaleVariables.openChannel.chatId, 'chatchannels'
     );
     if (this.originalMessage.message !== this.message.message)
       this.remove(this.globaleVariables.openChannel.chatId);

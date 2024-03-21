@@ -16,7 +16,7 @@ import { FirebaseChatService } from '../firebase-services/firebase-chat.service'
   providedIn: 'root',
 })
 export class GlobalFunctionsService {
-  
+
   globalVariables = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
 
@@ -24,10 +24,10 @@ export class GlobalFunctionsService {
     this.globalVariables.profileUserId = userId;
     this.globalVariables.ownprofile = ownProfile ? true : false;
     this.globalVariables.showProfile = true;
-    console.log(
-      'this.globalVariables.ownprofile: ',
-      this.globalVariables.ownprofile
-    );
+    /*    console.log(
+         'this.globalVariables.ownprofile: ',
+         this.globalVariables.ownprofile
+       ); */
   }
 
   //Diese openOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
@@ -48,9 +48,9 @@ export class GlobalFunctionsService {
   openEditChannelOverlay() {
     this.globalVariables.channelData.channelName = this.globalVariables.openChannel.titel;
     this.globalVariables.channelData.description = this.globalVariables.openChannel.desc;
-    
+
     this.globalVariables.isEditingChannel = true;
-    
+
     this.globalVariables.editChannelOverlayOpen = true;
   }
 
@@ -68,10 +68,10 @@ export class GlobalFunctionsService {
 
   openAddContactsOverlay() {
     this.globalVariables.showContacts = true;
-    console.log(
+    /* console.log(
       'Overlay should open now. showContacts:',
       this.globalVariables.showContacts
-    );
+    ); */
     if (this.globalVariables.showContacts)
       document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
@@ -105,7 +105,7 @@ export class GlobalFunctionsService {
   closeAddContactsOverlay() {
     this.globalVariables.showContacts = false;
     document.body.style.overflow = 'auto';
-    console.log('Overlay closed');
+    // console.log('Overlay closed');
   }
 
   //diese close funktion weicht etwas ab von den anderen
@@ -129,12 +129,65 @@ export class GlobalFunctionsService {
     e.stopPropagation();
   }
 
-  constructor(private firestore: Firestore) {}
+  /**
+ * this function provides all relevant information for the answer section
+ */
+  getAnswerInfo(message: any): { answerCount: number, lastAnswerTime: number, answerKey: string } {
+    let answerInfo = { answerCount: 0, lastAnswerTime: 0, answerKey: '' };
+    answerInfo.answerKey = message.userId + '_' + message.timestamp.toString();
+    let filteredMessages = this.globalVariables.chatChannel.messages.filter(
+      (message) => message.answerto === answerInfo.answerKey
+    );
+    answerInfo.answerCount = filteredMessages.length;
+    if (filteredMessages.length > 0 && filteredMessages[filteredMessages.length - 1].timestamp)
+      answerInfo.lastAnswerTime = filteredMessages[filteredMessages.length - 1].timestamp;
+    return answerInfo;
+  }
+
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //functions to change the chat start
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  /**
+   * this function fills the usterToChatWith with all nessecary information and
+   * @param user - object - contains all user information
+   */
+  openDirectMessageUser(user: any) {
+    // console.log(user);
+    this.globalVariables.isUserChat = true;
+    this.globalVariables.userToChatWith.name = user.name;
+    this.globalVariables.userToChatWith.img = user.img;
+    this.globalVariables.userToChatWith.email = user.email;
+    user.id
+      ? (this.globalVariables.userToChatWith.id = user.id)
+      : this.globalVariables.profileUserId;
+    this.globalVariables.userToChatWith.isActive = user.isActive;
+    let chatId = this.globalVariables.activeID + '_' + user.id;
+    this.showChat(chatId);
+  }
+
+  /**
+   * this function stets the flag for visability for chat
+   * * @param chatId - contains the chat id of the chat which should be open
+   */
+  showChat(chatId: string) {
+    this.globalVariables.showThread = false;
+    this.firebaseChatService.changeActiveChannel(chatId);
+    this.globalVariables.isChatVisable = true;
+    if (!this.globalVariables.desktop800) {
+      this.globalVariables.showChannelMenu = false;
+    }
+  }
+  
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //functions to change the chat end
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+  constructor(private firestore: Firestore) { }
 
   // simple function to get data from firestore returns a collection
   getData(item: string) {
     let dataCollection = collection(this.firestore, item);
-    // console.log(dataCollection);
     return collectionData(dataCollection, { idField: 'id' });
   }
 
@@ -161,44 +214,10 @@ export class GlobalFunctionsService {
     return addDoc(dataCollection, data);
   }
 
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //functions to change the chat start
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  /**
-   * this function fills the usterToChatWith with all nessecary information and
-   * @param user - object - contains all user information
-   */
-  openDirectMessageUser(user: any) {
-    console.log(user);
-    this.globalVariables.isUserChat = true;
-    this.globalVariables.userToChatWith.name = user.name;
-    this.globalVariables.userToChatWith.img = user.img;
-    this.globalVariables.userToChatWith.email = user.email;
-    user.id
-      ? (this.globalVariables.userToChatWith.id = user.id)
-      : this.globalVariables.profileUserId;
-    this.globalVariables.userToChatWith.isActive = user.isActive;
-    this.showChat();
-  }
 
-  /**
-   * this function stets the flag for visability for chat
-   */
-  showChat() {
-    this.globalVariables.showThread = false;
-    console.log('möp');
-    this.firebaseChatService.changeActiveChannel(
-      this.globalVariables.openChannel.chatId
-    );
-    this.globalVariables.isChatVisable = true;
-    if (!this.globalVariables.desktop800) {
-      this.globalVariables.showChannelMenu = false;
-    }
-  }
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //functions to change the chat end
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+  //warum existiert hier eine Firebasefunktion?
+  //Alle Firebasefunktionen sollten in einem Firebaseservice sein
   async updateData(collectionPath: string, docId: string, data: Partial<any>): Promise<void> {
     const docRef = doc(this.firestore, collectionPath, docId);
     await updateDoc(docRef, data);
@@ -206,9 +225,9 @@ export class GlobalFunctionsService {
 
 
 
-  showDashboardElement(screenWidth:number){
+  showDashboardElement(screenWidth: number) {
     if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;
-    else if(window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
+    else if (window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
   }
 
 }

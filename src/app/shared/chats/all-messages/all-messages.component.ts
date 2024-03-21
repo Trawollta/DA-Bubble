@@ -62,11 +62,19 @@ export class AllMessagesComponent {
 
   filterMessages() {
     let messages = this.globalVariablesService.chatChannel.messages;
-   // console.log('messages: ', this.globalVariablesService.chatChannel.messages);
+    //console.log('messages: ', this.globalVariablesService.chatChannel.messages);
    // console.log('filtered messages: ', this.globalVariablesService.chatChannel.messages.filter(message => message.answerto === this.globalVariablesService.answerKey));
     const channelChat = messages.filter(message => message.answerto === '');
     const threadChat = messages.filter(message => message.answerto === this.globalVariablesService.answerKey);
-    return this.isThread ? threadChat : channelChat;
+    const userchat = messages;
+    if(this.globalVariablesService.isUserChat){
+     // console.log('ein user Chat');
+      return userchat;
+    }else{
+     // console.log('ein channel Chat');
+      return this.isThread ? threadChat : channelChat;
+    }
+    
   }
 
   /**

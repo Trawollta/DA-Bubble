@@ -84,12 +84,12 @@ export class ChannelMenuComponent {
    * @param channel - object which contains information of selecet channel
    */
   openChannel(channel: any) {
-   // this.globalVariables.isUserChat = false;
+    this.globalVariables.isUserChat = false;
     this.globalVariables.openChannel.desc = channel.description;
     this.globalVariables.openChannel.titel = channel.channelName;
     this.globalVariables.openChannel.id = channel.id;
     this.globalVariables.openChannel.chatId = channel.chatId;
-    this.globalFunctions.showChat();
+    this.globalFunctions.showChat(channel.chatId);
   }
 
 

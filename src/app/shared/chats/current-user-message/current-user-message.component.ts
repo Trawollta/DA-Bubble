@@ -185,9 +185,7 @@ export class CurrentUserMessageComponent {
   editSave() {
     this.editMessage = false;
     this.globalVariables.messageData = this.message;
-    this.firebaseChatService.sendMessage(
-      this.globalVariables.openChannel.chatId
-    );
+    this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
     if (this.originalMessage.message !== this.message.message)
       this.remove(this.globalVariables.openChannel.chatId);
   }

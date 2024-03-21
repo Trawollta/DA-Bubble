@@ -60,7 +60,7 @@ export class ChatComponent {
       this.globalVariables.messageData.answerto = '';
       this.globalVariables.messageData.message = this.newMessage;
       this.globalVariables.messageData.emoji = [{icon: '', userId: [] as any[], iconId: ''}];
-      this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId);
+      this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
       this.globalVariables.messageData.message='';
       this.newMessage = '';
     }

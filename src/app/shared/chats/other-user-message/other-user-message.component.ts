@@ -222,9 +222,7 @@ export class OtherUserMessageComponent {
   addEmoji() {
     this.globalVariables.messageData = this.message;
     console.log('Das ist die Nachricht die hochgeladen wird: ', this.message);
-    this.firebaseChatService.sendMessage(
-      this.globalVariables.openChannel.chatId
-    );
+    this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
     this.remove(this.globalVariables.openChannel.chatId);
   }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

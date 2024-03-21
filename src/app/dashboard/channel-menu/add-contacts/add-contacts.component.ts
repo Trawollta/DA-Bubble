@@ -84,7 +84,7 @@ export class AddContactsComponent implements OnInit {
     });
    
     // add new chat and save channelID in it and return chatId
-    await this.firebaseChatService.addChat(this.addedChannelId).then(response => {
+    await this.firebaseChatService.addChat(this.addedChannelId, 'chatchannels').then(response => {
       this.addedChatId = response.id;
     }).catch(error => {
       console.error('Fehler beim Hinzufügen des Chats:', error);

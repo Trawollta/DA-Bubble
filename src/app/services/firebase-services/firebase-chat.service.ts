@@ -38,7 +38,7 @@ export class FirebaseChatService {
   unsubChat;
 
   constructor() {
-    this.unsubChat = this.getChat(this.activeChannelChatId);
+    this.unsubChat = this.getChat(this.activeChannelChatId, 'chatchannels');
   }
 
   /**
@@ -52,8 +52,8 @@ export class FirebaseChatService {
    * this function returns a reference of collection testusers
    * @returns reference to collection 'chatchannels'
    */
-  getchatChannelsRef() {
-    return collection(this.firestore, 'chatchannels');
+  getchatChannelsRef(chatFamily: string) {
+    return collection(this.firestore, chatFamily);
   }
 
   /**
@@ -61,8 +61,8 @@ export class FirebaseChatService {
    * @param docId - document which should read
    * @returns - returns a single document of collection 'user'
    */
-  getSingleChatRef(docId: string) {
-    return doc(this.getchatChannelsRef(), docId);
+  getSingleChatRef(docId: string, chatFamily: string) {
+    return doc(this.getchatChannelsRef(chatFamily), docId);
   }
 
   /**
@@ -70,8 +70,8 @@ export class FirebaseChatService {
    * @param id - id of active channel
    * @returns - array with data of active user
    */
-  getChat(id: string) {
-    let chatSnapshot = onSnapshot(this.getSingleChatRef(id), (chat) => {
+  getChat(id: string, chatFamily: string) {
+    let chatSnapshot = onSnapshot(this.getSingleChatRef(id, chatFamily), (chat) => {
       if (chat.data()) {
         this.globalVariablesService.chatChannel = new ChatChannel(chat.data());
       }
@@ -89,7 +89,7 @@ export class FirebaseChatService {
     if (this.unsubChat) this.unsubChat();
     this.activeChannelChatId = newChannelChatId;
     this.globalVariablesService.chatChannel = new ChatChannel();
-    this.unsubChat = this.getChat(this.activeChannelChatId);
+    this.unsubChat = this.getChat(this.activeChannelChatId, 'chatchannels');
   }
 
   /**
@@ -97,11 +97,11 @@ export class FirebaseChatService {
    * @param relatedChannelId - channel which is connected to the new chat
    * @returns - addDoc element
    */
-  addChat(relatedChannelId: string) {
+  addChat(relatedChannelId: string, chatFamily: string) {
     this.chatChannel.relatedChannelId = relatedChannelId;
     let data = this.toJson();
     //console.log('was steht im JSON: ',data);
-    return addDoc(this.getchatChannelsRef(), data);
+    return addDoc(this.getchatChannelsRef(chatFamily), data);
   }
 
   toJson(): {} {
@@ -133,15 +133,15 @@ export class FirebaseChatService {
    * @param chatId - id of chat
    * @returns -
    */
-  sendMessage(chatId: string) {
+  sendMessage(chatId: string, chatFamily: string) {
     //das hier erst einmal zum Test rein, ich brauche hier noch eine Abfrage, ob das erste Element überhaput leer ist
     // es entsteht als Platzhalter beim erstellen des Channels. 
     // Auch hier die Frage, wird dieser Platzhalter überhaupt gebraucht.
     // Die Frage kläre ich, sobald das Channelerstellen funktioniert
-    updateDoc(doc(this.firestore, 'chatchannels', chatId), {
+    updateDoc(doc(this.firestore, chatFamily, chatId), {
       messages: arrayRemove(this.removeEmptyData),
     });
-    return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
+    return updateDoc(doc(this.firestore, chatFamily, chatId), {
       messages: arrayUnion(this.newMessageToJson()),
     });
   }

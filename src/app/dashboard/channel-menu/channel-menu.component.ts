@@ -89,7 +89,7 @@ export class ChannelMenuComponent {
     this.globalVariables.openChannel.titel = channel.channelName;
     this.globalVariables.openChannel.id = channel.id;
     this.globalVariables.openChannel.chatId = channel.chatId;
-    this.globalFunctions.showChat();
+    this.globalFunctions.showChat(channel.chatId);
   }
 
 

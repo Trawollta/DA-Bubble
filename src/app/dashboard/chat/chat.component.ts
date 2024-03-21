@@ -12,20 +12,20 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 
 @Component({
-    selector: 'app-chat',
-    standalone: true,
-    templateUrl: './chat.component.html',
-    styleUrl: './chat.component.scss',
-    imports: [
-        InputfieldComponent,
-        CommonModule,
-        EditChannelComponent,
-        AllMessagesComponent,
-        AddContactsComponent,
-        AddToChannelComponent,
-        ShowContactsComponent,
-        FormsModule
-    ]
+  selector: 'app-chat',
+  standalone: true,
+  templateUrl: './chat.component.html',
+  styleUrl: './chat.component.scss',
+  imports: [
+    InputfieldComponent,
+    CommonModule,
+    EditChannelComponent,
+    AllMessagesComponent,
+    AddContactsComponent,
+    AddToChannelComponent,
+    ShowContactsComponent,
+    FormsModule
+  ]
 })
 export class ChatComponent {
   globalVariables = inject(GlobalVariablesService);
@@ -33,7 +33,7 @@ export class ChatComponent {
   firebaseChatService = inject(FirebaseChatService);
   allUserMessages: string = '';
   newMessage = '';
- 
+
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');
     if (emojiDiv && emojiDiv.classList.contains('d-none')) {
@@ -42,26 +42,35 @@ export class ChatComponent {
       emojiDiv.classList.add('d-none');
     }
   }
-  
 
-  
+
+
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
-    if(window.innerWidth < 1100)
-    this.globalVariables.showChannelMenu = false;
+    if (window.innerWidth < 1100)
+      this.globalVariables.showChannelMenu = false;
   }
 
-  sendMessage(){
+  sendMessage() {
 
-    if(this.newMessage !== ''){
+    if (this.newMessage !== '') {
       this.globalVariables.messageData.userId = this.globalVariables.activeID;
       this.globalVariables.messageData.timestamp = new Date().getTime();
       this.globalVariables.messageData.answerto = '';
       this.globalVariables.messageData.message = this.newMessage;
-      this.globalVariables.messageData.emoji = [{icon: '', userId: [] as any[], iconId: ''}];
-      this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
-      this.globalVariables.messageData.message='';
+      this.globalVariables.messageData.emoji = [{ icon: '', userId: [] as any[], iconId: '' }];
+console.log(this.globalVariables.openChannel);
+
+      // hier benötige ich die chatId und muss chatusers wählen wenn this.globalVariablesService.isUserChat
+      if (!this.globalVariables.isUserChat) {
+        this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
+      }
+      else {
+        this.firebaseChatService.sendMessage('shRks1N5WMOF04cEFdpvSdpNprB2_08ePOERI3mVOCDRY5RN3tBiowxB3', 'chatusers');
+      }
+      
+      this.globalVariables.messageData.message = '';
       this.newMessage = '';
     }
   }

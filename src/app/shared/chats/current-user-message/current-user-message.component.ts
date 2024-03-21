@@ -123,23 +123,6 @@ export class CurrentUserMessageComponent {
     this.answerKey = answerInfo.answerKey;
   }
 
-  /**
-   * this function providesall relevant information for the answer section
-   */
-/*   getAnswerInfo(message:any){
-    this.answerKey = message.userId + '_' + message.timestamp.toString();
-    console.log('lokale Variable: ',this.answerKey);
-    let filteredMessages = this.globalVariables.chatChannel.messages.filter(
-      (message) => message.answerto === this.answerKey
-    );
-    this.answercount = filteredMessages.length;
-    if (
-      filteredMessages.length > 0 &&
-      filteredMessages[filteredMessages.length - 1].timestamp
-    )
-      this.lastAnswerTime =
-        filteredMessages[filteredMessages.length - 1].timestamp;
-  } */
 
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');

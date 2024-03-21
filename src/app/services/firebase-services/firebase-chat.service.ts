@@ -23,7 +23,7 @@ export class FirebaseChatService {
   globalVariablesService = inject(GlobalVariablesService);
 
   activeID: string = this.globalVariablesService.activeID;
-  activeChannelChatId: string = this.globalVariablesService.openChannel.chatId;
+  activeChatId: string = this.globalVariablesService.openChannel.chatId;
   chatChannel: ChatChannel = new ChatChannel();
   user: User = new User();
 
@@ -33,12 +33,12 @@ export class FirebaseChatService {
     userId: '',
     timestamp: 0,
     emoji: [{ icon: '', userId: '' }],
-  }; 
+  };
 
   unsubChat;
 
   constructor() {
-    this.unsubChat = this.getChat(this.activeChannelChatId, 'chatchannels');
+    this.unsubChat = this.getChat(this.activeChatId, 'chatchannels');
   }
 
   /**
@@ -74,6 +74,7 @@ export class FirebaseChatService {
     let chatSnapshot = onSnapshot(this.getSingleChatRef(id, chatFamily), (chat) => {
       if (chat.data()) {
         this.globalVariablesService.chatChannel = new ChatChannel(chat.data());
+        console.log('hier: ',this.globalVariablesService.chatChannel);
       }
       //this.groupMessagesByAnswerTo();
       //console.log('Grupierter chat: ',this.globalVariablesService.chatChannel);
@@ -85,11 +86,22 @@ export class FirebaseChatService {
    * this function unsubscribes the closed chat and subscribes the new chat
    * @param newChannelId - new channel chat id
    */
-  changeActiveChannel(newChannelChatId: string) {
-    if (this.unsubChat) this.unsubChat();
-    this.activeChannelChatId = newChannelChatId;
+  changeActiveChannel(newChatId: string) {
+    //if (this.unsubChat) 
+    this.unsubChat();
+    this.activeChatId = newChatId;
     this.globalVariablesService.chatChannel = new ChatChannel();
-    this.unsubChat = this.getChat(this.activeChannelChatId, 'chatchannels');
+    let chatFamiliy = this.globalVariablesService.isUserChat ? 'chatusers' : 'chatchannels';
+    //console.log(newChatId);
+    //console.log(chatFamiliy);
+
+    //hier muss eine Funktion hinein, die checkt, ob der Chat existiert, wenn nein einen erstellt.
+    //Channels benötigen diesen Check nicht, das bei Channels, der Chat direkt erzeugt wird
+    //Für Userchats benötige ich diesen check
+    //Brauche ich dann die If Bedingung für chat Familiy?
+
+    this.unsubChat = this.getChat(newChatId, chatFamiliy);
+
   }
 
   /**
@@ -99,8 +111,9 @@ export class FirebaseChatService {
    */
   addChat(relatedChannelId: string, chatFamily: string) {
     this.chatChannel.relatedChannelId = relatedChannelId;
-    let data = this.toJson();
+    let data = this.toJson(); //wenn ich Channel benutze funktioniert das, für User 
     //console.log('was steht im JSON: ',data);
+
     return addDoc(this.getchatChannelsRef(chatFamily), data);
   }
 

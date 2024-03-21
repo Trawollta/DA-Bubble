@@ -161,22 +161,23 @@ export class GlobalFunctionsService {
       ? (this.globalVariables.userToChatWith.id = user.id)
       : this.globalVariables.profileUserId;
     this.globalVariables.userToChatWith.isActive = user.isActive;
-    this.showChat();
+    let chatId = this.globalVariables.activeID + '_' + user.id;
+    this.showChat(chatId);
   }
 
   /**
    * this function stets the flag for visability for chat
+   * * @param chatId - contains the chat id of the chat which should be open
    */
-  showChat() {
+  showChat(chatId: string) {
     this.globalVariables.showThread = false;
-    this.firebaseChatService.changeActiveChannel(
-      this.globalVariables.openChannel.chatId
-    );
+    this.firebaseChatService.changeActiveChannel(chatId);
     this.globalVariables.isChatVisable = true;
     if (!this.globalVariables.desktop800) {
       this.globalVariables.showChannelMenu = false;
     }
   }
+  
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //functions to change the chat end
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

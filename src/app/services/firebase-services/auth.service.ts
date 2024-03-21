@@ -1,13 +1,25 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, sendPasswordResetEmail } from '@angular/fire/auth';
 import { Firestore, collection, doc } from '@angular/fire/firestore';
+import { ToastService } from '../app-services/toast.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   firestore: Firestore = inject(Firestore);
+  toastService = inject(ToastService);
   constructor(private auth: Auth) { }
+
+  async sendPasswordResetEmail(email: string): Promise<void> {
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+      this.toastService.showMessage('E-Mail gesendet');
+    } catch (error) {
+      console.error('Fehler beim Senden der Passwort-Zurücksetzungs-E-Mail:', error);
+      throw error;
+    }
+  }
 
   async register(email: string, password: string) {
     return await createUserWithEmailAndPassword(this.auth, email, password);
@@ -28,7 +40,7 @@ export class AuthService {
       return userCredential.user;
     } catch (error) {
       console.error("Fehler bei der Google-Anmeldung:", error);
-      return null; // Im Fehlerfall null zurückgeben
+      return null;
     }
   }
 }

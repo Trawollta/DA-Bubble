@@ -7,12 +7,12 @@ import { GoBackButtonComponent } from 'app/shared/go-back-button/go-back-button.
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 
 @Component({
-  selector: 'app-sendmail',
+  selector: 'app-confirm-password-reset',
   standalone: true,
   imports: [CommonModule, FormsModule, ButtonComponent, InputfieldComponent, DialogComponent, GoBackButtonComponent],
-  templateUrl: './sendmail.component.html',
-  styleUrl: './sendmail.component.scss'
+  templateUrl: './confirm-password-reset.component.html',
+  styleUrl: './confirm-password-reset.component.scss'
 })
-export class SendmailComponent {
+export class ConfirmPasswordResetComponent {
 
 }

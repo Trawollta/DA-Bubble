@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,7 +8,7 @@ import { AddContactsComponent } from '../add-contacts/add-contacts.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 
@@ -21,7 +21,8 @@ import { Subject } from 'rxjs';
   templateUrl: './add-to-channel.component.html',
   styleUrl: './add-to-channel.component.scss'
 })
-export class AddToChannelComponent {
+export class AddToChannelComponent implements OnDestroy {
+  private destroy$ = new Subject<void>();
   globalFunctions = inject(GlobalFunctionsService);
   globalVariables = inject(GlobalVariablesService);
   users: any = [];
@@ -29,12 +30,17 @@ export class AddToChannelComponent {
 
   constructor(private userService: FirebaseUserService) {
     this.searchInput.pipe(
-      debounceTime(300), // Verzögerung, um nicht bei jeder Taste zu suchen
-      distinctUntilChanged(), // Nur suchen, wenn sich der Wert geändert hat
-      switchMap(searchTerm => this.userService.searchUsersByName(searchTerm))
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(searchTerm => this.userService.searchUsersByName(searchTerm)),
+      takeUntil(this.destroy$)
     ).subscribe(users => {
       this.users = users;
     });
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onSearchChange(searchValue: string): void {
@@ -43,7 +49,6 @@ export class AddToChannelComponent {
   }
 
   addNewChannel() {
-
     this.globalFunctions.addData('channels', this.globalVariables.channelData);
     this.globalVariables.openChannel.titel = this.globalVariables.channelData.channelName;
     this.globalVariables.channelData.channelName = '';

@@ -47,7 +47,6 @@ export class AppComponent implements OnInit {
         console.log('Benutzer ist eingeloggt:', user);
         this.userService.updateCurrentUser(user.uid);
       } else {
-        this.userService.logout();
         console.log('Benutzer ist nicht eingeloggt.');
       }
     });
@@ -70,7 +69,7 @@ export class AppComponent implements OnInit {
     this.globalVariables.desktop900 = window.innerWidth >= 900;
     this.showDasbordElement800();
     this.globalFunctions.showDashboardElement(1200);
-   
+
   }
 
   showDasbordElement800() {
@@ -88,5 +87,5 @@ export class AppComponent implements OnInit {
       this.globalVariables.isChatVisable = true;
     }
   }
-  
+
 }

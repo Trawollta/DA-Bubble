@@ -6,6 +6,7 @@ import {
   updateDoc,
   doc,
   collectionData,
+  getDoc,
   setDoc,
   onSnapshot,
   arrayUnion,
@@ -20,12 +21,15 @@ import { User } from 'app/models/user.class';
 })
 export class FirebaseChatService {
   firestore: Firestore = inject(Firestore);
-  globalVariablesService = inject(GlobalVariablesService);
+  globalVariables = inject(GlobalVariablesService);
 
-  activeID: string = this.globalVariablesService.activeID;
-  activeChatId: string = this.globalVariablesService.openChannel.chatId;
+  activeID: string = this.globalVariables.activeID;
+  activeChatId: string = this.globalVariables.openChannel.chatId;
   chatChannel: ChatChannel = new ChatChannel();
   user: User = new User();
+  chatExist: boolean = false;
+  userChatIdSwitch = false;
+
 
   removeEmptyData = {
     message: '',
@@ -38,7 +42,7 @@ export class FirebaseChatService {
   unsubChat;
 
   constructor() {
-    this.unsubChat = this.getChat(this.activeChatId, 'chatchannels');
+    this.unsubChat = this.getChat('chatchannels');
   }
 
   /**
@@ -58,51 +62,85 @@ export class FirebaseChatService {
 
   /**
    * this function returns the reference of the singe user with id... from collection testusers
-   * @param docId - document which should read
+   * @param chatFamily - string - userChat or channelChat
    * @returns - returns a single document of collection 'user'
    */
-  getSingleChatRef(docId: string, chatFamily: string) {
-    return doc(this.getchatChannelsRef(chatFamily), docId);
+  getSingleChatRef(chatFamily: string) {
+    return doc(this.getchatChannelsRef(chatFamily), this.activeChatId);
   }
 
   /**
    * this function returns the user with id ... from collection testusers
-   * @param id - id of active channel
-   * @returns - array with data of active user
+   * @param chatFamily - string - userChat or channelChat
+   * @returns - array with the chat
    */
-  getChat(id: string, chatFamily: string) {
-    let chatSnapshot = onSnapshot(this.getSingleChatRef(id, chatFamily), (chat) => {
-      if (chat.data()) {
-        this.globalVariablesService.chatChannel = new ChatChannel(chat.data());
-        console.log('hier: ',this.globalVariablesService.chatChannel);
+  getChat(chatFamily: string) {
+    return onSnapshot(this.getSingleChatRef(chatFamily), (chat) => {
+      if (chat.exists()) {
+        this.globalVariables.chatChannel = new ChatChannel(chat.data());
       }
-      //this.groupMessagesByAnswerTo();
-      //console.log('Grupierter chat: ',this.globalVariablesService.chatChannel);
     });
-    return chatSnapshot;
   }
+
+
+/**
+ * this function checks if a usercaht exists and create one if no.
+ * @param chatFamily - string - userChat or channelChat
+ * @returns -boolean- true if chat exist
+ */
+  async existUserChat(chatFamily: string) { 
+    let chatExist = await getDoc(this.getSingleChatRef(chatFamily));
+    if (!chatExist.exists()) {
+      this.activeChatId = this.bulidUserChatId(false);
+      chatExist = await getDoc(this.getSingleChatRef(chatFamily));
+      if (!chatExist.exists()) {
+        this.activeChatId = this.bulidUserChatId(true);
+        let data = this.toJson();
+        await setDoc(doc(this.getchatChannelsRef(chatFamily), this.activeChatId), data);
+      }
+    }
+    return true;
+  }
+
+  /**
+   * this function returns the snapshot if chat exist
+   * @param chatFamily - string - userChat or channelChat
+   * @returns snapshot of chat
+   */
+  getchatSnapshot(chatFamily: string) {
+    return onSnapshot(this.getSingleChatRef(chatFamily), (chat) => {
+      if (chat.exists()) {
+        this.globalVariables.chatChannel = new ChatChannel(chat.data());
+      }
+    });
+  }
+
+  /**
+   * this function switches the user for the userChatId
+   * @param user1_user2 - boolean 
+   * @returns key for userIdChat
+   */
+  bulidUserChatId(user1_user2: boolean) {
+    return user1_user2 ?
+      (this.globalVariables.activeID + '_' + this.globalVariables.userToChatWith.id) :
+      (this.globalVariables.userToChatWith.id + '_' + this.globalVariables.activeID);
+  }
+
 
   /**
    * this function unsubscribes the closed chat and subscribes the new chat
    * @param newChannelId - new channel chat id
    */
-  changeActiveChannel(newChatId: string) {
-    //if (this.unsubChat) 
-    this.unsubChat();
-    this.activeChatId = newChatId;
-    this.globalVariablesService.chatChannel = new ChatChannel();
-    let chatFamiliy = this.globalVariablesService.isUserChat ? 'chatusers' : 'chatchannels';
-    //console.log(newChatId);
-    //console.log(chatFamiliy);
-
-    //hier muss eine Funktion hinein, die checkt, ob der Chat existiert, wenn nein einen erstellt.
-    //Channels benötigen diesen Check nicht, das bei Channels, der Chat direkt erzeugt wird
-    //Für Userchats benötige ich diesen check
-    //Brauche ich dann die If Bedingung für chat Familiy?
-
-    this.unsubChat = this.getChat(newChatId, chatFamiliy);
-
+  changeActiveChannel() {
+    if (this.unsubChat) this.unsubChat();
+    this.chatExist = false;
+    //this.activeChatId = newChatId;
+    this.globalVariables.chatChannel = new ChatChannel();
+    let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
+    this.unsubChat = this.getChat(chatFamiliy);
   }
+
+
 
   /**
    * this function creates a new chat for the new channel and take over the belonging channel id
@@ -111,9 +149,7 @@ export class FirebaseChatService {
    */
   addChat(relatedChannelId: string, chatFamily: string) {
     this.chatChannel.relatedChannelId = relatedChannelId;
-    let data = this.toJson(); //wenn ich Channel benutze funktioniert das, für User 
-    //console.log('was steht im JSON: ',data);
-
+    let data = this.toJson();  
     return addDoc(this.getchatChannelsRef(chatFamily), data);
   }
 
@@ -124,13 +160,15 @@ export class FirebaseChatService {
     };
   }
 
+
+  //ich denke diese Funktion ist überflüssig
   /**
    * returns chat grouped by answerto
    * @returns chat grouped by answerto
    */
   groupMessagesByAnswerTo() {
     const groupedMessages: { [answerto: string]: any[] } = {};
-    this.globalVariablesService.chatChannel.messages.forEach((message) => {
+    this.globalVariables.chatChannel.messages.forEach((message) => {
       const answerTo = message.answerto;
       if (!groupedMessages[answerTo]) {
         groupedMessages[answerTo] = [message];
@@ -146,11 +184,12 @@ export class FirebaseChatService {
    * @param chatId - id of chat
    * @returns -
    */
-  sendMessage(chatId: string, chatFamily: string) {
-    //das hier erst einmal zum Test rein, ich brauche hier noch eine Abfrage, ob das erste Element überhaput leer ist
-    // es entsteht als Platzhalter beim erstellen des Channels. 
-    // Auch hier die Frage, wird dieser Platzhalter überhaupt gebraucht.
-    // Die Frage kläre ich, sobald das Channelerstellen funktioniert
+  sendMessage(id: string, chatFamily: string) {
+    //~~~~~Diese beiden folgenden Zeilen muss ich irgendwann wegnehmen. 
+    //~~~~~Die chatId kommt dann über this.activeChatId
+    //~~~~~Dazu muss ich aber in allen Dateien aufräumen, die diese Funktion nutzen 
+    let chatId = id;
+    if(this.globalVariables.isUserChat) chatId =this.activeChatId;
     updateDoc(doc(this.firestore, chatFamily, chatId), {
       messages: arrayRemove(this.removeEmptyData),
     });
@@ -164,19 +203,19 @@ export class FirebaseChatService {
    * @returns - JSON with data
    */
   newMessageToJson(): {} {
-    console.log('was wird gesendet? ', this.globalVariablesService.messageData);
+    console.log('was wird gesendet? ', this.globalVariables.messageData);
     return {
-      message: this.globalVariablesService.messageData.message,
-      userId: this.globalVariablesService.messageData.userId,
-      answerto: this.globalVariablesService.messageData.answerto,
-      timestamp: this.globalVariablesService.messageData.timestamp,
-      emoji: this.globalVariablesService.messageData.emoji,
+      message: this.globalVariables.messageData.message,
+      userId: this.globalVariables.messageData.userId,
+      answerto: this.globalVariables.messageData.answerto,
+      timestamp: this.globalVariables.messageData.timestamp,
+      emoji: this.globalVariables.messageData.emoji,
     };
   }
 
   newEmojiToJson(): {} {
     return {
-      emoji: this.globalVariablesService.messageData.emoji,
+      emoji: this.globalVariables.messageData.emoji,
     };
   }
 }

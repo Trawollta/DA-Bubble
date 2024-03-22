@@ -60,15 +60,13 @@ export class ChatComponent {
       this.globalVariables.messageData.answerto = '';
       this.globalVariables.messageData.message = this.newMessage;
       this.globalVariables.messageData.emoji = [{ icon: '', userId: [] as any[], iconId: '' }];
-console.log(this.globalVariables.openChannel);
-
+//console.log('elcher Channel ist offen: ',this.globalVariables.openChannel);
+//console.log('chatId:', this.globalVariables.openChannel.chatId );
+      let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
       // hier benötige ich die chatId und muss chatusers wählen wenn this.globalVariablesService.isUserChat
-      if (!this.globalVariables.isUserChat) {
-        this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
-      }
-      else {
-        this.firebaseChatService.sendMessage('shRks1N5WMOF04cEFdpvSdpNprB2_08ePOERI3mVOCDRY5RN3tBiowxB3', 'chatusers');
-      }
+      
+        this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, chatFamiliy);
+      
       
       this.globalVariables.messageData.message = '';
       this.newMessage = '';

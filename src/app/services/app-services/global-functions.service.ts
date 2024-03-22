@@ -152,7 +152,6 @@ export class GlobalFunctionsService {
    * @param user - object - contains all user information
    */
   openDirectMessageUser(user: any) {
-    // console.log(user);
     this.globalVariables.isUserChat = true;
     this.globalVariables.userToChatWith.name = user.name;
     this.globalVariables.userToChatWith.img = user.img;
@@ -161,17 +160,21 @@ export class GlobalFunctionsService {
       ? (this.globalVariables.userToChatWith.id = user.id)
       : this.globalVariables.profileUserId;
     this.globalVariables.userToChatWith.isActive = user.isActive;
-    let chatId = this.globalVariables.activeID + '_' + user.id;
-    this.showChat(chatId);
+    let chatId = this.firebaseChatService.bulidUserChatId(true);
+    this.globalVariables.openChannel.chatId = chatId;
+    this.firebaseChatService.activeChatId = chatId;
+    this.showChat();
   }
 
   /**
    * this function stets the flag for visability for chat
    * * @param chatId - contains the chat id of the chat which should be open
    */
-  showChat(chatId: string) {
+  async showChat() {
     this.globalVariables.showThread = false;
-    this.firebaseChatService.changeActiveChannel(chatId);
+    if(this.globalVariables.isUserChat)
+    await this.firebaseChatService.existUserChat('chatusers');
+    this.firebaseChatService.changeActiveChannel();
     this.globalVariables.isChatVisable = true;
     if (!this.globalVariables.desktop800) {
       this.globalVariables.showChannelMenu = false;

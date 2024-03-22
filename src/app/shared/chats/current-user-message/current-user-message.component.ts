@@ -214,7 +214,6 @@ export class CurrentUserMessageComponent {
   }
 
   addUserIdToEmoji(emoji: any): void {
-    debugger;
     if (emoji && emoji.userId && Array.isArray(emoji.userId)) {
       const activeID = this.globalVariables.activeID;
       if (emoji.userId.includes(activeID)) {
@@ -223,6 +222,11 @@ export class CurrentUserMessageComponent {
         emoji.userId.push(activeID);
       }
     }
+    this.emojiCount(emoji);
+    this.globalVariables.messageData = this.message;
+    this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
+    if (this.originalMessage.message !== this.message.message)
+      this.remove(this.globalVariables.openChannel.chatId);
   }
 
   emojiCount(emoji: any): number {

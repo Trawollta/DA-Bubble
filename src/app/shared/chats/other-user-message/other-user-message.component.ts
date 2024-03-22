@@ -161,17 +161,19 @@ export class OtherUserMessageComponent {
   }
 
   addUserIdToEmoji(emoji: any): void {
-    this.copyHelper(); // <-- das hab ich hier zum Test mit rein genommen Gruß Alex 18.3.
-    if (emoji) {
-      //console.log(emoji.userId);
-      if (emoji.userId.includes(this.globalVariables.activeID)) {
-        emoji.userId = emoji.userId.replace(new RegExp(this.globalVariables.activeID + ',? ?', 'g'), '');
+    if (emoji && emoji.userId && Array.isArray(emoji.userId)) {
+      const activeID = this.globalVariables.activeID;
+      if (emoji.userId.includes(activeID)) {
+        emoji.userId = emoji.userId.filter((id: any) => id !== activeID);
       } else {
-        emoji.userId += ', ' + this.globalVariables.activeID;
+        emoji.userId.push(activeID);
       }
     }
-    this.addEmoji(); // <-- das hab ich hier zum Test mit rein genommen Gruß Alex 18.3.
-    
+    this.emojiCount(emoji);
+    this.globalVariables.messageData = this.message;
+    this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
+    if (this.originalMessage.message !== this.message.message)
+      this.remove(this.globalVariables.openChannel.chatId);
   }
 
   emojiCount(emoji: any): number {

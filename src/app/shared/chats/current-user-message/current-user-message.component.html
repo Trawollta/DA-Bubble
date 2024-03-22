@@ -5,7 +5,7 @@
         <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
         <span class="username">{{ user.name }}</span>
       </div>
-      <div class="speech-bubble-current-user" (click)="openEmojis()" (click)="onSelectMessage(message.id)">
+      <div class="speech-bubble-current-user"  (click)="onSelectMessage(message.id)"> <!-- (click)="openEmojis()" -->
         <span class="speech-bubble-current-user-text" *ngIf="!editMessage">{{
           message.message
           }}</span>
@@ -15,7 +15,7 @@
         </div>
       </div>
       <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id"
-        [message]="message"></app-reactions>
+        [message]="message" [originalMessage]="originalMessage"></app-reactions>
 
       <div class="reaction-emojis">
         <span class="reaction-emoji-field" *ngFor="let emoji of message.emoji"(click)="addUserIdToEmoji(emoji)">

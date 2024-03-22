@@ -32,14 +32,7 @@ export class ReactionsComponent {
   firebaseChatService = inject(FirebaseChatService);
   @Output() newEmoji = new EventEmitter<string>();
   @Input() message: any;
-
-  originalMessage = {
-    message: '',
-    answerto: '',
-    userId: '',
-    timestamp: 0,
-    emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
-  };
+  @Input() originalMessage: any;
 
   // Variable für das ausgewählte Emoji
   choosedEmoji: string = '';
@@ -56,6 +49,7 @@ export class ReactionsComponent {
    */
   ngOnInit(): void {
     this.getEmojis();
+   // console.log(this.originalMessage);
   }
 
   /**
@@ -83,8 +77,7 @@ export class ReactionsComponent {
    * @param {string} emoji - The selected emoji.
    */
   public showInInput(emoji: any): void {
-    this.copyHelper();
-    /* this.editOpen() */
+    
     this.newEmoji.emit(emoji);
     if (this.message.emoji[0].icon === '') {
       this.message.emoji[0].icon = emoji.character;
@@ -126,49 +119,20 @@ export class ReactionsComponent {
 
   addEmoji() {
     this.globaleVariables.messageData = this.message;
-    console.log(
-      'Das ist die Nachricht die hochgeladen wird: ',
-      this.message
-    );
+   // console.log('Das ist die Nachricht die hochgeladen wird: ', this.message);
     this.firebaseChatService.sendMessage(this.globaleVariables.openChannel.chatId, 'chatchannels');
     this.remove(this.globaleVariables.openChannel.chatId);
   }
 
-  copyHelper() {
-    this.originalMessage.message = this.message.message;
-    this.originalMessage.answerto = this.message.answerto;
-    this.originalMessage.timestamp = this.message.timestamp;
-    this.originalMessage.userId = this.message.userId;
-    this.originalMessage.emoji = [];
-
-    this.message.emoji.forEach((element: any) => {
-      let updatedEmoji = this.helper(element); 
-      this.originalMessage.emoji.push(updatedEmoji);
-    });
-    this.remove(this.globaleVariables.openChannel.chatId);
-  }
-
+  
   remove(chatId: string) {
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
       messages: arrayRemove(this.originalMessage),
     });
   }
 
-  editOpen() {
+  editOpen() { 
     this.globaleVariables.editMessage = true;
-    this.originalMessage.message = this.message.message;
-    this.originalMessage.answerto = this.message.answerto;
-    this.originalMessage.timestamp = this.message.timestamp;
-    this.originalMessage.userId = this.message.userId;
-    this.originalMessage.emoji = [];
-
-    this.message.emoji.forEach((element: any) => {
-      this.originalMessage.emoji.push({
-        icon: element.icon,
-        userId: this.helper(element.userId),
-        iconId: element.iconId,
-      });
-    });
   }
 
   /**

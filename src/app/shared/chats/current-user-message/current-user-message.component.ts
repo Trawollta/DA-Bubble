@@ -111,20 +111,34 @@ export class CurrentUserMessageComponent {
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
     this.fillAnswerVariables();
+    this.cloneOriginalMessage();
+  }
+
+  /**
+   * this function clones the original message object for later remove logic
+   */
+  cloneOriginalMessage(){
+    this.originalMessage = { ...this.message }; //clone first layer
+    this.originalMessage.emoji = this.message.emoji.map((emoji: any) => ({//clone second layer
+      ...emoji, 
+      userId: [...emoji.userId] // clone third layer
+    })); 
+   // console.log('clonedMessage: ', this.originalMessage);
   }
 
   /**
    * this function gets all information needed for answers
    */
-  fillAnswerVariables(){
+  fillAnswerVariables() {
     let answerInfo = this.globalFunctions.getAnswerInfo(this.message);
     this.lastAnswerTime = answerInfo.lastAnswerTime;
     this.answercount = answerInfo.answerCount;
     this.answerKey = answerInfo.answerKey;
   }
 
-
+//Dise Funktion macht nichts, da sie mit nichts verlinkt ist
   openEmojis() {
+   // console.log('openEmojis');
     let emojiDiv = document.getElementById('emojis');
     if (emojiDiv && emojiDiv.classList.contains('d-none')) {
       emojiDiv.classList.remove('d-none');
@@ -173,22 +187,6 @@ export class CurrentUserMessageComponent {
     }
   }
 
-/*   editOpen() {
-    this.editMessage = true;
-    this.copyHelper();
-  }
-
-  editClose() {
-    this.editMessage = false;
-  }
-
-  editSave() {
-    this.editMessage = false;
-    this.globalVariables.messageData = this.message;
-    this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
-    if (this.originalMessage.message !== this.message.message)
-      this.remove(this.globalVariables.openChannel.chatId);
-  } */
 
   remove(chatId: string) {
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
@@ -225,7 +223,7 @@ export class CurrentUserMessageComponent {
     this.emojiCount(emoji);
     this.globalVariables.messageData = this.message;
     this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
-    if (this.originalMessage.message !== this.message.message)
+    //if (this.originalMessage.message !== this.message.message) 
       this.remove(this.globalVariables.openChannel.chatId);
   }
 

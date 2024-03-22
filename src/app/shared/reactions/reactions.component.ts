@@ -88,7 +88,7 @@ export class ReactionsComponent {
     this.newEmoji.emit(emoji);
     if (this.message.emoji[0].icon === '') {
       this.message.emoji[0].icon = emoji.character;
-      this.message.emoji[0].userId = this.globaleVariables.activeID;
+      this.message.emoji[0].userId = [this.globaleVariables.activeID];
       this.message.emoji[0].iconId = emoji.codePoint;
     } else {
       let existingEmoji = this.message.emoji.find(

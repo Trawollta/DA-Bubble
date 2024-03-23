@@ -219,6 +219,13 @@ export class CurrentUserMessageComponent {
       } else {
         emoji.userId.push(activeID);
       }
+
+      // Überprüfen, ob das emoji.userId-Array leer ist
+      if (emoji.userId.length === 0) {
+        emoji.userId = [];
+        emoji.iconId = '';
+        emoji.icon = '';
+      }
     }
 
     this.emojiCount(emoji);
@@ -229,7 +236,6 @@ export class CurrentUserMessageComponent {
     );
     //if (this.originalMessage.message !== this.message.message)
     this.remove(this.globalVariables.openChannel.chatId);
-    console.log(this.message);
   }
 
   emojiCount(emoji: any): number {
@@ -237,18 +243,17 @@ export class CurrentUserMessageComponent {
   }
 
   /**
-   * 
+   *
    * @returns - name of first user of emoji
    */
   getFirstUserOfEmoji(): string | null {
     let userIds = this.message.emoji[0].userId;
     if (userIds && userIds.length > 0) {
       let firstUserId = userIds[0];
-      console.log('das ist die ID zuerst', firstUserId);
       this.getUser(firstUserId);
       return this.user.name;
     } else {
-      return null; 
+      return null;
     }
   }
 }

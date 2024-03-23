@@ -28,17 +28,20 @@
         [originalMessage]="originalMessage"
       ></app-reactions>
 
-      <div class="reaction-emojis">
-        <ng-container *ngFor="let emoji of message.emoji">
-          <span
-            class="reaction-emoji-field"
-            *ngIf="emoji.userId && emoji.userId.length > 0"
-            (click)="addUserIdToEmoji(emoji)"
-          >
-            {{ emoji.icon }} {{ emojiCount(emoji) }}
-          </span>
-        </ng-container>
-      </div>
+      <div class="tooltip">
+        <div class="reaction-emojis">
+          <ng-container *ngFor="let emoji of message.emoji">
+            <span
+              class="reaction-emoji-field"
+              *ngIf="emoji.userId && emoji.userId.length > 0"
+              (click)="addUserIdToEmoji(emoji)"
+            >
+              {{ emoji.icon }} {{ emojiCount(emoji) }}
+            </span>
+          </ng-container>
+          <span class="tooltiptext"> {{ getFirstUserOfEmoji() }} </span>
+        </div>
+      </div>       
 
       <div *ngIf="!isThread" class="replie-wrapper">
         <div class="replie-text" (click)="openAnswers()">

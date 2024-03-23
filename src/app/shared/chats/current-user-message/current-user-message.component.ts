@@ -117,13 +117,14 @@ export class CurrentUserMessageComponent {
   /**
    * this function clones the original message object for later remove logic
    */
-  cloneOriginalMessage(){
+  cloneOriginalMessage() {
     this.originalMessage = { ...this.message }; //clone first layer
-    this.originalMessage.emoji = this.message.emoji.map((emoji: any) => ({//clone second layer
-      ...emoji, 
-      userId: [...emoji.userId] // clone third layer
-    })); 
-   // console.log('clonedMessage: ', this.originalMessage);
+    this.originalMessage.emoji = this.message.emoji.map((emoji: any) => ({
+      //clone second layer
+      ...emoji,
+      userId: [...emoji.userId], // clone third layer
+    }));
+    // console.log('clonedMessage: ', this.originalMessage);
   }
 
   /**
@@ -136,9 +137,9 @@ export class CurrentUserMessageComponent {
     this.answerKey = answerInfo.answerKey;
   }
 
-//Dise Funktion macht nichts, da sie mit nichts verlinkt ist
+  //Dise Funktion macht nichts, da sie mit nichts verlinkt ist
   openEmojis() {
-   // console.log('openEmojis');
+    // console.log('openEmojis');
     let emojiDiv = document.getElementById('emojis');
     if (emojiDiv && emojiDiv.classList.contains('d-none')) {
       emojiDiv.classList.remove('d-none');
@@ -187,7 +188,6 @@ export class CurrentUserMessageComponent {
     }
   }
 
-
   remove(chatId: string) {
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
       messages: arrayRemove(this.originalMessage),
@@ -220,11 +220,15 @@ export class CurrentUserMessageComponent {
         emoji.userId.push(activeID);
       }
     }
+
     this.emojiCount(emoji);
     this.globalVariables.messageData = this.message;
-    this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
-    //if (this.originalMessage.message !== this.message.message) 
-      this.remove(this.globalVariables.openChannel.chatId);
+    this.firebaseChatService.sendMessage(
+      this.globalVariables.openChannel.chatId,
+      'chatchannels'
+    );
+    //if (this.originalMessage.message !== this.message.message)
+    this.remove(this.globalVariables.openChannel.chatId);
   }
 
   emojiCount(emoji: any): number {

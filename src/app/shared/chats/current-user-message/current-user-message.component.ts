@@ -217,7 +217,7 @@ export class CurrentUserMessageComponent {
     console.log('current original Message: ', this.originalMessage);
   }
 
-  addUserIdToEmoji(emoji: any): void {
+  addUserIdToEmoji(emoji: any, index: number): void {
     if (emoji && emoji.userId && Array.isArray(emoji.userId)) {
       const activeID = this.globalVariables.activeID;
       if (emoji.userId.includes(activeID)) {
@@ -225,13 +225,13 @@ export class CurrentUserMessageComponent {
       } else {
         emoji.userId.push(activeID);
       }
-
-      // Überprüfen, ob das emoji.userId-Array leer ist
-      if (emoji.userId.length === 0) {
+      if (this.message.emoji.length == 1) {
         emoji.userId = [];
         emoji.iconId = '';
         emoji.icon = '';
-      }
+      } else if (this.message.emoji[index].iconId) {
+        this.message.emoji.splice(index, 1)
+      }     
     }
 
     this.emojiCount(emoji);

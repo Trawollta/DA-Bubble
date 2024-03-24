@@ -30,16 +30,16 @@
 
       <div class="tooltip">
         <div class="reaction-emojis">
-          <ng-container *ngFor="let emoji of message.emoji">
+          <ng-container *ngFor="let emoji of message.emoji let index = index">
             <span
               class="reaction-emoji-field"
               *ngIf="emoji.userId && emoji.userId.length > 0"
-              (click)="addUserIdToEmoji(emoji)"
+              (click)="addUserIdToEmoji(emoji, index)"
             >
               {{ emoji.icon }} {{ emojiCount(emoji) }}
             </span>
           </ng-container>
-          <span class="tooltiptext" *ngIf="mouseover"> {{ hoverUser }} </span>
+          <span class="tooltiptext" *ngIf="mouseover"> {{ hoverUser }} & x Personen </span>
         </div>
       </div>
       

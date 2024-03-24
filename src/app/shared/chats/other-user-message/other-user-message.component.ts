@@ -193,23 +193,29 @@ export class OtherUserMessageComponent {
     this.selectedMessage = '';
   }
 
-  addUserIdToEmoji(emoji: any): void {
+  addUserIdToEmoji(emoji: any, index: number): void {
     if (emoji && emoji.userId && Array.isArray(emoji.userId)) {
-      // Ich habe Fragen
       const activeID = this.globalVariables.activeID;
       if (emoji.userId.includes(activeID)) {
         emoji.userId = emoji.userId.filter((id: any) => id !== activeID);
       } else {
         emoji.userId.push(activeID);
       }
+      if (this.message.emoji.length == 1) {
+        emoji.userId = [];
+        emoji.iconId = '';
+        emoji.icon = '';
+      } else if (this.message.emoji[index].iconId) {
+        this.message.emoji.splice(index, 1)
+      }     
     }
+
     this.emojiCount(emoji);
     this.globalVariables.messageData = this.message;
     this.firebaseChatService.sendMessage(
       this.globalVariables.openChannel.chatId,
       'chatchannels'
     );
-    //if (this.originalMessage.message !== this.message.message)
     this.remove(this.globalVariables.openChannel.chatId);
   }
 

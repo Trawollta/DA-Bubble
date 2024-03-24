@@ -246,11 +246,11 @@ export class CurrentUserMessageComponent {
    *
    * @returns - name of first user of emoji
    */
-  getFirstUserOfEmoji(): string | null {
+  getFirstUserOfEmoji(){
     let userIds = this.message.emoji[0].userId;
     if (userIds && userIds.length > 0) {
       let firstUserId = userIds[0];
-      this.getUser(firstUserId);
+      this.getUserRef(firstUserId);
       return this.user.name;
     } else {
       return null;

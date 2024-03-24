@@ -12,16 +12,19 @@
     </div>
     <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id"
       [message]="message" [originalMessage]="originalMessage"></app-reactions>
-      <div class="reaction-emojis">
-        <ng-container *ngFor="let emoji of message.emoji">
-          <span
-            class="reaction-emoji-field"
-            *ngIf="emoji.userId && emoji.userId.length > 0"
-            (click)="addUserIdToEmoji(emoji)"
-          >
-            {{ emoji.icon }} {{ emojiCount(emoji) }}
-          </span>
-        </ng-container>
+      <div class="tooltip">
+        <div class="reaction-emojis">
+          <ng-container *ngFor="let emoji of message.emoji">
+            <span
+              class="reaction-emoji-field"
+              *ngIf="emoji.userId && emoji.userId.length > 0"
+              (click)="addUserIdToEmoji(emoji)"
+            >
+              {{ emoji.icon }} {{ emojiCount(emoji) }}
+            </span>
+          </ng-container>
+          <span class="tooltiptext" *ngIf="mouseover"> {{ hoverUser }} </span>
+        </div>
       </div>
     <div *ngIf="!isThread" class="replie-wrapper">
       <div  class="replie-text" (click)="openAnswers()">

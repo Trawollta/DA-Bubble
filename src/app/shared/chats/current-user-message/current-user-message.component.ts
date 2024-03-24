@@ -266,8 +266,6 @@ export class CurrentUserMessageComponent {
       this.mouseover = true;
       this.getFirstUserOfEmoji();
     }
-    
-
   }
 
   @HostListener('mouseout')

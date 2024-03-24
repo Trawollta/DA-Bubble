@@ -28,7 +28,7 @@
         [originalMessage]="originalMessage"
       ></app-reactions>
 
-      <div class="tooltip">
+      <div class="tooltip"  *ngIf="message.emoji.length !== 0">
         <div class="reaction-emojis">
           <ng-container *ngFor="let emoji of message.emoji">
             <span
@@ -38,12 +38,15 @@
             >
               {{ emoji.icon }} {{ emojiCount(emoji) }}
             </span>
+            
           </ng-container>
+
+          <span class="tooltiptext" *ngIf="mouseover" > {{ hoverUser }} </span>
           <div
             (mouseover)="mouseover = true"
             (mouseout)="mouseover = false"
           ></div>
-          <span class="tooltiptext" *ngIf="mouseover"> {{ hoverUser }} </span>
+          
         </div>
       </div>
 

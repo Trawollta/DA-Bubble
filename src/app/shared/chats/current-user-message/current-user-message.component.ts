@@ -240,7 +240,6 @@ export class CurrentUserMessageComponent {
       this.globalVariables.openChannel.chatId,
       'chatchannels'
     );
-    //if (this.originalMessage.message !== this.message.message)
     this.remove(this.globalVariables.openChannel.chatId);
   }
 
@@ -253,19 +252,22 @@ export class CurrentUserMessageComponent {
    * @returns - name of first user of emoji
    */
   async getFirstUserOfEmoji() {
-    let userId = this.message.emoji[0].userId[0]; // array
+    let userId = this.message.emoji[0].userId[0]; 
     if (userId !== '') {
       let x = await this.firebaseUpdate.getUserData(userId);
       this.profile = new User(x);
       this.hoverUser = this.profile.name;
-      console.log(this.hoverUser)
     }
   }
 
   @HostListener('mouseover')
   onMouseOver() {
-    this.mouseover = true;
-    this.getFirstUserOfEmoji();
+    if(this.message.emoji[0].icon){
+      this.mouseover = true;
+      this.getFirstUserOfEmoji();
+    }
+    
+
   }
 
   @HostListener('mouseout')

@@ -24,6 +24,7 @@ import { User } from 'app/models/user.class';
 import { ChatChannel } from 'app/models/chatChannel.class';
 import { FormsModule } from '@angular/forms';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
+import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
 
 @Component({
   selector: 'app-current-user-message',
@@ -43,6 +44,7 @@ export class CurrentUserMessageComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
+  firebaseUpdate = inject(FirebaseUserupdateService);
   openReaction: boolean = false;
   selectedMessage: string = '';
 
@@ -61,6 +63,10 @@ export class CurrentUserMessageComponent {
   };
   editMessage: boolean = false;
   msgEmojis: any[] = []; // Initialisieren Sie msgEmojis als leeres Array
+
+  profile: User = { img: '', name: '', isActive: false, email: '' };
+  mouseover:boolean = false;
+  hoverUser: string = '';
 
   unsubUser;
   userId: string = 'guest';
@@ -246,14 +252,24 @@ export class CurrentUserMessageComponent {
    *
    * @returns - name of first user of emoji
    */
-  getFirstUserOfEmoji(){
-    let userIds = this.message.emoji[0].userId;
-    if (userIds && userIds.length > 0) {
-      let firstUserId = userIds[0];
-      this.getUserRef(firstUserId);
-      return this.user.name;
-    } else {
-      return null;
+  async getFirstUserOfEmoji() {
+    let userId = this.message.emoji[0].userId[0]; // array
+    if (userId !== '') {
+      let x = await this.firebaseUpdate.getUserData(userId);
+      this.profile = new User(x);
+      this.hoverUser = this.profile.name;
+      console.log(this.hoverUser)
     }
+  }
+
+  @HostListener('mouseover')
+  onMouseOver() {
+    this.mouseover = true;
+    this.getFirstUserOfEmoji();
+  }
+
+  @HostListener('mouseout')
+  onMouseOut() {
+    this.mouseover = false;
   }
 }

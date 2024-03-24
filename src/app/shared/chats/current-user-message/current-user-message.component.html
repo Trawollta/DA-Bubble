@@ -39,9 +39,13 @@
               {{ emoji.icon }} {{ emojiCount(emoji) }}
             </span>
           </ng-container>
-          <span class="tooltiptext"> {{ getFirstUserOfEmoji() }} </span>
+          <div
+            (mouseover)="mouseover = true"
+            (mouseout)="mouseover = false"
+          ></div>
+          <span class="tooltiptext" *ngIf="mouseover"> {{ hoverUser }} </span>
         </div>
-      </div>       
+      </div>
 
       <div *ngIf="!isThread" class="replie-wrapper">
         <div class="replie-text" (click)="openAnswers()">

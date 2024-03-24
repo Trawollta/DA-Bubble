@@ -23,19 +23,19 @@ export class HeaderMenuComponent {
   private userService = inject(FirebaseUserService);
   private userUpdateServce = inject(FirebaseUserupdateService);
 
-constructor(){
-  this.globalVariables.showProfileMenu = false;
- // console.log('currentUser: ', this.globalVariables.currentUser );
- // console.log('uid: ', this.globalVariables.activeID );
-  this.userUpdateServce.setActiveUserId(this.globalVariables.activeID);
-}
+  constructor() {
+    this.globalVariables.showProfileMenu = false;
+    // console.log('currentUser: ', this.globalVariables.currentUser );
+    // console.log('uid: ', this.globalVariables.activeID );
+    this.userUpdateServce.setActiveUserId(this.globalVariables.activeID);
+  }
 
-  login() {
+  logOut() {
     this.userService.logout();
   }
 
- /*  openProfile() {
-    this.globalVariables.showProfile = true;
-  }
- */
+  /*  openProfile() {
+     this.globalVariables.showProfile = true;
+   }
+  */
 }

@@ -29,6 +29,7 @@ export class PasswordResetComponent {
     window.dispatchEvent(new Event('resize'));
     Aos.init();
   }
+
   async onSubmit(form: NgForm) {
     if (!form.valid) {
       return;

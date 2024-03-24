@@ -10,5 +10,5 @@
         </div>
     </div>
     <router-outlet></router-outlet>
-    <app-footer></app-footer>
+    <app-footer *ngIf="!globalVariables.imprintActiv"></app-footer>
 </section>

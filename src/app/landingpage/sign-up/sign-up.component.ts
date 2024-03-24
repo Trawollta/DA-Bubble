@@ -33,6 +33,10 @@ export class SignUpComponent {
   selectedAvatar: string = '';
   signUpUserPassword: string = "";
 
+  constructor() {
+    this.globalVariables.signup = true;
+  }
+
   signUpUserData = {
     name: "",
     email: "",

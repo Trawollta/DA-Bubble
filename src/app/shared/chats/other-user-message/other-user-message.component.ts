@@ -1,18 +1,32 @@
-import { Component, ElementRef, HostListener, inject, Input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  Input,
+} from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
-import { Firestore, doc, collection, onSnapshot, getDoc, updateDoc, arrayRemove } from '@angular/fire/firestore';
-
+import {
+  Firestore,
+  doc,
+  collection,
+  onSnapshot,
+  getDoc,
+  updateDoc,
+  arrayRemove,
+} from '@angular/fire/firestore';
 
 import { User } from 'app/models/user.class';
 import { DatePipe, CommonModule } from '@angular/common';
-import { ReactionsComponent } from "../../reactions/reactions.component";
+import { ReactionsComponent } from '../../reactions/reactions.component';
+import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
 
 interface Emoji {
-  icon: string,
-  iconId: string,
-  userId: string,
+  icon: string;
+  iconId: string;
+  userId: string;
 }
 
 @Component({
@@ -20,21 +34,15 @@ interface Emoji {
   standalone: true,
   templateUrl: './other-user-message.component.html',
   styleUrl: './other-user-message.component.scss',
-  imports: [
-    DatePipe,
-    ReactionsComponent,
-    CommonModule
-  ]
+  imports: [DatePipe, ReactionsComponent, CommonModule],
 })
-
-
 export class OtherUserMessageComponent {
-
   firestore: Firestore = inject(Firestore);
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
-  
+  firebaseUpdate = inject(FirebaseUserupdateService);
+
   openReaction: boolean = false;
   selectedMessage: string = '';
   @Input() message: any;
@@ -42,7 +50,7 @@ export class OtherUserMessageComponent {
 
   emojiArray: Emoji[] = [];
   postingTime: string | null = null;
-  user: User = new User;
+  user: User = new User();
   originalMessage = {
     message: '',
     answerto: '',
@@ -57,12 +65,13 @@ export class OtherUserMessageComponent {
   answercount: number = 0;
   lastAnswerTime: number = 0;
 
+  profile: User = { img: '', name: '', isActive: false, email: '' };
+  mouseover: boolean = false;
+  hoverUser: string = '';
 
   constructor(private elementRef: ElementRef) {
     this.unsubUser = this.getUser(this.userId);
-
   }
-
 
   /**
    * this function unsubscribes the containing content
@@ -91,15 +100,12 @@ export class OtherUserMessageComponent {
         this.user = new User(user.data());
       }
     });
-
   }
-
 
   /**
    * this function calls function getUser() for providing userdata for the post
    */
   async ngOnInit() {
-  
     this.getUser(this.message.userId);
     this.postingTime = this.message.timestamp;
     this.fillAnswerVariables();
@@ -109,26 +115,27 @@ export class OtherUserMessageComponent {
   /**
    * this function clones the original message object for later remove logic
    */
-  cloneOriginalMessage(){
+  cloneOriginalMessage() {
     this.originalMessage = { ...this.message }; //clone first layer
-    this.originalMessage.emoji = this.message.emoji.map((emoji: any) => ({//clone second layer
-      ...emoji, 
-      userId: [...emoji.userId] // clone third layer
-    })); 
-   // console.log('clonedMessage: ', this.originalMessage);
+    this.originalMessage.emoji = this.message.emoji.map((emoji: any) => ({
+      //clone second layer
+      ...emoji,
+      userId: [...emoji.userId], // clone third layer
+    }));
+    // console.log('clonedMessage: ', this.originalMessage);
   }
 
   /**
    * this function gets all information needed for answers
    */
-  fillAnswerVariables(){
+  fillAnswerVariables() {
     let answerInfo = this.globalFunctions.getAnswerInfo(this.message);
     this.lastAnswerTime = answerInfo.lastAnswerTime;
     this.answercount = answerInfo.answerCount;
     this.answerKey = answerInfo.answerKey;
   }
 
-//Dise Funktion macht nichts, da sie mit nichts verlinkt ist
+  //Dise Funktion macht nichts, da sie mit nichts verlinkt ist
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');
     if (emojiDiv && emojiDiv.classList.contains('d-none')) {
@@ -138,7 +145,6 @@ export class OtherUserMessageComponent {
     }
   }
 
-
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
     //console.log('showThread: ',this.globalVariables.showThread);
@@ -147,7 +153,8 @@ export class OtherUserMessageComponent {
     this.globalVariables.answerCount = this.answercount;
     this.fillInitialUserObj();
     this.globalVariables.openChat = 'isChatVisable';
-    this.globalVariables.messageData.answerto = this.message.userId + '_' + this.message.timestamp.toString();
+    this.globalVariables.messageData.answerto =
+      this.message.userId + '_' + this.message.timestamp.toString();
     this.globalFunctions.showDashboardElement(1200);
     if (window.innerWidth < 800) {
       this.globalVariables.showChannelMenu = false;
@@ -178,28 +185,38 @@ export class OtherUserMessageComponent {
       this.onCloseReactions();
     }
   }
-/**
- * just set flags for closing emoji container
- */
+  /**
+   * just set flags for closing emoji container
+   */
   onCloseReactions() {
     this.openReaction = false;
     this.selectedMessage = '';
   }
 
-  addUserIdToEmoji(emoji: any): void {
-    if (emoji && emoji.userId && Array.isArray(emoji.userId)) { // Ich habe Fragen
+  addUserIdToEmoji(emoji: any, index: number): void {
+    if (emoji && emoji.userId && Array.isArray(emoji.userId)) {
       const activeID = this.globalVariables.activeID;
       if (emoji.userId.includes(activeID)) {
         emoji.userId = emoji.userId.filter((id: any) => id !== activeID);
       } else {
         emoji.userId.push(activeID);
       }
+      if (this.message.emoji.length == 1) {
+        emoji.userId = [];
+        emoji.iconId = '';
+        emoji.icon = '';
+      } else if (this.message.emoji[index].iconId) {
+        this.message.emoji.splice(index, 1)
+      }     
     }
+
     this.emojiCount(emoji);
     this.globalVariables.messageData = this.message;
-    this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
-    //if (this.originalMessage.message !== this.message.message)
-      this.remove(this.globalVariables.openChannel.chatId);
+    this.firebaseChatService.sendMessage(
+      this.globalVariables.openChannel.chatId,
+      'chatchannels'
+    );
+    this.remove(this.globalVariables.openChannel.chatId);
   }
 
   emojiCount(emoji: any): number {
@@ -210,7 +227,7 @@ export class OtherUserMessageComponent {
   test(emojiArray: Emoji[]) {
     const groupedByIconId = new Map<string, Emoji[]>();
 
-    emojiArray.forEach(emoji => {
+    emojiArray.forEach((emoji) => {
       if (!groupedByIconId.has(emoji.iconId)) {
         groupedByIconId.set(emoji.iconId, []);
       }
@@ -220,9 +237,9 @@ export class OtherUserMessageComponent {
     console.log(groupedByIconId);
   }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ///<-- das hab ich hier zum Test mit rein genommen Gruß Alex 18.3.
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   copyHelper() {
     this.originalMessage.message = this.message.message;
@@ -237,12 +254,11 @@ export class OtherUserMessageComponent {
         userId: [element.userId],
         iconId: element.iconId,
       });
-    }); 
-   
+    });
   }
 
   remove(chatId: string) {
-   // debugger;
+    // debugger;
     return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
       messages: arrayRemove(this.originalMessage),
     });
@@ -251,9 +267,36 @@ export class OtherUserMessageComponent {
   addEmoji() {
     this.globalVariables.messageData = this.message;
     console.log('Das ist die Nachricht die hochgeladen wird: ', this.message);
-    this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
+    this.firebaseChatService.sendMessage(
+      this.globalVariables.openChannel.chatId,
+      'chatchannels'
+    );
     this.remove(this.globalVariables.openChannel.chatId);
   }
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  /**
+   *
+   * @returns - name of first user of emoji
+   */
+  async getFirstUserOfEmoji() {
+    let userId = this.message.emoji[0].userId[0];
+    if (userId !== '') {
+      let x = await this.firebaseUpdate.getUserData(userId);
+      this.profile = new User(x);
+      this.hoverUser = this.profile.name;
+    }
+  }
+
+  @HostListener('mouseover')
+  onMouseOver() {
+    if (this.message.emoji[0].icon) {
+      this.mouseover = true;
+      this.getFirstUserOfEmoji();
+    }
+  }
+
+  @HostListener('mouseout')
+  onMouseOut() {
+    this.mouseover = false;
+  }
 }

@@ -105,7 +105,6 @@ export class GlobalFunctionsService {
   closeAddContactsOverlay() {
     this.globalVariables.showContacts = false;
     document.body.style.overflow = 'auto';
-    // console.log('Overlay closed');
   }
 
   //diese close funktion weicht etwas ab von den anderen

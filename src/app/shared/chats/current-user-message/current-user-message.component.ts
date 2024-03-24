@@ -24,6 +24,7 @@ import { User } from 'app/models/user.class';
 import { ChatChannel } from 'app/models/chatChannel.class';
 import { FormsModule } from '@angular/forms';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
+import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
 
 @Component({
   selector: 'app-current-user-message',
@@ -43,6 +44,7 @@ export class CurrentUserMessageComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
+  firebaseUpdate = inject(FirebaseUserupdateService);
   openReaction: boolean = false;
   selectedMessage: string = '';
 
@@ -61,6 +63,10 @@ export class CurrentUserMessageComponent {
   };
   editMessage: boolean = false;
   msgEmojis: any[] = []; // Initialisieren Sie msgEmojis als leeres Array
+
+  profile: User = { img: '', name: '', isActive: false, email: '' };
+  mouseover:boolean = false;
+  hoverUser: string = '';
 
   unsubUser;
   userId: string = 'guest';
@@ -211,7 +217,7 @@ export class CurrentUserMessageComponent {
     console.log('current original Message: ', this.originalMessage);
   }
 
-  addUserIdToEmoji(emoji: any): void {
+  addUserIdToEmoji(emoji: any, index: number): void {
     if (emoji && emoji.userId && Array.isArray(emoji.userId)) {
       const activeID = this.globalVariables.activeID;
       if (emoji.userId.includes(activeID)) {
@@ -219,13 +225,13 @@ export class CurrentUserMessageComponent {
       } else {
         emoji.userId.push(activeID);
       }
-
-      // Überprüfen, ob das emoji.userId-Array leer ist
-      if (emoji.userId.length === 0) {
+      if (this.message.emoji.length == 1) {
         emoji.userId = [];
         emoji.iconId = '';
         emoji.icon = '';
-      }
+      } else if (this.message.emoji[index].iconId) {
+        this.message.emoji.splice(index, 1)
+      }     
     }
 
     this.emojiCount(emoji);
@@ -234,7 +240,6 @@ export class CurrentUserMessageComponent {
       this.globalVariables.openChannel.chatId,
       'chatchannels'
     );
-    //if (this.originalMessage.message !== this.message.message)
     this.remove(this.globalVariables.openChannel.chatId);
   }
 
@@ -246,14 +251,25 @@ export class CurrentUserMessageComponent {
    *
    * @returns - name of first user of emoji
    */
-  getFirstUserOfEmoji(): string | null {
-    let userIds = this.message.emoji[0].userId;
-    if (userIds && userIds.length > 0) {
-      let firstUserId = userIds[0];
-      this.getUser(firstUserId);
-      return this.user.name;
-    } else {
-      return null;
+  async getFirstUserOfEmoji() {
+    let userId = this.message.emoji[0].userId[0]; 
+    if (userId !== '') {
+      let x = await this.firebaseUpdate.getUserData(userId);
+      this.profile = new User(x);
+      this.hoverUser = this.profile.name;
     }
+  }
+
+  @HostListener('mouseover')
+  onMouseOver() {
+    if(this.message.emoji[0].icon){
+      this.mouseover = true;
+      this.getFirstUserOfEmoji();
+    }
+  }
+
+  @HostListener('mouseout')
+  onMouseOut() {
+    this.mouseover = false;
   }
 }

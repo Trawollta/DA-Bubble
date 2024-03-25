@@ -3,8 +3,7 @@
         <h3 *ngIf="globalVariables.desktop600">{{globalVariables.currentUser.name}}</h3>
         <div class="avatarCon">
             <img class="imgAvatar" [src]="globalVariables.currentUser.img" alt="avatar">
-            <img *ngIf="globalVariables.desktop600" class="imgArrow" src="assets/img/icons/keyboard_arrow_down.svg"
-                alt="arrow-down">
+            <img *ngIf="globalVariables.desktop600" class="imgArrow" src="assets/img/icons/keyboard_arrow_down.svg" alt="arrow-down">
         </div>
 
 
@@ -19,11 +18,10 @@
                 <div class="menuOuterContainer">
                     <div class="menu">
                         <a>
-                            <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/account_circle.svg"
-                                alt="avatarIcon">
+                            <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/account_circle.svg" alt="avatarIcon">
                             <span (click)="globalFunctions.openProfile(true, globalVariables.activeID)">Profile </span>
                         </a>
-                        <a (click)="login()">
+                        <a (click)="logOut()">
                             <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/logout.svg" alt="logoutIcon">
                             <span>Log out</span>
                         </a>

@@ -21,11 +21,16 @@ export class LogInComponent {
   private userService = inject(FirebaseUserService);
   private authService = inject(AuthService);
   private router = inject(Router);
+  constructor() {
+    this.globalVariables.imprintActiv = false;
+    this.globalVariables.signup = false;
+  }
 
   logInUserData = {
     email: "",
     password: ""
   }
+
 
   async logInWithEmailAndPassword() {
     const { email, password } = this.logInUserData;

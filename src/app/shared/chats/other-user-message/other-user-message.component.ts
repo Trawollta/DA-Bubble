@@ -122,7 +122,6 @@ export class OtherUserMessageComponent {
       ...emoji,
       userId: [...emoji.userId], // clone third layer
     }));
-    // console.log('clonedMessage: ', this.originalMessage);
   }
 
   /**
@@ -135,7 +134,7 @@ export class OtherUserMessageComponent {
     this.answerKey = answerInfo.answerKey;
   }
 
-  //Dise Funktion macht nichts, da sie mit nichts verlinkt ist
+ /*  //Dise Funktion macht nichts, da sie mit nichts verlinkt ist
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');
     if (emojiDiv && emojiDiv.classList.contains('d-none')) {
@@ -143,13 +142,11 @@ export class OtherUserMessageComponent {
     } else if (emojiDiv && emojiDiv.classList.contains('d-none') == false) {
       emojiDiv.classList.add('d-none');
     }
-  }
+  } */
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
-    //console.log('showThread: ',this.globalVariables.showThread);
     this.globalVariables.answerKey = this.answerKey;
-    console.log('answerKex: ', this.answerKey);
     this.globalVariables.answerCount = this.answercount;
     this.fillInitialUserObj();
     this.globalVariables.openChat = 'isChatVisable';
@@ -193,86 +190,36 @@ export class OtherUserMessageComponent {
     this.selectedMessage = '';
   }
 
-  addUserIdToEmoji(emoji: any, index: number): void {
-    if (emoji && emoji.userId && Array.isArray(emoji.userId)) {
-      const activeID = this.globalVariables.activeID;
-      if (emoji.userId.includes(activeID)) {
-        emoji.userId = emoji.userId.filter((id: any) => id !== activeID);
-      } else {
-        emoji.userId.push(activeID);
-      }
+  addUserIdToEmoji(emoji: any, index: number) {
+    const activeID = this.globalVariables.activeID;
+    if (emoji.userId.includes(activeID) && emoji.userId.length === 1) {
       if (this.message.emoji.length == 1) {
         emoji.userId = [];
         emoji.iconId = '';
         emoji.icon = '';
-      } else if (this.message.emoji[index].iconId) {
-        this.message.emoji.splice(index, 1)
-      }     
-    }
+      } else this.message.emoji.splice(index, 1);
+    } else if (emoji.userId.includes(activeID)) emoji.userId = emoji.userId.filter((id: string) => id !== activeID);
+    else emoji.userId.push(activeID);
+    this.updateMessage();
+  }
 
-    this.emojiCount(emoji);
+  updateMessage() {
     this.globalVariables.messageData = this.message;
+    let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
     this.firebaseChatService.sendMessage(
       this.globalVariables.openChannel.chatId,
-      'chatchannels'
+      chatFamiliy
     );
-    this.remove(this.globalVariables.openChannel.chatId);
+    this.remove(this.globalVariables.openChannel.chatId, chatFamiliy); // es kommt zu einem Springen des chats, wenn Function ausgeführt wird
   }
 
-  emojiCount(emoji: any): number {
-    return emoji.userId.length;
-  }
 
-  //just a test function
-  test(emojiArray: Emoji[]) {
-    const groupedByIconId = new Map<string, Emoji[]>();
-
-    emojiArray.forEach((emoji) => {
-      if (!groupedByIconId.has(emoji.iconId)) {
-        groupedByIconId.set(emoji.iconId, []);
-      }
-      groupedByIconId.get(emoji.iconId)!.push(emoji);
-    });
-
-    console.log(groupedByIconId);
-  }
-
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ///<-- das hab ich hier zum Test mit rein genommen Gruß Alex 18.3.
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  copyHelper() {
-    this.originalMessage.message = this.message.message;
-    this.originalMessage.answerto = this.message.answerto;
-    this.originalMessage.timestamp = this.message.timestamp;
-    this.originalMessage.userId = this.message.userId;
-    this.originalMessage.emoji = [];
-
-    this.message.emoji.forEach((element: any) => {
-      this.originalMessage.emoji.push({
-        icon: element.icon,
-        userId: [element.userId],
-        iconId: element.iconId,
-      });
-    });
-  }
-
-  remove(chatId: string) {
-    // debugger;
-    return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
+  remove(chatId: string, chatFamiliy: string) {
+    return updateDoc(doc(this.firestore, chatFamiliy, chatId), {
       messages: arrayRemove(this.originalMessage),
     });
   }
 
-  addEmoji() {
-    this.globalVariables.messageData = this.message;
-    console.log('Das ist die Nachricht die hochgeladen wird: ', this.message);
-    this.firebaseChatService.sendMessage(
-      this.globalVariables.openChannel.chatId,
-      'chatchannels'
-    );
-    this.remove(this.globalVariables.openChannel.chatId);
-  }
 
   /**
    *

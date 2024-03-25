@@ -25,8 +25,6 @@ export class HeaderMenuComponent {
 
   constructor() {
     this.globalVariables.showProfileMenu = false;
-    // console.log('currentUser: ', this.globalVariables.currentUser );
-    // console.log('uid: ', this.globalVariables.activeID );
     this.userUpdateServce.setActiveUserId(this.globalVariables.activeID);
   }
 
@@ -34,8 +32,5 @@ export class HeaderMenuComponent {
     this.userService.logout();
   }
 
-  /*  openProfile() {
-     this.globalVariables.showProfile = true;
-   }
-  */
+
 }

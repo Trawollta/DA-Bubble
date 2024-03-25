@@ -42,20 +42,16 @@ export class ProfileComponent {
   }
 
 async ngOnInit(){
-  console.log('Aufruf des Profile. UserId:', this.globalVariables.profileUserId);
+  
+  this.globalVariables.userToChatWith.id = this.globalVariables.profileUserId;
   const userData = await this.firebaseService.getUserData(this.globalVariables.profileUserId);
-  //console.log('userData bei Ini: ', userData);
   this.profile = new User(userData);
- // console.log('proflie bei Ini: ', this.profile);
 }
 
   close() {
     this.globalVariables.showProfile = false;
   }
 
-  openMessage() {
-   // this.globalVariables.showWriteMessage = true;
-  }
 
   editProfile() {
     this.nameBuffer = this.profile.name;

@@ -7,11 +7,11 @@
       <span class="username">{{ user.name }}</span>
       <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
     </div>
-    <div class="speech-bubble"(click)="onSelectMessage(message.id)">
+    <div class="speech-bubble"(click)="onSelectMessage()">
       <span class="speech-bubble-text">{{ message.message }}</span>
     </div>
-    <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id"
-      [message]="message" [originalMessage]="originalMessage"></app-reactions>
+    <app-reactions class="reaction-field" *ngIf="openReaction" 
+      [message]="message" [originalMessage]="originalMessage"></app-reactions><!--  && selectedMessage === message.id -->
       <div class="tooltip">
         <div class="reaction-emojis">
           <ng-container *ngFor="let emoji of message.emoji let index = index">

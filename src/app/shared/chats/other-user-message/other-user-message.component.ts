@@ -44,7 +44,6 @@ export class OtherUserMessageComponent {
   firebaseUpdate = inject(FirebaseUserupdateService);
 
   openReaction: boolean = false;
-  selectedMessage: string = '';
   @Input() message: any;
   @Input() isThread: boolean = false;
 
@@ -167,8 +166,7 @@ export class OtherUserMessageComponent {
     this.globalVariables.messageThreadStart.img = this.user.img;
   }
 
-  onSelectMessage(message: string) {
-    this.selectedMessage = message; //hier wird die messageId übergeben.
+  onSelectMessage() {
     this.openReaction = !this.openReaction; //geändert, damit man es auch wieder schließen kann, wenn mannochmal auf das Element klickt
   }
 
@@ -187,8 +185,7 @@ export class OtherUserMessageComponent {
    */
   onCloseReactions() {
     this.openReaction = false;
-    this.selectedMessage = '';
-  }
+    }
 
   addUserIdToEmoji(emoji: any, index: number) {
     const activeID = this.globalVariables.activeID;

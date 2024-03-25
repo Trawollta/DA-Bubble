@@ -46,7 +46,6 @@ export class CurrentUserMessageComponent {
   firebaseChatService = inject(FirebaseChatService);
   firebaseUpdate = inject(FirebaseUserupdateService);
   openReaction: boolean = false;
-  selectedMessage: string = '';
 
   @Input() message: any;
   @Input() index: any;
@@ -61,7 +60,7 @@ export class CurrentUserMessageComponent {
     timestamp: 0,
     emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
   };
-  editMessage: boolean = false;
+  activeMessage: boolean = false;
 
   profile: User = { img: '', name: '', isActive: false, email: '' };
   mouseover: boolean = false;
@@ -165,9 +164,9 @@ export class CurrentUserMessageComponent {
     this.globalVariables.messageThreadStart.img = this.user.img;
   }
 
-  onSelectMessage(message: string) {
-    this.selectedMessage = message;
-    this.openReaction = true;
+  onSelectMessage() {
+   this.activeMessage = !this.activeMessage;
+    this.openReaction = !this.openReaction;
   }
 
   @HostListener('document:click', ['$event'])
@@ -178,8 +177,8 @@ export class CurrentUserMessageComponent {
   }
 
   onCloseReactions() {
+    this.activeMessage = false
     this.openReaction = false;
-    this.selectedMessage = '';
   }
 
   addUserIdToEmoji(emoji: any, index: number) {

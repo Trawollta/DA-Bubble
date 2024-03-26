@@ -128,6 +128,7 @@ export class GlobalFunctionsService {
     e.stopPropagation();
   }
 
+
   /**
  * this function provides all relevant information for the answer section
  */
@@ -217,15 +218,12 @@ export class GlobalFunctionsService {
   }
 
 
-
   //warum existiert hier eine Firebasefunktion?
   //Alle Firebasefunktionen sollten in einem Firebaseservice sein
   async updateData(collectionPath: string, docId: string, data: Partial<any>): Promise<void> {
     const docRef = doc(this.firestore, collectionPath, docId);
     await updateDoc(docRef, data);
   }
-
-
 
   showDashboardElement(screenWidth: number) {
     if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;

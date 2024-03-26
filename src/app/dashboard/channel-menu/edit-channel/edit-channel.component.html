@@ -14,7 +14,7 @@
       <div class="editName-area">
         <div class="first-row">
           <label for="channelName" class="label">Channel name:</label>
-          <button class="edit-btn" (click)="toggleEdit('channelName')">
+          <button class="edit-btn" (click)="toggleEdit(globalVariables.channelData)">
             {{ editMode.channelName ? 'Speichern' : 'Bearbeiten' }}
           </button>
         </div>
@@ -28,8 +28,8 @@
       <div class="editName-area">
         <div class="first-row">
           <label for="description">Beschreibung:</label>
-          <button class="edit-btn" (click)="toggleEdit('channelName')">
-            {{ editMode.channelName ? 'Speichern' : 'Bearbeiten' }}
+          <button class="edit-btn" (click)="toggleEdit('description')">
+            {{ editMode.description ? 'Speichern' : 'Bearbeiten' }}
           </button>
         </div>
           <div *ngIf="!editMode.description">{{ globalVariables.channelData.description }}</div>
@@ -46,7 +46,8 @@
         </div>
     </div>
           <div class="button-area">
-            <app-button [classes]="['primary']" caption="{{ globalVariables.isEditingChannel ? 'Channel verlassen' : 'Channel erstellen' }}" imgPath=""></app-button>
+            <app-button [classes]="['primary']" (click)="saveChangesAndExit()" caption="{{ globalVariables.isEditingChannel ? 'Änderungen speichern und Channel verlassen' : 'Channel erstellen' }}" imgPath=""></app-button>
+
           </div>
   </div>
 </div>

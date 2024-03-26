@@ -25,7 +25,6 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
     InputfieldComponent,
     AddNewChannelComponent,
     ChannelMenuComponent,
-    
     FormsModule
 
   ],
@@ -114,6 +113,7 @@ export class AddContactsComponent implements OnInit {
     this.globalVariables.channelData.channelName = '';
     this.globalVariables.channelData.description = '';
     this.globalVariables.channelData.chatId = '';
+    this.globalVariables.channelData.id = '';
     this.globalFunctions.closeAddContactsOverlay();
   }
 
@@ -126,6 +126,8 @@ export class AddContactsComponent implements OnInit {
       description: this.globalVariables.channelData.description,
       chatId: '',
       members: selectedUserIds,
+      id: ''
+
     };
     console.log('newChannelData: ', newChannelData);
     return newChannelData;

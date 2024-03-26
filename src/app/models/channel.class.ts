@@ -3,13 +3,15 @@ export class channel {
 
     channelName: string;
     description: string;
-    creator: string; 
+    creator: string;
+    id:string;
    // members: User[];
     channelMember: {
         userId: string
     }[];
 
     constructor(obj?: any) {
+        this.id = obj ? obj.id : '';
         this.channelName = obj ? obj.channelName : '';
         this.description = obj ? obj.description : '';
         this.creator = obj ? obj.creator : ''; // hier kommt die active UserId rein

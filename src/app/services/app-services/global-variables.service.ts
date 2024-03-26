@@ -13,7 +13,6 @@ export class GlobalVariablesService {
   desktop1200: boolean = window.innerWidth > 1200;
   login: boolean = false;
   signup: boolean = false;
-  imprintActiv: boolean = false;
   accountAdjustment: boolean = false;
 
   activeID: string = 'guest'; // this is the id of guest user of testusers
@@ -26,7 +25,7 @@ export class GlobalVariablesService {
   isProfileOfCurrentUser: boolean = true;
   profileUserId: string = '';
 
-  // insert from globalfunctions
+// insert from globalfunctions
   channel: boolean = false;
   adduser: boolean = false;
   openReaction: boolean = false;
@@ -34,8 +33,8 @@ export class GlobalVariablesService {
   editChannel: boolean = false;
   showContacts: boolean = false;
   memberlist: boolean = false;
-  newChannelname: boolean = false;
-  isEditingChannel: boolean = false;
+  newChannelname: boolean =false;
+  isEditingChannel: boolean =false ;
 
   //flags for showing the dashboard main elements
   showChannelMenu: boolean = true;
@@ -58,6 +57,11 @@ export class GlobalVariablesService {
   showChannels: boolean = false;
   gotoChannel: any = [];
   isChannelVisible: boolean = true;
+
+
+  currentChannelId: string = '';
+
+
 
   //this is the object for collecting message data from input field in chat
   messageData = {
@@ -102,6 +106,7 @@ export class GlobalVariablesService {
     description: '',
     channelName: '',
     chatId: '',
+    id: ''
     /* owner: '',
     allowedUser: ['id1', '1d2'] */
   };
@@ -124,16 +129,18 @@ export class GlobalVariablesService {
 
   editMessage: boolean = false;
 
-  constructor() { }
+  imprintActiv= false;
+
+  constructor() {}
 
   //eine Idee:
   //wir müssen die User überall mit der ID ansprechen und nur wenn wir den Namen brauchen holen wir ihn.
   //wir müssten also inern ausschließlich mit den IDs arbeiten und  nur wenn wir den Profilnamen anzeigen lassen wollen wird hier hin verwiesen.
   // dadurch können user auch den gleichen Namen haben.
-  /*  allUserIDs = [
-     {
-       userId: '',
-       userName: '',
-     },
-   ]; */
+ /*  allUserIDs = [
+    {
+      userId: '',
+      userName: '',
+    },
+  ]; */
 }

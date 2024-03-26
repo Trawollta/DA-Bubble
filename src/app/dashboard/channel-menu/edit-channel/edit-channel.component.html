@@ -14,12 +14,15 @@
       <div class="editName-area">
         <div class="first-row">
           <label for="channelName" class="label">Channel name:</label>
-          <button class="edit-btn" (click)="toggleEdit(globalVariables.channelData)">
-            {{ editMode.channelName ? 'Speichern' : 'Bearbeiten' }}
+          <button class="edit-btn" (click)="toggleEdit()">
+            <span *ngIf="!editChannelDM" (click)="editChannelName()">Bearbeiten</span>
+            <span *ngIf="editChannelDM" (click)="sumbitEdit()">Speichern</span>
+            <!-- {{ globalVariables.channelData.channelName }} -->
           </button>
         </div>
         <div *ngIf="!editMode.channelName" class="channel-name-display">#{{ globalVariables.channelData.channelName }}</div>
-        <app-inputfield *ngIf="editMode.channelName" [(ngModel)]="globalVariables.channelData.channelName" [classes]="['standard']" type="text"></app-inputfield>
+        <app-inputfield *ngIf="editChannelDM" [(ngModel)]="editedName" [classes]="['standard']" type="text"></app-inputfield>
+        <!-- <app-inputfield *ngIf="editMode.channelName" [(ngModel)]="globalVariables.channelData.channelName" [classes]="['standard']" type="text"></app-inputfield> -->
       </div>
     </div>
 
@@ -28,9 +31,9 @@
       <div class="editName-area">
         <div class="first-row">
           <label for="description">Beschreibung:</label>
-          <button class="edit-btn" (click)="toggleEdit('description')">
+<!--           <button class="edit-btn" (click)="toggleEdit('description')">
             {{ editMode.description ? 'Speichern' : 'Bearbeiten' }}
-          </button>
+          </button> -->
         </div>
           <div *ngIf="!editMode.description">{{ globalVariables.channelData.description }}</div>
             <app-inputfield *ngIf="editMode.description" [(ngModel)]="globalVariables.channelData.description" [classes]="['standard']" type="text"></app-inputfield>

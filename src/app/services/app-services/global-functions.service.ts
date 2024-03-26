@@ -48,6 +48,8 @@ export class GlobalFunctionsService {
   openEditChannelOverlay() {
     this.globalVariables.channelData.channelName = this.globalVariables.openChannel.titel;
     this.globalVariables.channelData.description = this.globalVariables.openChannel.desc;
+    this.globalVariables.channelData.chatId = this.globalVariables.openChannel.chatId;
+    this.globalVariables.channelData.id = this.globalVariables.openChannel.id;
 
     this.globalVariables.isEditingChannel = true;
 

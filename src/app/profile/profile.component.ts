@@ -55,7 +55,7 @@ async ngOnInit(){
 
   editProfile() {
     this.nameBuffer = this.profile.name;
-      this.emailBuffer = this.profile.email;
+    this.emailBuffer = this.profile.email;
     this.globalVariables.showEditProfile = true;
 
   }

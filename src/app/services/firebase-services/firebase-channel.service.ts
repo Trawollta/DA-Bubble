@@ -39,9 +39,8 @@ export class FirebaseChannelService {
     return this.updateChannel(channelId, { description: newDescription });
   }
 
-  async loadChannelData() {
-    // Beispiel, wie man Kanaldaten aus Firebase abruft
-    const docRef = doc(this.firestore, 'channels', 'nu2dor7D33hTQUXYIssO');
+  async loadChannelData(docId: string) {
+    const docRef = doc(this.firestore, 'channels', docId); 
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       console.log("Dokumentdaten:", docSnap.data());
@@ -63,5 +62,13 @@ export class FirebaseChannelService {
       }
     });
   }
+
+    /**
+   * this funktion updates the element
+   * @param data -Json
+   */
+    async updateDataChannel(data: { [x: string]: any }, docId: string) {
+      await updateDoc(doc(this.firestore, 'channels', docId), data);
+    }
 
 }

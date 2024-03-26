@@ -7,6 +7,7 @@ import { FirebaseUserService } from 'app/services/firebase-services/firebase-use
 import { ButtonComponent } from 'app/shared/button/button.component';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { User } from 'app/models/user.class';
+import { channel } from 'app/models/channel.class';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
 
@@ -40,34 +41,33 @@ export class EditChannelComponent {
   channelBuffer = '';
   descriptionBuffer = '';
   // Beispiel eines Kanalobjekts. Stellen Sie sicher, dass dieses durch die ausgewählten Kanaldaten initialisiert wird.
-  channel?:any;
+  
+  channel: channel = {
+    description: '',
+    channelName: '',
+    id: '',
+    chatId: '',
+    creator: '',
+    channelMember: [],
+  }
 
   channelId: string = '';
+
+
+  editChannelDM = false;
+  editedName = '';
 
 
 
   constructor(private channelService: FirebaseChannelService) {}
 
   async ngOnInit() {
-    const channelData = await this.firebaseChannelService.loadChannelData(); // Implementieren Sie diese Funktion entsprechend
+    let idToSearch = this.globalVariables.channelData.id;
+    const channelData = await this.firebaseChannelService.loadChannelData(idToSearch); // Implementieren Sie diese Funktion entsprechend
     if (channelData) {
-
-      this.channel = channelData;
-      console.log('Kanaldaten geladen:', channelData);
-    } else {
-      console.error('Kanaldaten konnten nicht geladen werden.');
+      this.channel.channelName = channelData['channelName'];
     }
-  
   }
-  
-  
-  // Vorbereitung der Bearbeitung mit den aktuellen Kanaldaten
-  editChannel() {
-    this.channelBuffer = this.channel.name;
-    this.descriptionBuffer = this.channel.description;
-    this.globalVariables.isEditingChannel = true; // Angenommen, dieser Zustand existiert und wird entsprechend verwendet
-  }
-
   // Abbrechen der Bearbeitung
   cancelEditChannel() {
     this.channelBuffer = '';
@@ -107,36 +107,43 @@ export class EditChannelComponent {
     await this.globalFunctions.updateData('channels', this.channel.id, data);
     // Aktualisieren der lokalen Kopie des Kanals nach der erfolgreichen Aktualisierung
     if (field === 'channelName') {
-      this.channel.name = this.globalVariables.channelData.channelName;
+      this.channel.channelName = this.globalVariables.channelData.channelName;
     } else if (field === 'description') {
       this.channel.description = this.globalVariables.channelData.description;
     }
   }
-
-  // Generierung der zu aktualisierenden Daten
-  data(): { [key: string]: any } {
-    const nameChanged = this.channelBuffer !== this.channel.name;
-    const descriptionChanged = this.descriptionBuffer !== this.channel.description;
-    const data: { [key: string]: any } = {};
-    if (nameChanged) data['name'] = this.channelBuffer;
-    if (descriptionChanged) data['description'] = this.descriptionBuffer;
-
-    return data;
-  }
-
 
   enableEdit(field: 'channelName' | 'description') {
     this['editMode'][field] = true;
   }
 
 
-  toggleEdit(channelData:any) {
-    // this.editMode[field] = !this.editMode[field];
-  
-    // if (!this.editMode[field]) {
-    //   this.saveChanges(field);
-    // }
-    console.log(channelData)
+  toggleEdit() {
+  }
+
+  editChannelName() {
+    this.editChannelDM = true;
+  }
+
+  saveChannelName() {
+    this.channel.channelName = this.editedName;
+    this.editChannelDM = false;
+  }
+
+  async sumbitEdit() {
+    let idToSearch = this.globalVariables.channelData.id;
+    this.firebaseChannelService.updateDataChannel(this.data(), idToSearch);
+    const userData = await this.firebaseChannelService.loadChannelData(idToSearch);
+    this.channel = new channel(userData);
+    this.saveChannelName();
+  }
+
+ 
+  data():{} {
+    const nameChanged = this.editedName !== this.channel.channelName;
+     const data: { [key: string]: any } = {};
+    if(nameChanged) data['channelName'] = this.editedName;
+    return data;
   }
 
   async updateChannelName(channelId: string, newName: string): Promise<void> {

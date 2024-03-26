@@ -27,10 +27,9 @@
 
       </div>
       <div class="partingLineContainer">
-        <div *ngIf="globalVariables.answerCount !== 0" class="partingLineText">{{ globalVariables.answerCount }} 
+        <div *ngIf="globalVariables.answerCount !== 0" class="partingLineText">{{ globalVariables.answerCount }}
           <span> Antwort</span>
-          <span
-          *ngIf="globalVariables.answerCount !== 1">en</span>
+          <span *ngIf="globalVariables.answerCount !== 1">en</span>
         </div>
         <div class="partingLine"></div>
       </div>
@@ -41,10 +40,15 @@
   <!-- input marnie-->
   <!-- container for all inputfield and controll elements -->
   <section class="inputfield">
-    <app-inputfield [classes]="['standard']" type="text" placeholder="Deine Nachricht"
+    <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht"
       [(ngModel)]="globalVariables.messageData.message"></app-inputfield>
     <div class="controllElementsContainer">
-      <div class="moreControlls"></div>
+      <div class="moreControls">
+        <img src="assets/img/input-imgs/add.svg" alt="">
+        <div class="inputFieldVerticalLine"></div>
+        <img src="assets/img/input-imgs/sentiment_satisfied.svg" alt="">
+        <img src="assets/img/input-imgs/alternate_email.svg" alt="">
+      </div>
       <img src="assets/img/input-imgs/send.svg" alt="send button" (click)="sendMessage()">
     </div>
   </section>

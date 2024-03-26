@@ -44,9 +44,14 @@
 
 <!-- container for all inputfield and controll elements -->
   <section class="inputfield">
-    <app-inputfield [classes]="['standard']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield>
+    <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield>
     <div class="controllElementsContainer">
-      <div class="moreControlls"></div>
+      <div class="moreControls">
+        <img src="assets/img/input-imgs/add.svg" alt="">
+        <div class="inputFieldVerticalLine"></div>
+        <img src="assets/img/input-imgs/sentiment_satisfied.svg" alt="">
+        <img src="assets/img/input-imgs/alternate_email.svg" alt="" *ngIf="!globalVariables.isUserChat">
+      </div>
       <img src="assets/img/input-imgs/send.svg" alt="send button" (click)="sendMessage()">
     </div>
   </section>

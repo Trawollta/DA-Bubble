@@ -7,6 +7,8 @@ main {
   border-radius: 30px;
   background-color: $white;
   height: 100%;
+  padding-bottom: 16px;
+  box-sizing: border-box;
 
   .contentContainer {
     @include dFlex($fd: column, $ai: flex-end, $jc: space-between);
@@ -51,9 +53,8 @@ main {
       border-radius: 20px;
       cursor: pointer;
 
-      img{
-        filter:invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
-        brightness(93%) contrast(103%);
+      img {
+        filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
       }
     }
 
@@ -113,14 +114,32 @@ main {
 }
 
 .inputfield {
-  width: 100%;
-  margin-bottom: 16px;
-  .controllElementsContainer{
+  width: 90%;
+  height: 145px;
+  font-size: 18px !important;
+ /*  box-sizing: border-box;
+  margin-bottom: 16px; */
+  border: 1px solid $light_purple;
+  border-radius: 20px;
+
+  .controllElementsContainer {
     width: 100%;
     @include dFlex($jc: space-between);
-
-    img{
+    padding: 18px 16px;
+    box-sizing: border-box;
+    img {
+      height: 20px;
+      width: 20px;
       cursor: pointer;
+    }
+    .moreControls {
+      @include dFlex($g: 8px);
+      .inputFieldVerticalLine{
+        height: 35px;
+        width: 0;
+        border: 0.5px solid $light_purple;
+      }
+     
     }
   }
 }

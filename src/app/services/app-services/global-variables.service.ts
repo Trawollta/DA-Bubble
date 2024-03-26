@@ -98,6 +98,7 @@ export class GlobalVariablesService {
     desc: '',
     id: 'fsjWrBdDhpg1SvocXmxS',
     chatId: 'NQMdt08FAcXbVroDLhvm',
+    creator: '',
   };
 
 
@@ -106,7 +107,8 @@ export class GlobalVariablesService {
     description: '',
     channelName: '',
     chatId: '',
-    id: ''
+    id: '',
+    creator: ''
     /* owner: '',
     allowedUser: ['id1', '1d2'] */
   };

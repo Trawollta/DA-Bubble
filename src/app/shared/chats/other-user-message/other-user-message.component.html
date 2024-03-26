@@ -23,7 +23,7 @@
               {{ emoji.icon }} {{ emoji.userId.length }}
             </span>
           </ng-container>
-          <span class="tooltiptext" *ngIf="mouseover"> {{ hoverUser }} & x Personen </span>
+          <span class="tooltiptext" *ngIf="mouseover"> {{ hoverUser }} & {{ count }} Personen </span>
         </div>
       </div>
     <div *ngIf="!isThread && !globalVariables.isUserChat" class="replie-wrapper">

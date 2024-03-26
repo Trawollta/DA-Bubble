@@ -50,6 +50,7 @@ export class GlobalFunctionsService {
     this.globalVariables.channelData.description = this.globalVariables.openChannel.desc;
     this.globalVariables.channelData.chatId = this.globalVariables.openChannel.chatId;
     this.globalVariables.channelData.id = this.globalVariables.openChannel.id;
+    this.globalVariables.channelData.creator = this.globalVariables.openChannel.creator;
 
     this.globalVariables.isEditingChannel = true;
 

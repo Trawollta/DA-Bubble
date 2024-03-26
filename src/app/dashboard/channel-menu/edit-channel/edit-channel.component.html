@@ -14,7 +14,7 @@
       <div class="editName-area">
         <div class="first-row">
           <label for="channelName" class="label">Channel name:</label>
-          <button class="edit-btn" (click)="toggleEdit()">
+          <button class="edit-btn">
             <span *ngIf="!editChannelDM" (click)="editChannelName()">Bearbeiten</span>
             <span *ngIf="editChannelDM" (click)="sumbitEdit()">Speichern</span>
             <!-- {{ globalVariables.channelData.channelName }} -->
@@ -44,7 +44,7 @@
     
                 <div class="creator">
                   <label>Erstellt von:</label>
-                  <div>{{profile.name}}</div>
+                  <div>{{ creatorName }}</div>
                 </div>
         </div>
     </div>

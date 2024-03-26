@@ -21,7 +21,6 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
 import { ReactionsComponent } from 'app/shared/reactions/reactions.component';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { User } from 'app/models/user.class';
-import { ChatChannel } from 'app/models/chatChannel.class';
 import { FormsModule } from '@angular/forms';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
@@ -71,6 +70,7 @@ export class CurrentUserMessageComponent {
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
+  count = '';
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -204,25 +204,24 @@ export class CurrentUserMessageComponent {
     this.remove(this.globalVariables.openChannel.chatId, chatFamiliy); // es kommt zu einem Springen des chats, wenn Function ausgeführt wird
   }
 
-
   remove(chatId: string, chatFamiliy: string) {
     return updateDoc(doc(this.firestore, chatFamiliy, chatId), {
       messages: arrayRemove(this.originalMessage),
     });
   }
 
-
-
   /**
    *
    * @returns - name of first user of emoji
    */
   async getFirstUserOfEmoji() {
+    let lenght = this.message.emoji[0].userId.length - 1;
     let userId = this.message.emoji[0].userId[0];
     if (userId !== '') {
       let x = await this.firebaseUpdate.getUserData(userId);
       this.profile = new User(x);
       this.hoverUser = this.profile.name;
+      this.count = lenght.toString();
     }
   }
 

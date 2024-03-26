@@ -67,6 +67,7 @@ export class OtherUserMessageComponent {
   profile: User = { img: '', name: '', isActive: false, email: '' };
   mouseover: boolean = false;
   hoverUser: string = '';
+  count: string = '';
 
   constructor(private elementRef: ElementRef) {
     this.unsubUser = this.getUser(this.userId);
@@ -223,11 +224,13 @@ export class OtherUserMessageComponent {
    * @returns - name of first user of emoji
    */
   async getFirstUserOfEmoji() {
+    let lenght = this.message.emoji[0].userId.length - 1;
     let userId = this.message.emoji[0].userId[0];
     if (userId !== '') {
       let x = await this.firebaseUpdate.getUserData(userId);
       this.profile = new User(x);
       this.hoverUser = this.profile.name;
+      this.count = lenght.toString();
     }
   }
 

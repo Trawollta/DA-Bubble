@@ -9,54 +9,6 @@
     width: 100%;
 }
 
-.channelName {
-    font-weight: 700;
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 30px;
-}
-
-
-.border {
-    border: 1px solid #797ef3;
-    border-radius: 20px;
-    display: flex;
-    margin-bottom: 50px; 
-}
-
-.editName-area {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px; /* Fügt etwas Platz zwischen den Bereichen hinzu */
-}
-.channel-name-display {
-    padding-top: 20px; 
-    padding-left: 20px; 
-}
-
-.edit-btn {
-    color: #797ef3;
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-    font-weight: 600;
-    font-size: 16px;
-
-}
-
-.line {
-    width: 95%;
-    height: 2px;
-    border-radius: 20px;
-    background-color: #aDB0D9
-}
-.first-row {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    width: 100%;
-}
-
 // @media screen and (min-width: 800px) {
 //     .overlay {
 //         background-color: white;
@@ -68,6 +20,95 @@
 //         height: 55vh;
 //     }
 // }
+
+.channelName {
+    font-weight: 700;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.channel-name {
+    margin-top: 16px;
+    margin-left: 32px;
+}
+
+.channel {
+    margin-left: 32px;
+}
+.channel-name-display {
+    margin-left: 32px;
+    margin-top: 20px;
+}
+
+.description {
+    font-weight: bold;
+}
+
+.editName-area {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    height: 100px;
+    border: 1px solid #797ef3;
+    border-radius: 20px;
+    margin-bottom: 50px; 
+    margin-top: 40px;
+}
+
+.no-border {
+    border: none !important;
+}
+
+
+.editDescription-area {
+    display: flex;
+    flex-direction: column;
+    height: 160px;
+    border: 1px solid #797ef3;
+    border-radius: 20px;
+    margin-bottom: 50px; 
+    margin-top: 40px;
+}
+
+.edit-btn {
+    color: #797ef3;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.publisher {
+    color: #797ef3;
+    font-size: 18px;
+    margin-top: 8px;
+}
+
+.line {
+    width: 90%;
+    height: 2px;
+    border-radius: 20px;
+    background-color: #aDB0D9;
+    margin-top: 32px;
+    margin-left: 32px;
+}
+
+.first-row {
+    display: flex;
+    justify-content: space-between; 
+    margin-left: 32px;
+    margin-right: 32px;
+}
+
+.second-row {
+    display: flex;
+    justify-content: space-between; 
+    margin-left: 32px;
+    margin-right: 32px;
+    margin-top: 24px;
+}
 
 .Edit-content {
     display:flex;
@@ -83,7 +124,7 @@
 }
 
 .close-btn {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .headline {
@@ -107,12 +148,6 @@
     text-align: left;
 }
 
-h3 {
-    margin-top:20px;
-    font-weight: 700;
-    font-size: 20px;
-}
-
 .button-area {
     display:flex;
     justify-content: flex-end;
@@ -124,6 +159,10 @@ h3 {
     justify-content: center;
 }
 
-.edit {
-    
+.creator {
+    display:flex;
+    flex-direction: column;
+    margin-left: 32px;
+    margin-top: 14px;
 }
+

@@ -120,7 +120,6 @@ export class AddContactsComponent implements OnInit {
 
   addChannelwithChoosenMembers() {
     const selectedUserIds = this.selectedUsers.map(user => user.id);
-    console.log('this.selectedUsers: ', this.selectedUsers);
     const newChannelData = {
       channelName: this.globalVariables.channelData.channelName,
       description: this.globalVariables.channelData.description,

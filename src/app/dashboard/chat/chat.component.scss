@@ -117,29 +117,50 @@ main {
   width: 90%;
   height: 145px;
   font-size: 18px !important;
- /*  box-sizing: border-box;
+  /*  box-sizing: border-box;
   margin-bottom: 16px; */
   border: 1px solid $light_purple;
   border-radius: 20px;
+  @include dFlex($fd:column, $ai:normal);
+  
+
+  textarea {
+    background-color: none;
+    border: 0;
+    padding-left: 16px; 
+    padding-top: 18px; 
+    font-size: 18px;
+    flex: 1;
+    border-radius: 20px;
+    resize: none;
+    &:focus-visible{
+      outline:0;
+    }
+  }
+
+  
 
   .controllElementsContainer {
     width: 100%;
     @include dFlex($jc: space-between);
     padding: 18px 16px;
     box-sizing: border-box;
+
     img {
       height: 20px;
       width: 20px;
       cursor: pointer;
     }
+
     .moreControls {
       @include dFlex($g: 8px);
-      .inputFieldVerticalLine{
+
+      .inputFieldVerticalLine {
         height: 35px;
         width: 0;
         border: 0.5px solid $light_purple;
       }
-     
+
     }
   }
 }

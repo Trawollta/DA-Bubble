@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { InputfieldComponent } from '../../shared/inputfield/inputfield.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { EditChannelComponent } from '../channel-menu/edit-channel/edit-channel.component';
@@ -31,9 +31,13 @@ export class ChatComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
+  //scroller = inject(ViewportScroller);
   allUserMessages: string = '';
   newMessage = '';
 
+  constructor(private scroller: ViewportScroller){
+    this.scroller.scrollToAnchor("scrolldown");
+  }
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');
     if (emojiDiv && emojiDiv.classList.contains('d-none')) {
@@ -43,7 +47,12 @@ export class ChatComponent {
     }
   }
 
-
+  ngOnInit(){
+    this.scroller.scrollToAnchor("scrolldown");
+  }
+  goDown() {
+    this.scroller.scrollToAnchor("scrolldown");
+  }
 
 
   openAnswers() {
@@ -71,5 +80,6 @@ export class ChatComponent {
       this.globalVariables.messageData.message = '';
       this.newMessage = '';
     }
+    //this.goDown();
   }
 }

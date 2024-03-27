@@ -124,7 +124,7 @@ export class GlobalVariablesService {
     email: 'muster@mail.de',
     img: 'assets/img/avatars/avatar_3.svg',
     isActive: true,
-    relatedChats:['test']
+    relatedChats:['NQMdt08FAcXbVroDLhvm']
   };
 
   choosedEmoji: any = { icon: '', userID: '' }; // this is the emoji which is choosen in emoji-picker

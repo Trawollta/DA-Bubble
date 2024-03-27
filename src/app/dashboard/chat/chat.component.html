@@ -39,12 +39,14 @@
   <div class="contentContainer">
     <div class="messages">
       <app-all-messages [isChat]="true"></app-all-messages>
+      
     </div>
   </div>
 
 <!-- container for all inputfield and controll elements -->
   <section class="inputfield">
-    <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield>
+    <textarea  class="'standard', 'inputFieldChat'" name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></textarea>
+    <!-- <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield> -->
     <div class="controllElementsContainer">
       <div class="moreControls">
         <img src="assets/img/input-imgs/add.svg" alt="">

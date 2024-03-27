@@ -122,6 +122,9 @@ export class EditChannelComponent {
   }
 
   async sumbitEdit() {
+    const newTitle = this.editedName; // Der neue Titel, den der Benutzer eingegeben hat
+    const channelId = this.globalVariables.channelData.id;
+
     let idToSearch = this.globalVariables.channelData.id;
     this.firebaseChannelService.updateDataChannel(this.data(), idToSearch);
     const userData = await this.firebaseChannelService.loadChannelData(
@@ -129,6 +132,8 @@ export class EditChannelComponent {
     );
     this.channel = new channel(userData);
     this.saveChannelName();
+
+    this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
   }
 
   async submitEdit() {

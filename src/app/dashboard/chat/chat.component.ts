@@ -10,6 +10,7 @@ import { AddToChannelComponent } from "../channel-menu/add-to-channel/add-to-cha
 import { ShowContactsComponent } from '../channel-menu/show-contacts/show-contacts.component';
 import { FormsModule } from '@angular/forms';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 
 @Component({
   selector: 'app-chat',
@@ -31,6 +32,7 @@ export class ChatComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
+  firebaseChannelService = inject (FirebaseChannelService);
   //scroller = inject(ViewportScroller);
   allUserMessages: string = '';
   newMessage = '';
@@ -81,5 +83,10 @@ export class ChatComponent {
       this.newMessage = '';
     }
     //this.goDown();
+  }
+
+  submitChannelNameChange(newTitle: string): void {
+    const channelId = this.globalVariables.openChannel.id; // Die ID des aktuellen Kanals
+    this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, addDoc, updateDoc, doc, setDoc, onSnapshot, getDoc } from '@angular/fire/firestore';
+import { GlobalVariablesService } from '../app-services/global-variables.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,7 @@ import { Firestore, collection, addDoc, updateDoc, doc, setDoc, onSnapshot, getD
 export class FirebaseChannelService {
 
   firestore: Firestore = inject(Firestore);
+  globalVariables = inject(GlobalVariablesService);
 
   constructor() { }
 
@@ -70,5 +72,17 @@ export class FirebaseChannelService {
     async updateDataChannel(data: { [x: string]: any }, docId: string) {
       await updateDoc(doc(this.firestore, 'channels', docId), data);
     }
+
+
+    updateChannelTitle(channelId: string, newTitle: string): void {
+      // Aktualisiere den Kanal im Backend, zum Beispiel in Firebase oder einer anderen Datenbank
+      this.updateChannel(channelId, { titel: newTitle }).then(() => {
+        // Aktualisiere den lokalen Zustand direkt nach dem erfolgreichen Backend-Update
+        if (this.globalVariables.openChannel && this.globalVariables.openChannel.id === channelId) {
+          this.globalVariables.openChannel.titel = newTitle;
+        }
+      });
+    }
+
 
 }

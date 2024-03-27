@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="headline">
       <div>
-        <span class="top">#{{ globalVariables.channelData.channelName }}</span>
+        <span class="top">#{{ globalVariables.openChannel.titel }}</span>
       </div>
       <div>
         <img (click)="globalFunctions.closeEditOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="Schließen">
@@ -18,8 +18,8 @@
             <span *ngIf="editChannelDM" (click)="sumbitEdit()">Speichern</span>
           </div>
         </div>
-        <div *ngIf="!editChannelDM" class="channel-name">#{{ globalVariables.channelData.channelName }}</div>
-        <app-inputfield *ngIf="editChannelDM" [(ngModel)]="editedName" [placeholder]="globalVariables.channelData.channelName" [classes]="['standard']" type="text"></app-inputfield>
+        <div *ngIf="!editChannelDM" class="channel-name">#{{ globalVariables.openChannel.titel }}</div>
+        <app-inputfield *ngIf="editChannelDM" [(ngModel)]="editedName" [placeholder]="globalVariables.openChannel.titel" [classes]="['standard']" type="text"></app-inputfield>
       </div>
 
     <!-- Bereich für die Beschreibung -->

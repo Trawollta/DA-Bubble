@@ -11,6 +11,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { FirebaseChatService } from '../firebase-services/firebase-chat.service';
+import { FirebaseChannelService } from '../firebase-services/firebase-channel.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,7 @@ export class GlobalFunctionsService {
 
   globalVariables = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
+  firebaseChannelService = inject (FirebaseChannelService);
 
   openProfile(ownProfile: boolean, userId: string) {
     this.globalVariables.profileUserId = userId;
@@ -231,6 +233,11 @@ export class GlobalFunctionsService {
   showDashboardElement(screenWidth: number) {
     if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;
     else if (window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
+  }
+
+  submitChannelNameChange(newTitle: string): void {
+    const channelId = this.globalVariables.openChannel.id; // Die ID des aktuellen Kanals
+    this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
   }
 
 }

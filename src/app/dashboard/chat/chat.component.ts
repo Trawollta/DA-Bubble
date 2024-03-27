@@ -85,8 +85,4 @@ export class ChatComponent {
     //this.goDown();
   }
 
-  submitChannelNameChange(newTitle: string): void {
-    const channelId = this.globalVariables.openChannel.id; // Die ID des aktuellen Kanals
-    this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
-  }
 }

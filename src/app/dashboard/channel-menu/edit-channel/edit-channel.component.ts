@@ -33,7 +33,7 @@ export class EditChannelComponent {
     description: false,
   };
 
-  profile: User = { img: '', name: '', isActive: false, email: '' };
+  profile: User = { img: '', name: '', isActive: false, email: '', relatedChats:[] };
 
   channelBuffer = '';
   descriptionBuffer = '';

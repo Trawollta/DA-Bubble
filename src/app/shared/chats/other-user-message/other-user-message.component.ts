@@ -64,7 +64,7 @@ export class OtherUserMessageComponent {
   answercount: number = 0;
   lastAnswerTime: number = 0;
 
-  profile: User = { img: '', name: '', isActive: false, email: '' };
+  profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
   mouseover: boolean = false;
   hoverUser: string = '';
   count: string = '';

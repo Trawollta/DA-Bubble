@@ -61,7 +61,7 @@ export class CurrentUserMessageComponent {
   };
   activeMessage: boolean = false;
 
-  profile: User = { img: '', name: '', isActive: false, email: '' };
+  profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
   mouseover: boolean = false;
   hoverUser: string = '';
 

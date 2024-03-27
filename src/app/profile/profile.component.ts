@@ -38,7 +38,8 @@ export class ProfileComponent {
     img: this.globalVariables.currentUser.img,
     name: this.globalVariables.currentUser.name, 
     email: this.globalVariables.currentUser.email,
-    isActive: this.globalVariables.currentUser.isActive
+    isActive: this.globalVariables.currentUser.isActive,
+    relatedChats: this.globalVariables.currentUser.relatedChats as string[]
   }
 
 async ngOnInit(){

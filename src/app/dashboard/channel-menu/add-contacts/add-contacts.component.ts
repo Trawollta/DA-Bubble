@@ -57,7 +57,6 @@ export class AddContactsComponent implements OnInit {
 
   constructor(
     private userService: FirebaseUserService, // Injizieren Sie den UserService
-    private firestore: Firestore,
     public globalFunctions: GlobalFunctionsService
   ) {}
 
@@ -120,13 +119,13 @@ export class AddContactsComponent implements OnInit {
 
   addChannelwithChoosenMembers() {
     const selectedUserIds = this.selectedUsers.map(user => user.id);
-    console.log('this.selectedUsers: ', this.selectedUsers);
     const newChannelData = {
       channelName: this.globalVariables.channelData.channelName,
       description: this.globalVariables.channelData.description,
       chatId: '',
       members: selectedUserIds,
-      id: ''
+      id: '',
+      creator: this.globalVariables.activeID
 
     };
     console.log('newChannelData: ', newChannelData);

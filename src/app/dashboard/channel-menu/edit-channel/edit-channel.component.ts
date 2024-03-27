@@ -53,6 +53,7 @@ export class EditChannelComponent {
   editChannelDES= false;
   editedName = '';
   editedDescription = '';
+  creator: boolean = false;
 
   creatorName: string = '';
 
@@ -69,6 +70,15 @@ export class EditChannelComponent {
       this.channel.creator = channelData['creator'];
     }
     this.getUserIdToName();
+    this.compareCreator();
+  }
+
+  compareCreator() {
+    if (this.globalVariables.activeID === this.channel.creator) {
+      this.creator = true;
+    } else {
+      this.creator = false;
+    }
   }
 
   cancelEditChannel() {

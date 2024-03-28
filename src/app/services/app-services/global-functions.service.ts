@@ -89,6 +89,12 @@ export class GlobalFunctionsService {
     else document.body.style.overflow = 'auto';
   }
 
+  freezeBackground(freeze: boolean){
+    if (freeze)
+      document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }
+
   //Diese CloseOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
 
   closeChannelOverlay() {

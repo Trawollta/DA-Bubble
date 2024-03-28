@@ -1,7 +1,8 @@
 <main>
 
-   <!-- container for header it is a channel chat -->
+  <!-- container for header it is a channel chat -->
   <section class="msg-header" *ngIf="!globalVariables.isUserChat">
+    <app-show-contacts class="showContactsHeader" *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers"></app-show-contacts>
     <div class="topic-headline">
       <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
         <p></p>
@@ -11,11 +12,12 @@
     </div>
     <div class="active-contacts">
       <div class="contact-row" *ngIf="globalVariables.desktop700">
-        <div (click)="globalFunctions.showMembers()">
+        <div (click)="showMembers(true)">
+          
           <!-- Beide Varianten funktionieren! '../  oder ./' -->
-        <img src="./assets/img/avatars/Elias_Neumann.svg" alt="" />
-        <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
-      </div>
+          <img src="./assets/img/avatars/Elias_Neumann.svg" alt="" />
+          <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
+        </div>
       </div>
       <div class="add-contact" (click)="globalFunctions.openAddContactsOverlay()">
         <img src="../../../assets/img/icons/person_add.svg" alt="" />
@@ -26,7 +28,7 @@
   <!-- container for header it is a user chat -->
   <section class="msg-header" *ngIf="globalVariables.isUserChat">
     <div class="topic-headline">
-      <div class="headline" (click)="globalFunctions.openProfile(false, this.globalVariables.userToChatWith.id)"> 
+      <div class="headline" (click)="globalFunctions.openProfile(false, this.globalVariables.userToChatWith.id)">
         <p></p>
         <img src="{{ globalVariables.userToChatWith.img }}" alt="">
         <p>{{ globalVariables.userToChatWith.name }}</p>
@@ -35,32 +37,36 @@
     </div>
   </section>
 
-<!-- container for all chat meassages -->
+  <!-- container for all chat meassages -->
   <div class="contentContainer">
     <div class="messages">
       <app-all-messages [isChat]="true"></app-all-messages>
-      
+
     </div>
   </div>
 
-<!-- container for all inputfield and controll elements -->
+  <!-- container for all inputfield and controll elements -->
   <section class="inputfield">
-    <textarea  class="'standard', 'inputFieldChat'" name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></textarea>
+    <textarea class="'standard', 'inputFieldChat'" name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht"
+      [(ngModel)]="newMessage"></textarea>
     <!-- <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield> -->
     <div class="controllElementsContainer">
+      <app-show-contacts class="showContactsTextInput" *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers"></app-show-contacts>
       <div class="moreControls">
         <img src="assets/img/input-imgs/add.svg" alt="">
         <div class="inputFieldVerticalLine"></div>
         <img src="assets/img/input-imgs/sentiment_satisfied.svg" alt="">
-        <img src="assets/img/input-imgs/alternate_email.svg" alt="" *ngIf="!globalVariables.isUserChat">
+        <img src="assets/img/input-imgs/alternate_email.svg" alt="" 
+        *ngIf="!globalVariables.isUserChat"
+        (click)="showMembers(false)">
       </div>
       <img src="assets/img/input-imgs/send.svg" alt="send button" (click)="sendMessage()">
     </div>
   </section>
 
-   <!-- container popup elements -->
-  <app-show-contacts *ngIf="globalVariables.memberlist"></app-show-contacts>
-  <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel> 
+  <!-- container popup elements -->
+  
+  <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel>
   <app-edit-channel *ngIf="globalVariables.editChannelOverlayOpen"></app-edit-channel>
 
 

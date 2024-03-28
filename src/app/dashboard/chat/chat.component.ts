@@ -36,6 +36,7 @@ export class ChatComponent {
   //scroller = inject(ViewportScroller);
   allUserMessages: string = '';
   newMessage = '';
+  headerShowMembers: boolean = false; 
 
   constructor(private scroller: ViewportScroller){
     this.scroller.scrollToAnchor("scrolldown");
@@ -63,6 +64,13 @@ export class ChatComponent {
       this.globalVariables.showChannelMenu = false;
   }
 
+  showMembers(headerShowMembers: boolean) {
+    this.globalVariables.memberlist = !this.globalVariables.memberlist;
+    this.globalVariables.headerShowMembers = this.globalVariables.memberlist && headerShowMembers ? true : false;
+    console.log('headerShowMembers', this.globalVariables.headerShowMembers);
+    this.globalFunctions.freezeBackground(this.globalVariables.memberlist);
+  }
+
   sendMessage() {
 
     if (this.newMessage !== '') {
@@ -71,14 +79,8 @@ export class ChatComponent {
       this.globalVariables.messageData.answerto = '';
       this.globalVariables.messageData.message = this.newMessage;
       this.globalVariables.messageData.emoji = [{ icon: '', userId: [] as any[], iconId: '' }];
-//console.log('elcher Channel ist offen: ',this.globalVariables.openChannel);
-//console.log('chatId:', this.globalVariables.openChannel.chatId );
-      let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
-      // hier benötige ich die chatId und muss chatusers wählen wenn this.globalVariablesService.isUserChat
-      
-        this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, chatFamiliy);
-      
-      
+      let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';      
+      this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, chatFamiliy);      
       this.globalVariables.messageData.message = '';
       this.newMessage = '';
     }

@@ -25,7 +25,7 @@ export class GlobalVariablesService {
   isProfileOfCurrentUser: boolean = true;
   profileUserId: string = '';
 
-// insert from globalfunctions
+// Flags to manage chat
   channel: boolean = false;
   adduser: boolean = false;
   openReaction: boolean = false;
@@ -33,8 +33,9 @@ export class GlobalVariablesService {
   editChannel: boolean = false;
   showContacts: boolean = false;
   memberlist: boolean = false;
-  newChannelname: boolean =false;
-  isEditingChannel: boolean =false ;
+  newChannelname: boolean = false;
+  isEditingChannel: boolean = false;
+  headerShowMembers: boolean = false;
 
   //flags for showing the dashboard main elements
   showChannelMenu: boolean = true;

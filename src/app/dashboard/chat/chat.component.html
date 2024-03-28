@@ -48,14 +48,15 @@
   <!-- container for all inputfield and controll elements -->
   <section class="inputfield">
     <textarea class="'standard', 'inputFieldChat'" name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht"
-      [(ngModel)]="newMessage"></textarea>
+      [(ngModel)]="globalVariables.newMessage"></textarea>
     <!-- <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield> -->
     <div class="controllElementsContainer">
       <app-show-contacts class="showContactsTextInput" *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers"></app-show-contacts>
+      <app-emoji-container class="showContactsTextInput" *ngIf="globalVariables.showEmojiContainer"></app-emoji-container>
       <div class="moreControls">
         <img src="assets/img/input-imgs/add.svg" alt="">
         <div class="inputFieldVerticalLine"></div>
-        <img src="assets/img/input-imgs/sentiment_satisfied.svg" alt="">
+        <img src="assets/img/input-imgs/sentiment_satisfied.svg" alt="" (click)="showEmojiContainer()">
         <img src="assets/img/input-imgs/alternate_email.svg" alt="" 
         *ngIf="!globalVariables.isUserChat"
         (click)="showMembers(false)">

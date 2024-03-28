@@ -11,6 +11,7 @@ import { ShowContactsComponent } from '../channel-menu/show-contacts/show-contac
 import { FormsModule } from '@angular/forms';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
+import { EmojiContainerComponent } from 'app/shared/reactions/emoji-container/emoji-container.component';
 
 @Component({
   selector: 'app-chat',
@@ -25,7 +26,8 @@ import { FirebaseChannelService } from 'app/services/firebase-services/firebase-
     AddContactsComponent,
     AddToChannelComponent,
     ShowContactsComponent,
-    FormsModule
+    FormsModule,
+    EmojiContainerComponent
   ]
 })
 export class ChatComponent {
@@ -71,18 +73,24 @@ export class ChatComponent {
     this.globalFunctions.freezeBackground(this.globalVariables.memberlist);
   }
 
+  showEmojiContainer(){
+    this.globalVariables.showEmojiContainer = !this.globalVariables.showEmojiContainer;
+    this.globalFunctions.freezeBackground(this.globalVariables.showEmojiContainer);
+    console.log('showEmojiContainer', this.globalVariables.showEmojiContainer);
+  }
+
   sendMessage() {
 
-    if (this.newMessage !== '') {
+    if (this.globalVariables.newMessage !== '') {
       this.globalVariables.messageData.userId = this.globalVariables.activeID;
       this.globalVariables.messageData.timestamp = new Date().getTime();
       this.globalVariables.messageData.answerto = '';
-      this.globalVariables.messageData.message = this.newMessage;
+      this.globalVariables.messageData.message = this.globalVariables.newMessage;
       this.globalVariables.messageData.emoji = [{ icon: '', userId: [] as any[], iconId: '' }];
       let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';      
       this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, chatFamiliy);      
       this.globalVariables.messageData.message = '';
-      this.newMessage = '';
+      this.globalVariables.newMessage = '';
     }
     //this.goDown();
   }

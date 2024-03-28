@@ -39,7 +39,7 @@ export class ReactionsComponent {
   editMessage: boolean = false;
 
   emojiList: Array<any> = [];
-  allEmojis: Array<any> = [];
+  allEmojis: Array<any> = []; // wo wird das gebraucht? 
 
   url =
     'https://emoji-api.com/emojis?access_key=60ede231f07183acd1dbb4bdd7dde0797f62e95e';

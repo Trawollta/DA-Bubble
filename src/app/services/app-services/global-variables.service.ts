@@ -36,6 +36,15 @@ export class GlobalVariablesService {
   newChannelname: boolean = false;
   isEditingChannel: boolean = false;
   headerShowMembers: boolean = false;
+  newMessage: string = '';
+  showEmojiContainer: boolean = false;
+
+  //take over selected Emoji
+  selectedEmoji = {
+    character: '',
+    codePoint: ''
+  };
+  
 
   //flags for showing the dashboard main elements
   showChannelMenu: boolean = true;

@@ -15,8 +15,9 @@
         <div class="userContainer">
           <!-- version highlight member in message -->
           <label class="contactContainer" *ngIf="!globalVariables.headerShowMembers">
-            <input type="checkbox">
+            <input type="checkbox"  (change)="checkboxChanged(user.name)" [(ngModel)]="user.checked">
             {{ user.name }}
+            
           </label>
           <!-- version open member list in header -->
           <div class="contactContainer" *ngIf="globalVariables.headerShowMembers">

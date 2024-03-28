@@ -18,7 +18,7 @@
             <span *ngIf="editChannelDM" (click)="sumbitEdit()">Speichern</span>
           </div>
         </div>
-        <div *ngIf="!editChannelDM" class="channel-name">#{{ globalVariables.openChannel.titel }}</div>
+        <div *ngIf="!editChannelDM" class="edited-field">#{{ globalVariables.openChannel.titel }}</div>
         <app-inputfield *ngIf="editChannelDM" [(ngModel)]="editedName" [placeholder]="globalVariables.openChannel.titel" [classes]="['standard']" type="text"></app-inputfield>
       </div>
 
@@ -31,7 +31,11 @@
             <span *ngIf="editChannelDES" (click)="submitEdit()">Speichern</span>
           </div>
         </div>
-          <div *ngIf="!editChannelDES">{{ globalVariables.channelData.description }}</div>
+        <div class="desc-area">
+          <span *ngIf="!editChannelDES" class="edited-field">{{ globalVariables.channelData.description }}</span>
+        </div>
+          
+
             <app-inputfield *ngIf="editChannelDES" [(ngModel)]="editedDescription" [placeholder]="globalVariables.channelData.description"[classes]="['standard']" type="text"></app-inputfield>
 
             <div class="line">
@@ -46,7 +50,7 @@
               [classes]="['primary']" 
               caption="Channel verlassen" (click)="globalFunctions.closeEditOverlay()"
               imgPath=""
-              ></app-button>
+            ></app-button>
           </div>
   </div>
 </div>

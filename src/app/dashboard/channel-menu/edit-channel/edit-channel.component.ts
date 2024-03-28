@@ -57,6 +57,8 @@ export class EditChannelComponent {
 
   creatorName: string = '';
 
+  descriptionEdited= false;
+
   constructor(private channelService: FirebaseChannelService) {}
 
   async ngOnInit() {
@@ -103,10 +105,12 @@ export class EditChannelComponent {
   }
 
   editChannelName() {
+    this.editedName = this.globalVariables.openChannel.titel;
     this.editChannelDM = true;
   }
 
   editChannelDescripition() {
+    this.editedDescription = this.globalVariables.openChannel.desc;
     this.editChannelDES = true;
 
   }
@@ -169,5 +173,6 @@ export class EditChannelComponent {
     const docRef = doc(this.firestore, `channels/${channelId}`);
     return updateDoc(docRef, { name: newDescription });
   }
+
   
 }

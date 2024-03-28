@@ -1,14 +1,16 @@
 <div class="main-content">
-
     <div class="overlay" *ngIf="globalVariables.showContacts">
         <div class="headline">
             <div>
-                <span class="top"> Leute hinzufuegen</span>
-            </div>
-            <div>
-                <img (click)="globalFunctions.closeAddContactsOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
-            </div>
+                <span class="top"> Leute hinzufügen</span>
 
+                <div>
+                    <span class="title">#{{ globalVariables.openChannel.titel }}</span>
+                  </div>
+            </div>
+                <div>
+                    <img (click)="globalFunctions.closeAddContactsOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
+                </div>
         </div>
         <app-inputfield [classes]="['standard']" type="search" placeholder="Mitglieder suchen" (inputChange)="onSearchChange($event)"></app-inputfield>
         <ul>
@@ -19,7 +21,6 @@
             </li>
         </ul>
         <div class="add">
-
             <div class="button-area">
                 <app-button [classes]="['primary']" (click)="addToChannel()" caption="Hinzufügen" imgPath=""></app-button>
             </div>

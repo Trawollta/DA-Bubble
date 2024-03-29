@@ -2,7 +2,8 @@
 
   <!-- container for header it is a channel chat -->
   <section class="msg-header" *ngIf="!globalVariables.isUserChat">
-    <app-show-contacts class="showContactsHeader" *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers"></app-show-contacts>
+    <app-show-contacts class="showContactsHeader"
+      *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers"></app-show-contacts>
     <div class="topic-headline">
       <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
         <p></p>
@@ -13,7 +14,7 @@
     <div class="active-contacts">
       <div class="contact-row" *ngIf="globalVariables.desktop700">
         <div (click)="showMembers(true)">
-          
+
           <!-- Beide Varianten funktionieren! '../  oder ./' -->
           <img src="./assets/img/avatars/Elias_Neumann.svg" alt="" />
           <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
@@ -51,22 +52,24 @@
       [(ngModel)]="globalVariables.newMessage"></textarea>
     <!-- <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield> -->
     <div class="controllElementsContainer">
-      <app-show-contacts class="showContactsTextInput" *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers"></app-show-contacts>
-      <app-emoji-container class="showContactsTextInput" *ngIf="globalVariables.showEmojiContainer"></app-emoji-container>
+      <app-show-contacts class="showContactsTextInput"
+        *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers"></app-show-contacts>
+      <app-emoji-container class="showContactsTextInput"
+        *ngIf="globalVariables.showEmojiContainer"></app-emoji-container>
       <div class="moreControls">
-        <img src="assets/img/input-imgs/add.svg" alt="">
+        <input type="file" id="getFile" #fileInput hidden (change)="onFileSelected($event)">
+        <img src="assets/img/input-imgs/add.svg" alt="" (click)="fileInput.click()">
         <div class="inputFieldVerticalLine"></div>
         <img src="assets/img/input-imgs/sentiment_satisfied.svg" alt="" (click)="showEmojiContainer()">
-        <img src="assets/img/input-imgs/alternate_email.svg" alt="" 
-        *ngIf="!globalVariables.isUserChat"
-        (click)="showMembers(false)">
+        <img src="assets/img/input-imgs/alternate_email.svg" alt="" *ngIf="!globalVariables.isUserChat"
+          (click)="showMembers(false)">
       </div>
       <img src="assets/img/input-imgs/send.svg" alt="send button" (click)="sendMessage()">
     </div>
   </section>
 
   <!-- container popup elements -->
-  
+
   <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel>
   <app-edit-channel *ngIf="globalVariables.editChannelOverlayOpen"></app-edit-channel>
 

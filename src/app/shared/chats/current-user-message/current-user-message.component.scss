@@ -1,13 +1,8 @@
 @import "../../../../styles.scss";
 
 .message-current-user {
-  // height: 200px;
   @include dFlex($g: 30px, $jc: flex-end, $ai: normal);
-  /* gap: 30px;
-  display: flex;
-  justify-content: flex-end; */
   position: relative;
-  //margin: 16px 16px;
 
   &:hover {
     background-color: $background;
@@ -15,17 +10,13 @@
   }
 
   .current-user-content {
-    //height: 180px;
     @include dFlex($g: 8px);
-   /*  gap: 8px;
-    display: flex; */
+  
 
     .info-area {
-      //height: 142px;
-      //gap: 8px;
 
       .info-area-wrapper {
-        //justify-content: flex-end !important;
+  
         @include dFlex($g: 20px, $jc: flex-end);
         height: 25px;
 
@@ -48,13 +39,12 @@
         padding: 15px;
         box-sizing: border-box;
         border-radius: 30px 0px 30px 30px;
-        //gap: 8px;
         background-color: $purple2;
-        /* .speech-bubble-current-user-text {
-         // padding: 15px;
-        //  border-radius: 30px 0px 30px 30px;
-         // gap: 8px;
-        } */
+       
+        img{
+            max-width: 200px;
+          }
+       
       }
 
       .reaction-btn {
@@ -66,9 +56,6 @@
       .replie-wrapper {
         max-height: 25px;
         @include dFlex($g: 20px, $fd: row, $jc: flex-start);
-       /*  gap: 20px;
-        display: flex;
-        flex-direction: row; */
 
         .replie-text {
           font-size: 16px;
@@ -96,8 +83,7 @@
   }
 
   .user {
-   // height: 50px;
-   // border-radius: 40px;
+   
     img {
       width: 50px;
       height: 50px;
@@ -108,8 +94,6 @@
 
 .reaction-field {
   @include dFlex($jc:flex-start, $fd:column, $ai:flex-start);
- // display: flex;
- // justify-content: flex-start;
   position: absolute;
   top: 0;
   left: 0;
@@ -117,9 +101,6 @@
 
 .reaction-emojis {
   @include dFlex($jc:flex-start);
-  /* display: flex;
-  flex-direction: row;
-  justify-content: flex-end; */
   gap: 5px;
   padding-top: 10px;
   padding-bottom: 5px;
@@ -127,8 +108,6 @@
 
 .reaction-emoji-field {
   @include dFlex();
-  /* align-items: center;
-  display: flex; */
   width: 40px;
   height: 20px;
   border: 1px solid $light_purple;

@@ -68,6 +68,7 @@ export class OtherUserMessageComponent {
   mouseover: boolean = false;
   hoverUser: string = '';
   count: string = '';
+  isImage:boolean = false;
 
   constructor(private elementRef: ElementRef) {
     this.unsubUser = this.getUser(this.userId);
@@ -110,6 +111,13 @@ export class OtherUserMessageComponent {
     this.postingTime = this.message.timestamp;
     this.fillAnswerVariables();
     this.cloneOriginalMessage();
+    this.isImage = this.isValidURL(this.message.message);
+    console.log('this.isImage', this.isImage  );
+  }
+
+  isValidURL(url: string): boolean {
+    const urlPattern = /^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
+    return urlPattern.test(url);
   }
 
   /**

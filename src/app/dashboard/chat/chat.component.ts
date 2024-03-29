@@ -12,6 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { EmojiContainerComponent } from 'app/shared/reactions/emoji-container/emoji-container.component';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
+
 
 @Component({
   selector: 'app-chat',
@@ -34,13 +37,16 @@ export class ChatComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
-  firebaseChannelService = inject (FirebaseChannelService);
+  firebaseChannelService = inject(FirebaseChannelService);
+
+  
+
   //scroller = inject(ViewportScroller);
   allUserMessages: string = '';
   newMessage = '';
-  headerShowMembers: boolean = false; 
+  headerShowMembers: boolean = false;
 
-  constructor(private scroller: ViewportScroller){
+  constructor(private scroller: ViewportScroller) {
     this.scroller.scrollToAnchor("scrolldown");
   }
   openEmojis() {
@@ -52,7 +58,7 @@ export class ChatComponent {
     }
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.scroller.scrollToAnchor("scrolldown");
   }
   goDown() {
@@ -73,10 +79,10 @@ export class ChatComponent {
     this.globalFunctions.freezeBackground(this.globalVariables.memberlist);
   }
 
-  showEmojiContainer(){
+  showEmojiContainer() {
     this.globalVariables.showEmojiContainer = !this.globalVariables.showEmojiContainer;
     this.globalFunctions.freezeBackground(this.globalVariables.showEmojiContainer);
-   // console.log('showEmojiContainer', this.globalVariables.showEmojiContainer);
+    // console.log('showEmojiContainer', this.globalVariables.showEmojiContainer);
   }
 
   sendMessage() {
@@ -87,12 +93,50 @@ export class ChatComponent {
       this.globalVariables.messageData.answerto = '';
       this.globalVariables.messageData.message = this.globalVariables.newMessage;
       this.globalVariables.messageData.emoji = [{ icon: '', userId: [] as any[], iconId: '' }];
-      let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';      
-      this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, chatFamiliy);      
+      let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
+      this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, chatFamiliy);
       this.globalVariables.messageData.message = '';
       this.globalVariables.newMessage = '';
     }
     //this.goDown();
+  }
+
+
+  fileName = '';
+  storage = getStorage();
+  
+
+  
+
+  onFileSelected(event: any) {
+    const selectedFile: File = event.target.files[0];
+    // Hier kannst du den Code hinzufügen, um mit der ausgewählten Datei zu arbeiten
+    console.log(selectedFile);
+    this.uploadfile(selectedFile);
+    
+    
+
+    if (selectedFile) {
+      this.fileName = selectedFile.name;
+      const formData = new FormData();
+      formData.append("thumbnail", selectedFile);
+      
+
+    }
+  }
+
+  async uploadfile(file:File){
+    const storageRef = ref(this.storage, this.globalVariables.activeID + '/' + file.name);
+    const imageRef = ref(storageRef, file.name);
+    console.log('mountainImagesRef', storageRef);
+    if(file.size < 500000){
+    await uploadBytes(imageRef, file);
+    const downloadURL = await getDownloadURL(imageRef);
+    console.log('downloadURL', downloadURL);
+    this.globalVariables.newMessage = downloadURL;
+  }else{
+    console.log('file zu groß', file.size);
+  }
   }
 
 }

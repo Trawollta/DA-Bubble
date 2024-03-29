@@ -8,7 +8,10 @@
       <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
     </div>
     <div class="speech-bubble"(click)="onSelectMessage()">
-      <span class="speech-bubble-text">{{ message.message }}</span>
+      <span class="speech-bubble-text"  *ngIf="!isImage">{{ message.message }}</span>
+      <div class="loadedImg" *ngIf="isImage">
+        <img src="{{ message.message }}" alt="">
+      </div>
     </div>
     <app-reactions class="reaction-field" *ngIf="openReaction" 
       [message]="message" [originalMessage]="originalMessage"></app-reactions><!--  && selectedMessage === message.id -->

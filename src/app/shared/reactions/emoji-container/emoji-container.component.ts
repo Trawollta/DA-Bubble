@@ -52,7 +52,7 @@ export class EmojiContainerComponent {
     });
   }
 
-  takeEmoji(emoji: any, isAddToMessage: boolean){
+  takeEmoji(emoji: Emoji, isAddToMessage: boolean){
     this.globalVariables.selectedEmoji.character = emoji.character;
     this.globalVariables.selectedEmoji.codePoint = emoji.codePoint;
     if(isAddToMessage){

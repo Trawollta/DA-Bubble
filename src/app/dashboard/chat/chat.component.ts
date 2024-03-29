@@ -69,14 +69,14 @@ export class ChatComponent {
   showMembers(headerShowMembers: boolean) {
     this.globalVariables.memberlist = !this.globalVariables.memberlist;
     this.globalVariables.headerShowMembers = this.globalVariables.memberlist && headerShowMembers ? true : false;
-    console.log('headerShowMembers', this.globalVariables.headerShowMembers);
+    //console.log('headerShowMembers', this.globalVariables.headerShowMembers);
     this.globalFunctions.freezeBackground(this.globalVariables.memberlist);
   }
 
   showEmojiContainer(){
     this.globalVariables.showEmojiContainer = !this.globalVariables.showEmojiContainer;
     this.globalFunctions.freezeBackground(this.globalVariables.showEmojiContainer);
-    console.log('showEmojiContainer', this.globalVariables.showEmojiContainer);
+   // console.log('showEmojiContainer', this.globalVariables.showEmojiContainer);
   }
 
   sendMessage() {

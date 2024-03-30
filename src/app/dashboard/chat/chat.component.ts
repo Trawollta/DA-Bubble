@@ -13,6 +13,7 @@ import { FirebaseChatService } from 'app/services/firebase-services/firebase-cha
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { EmojiContainerComponent } from 'app/shared/reactions/emoji-container/emoji-container.component';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ClickedOutsideDirective } from 'app/directives/clicked-outside.directive';
 
 
 
@@ -30,7 +31,8 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
     AddToChannelComponent,
     ShowContactsComponent,
     FormsModule,
-    EmojiContainerComponent
+    EmojiContainerComponent,
+    ClickedOutsideDirective
   ]
 })
 export class ChatComponent {
@@ -45,6 +47,7 @@ export class ChatComponent {
   allUserMessages: string = '';
   newMessage = '';
   headerShowMembers: boolean = false;
+  isPopupOpen:boolean = false;
 
   constructor(private scroller: ViewportScroller) {
     this.scroller.scrollToAnchor("scrolldown");
@@ -73,17 +76,41 @@ export class ChatComponent {
   }
 
   showMembers(headerShowMembers: boolean) {
-    this.globalVariables.memberlist = !this.globalVariables.memberlist;
+    this.globalVariables.memberlist = true;
     this.globalVariables.headerShowMembers = this.globalVariables.memberlist && headerShowMembers ? true : false;
-    //console.log('headerShowMembers', this.globalVariables.headerShowMembers);
     this.globalFunctions.freezeBackground(this.globalVariables.memberlist);
   }
 
   showEmojiContainer() {
-    this.globalVariables.showEmojiContainer = !this.globalVariables.showEmojiContainer;
+    this.globalVariables.showEmojiContainer = true; 
     this.globalFunctions.freezeBackground(this.globalVariables.showEmojiContainer);
-    // console.log('showEmojiContainer', this.globalVariables.showEmojiContainer);
   }
+
+  /**
+   * this function closes the showContacts popup by using appClickedOutside from ClickedOutsideDirective
+   */
+  closeMembers() {
+    if(this.globalVariables.memberlist && !this.isPopupOpen ){
+      this.isPopupOpen = true;
+    }else if(this.globalVariables.memberlist && this.isPopupOpen ){
+      this.globalVariables.memberlist = false;
+      this.isPopupOpen = false;
+    }
+  }
+
+  /**
+   * this function closes the emoji popup by using appClickedOutside from ClickedOutsideDirective
+   */
+  closeEmoji() {
+    if(this.globalVariables.showEmojiContainer && !this.isPopupOpen ){
+      this.isPopupOpen = true;
+    }else if(this.globalVariables.showEmojiContainer && this.isPopupOpen ){
+      this.globalVariables.showEmojiContainer = false;
+      this.isPopupOpen = false;
+    }
+  }
+  
+  
 
   sendMessage() {
 
@@ -138,5 +165,11 @@ export class ChatComponent {
     console.log('file zu groß', file.size);
   }
   }
+
+
+  doSomething(){
+    console.log('nicht im Element');
+  }
+
 
 }

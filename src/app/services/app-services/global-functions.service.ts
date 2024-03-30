@@ -36,9 +36,7 @@ export class GlobalFunctionsService {
   menuProfileClicked() {
     this.globalVariables.showProfileMenu =
       !this.globalVariables.showProfileMenu;
-    if (this.globalVariables.showProfileMenu)
-      document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
+      this.freezeBackground(this.globalVariables.showProfileMenu);
   }
 
   openChannelOverlay() {

@@ -3,7 +3,8 @@
   <!-- container for header it is a channel chat -->
   <section class="msg-header" *ngIf="!globalVariables.isUserChat">
     <app-show-contacts class="showContactsHeader"
-      *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers"></app-show-contacts>
+      *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers"
+      appClickedOutside (clickedOutside)="closeMembers()"></app-show-contacts>
     <div class="topic-headline">
       <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
         <p></p>
@@ -53,10 +54,13 @@
     <!-- <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield> -->
     <div class="controllElementsContainer">
       <app-show-contacts class="showContactsTextInput"
-        *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers"></app-show-contacts>
+        *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers"
+        appClickedOutside (clickedOutside)="closeMembers()"
+        ></app-show-contacts>
       <app-emoji-container class="showContactsTextInput"
-        *ngIf="globalVariables.showEmojiContainer"></app-emoji-container>
-      <div class="moreControls">
+        *ngIf="globalVariables.showEmojiContainer"
+        appClickedOutside (clickedOutside)="closeEmoji()"></app-emoji-container>
+      <div class="moreControls"  >
         <input type="file" id="getFile" #fileInput hidden (change)="onFileSelected($event)">
         <img src="assets/img/input-imgs/add.svg" alt="" (click)="fileInput.click()">
         <div class="inputFieldVerticalLine"></div>

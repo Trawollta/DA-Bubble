@@ -112,7 +112,7 @@ export class OtherUserMessageComponent {
     this.fillAnswerVariables();
     this.cloneOriginalMessage();
     this.isImage = this.isValidURL(this.message.message);
-    console.log('this.isImage', this.isImage  );
+    //console.log('this.isImage', this.isImage  );
   }
 
   isValidURL(url: string): boolean {

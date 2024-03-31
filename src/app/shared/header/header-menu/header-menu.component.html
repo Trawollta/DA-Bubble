@@ -17,9 +17,9 @@
                 </div>
                 <div class="menuOuterContainer">
                     <div class="menu">
-                        <a>
+                        <a (click)="globalFunctions.openProfile(true, globalVariables.activeID)">
                             <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/account_circle.svg" alt="avatarIcon">
-                            <span (click)="globalFunctions.openProfile(true, globalVariables.activeID)">Profile </span>
+                            <span >Profile </span>
                         </a>
                         <a (click)="logOut()">
                             <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/logout.svg" alt="logoutIcon">

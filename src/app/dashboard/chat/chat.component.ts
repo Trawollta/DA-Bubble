@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { EmojiContainerComponent } from 'app/shared/reactions/emoji-container/emoji-container.component';
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject  } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { ClickedOutsideDirective } from 'app/directives/clicked-outside.directive';
 
 
@@ -41,13 +41,23 @@ export class ChatComponent {
   firebaseChatService = inject(FirebaseChatService);
   firebaseChannelService = inject(FirebaseChannelService);
 
-  
+
 
   //scroller = inject(ViewportScroller);
   allUserMessages: string = '';
   newMessage = '';
   headerShowMembers: boolean = false;
-  isPopupOpen:boolean = false;
+  isPopupOpen: boolean = false;
+
+  // for file upload 
+  storage = getStorage();
+  deleteFileRef = ref(this.storage, '');
+  showErrorPopup = false;
+  downloadURL = '';
+  downloadURLAlias = ''
+  fileSize = '';
+  selectedFile: File | null = null;
+
 
   constructor(private scroller: ViewportScroller) {
     this.scroller.scrollToAnchor("scrolldown");
@@ -82,7 +92,7 @@ export class ChatComponent {
   }
 
   showEmojiContainer() {
-    this.globalVariables.showEmojiContainer = true; 
+    this.globalVariables.showEmojiContainer = true;
     this.globalFunctions.freezeBackground(this.globalVariables.showEmojiContainer);
   }
 
@@ -90,9 +100,9 @@ export class ChatComponent {
    * this function closes the showContacts popup by using appClickedOutside from ClickedOutsideDirective
    */
   closeMembers() {
-    if(this.globalVariables.memberlist && !this.isPopupOpen ){
+    if (this.globalVariables.memberlist && !this.isPopupOpen) {
       this.isPopupOpen = true;
-    }else if(this.globalVariables.memberlist && this.isPopupOpen ){
+    } else if (this.globalVariables.memberlist && this.isPopupOpen) {
       this.globalVariables.memberlist = false;
       this.isPopupOpen = false;
     }
@@ -102,91 +112,102 @@ export class ChatComponent {
    * this function closes the emoji popup by using appClickedOutside from ClickedOutsideDirective
    */
   closeEmoji() {
-    if(this.globalVariables.showEmojiContainer && !this.isPopupOpen ){
+    if (this.globalVariables.showEmojiContainer && !this.isPopupOpen) {
       this.isPopupOpen = true;
-    }else if(this.globalVariables.showEmojiContainer && this.isPopupOpen ){
+    } else if (this.globalVariables.showEmojiContainer && this.isPopupOpen) {
       this.globalVariables.showEmojiContainer = false;
       this.isPopupOpen = false;
     }
   }
-  
-  
 
-  sendMessage() {
+
+  /**
+   * this function fills all relevant data to the messagData object and calls the send message function from firebase service
+   */
+  async sendMessage() {
 
     if (this.globalVariables.newMessage !== '') {
       this.globalVariables.messageData.userId = this.globalVariables.activeID;
       this.globalVariables.messageData.timestamp = new Date().getTime();
       this.globalVariables.messageData.answerto = '';
-
-      // toDo: messages muss gelöscht werden, wenn ich den Kanal wechsle!
-
-
-      //hier muss ich eine Logic einbauen, die checkt, ob er Alias vorhanden ist.
-      //wenn nein. Lösche die File, die in downloadURL steht.
-      // Ich brauche auch ein Flag, dass verhindert, das mehr als ein File hochgeladen werden kann,
-      // Grund. Ich habe in downloadURL nur eine File.
-      // Wenn ja, dann muss der Alias in der message durch de URL ausgetauscht werden.
-      // Ziel: es soll neben der URL auch noch Beschreibungstext gesendet werden können.
-      // Wenn die Message dann gerendert wird. benötige ich eine Logic, die den normalen Text von der URL unterscheidet
-      this.globalVariables.messageData.message = this.globalVariables.newMessage;
+      this.globalVariables.messageData.message = await this.buildMessage();
       this.globalVariables.messageData.emoji = [{ icon: '', userId: [] as any[], iconId: '' }];
       let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
       this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, chatFamiliy);
       this.globalVariables.messageData.message = '';
       this.globalVariables.newMessage = '';
+      this.selectedFile = null
     }
-    //this.goDown();
+
   }
 
-//den folgenden Code muss ich noch einordnen
-  fileName = '';
-  storage = getStorage();
-  deleteFileRef =ref(this.storage, '');
-  showErrorPopup = false;
-  downloadURL = '';
-  downloadURLAlias = ''
-  fileSize = '';
-
-  
-
-  
-
+  /**
+   * This function checks if file size ok, if yes save file object and alias
+   * @param event - click on open button
+   */
   onFileSelected(event: any) {
-    const selectedFile: File = event.target.files[0];
-    // Hier kannst du den Code hinzufügen, um mit der ausgewählten Datei zu arbeiten
-    console.log(selectedFile);
-    this.uploadfile(selectedFile);
-  if (selectedFile) {
-      this.fileName = selectedFile.name;
-      const formData = new FormData();
-      formData.append("thumbnail", selectedFile);
-      
+    this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      if (this.selectedFile.size > 500000) {
+        this.showErrorPopup = true;
+        this.fileSize = Math.round(this.selectedFile.size / 1000).toString() + 'KB';
+        this.selectedFile = null;
+      }
+      else {
+        this.downloadURLAlias = this.selectedFile.name
+        this.globalVariables.newMessage = this.downloadURLAlias;
+      }
     }
   }
 
-  async uploadfile(file:File){
-    const storageRef = ref(this.storage, this.globalVariables.activeID + '/' + file.name);
-
-    this.deleteFileRef = storageRef; // if I need to delete file
-
-    const imageRef = ref(storageRef, file.name);
-    //console.log('mountainImagesRef', storageRef);
-    if(file.size < 500000){
-    await uploadBytes(imageRef, file);
-    this.downloadURL = await getDownloadURL(imageRef);
-    //console.log('downloadURL', downloadURL);
-    this.downloadURLAlias = file.name
-    this.globalVariables.newMessage = this.downloadURLAlias; // only the file name should shown will save url by clicking submit
-      // if the alias is not in this.globalVariables.newMessage the file has to be removed from storage
-  }else{
-    this.showErrorPopup = true;
-    this.fileSize = Math.round(file.size / 1000).toString() + 'KB';
-    console.log('file zu groß', file.size);
-  }
+  /**
+   * this function replaces the alias with the URL
+   * @returns message which should send
+   */
+  async buildMessage() {
+    let message = this.globalVariables.newMessage
+    if (this.selectedFile) {
+      await this.uploadfile(this.selectedFile);
+      message = message.replace(this.downloadURLAlias, this.downloadURL);
+      console.log(message);
+      debugger;
+    }
+    return message;
   }
 
-  closeErrorPopup(){
+  /**
+   * this function stores the file in storage and returns the download URL
+   * @param file - selectedFile 
+   */
+  async uploadfile(file: File | null) {
+    if (file) {
+      try {
+        const storageRef = ref(this.storage, this.globalVariables.activeID + '/' + file.name);
+        this.deleteFileRef = storageRef; // if delete is necessary
+        const imageRef = ref(storageRef, file.name);
+        await uploadBytes(imageRef, file);
+        this.downloadURL = await getDownloadURL(imageRef);
+      } catch (error) { console.error("error while uploading:", error);}
+    } else console.error("No file availabe");
+  }
+
+
+  /**
+   * this function removes the image from storage
+   */
+  deleteFile() {
+    // Delete the file
+    deleteObject(this.deleteFileRef).then(() => {
+      console.log('File deleted successfully');
+    }).catch((error) => {
+      console.log('Uh-oh, an error occurred!', error);
+    });
+  }
+
+  /**
+   * this function just sets the flag for closing the error popup
+   */
+  closeErrorPopup() {
     this.showErrorPopup = false;
   }
 

@@ -71,6 +71,7 @@
     </div>
   </section>
 
+  <!-- error upload popup -->
   <div *ngIf="showErrorPopup" class="errorPopupOuterContainer">
     <div class="errorPopup" appClickedOutside (clickedOutside)="closeErrorPopup()">
       <div class="errorPopupInnerContainer">
@@ -83,7 +84,7 @@
       </div>
     </div>
   </div>
-  <!-- container popup elements -->
+
 
   <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel>
   <app-edit-channel *ngIf="globalVariables.editChannelOverlayOpen"></app-edit-channel>

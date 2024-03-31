@@ -38,6 +38,7 @@ export class GlobalVariablesService {
   headerShowMembers: boolean = false;
   newMessage: string = '';
   showEmojiContainer: boolean = false;
+  scrolledToBottom: boolean = false;
 
   //take over selected Emoji
   selectedEmoji = {

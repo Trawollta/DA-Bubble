@@ -4,6 +4,9 @@ import {
   ChangeDetectorRef,
   AfterContentChecked,
   Input,
+  ElementRef,
+  ViewChild,
+  AfterViewChecked,
 } from '@angular/core';
 import { OtherUserMessageComponent } from 'app/shared/chats/other-user-message/other-user-message.component';
 import { CurrentUserMessageComponent } from 'app/shared/chats/current-user-message/current-user-message.component';
@@ -11,7 +14,7 @@ import { ChatChannel } from 'app/models/chatChannel.class';
 import { ChatUsers } from 'app/models/chatUsers.class';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, ViewportScroller } from '@angular/common';
 import { ReactionsComponent } from '../../reactions/reactions.component';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 
@@ -29,7 +32,7 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
     DatePipe,
   ],
 })
-export class AllMessagesComponent {
+export class AllMessagesComponent implements AfterViewChecked {
   firebaseChatService = inject(FirebaseChatService);
   globalVariablesService = inject(GlobalVariablesService);
   GlobalFunctionsService = inject(GlobalFunctionsService);
@@ -43,8 +46,29 @@ export class AllMessagesComponent {
 
   @Input() isChat: boolean = false;
   @Input() isThread: boolean = false;
+  @ViewChild('scrolldown') scrollDownElement!: ElementRef;
 
   constructor(private changeDetector: ChangeDetectorRef) { }
+
+  /**
+   * this function checks if the chat is scrolled down
+   */
+  ngAfterViewChecked() {
+    if (!this.globalVariablesService.scrolledToBottom) {
+      setTimeout(() => {
+        this.scrollToElement();
+        this.globalVariablesService.scrolledToBottom = true;
+      }, 400);
+    }
+  }
+
+  /**
+   * this function scrolls down the chat
+   */
+  scrollToElement() {
+    this.scrollDownElement.nativeElement.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' });
+  }
+
 
   //this function avoids the ExpressionChangedAfterItHasBeenCheckedError in the developer Mode
   ngAfterContentChecked(): void {
@@ -52,7 +76,6 @@ export class AllMessagesComponent {
   }
 
   ngOnInit() {
-    //this.lastDisplayedDate = new Date()
     if (this.globalVariablesService.chatChannel.messages.length > 0) {
       this.lastDisplayedDate = new Date(
         this.globalVariablesService.chatChannel.messages[0].timestamp
@@ -67,14 +90,13 @@ export class AllMessagesComponent {
     const channelChat = messages.filter(message => message.answerto === '');
     const threadChat = messages.filter(message => message.answerto === this.globalVariablesService.answerKey);
     const userchat = messages;
-    if(this.globalVariablesService.isUserChat){
-     // console.log('ein user Chat');
+    if (this.globalVariablesService.isUserChat) {
+      // console.log('ein user Chat');
       return userchat;
-    }else{
-     // console.log('ein channel Chat');
+    } else {
+      // console.log('ein channel Chat');
       return this.isThread ? threadChat : channelChat;
     }
-    
   }
 
   /**
@@ -127,17 +149,15 @@ export class AllMessagesComponent {
     let conditionTest: boolean = false;
     if (this.isChat)
       conditionTest = message.userId == this.globalVariablesService.activeID && message.answerto == ''; /* message.message != '' && */
-      else if (this.isThread){
-        conditionTest =
-          message.userId === this.globalVariablesService.activeID &&
-          message.message != '' &&
-          message.answerto === this.globalVariablesService.answerKey; 
-          //debugger;
-      }
-        
-      else conditionTest = false;
-      return conditionTest;
+    else if (this.isThread) {
+      conditionTest =
+        message.userId === this.globalVariablesService.activeID &&
+        message.message != '' &&
+        message.answerto === this.globalVariablesService.answerKey;
     }
+    else conditionTest = false;
+    return conditionTest;
+  }
 
   /**
    * this function is for setting the conditions for showing all messages from other users which are not an answer
@@ -150,20 +170,18 @@ export class AllMessagesComponent {
       conditionTest =
         message.userId !== this.globalVariablesService.activeID &&
         message.message != '' &&
-        message.answerto == ''; 
-    else if (this.isThread){
+        message.answerto == '';
+    else if (this.isThread) {
       conditionTest =
         message.userId !== this.globalVariablesService.activeID &&
         message.message != '' &&
-        message.answerto === this.globalVariablesService.answerKey; 
-       // debugger;
+        message.answerto === this.globalVariablesService.answerKey;
     }
-      
     else conditionTest = false;
     return conditionTest;
   }
 
-  logBefehl(i: number) {
+/*   logBefehl(i: number) {
     console.log(i);
-  }
+  } */
 }

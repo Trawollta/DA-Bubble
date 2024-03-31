@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { InputfieldComponent } from '../../shared/inputfield/inputfield.component';
-import { CommonModule, ViewportScroller } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { EditChannelComponent } from '../channel-menu/edit-channel/edit-channel.component';
@@ -42,8 +42,6 @@ export class ChatComponent {
   firebaseChannelService = inject(FirebaseChannelService);
 
 
-
-  //scroller = inject(ViewportScroller);
   allUserMessages: string = '';
   newMessage = '';
   headerShowMembers: boolean = false;
@@ -59,8 +57,8 @@ export class ChatComponent {
   selectedFile: File | null = null;
 
 
-  constructor(private scroller: ViewportScroller) {
-    this.scroller.scrollToAnchor("scrolldown");
+  constructor() {
+    
   }
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');
@@ -72,12 +70,10 @@ export class ChatComponent {
   }
 
   ngOnInit() {
-    this.scroller.scrollToAnchor("scrolldown");
+    this.globalVariables.scrolledToBottom = false;
+    
   }
-  goDown() {
-    this.scroller.scrollToAnchor("scrolldown");
-  }
-
+  
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
@@ -137,6 +133,7 @@ export class ChatComponent {
       this.globalVariables.messageData.message = '';
       this.globalVariables.newMessage = '';
       this.selectedFile = null
+      this.globalVariables.scrolledToBottom = false;
     }
 
   }
@@ -169,8 +166,8 @@ export class ChatComponent {
     if (this.selectedFile) {
       await this.uploadfile(this.selectedFile);
       message = message.replace(this.downloadURLAlias, this.downloadURL);
-      console.log(message);
-      debugger;
+     // console.log(message);
+     // debugger;
     }
     return message;
   }

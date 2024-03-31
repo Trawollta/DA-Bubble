@@ -3,8 +3,8 @@
   <!-- container for header it is a channel chat -->
   <section class="msg-header" *ngIf="!globalVariables.isUserChat">
     <app-show-contacts class="showContactsHeader"
-      *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers"
-      appClickedOutside (clickedOutside)="closeMembers()"></app-show-contacts>
+      *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers" appClickedOutside
+      (clickedOutside)="closeMembers()"></app-show-contacts>
     <div class="topic-headline">
       <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
         <p></p>
@@ -50,17 +50,16 @@
   <!-- container for all inputfield and controll elements -->
   <section class="inputfield">
     <textarea class="'standard', 'inputFieldChat'" name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht"
-      [(ngModel)]="globalVariables.newMessage"></textarea>
+      [(ngModel)]="globalVariables.newMessage">
+    </textarea>
     <!-- <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield> -->
     <div class="controllElementsContainer">
       <app-show-contacts class="showContactsTextInput"
-        *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers"
-        appClickedOutside (clickedOutside)="closeMembers()"
-        ></app-show-contacts>
-      <app-emoji-container class="showContactsTextInput"
-        *ngIf="globalVariables.showEmojiContainer"
-        appClickedOutside (clickedOutside)="closeEmoji()"></app-emoji-container>
-      <div class="moreControls"  >
+        *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers" appClickedOutside
+        (clickedOutside)="closeMembers()"></app-show-contacts>
+      <app-emoji-container class="showContactsTextInput" *ngIf="globalVariables.showEmojiContainer" appClickedOutside
+        (clickedOutside)="closeEmoji()"></app-emoji-container>
+      <div class="moreControls">
         <input type="file" id="getFile" #fileInput hidden (change)="onFileSelected($event)">
         <img src="assets/img/input-imgs/add.svg" alt="" (click)="fileInput.click()">
         <div class="inputFieldVerticalLine"></div>
@@ -72,6 +71,18 @@
     </div>
   </section>
 
+  <div *ngIf="showErrorPopup" class="errorPopupOuterContainer">
+    <div class="errorPopup" appClickedOutside (clickedOutside)="closeErrorPopup()">
+      <div class="errorPopupInnerContainer">
+        <div class="errorPopupTxtContainer">
+          <span>Das ausgewählte File ist zu groß. </span>
+          <span>{{fileSize}}</span>
+          <span>Maximalfilegröße<br>500KB </span>
+        </div>
+        <div class="okBtn" (click)="closeErrorPopup()">OK</div>
+      </div>
+    </div>
+  </div>
   <!-- container popup elements -->
 
   <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel>

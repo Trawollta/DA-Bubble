@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { EmojiContainerComponent } from 'app/shared/reactions/emoji-container/emoji-container.component';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject  } from 'firebase/storage';
 import { ClickedOutsideDirective } from 'app/directives/clicked-outside.directive';
 
 
@@ -118,6 +118,17 @@ export class ChatComponent {
       this.globalVariables.messageData.userId = this.globalVariables.activeID;
       this.globalVariables.messageData.timestamp = new Date().getTime();
       this.globalVariables.messageData.answerto = '';
+
+      // toDo: messages muss gelöscht werden, wenn ich den Kanal wechsle!
+
+
+      //hier muss ich eine Logic einbauen, die checkt, ob er Alias vorhanden ist.
+      //wenn nein. Lösche die File, die in downloadURL steht.
+      // Ich brauche auch ein Flag, dass verhindert, das mehr als ein File hochgeladen werden kann,
+      // Grund. Ich habe in downloadURL nur eine File.
+      // Wenn ja, dann muss der Alias in der message durch de URL ausgetauscht werden.
+      // Ziel: es soll neben der URL auch noch Beschreibungstext gesendet werden können.
+      // Wenn die Message dann gerendert wird. benötige ich eine Logic, die den normalen Text von der URL unterscheidet
       this.globalVariables.messageData.message = this.globalVariables.newMessage;
       this.globalVariables.messageData.emoji = [{ icon: '', userId: [] as any[], iconId: '' }];
       let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
@@ -128,9 +139,15 @@ export class ChatComponent {
     //this.goDown();
   }
 
-
+//den folgenden Code muss ich noch einordnen
   fileName = '';
   storage = getStorage();
+  deleteFileRef =ref(this.storage, '');
+  showErrorPopup = false;
+  downloadURL = '';
+  downloadURLAlias = ''
+  fileSize = '';
+
   
 
   
@@ -140,36 +157,43 @@ export class ChatComponent {
     // Hier kannst du den Code hinzufügen, um mit der ausgewählten Datei zu arbeiten
     console.log(selectedFile);
     this.uploadfile(selectedFile);
-    
-    
-
-    if (selectedFile) {
+  if (selectedFile) {
       this.fileName = selectedFile.name;
       const formData = new FormData();
       formData.append("thumbnail", selectedFile);
       
-
     }
   }
 
   async uploadfile(file:File){
     const storageRef = ref(this.storage, this.globalVariables.activeID + '/' + file.name);
+
+    this.deleteFileRef = storageRef; // if I need to delete file
+
     const imageRef = ref(storageRef, file.name);
-    console.log('mountainImagesRef', storageRef);
+    //console.log('mountainImagesRef', storageRef);
     if(file.size < 500000){
     await uploadBytes(imageRef, file);
-    const downloadURL = await getDownloadURL(imageRef);
-    console.log('downloadURL', downloadURL);
-    this.globalVariables.newMessage = downloadURL;
+    this.downloadURL = await getDownloadURL(imageRef);
+    //console.log('downloadURL', downloadURL);
+    this.downloadURLAlias = file.name
+    this.globalVariables.newMessage = this.downloadURLAlias; // only the file name should shown will save url by clicking submit
+      // if the alias is not in this.globalVariables.newMessage the file has to be removed from storage
   }else{
+    this.showErrorPopup = true;
+    this.fileSize = Math.round(file.size / 1000).toString() + 'KB';
     console.log('file zu groß', file.size);
   }
   }
 
-
-  doSomething(){
-    console.log('nicht im Element');
+  closeErrorPopup(){
+    this.showErrorPopup = false;
   }
+
+  /* doSomething(){
+    
+    console.log('nicht im Element');
+  } */
 
 
 }

@@ -184,3 +184,41 @@ main {
   }
 }
 
+
+.errorPopupOuterContainer{
+  width: 100vw;
+  height: 100vh;
+  @include dFlex();
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  .errorPopup{
+    width: 240px;
+    height: auto;
+    @include dFlex();
+    background-color: $white;
+    box-shadow:  3px 3px 7px 1px rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+
+    .errorPopupInnerContainer{
+      margin: 16px;
+      height: 100%;
+      @include dFlex($fd: column, $jc:space-around, $g:16px);
+      text-align: center;
+      .errorPopupTxtContainer{
+        @include dFlex($fd: column, $g:8px);
+      }
+      .okBtn{
+      width: 60px;
+      border: 1px solid;
+      border-radius: 20px;
+    }
+    
+  }
+    }
+    
+}
+
+

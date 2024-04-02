@@ -7,6 +7,7 @@ import { AddNewChannelComponent } from './add-new-channel/add-new-channel.compon
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { channel } from 'app/models/channel.class';
+import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 
 @Component({
   selector: 'app-channel-menu',
@@ -23,6 +24,7 @@ import { channel } from 'app/models/channel.class';
 export class ChannelMenuComponent {
   globalVariables = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
+  firebasUserService = inject(FirebaseUserService);
   allChannels: any = [];
   allUsers: any = [];
 
@@ -86,12 +88,41 @@ export class ChannelMenuComponent {
   openChannel(channel: any) {
     this.globalVariables.scrolledToBottom = false;
     this.globalVariables.isUserChat = false;
+    this.getChatUserData(channel.members);
     this.globalVariables.openChannel.desc = channel.description;
     this.globalVariables.openChannel.titel = channel.channelName;
     this.globalVariables.openChannel.id = channel.id;
     this.globalVariables.openChannel.chatId = channel.chatId;
     this.firebaseChatService.activeChatId = channel.chatId;
     this.globalFunctions.showChat();
+  }
+
+  /**
+   * This function fills the channelUser Array with all relevant data
+   * @param member - Array of member ids
+   */
+  async getChatUserData(member: string[]) {
+    this.globalVariables.openChannelUser = [];
+    const userDataList = await Promise.all(this.getMemberData(member));
+    const filteredUserDataList = userDataList.filter(userData => userData !== null) as { id: string, name: string, img: string }[];
+    this.globalVariables.openChannelUser.push(...filteredUserDataList);
+    //console.log('Benutzerdaten:', this.globalVariables.openChannelUser);
+  }
+
+  /**
+   * this function returns an array with user data for all user listed for the channel
+   * @param member - Array of member ids
+   * @returns - returns an array with uid, name and image path
+   */
+  getMemberData(member: string[]) {
+    return member.map(async (userId) => {
+      const memberData = await this.firebasUserService.getUserData(userId);
+      if (memberData) {
+        return { id: userId, name: memberData['name'], img: memberData['img'] };
+      } else {
+        return null;
+      }
+    });
   }
 
 }

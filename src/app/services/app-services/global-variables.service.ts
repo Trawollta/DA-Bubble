@@ -25,7 +25,7 @@ export class GlobalVariablesService {
   isProfileOfCurrentUser: boolean = true;
   profileUserId: string = '';
 
-// Flags to manage chat
+  // Flags to manage chat
   channel: boolean = false;
   adduser: boolean = false;
   openReaction: boolean = false;
@@ -45,7 +45,7 @@ export class GlobalVariablesService {
     character: '',
     codePoint: ''
   };
-  
+
 
   //flags for showing the dashboard main elements
   showChannelMenu: boolean = true;
@@ -112,6 +112,15 @@ export class GlobalVariablesService {
     creator: '',
   };
 
+  //this Array contains all users of the active chat
+  openChannelUser = [
+    {
+      id: '',
+      name: '',
+      img: ''
+    }
+  ]
+
 
   //wird in edit-channel.component, add-contacts.component und add-to-channel.component verwendet
   channelData = {
@@ -135,7 +144,7 @@ export class GlobalVariablesService {
     email: 'muster@mail.de',
     img: 'assets/img/avatars/avatar_3.svg',
     isActive: true,
-    relatedChats:['NQMdt08FAcXbVroDLhvm']
+    relatedChats: ['NQMdt08FAcXbVroDLhvm']
   };
 
   choosedEmoji: any = { icon: '', userID: '' }; // this is the emoji which is choosen in emoji-picker
@@ -143,18 +152,18 @@ export class GlobalVariablesService {
 
   editMessage: boolean = false;
 
-  imprintActiv= false;
+  imprintActiv = false;
 
-  constructor() {}
+  constructor() { }
 
   //eine Idee:
   //wir müssen die User überall mit der ID ansprechen und nur wenn wir den Namen brauchen holen wir ihn.
   //wir müssten also inern ausschließlich mit den IDs arbeiten und  nur wenn wir den Profilnamen anzeigen lassen wollen wird hier hin verwiesen.
   // dadurch können user auch den gleichen Namen haben.
- /*  allUserIDs = [
-    {
-      userId: '',
-      userName: '',
-    },
-  ]; */
+  /*  allUserIDs = [
+     {
+       userId: '',
+       userName: '',
+     },
+   ]; */
 }

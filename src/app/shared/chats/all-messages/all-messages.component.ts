@@ -14,7 +14,7 @@ import { ChatChannel } from 'app/models/chatChannel.class';
 import { ChatUsers } from 'app/models/chatUsers.class';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { CommonModule, DatePipe, ViewportScroller } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ReactionsComponent } from '../../reactions/reactions.component';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 
@@ -38,9 +38,12 @@ export class AllMessagesComponent implements AfterViewChecked {
   GlobalFunctionsService = inject(GlobalFunctionsService);
 
   chatChannel: ChatChannel = new ChatChannel();
-  chatUsers: ChatUsers = new ChatUsers();
+
+  chatUsers: ChatUsers = new ChatUsers(); // das wird denke ich nicht gebraucht
   postingTime: string | null = null;
   index: number = 0;
+  userName: string = '';
+  userImgPath: string = '';
 
   lastDisplayedDate: Date = new Date();
 
@@ -76,6 +79,8 @@ export class AllMessagesComponent implements AfterViewChecked {
   }
 
   ngOnInit() {
+    //an diesem Punkt gibt es noch keinen Chat desen Länge man messen kann
+    //brauche ich das dann hier überhaupt?
     if (this.globalVariablesService.chatChannel.messages.length > 0) {
       this.lastDisplayedDate = new Date(
         this.globalVariablesService.chatChannel.messages[0].timestamp
@@ -83,18 +88,19 @@ export class AllMessagesComponent implements AfterViewChecked {
     }
   }
 
+
+  /**
+   * this function filters all messages if they are answers of a message or not and returns the chat 
+   * @returns - chat
+   */
   filterMessages() {
     let messages = this.globalVariablesService.chatChannel.messages;
-    //console.log('messages: ', this.globalVariablesService.chatChannel.messages);
-   // console.log('filtered messages: ', this.globalVariablesService.chatChannel.messages.filter(message => message.answerto === this.globalVariablesService.answerKey));
     const channelChat = messages.filter(message => message.answerto === '');
     const threadChat = messages.filter(message => message.answerto === this.globalVariablesService.answerKey);
     const userchat = messages;
     if (this.globalVariablesService.isUserChat) {
-      // console.log('ein user Chat');
       return userchat;
     } else {
-      // console.log('ein channel Chat');
       return this.isThread ? threadChat : channelChat;
     }
   }
@@ -117,7 +123,6 @@ export class AllMessagesComponent implements AfterViewChecked {
    * @returns - boolean
    */
   showDateBar(messageTimestamp: number, answerTo: string, index: number): boolean {
-    //debugger;
     let displayDate = false;
     if (this.isChat || this.isThread) {
       if (index == 0)
@@ -130,7 +135,6 @@ export class AllMessagesComponent implements AfterViewChecked {
     if (displayDate && messageTimestamp != 0) {
       this.lastDisplayedDate = new Date(messageTimestamp);
     }
-
     return displayDate;
   }
 
@@ -139,23 +143,17 @@ export class AllMessagesComponent implements AfterViewChecked {
    * @param message - object
    * @returns - boolean
    */
-  meetContitionsCurrentUser(message: {
-    answerto: string;
-    message: string;
-    timestamp: number;
-    userId: string;
-  }) {
-    // return (message.userId === this.globalVariablesService.activeID && message.message != '' && message.answerto =='');
+  meetContitionsCurrentUser(userId: string) {
+
     let conditionTest: boolean = false;
-    if (this.isChat)
-      conditionTest = message.userId == this.globalVariablesService.activeID && message.answerto == ''; /* message.message != '' && */
-    else if (this.isThread) {
-      conditionTest =
-        message.userId === this.globalVariablesService.activeID &&
-        message.message != '' &&
-        message.answerto === this.globalVariablesService.answerKey;
+    if (userId) {
+      if (this.isChat)
+        conditionTest = userId === this.globalVariablesService.activeID;
+      else if (this.isThread) {
+        conditionTest = userId === this.globalVariablesService.activeID;
+      }
+      else conditionTest = false;
     }
-    else conditionTest = false;
     return conditionTest;
   }
 
@@ -164,24 +162,18 @@ export class AllMessagesComponent implements AfterViewChecked {
    * @param message - object
    * @returns - boolean
    */
-  meetContitionsOtherUser(message: { answerto: string; message: string; timestamp: number; userId: string; }) {
+  meetContitionsOtherUser(userId: string) {
     let conditionTest: boolean = false;
-    if (this.isChat)
-      conditionTest =
-        message.userId !== this.globalVariablesService.activeID &&
-        message.message != '' &&
-        message.answerto == '';
-    else if (this.isThread) {
-      conditionTest =
-        message.userId !== this.globalVariablesService.activeID &&
-        message.message != '' &&
-        message.answerto === this.globalVariablesService.answerKey;
+    if (userId) {
+      if (this.isChat) {
+        conditionTest = userId !== this.globalVariablesService.activeID;
+      }
+      else if (this.isThread) {
+        conditionTest = userId !== this.globalVariablesService.activeID;
+      }
+      else conditionTest = false;
     }
-    else conditionTest = false;
     return conditionTest;
   }
 
-/*   logBefehl(i: number) {
-    console.log(i);
-  } */
 }

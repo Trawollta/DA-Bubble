@@ -34,6 +34,11 @@ export class FirebaseUserService {
     await setDoc(doc(this.firestore, "users", uid), this.getCleanJson(userData));
   }
 
+  async userExists(uid: string): Promise<boolean> {
+    const userDoc = await getDoc(doc(this.firestore, "users", uid));
+    return userDoc.exists();
+  }
+
   searchUsersByName(searchTerm: string): Observable<any[]> {
     const q = query(this.getUsersRef(), where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
     return from(getDocs(q).then(querySnapshot => {

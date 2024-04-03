@@ -12,17 +12,18 @@
                     <img (click)="globalFunctions.closeAddContactsOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
                 </div>
         </div>
-        <app-inputfield [classes]="['standard']" type="search" placeholder="Mitglieder suchen" (inputChange)="onSearchChange($event)"></app-inputfield>
-        <ul>
-            <li *ngFor="let user of allUsers">
-                <label (click)="addUserToList(user)" [for]="user.id" class="user-label">
-                    <img [src]="user.img" alt="userImage" class="user-img">{{ user.name }}
-                </label>
+        <app-inputfield [(ngModel)]="selectedUserName" [classes]="['standard']" type="search" placeholder="Mitglieder suchen" (inputChange)="onSearchChange($event)"></app-inputfield>
+
+
+        <ul *ngIf="users.length > 0">
+            <li *ngFor="let user of users" (click)="selectUser(user)">
+                <img [src]="user.img" alt="userImage" class="user-img">{{ user.name }}
             </li>
         </ul>
+
         <div class="add">
             <div class="button-area">
-                <app-button [classes]="['primary']" (click)="addToChannel()" caption="Hinzufügen" imgPath=""></app-button>
+                <app-button [classes]="['primary']" (click)="addUsersToExistingChannel() " caption="Hinzufügen" imgPath=""></app-button>
             </div>
         </div>
     </div>

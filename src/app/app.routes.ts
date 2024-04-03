@@ -9,7 +9,9 @@ import { ImprintComponent } from './landingpage/imprint/imprint.component';
 import { PrivacypolicyComponent } from './landingpage/privacypolicy/privacypolicy.component';
 import { PasswordResetComponent } from './landingpage/password-reset/password-reset.component';
 import { ConfirmPasswordResetComponent } from './landingpage/confirm-password-reset/confirm-password-reset.component';
+import { canActivate, AuthPipeGenerator, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
+const redirectUnauthorizedToLogin: AuthPipeGenerator = () => redirectUnauthorizedTo(['']);
 
 export const routes: Routes = [
   {
@@ -38,8 +40,16 @@ export const routes: Routes = [
         component: PrivacypolicyComponent
       }]
   },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'add-new-channel', component: AddNewChannelComponent },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'add-new-channel',
+    component: AddNewChannelComponent,
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
 ];
 
 @NgModule({

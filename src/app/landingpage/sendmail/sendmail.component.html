@@ -1,0 +1,20 @@
+<app-dialog>
+    <section>
+        <header>
+            <div class="headline-wrapper">
+                <app-go-back-button></app-go-back-button>
+                <div class="headline">
+                    <h2>Passwort zurücksetzen</h2>
+                </div>
+            </div>
+        </header>
+        <div class="info">Bitte geben Sie Ihre E-Mail-Adresse ein.</div>
+        <form #logInForm="ngForm" name="login-form">
+            <div class="input-fields">
+                <app-inputfield #email="" name="email" id="email" [required]="true" [imgSize]="'16px'" [classes]="['login']" type="email" id="email" imgName="mail" placeholder="beispielname@email.com"></app-inputfield>
+            </div>
+            <div class="info">Wir senden Ihnen eine E-Mail, über die Sie Ihr Passwort ändern können.</div>
+            <app-button type="submit" [classes]="['primary','noIcon']" caption="E-Mail senden"></app-button>
+        </form>
+    </section>
+</app-dialog>

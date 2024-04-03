@@ -70,14 +70,17 @@ export class FirebaseUserService {
         let logedInUser = new User(user.data());
         this.globalVariables.currentUser = logedInUser;
         this.globalVariables.activeID = user.id;
+        this.updateUserStatus(this.globalVariables.activeID, true);
       }
     });
   }
 
   async logout() {
     try {
-      await this.updateUserStatus(this.auth.currentUser!.uid, false);
+      //await this.updateUserStatus(this.auth.currentUser.uid, false);
       await this.authService.logout();
+      await this.updateUserStatus(this.globalVariables.activeID, false);
+      this.globalVariables.activeID = '';
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {

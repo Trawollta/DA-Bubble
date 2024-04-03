@@ -22,6 +22,7 @@ import { User } from 'app/models/user.class';
 import { DatePipe, CommonModule } from '@angular/common';
 import { ReactionsComponent } from '../../reactions/reactions.component';
 import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
+import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 
 interface Emoji {
   icon: string;
@@ -42,10 +43,12 @@ export class OtherUserMessageComponent {
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
   firebaseUpdate = inject(FirebaseUserupdateService);
+  firebaseUser = inject(FirebaseUserService);
 
   openReaction: boolean = false;
   @Input() message: any;
   @Input() isThread: boolean = false;
+ // @Input() userName: string = '';
 
   emojiArray: Emoji[] = [];
   postingTime: string | null = null;
@@ -58,11 +61,11 @@ export class OtherUserMessageComponent {
     emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
   };
 
-  unsubUser;
   userId: string = 'guest';
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
+  userMessage: string = '';
 
   profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
   mouseover: boolean = false;
@@ -71,48 +74,23 @@ export class OtherUserMessageComponent {
   isImage:boolean = false;
 
   constructor(private elementRef: ElementRef) {
-    this.unsubUser = this.getUser(this.userId);
+   
   }
 
-  /**
-   * this function unsubscribes the containing content
-   */
-  ngOnDestroy() {
-    this.unsubUser;
-  }
 
-  /**
-   * thsi function returns the reference to the user doc
-   * @param docId - id of user
-   * @returns - referenz of document
-   */
-  getUserRef(docId: string) {
-    return doc(collection(this.firestore, 'users'), docId);
-  }
-
-  /**
-   * this function get data of user and saves it in lokal user object
-   * @param id - id of user
-   * @returns - onSnapshot object
-   */
-  getUser(id: string) {
-    return onSnapshot(this.getUserRef(id), (user) => {
-      if (user.data()) {
-        this.user = new User(user.data());
-      }
-    });
+ async getUser2(id: string) {     
+        this.user = new User(await this.firebaseUser.getUserData(id));  
   }
 
   /**
    * this function calls function getUser() for providing userdata for the post
    */
-  async ngOnInit() {
-    this.getUser(this.message.userId);
+  ngOnInit() {
+    this.getUser2(this.message.userId);
     this.postingTime = this.message.timestamp;
     this.fillAnswerVariables();
     this.cloneOriginalMessage();
     this.isImage = this.isValidURL(this.message.message);
-    //console.log('this.isImage', this.isImage  );
   }
 
   isValidURL(url: string): boolean {

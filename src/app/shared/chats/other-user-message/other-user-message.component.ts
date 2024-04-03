@@ -184,7 +184,7 @@ export class OtherUserMessageComponent {
    */
   onCloseReactions() {
     this.openReaction = false;
-    }
+  }
 
   addUserIdToEmoji(emoji: any, index: number) {
     const activeID = this.globalVariables.activeID;

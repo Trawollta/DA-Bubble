@@ -70,6 +70,7 @@ export class CurrentUserMessageComponent {
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
+  messageImgUrl: string = '';
   count = '';
   isImage:boolean = false;
 
@@ -118,12 +119,16 @@ export class CurrentUserMessageComponent {
     this.fillAnswerVariables();
     this.cloneOriginalMessage();
     this.isImage = this.isValidURL(this.message.message);
-    //console.log('this.isImage', this.isImage  );
+    
   }
 
-  isValidURL(url: string): boolean {
+  isValidURL(message: string): boolean {
+    //const urlPattern = /(https?:\/\/[^\s]+)/;
     const urlPattern = /^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
-    return urlPattern.test(url);
+    const urlMatch = message.match(urlPattern);
+    console.log('urlMatch', urlMatch  );
+    this.messageImgUrl = urlMatch ? urlMatch[0] : '';
+    return urlPattern.test(this.messageImgUrl);
   }
   
 

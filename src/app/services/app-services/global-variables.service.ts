@@ -140,10 +140,10 @@ export class GlobalVariablesService {
   //this is for test purpose. It could be take over when working.
   // variable is used in profile card and firebase-user.service.ts
   currentUser = {
-    name: 'Guest',
-    email: 'muster@mail.de',
-    img: 'assets/img/avatars/avatar_3.svg',
-    isActive: true,
+    name: '',
+    email: '',
+    img: '',
+    isActive: false,
     relatedChats: ['NQMdt08FAcXbVroDLhvm']
   };
 

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, sendPasswordResetEmail } from '@angular/fire/auth';
-import { Firestore, collection, doc } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { ToastService } from '../app-services/toast.service';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { ToastService } from '../app-services/toast.service';
 export class AuthService {
   firestore: Firestore = inject(Firestore);
   toastService = inject(ToastService);
-  constructor(private auth: Auth) { }
+  private auth = inject(Auth);
 
   async sendPasswordResetEmail(email: string): Promise<void> {
     try {

@@ -48,7 +48,7 @@
 }
 
 .add {
-    margin-top: 80px;
+    margin-top: 40px;
 }
 
 .checkbox-container {
@@ -58,11 +58,14 @@
 .button-area {
     display:flex;
     justify-content: flex-end;
+    padding-top: 10px;
 }
 
 .user-list {
     list-style-type: none;
     padding: 0;
+    overflow-y: scroll;
+    height: 150px;
   }
   
   .user-list li {

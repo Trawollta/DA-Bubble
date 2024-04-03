@@ -10,17 +10,12 @@
         </div>
     </div>
     <div class="add">
-      
         <div class="checkbox-container">
-            <input type="checkbox" id="privateChannel" name="channelType" value="private">
-            <label for="privateChannel">Privater Channel</label>
-        </div>
-        <div class="checkbox-container">
-            <input type="checkbox" id="addAllMembers" name="addMembers" value="all">
+            <input type="radio" id="addAllMembers" name="addMembers" value="all" (change)="!showCertainPeople = showCertainPeople">
             <label for="addAllMembers">Alle Mitglieder hinzufügen</label>
         </div>
         <div class="checkbox-container">
-            <input type="checkbox" id="addCertainPeople" name="addMembers" value="certain" (change)="showCertainPeople = !showCertainPeople">
+            <input type="radio" id="addCertainPeople" name="addMembers" value="certain" (change)="showCertainPeople = !showCertainPeople">
             <label for="addCertainPeople">Bestimmte Leute hinzufügen</label>
           </div>
 
@@ -39,13 +34,7 @@
               (click)="addNewChannel()"
               ></app-button>
           </div>
-
-          <ul class="user-list">
-            <li *ngFor="let user of filteredUsers; let i = index">
-              <!-- Benutzeranzeige -->
-            </li>
-          </ul>
-          
+        
             <ul class="user-list">
               <li *ngFor="let user of allUsers; let i =index"  >
                 <input type="checkbox" [id]="user.id" [checked]="isChecked[i]" (change)="onChange(i)">

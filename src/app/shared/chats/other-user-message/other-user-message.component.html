@@ -10,7 +10,7 @@
     <div class="speech-bubble"(click)="onSelectMessage()">
       <span class="speech-bubble-text"  *ngIf="!isImage">{{ message.message }}</span>
       <div class="loadedImg" *ngIf="isImage">
-        <img src="{{ message.message }}" alt="">
+        <img src="{{ messageImgUrl }}" alt="">
       </div>
     </div>
     <app-reactions class="reaction-field" *ngIf="openReaction" 

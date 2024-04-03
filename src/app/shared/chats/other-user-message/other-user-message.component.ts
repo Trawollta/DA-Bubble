@@ -65,7 +65,7 @@ export class OtherUserMessageComponent {
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
-  userMessage: string = '';
+  messageImgUrl: string = '';
 
   profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
   mouseover: boolean = false;
@@ -93,9 +93,11 @@ export class OtherUserMessageComponent {
     this.isImage = this.isValidURL(this.message.message);
   }
 
-  isValidURL(url: string): boolean {
+  isValidURL(message: string): boolean {
     const urlPattern = /^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
-    return urlPattern.test(url);
+    const urlMatch = message.match(urlPattern);
+    this.messageImgUrl = urlMatch ? urlMatch[0] : '';
+    return urlPattern.test(this.messageImgUrl);
   }
 
   /**

@@ -13,7 +13,7 @@
           >{{ message.message }}</span
         >
         <div class="loadedImg" *ngIf="isImage">
-          <img src="{{ message.message }}" alt="">
+          <img src="{{ messageImgUrl }}" alt="">
         </div>
         <div class="edit" (click)="globalFunctions.stopPropagation($event)">
           <app-inputfield

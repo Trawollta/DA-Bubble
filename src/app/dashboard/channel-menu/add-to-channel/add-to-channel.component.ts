@@ -18,6 +18,7 @@ import { Subject } from 'rxjs';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { channel } from 'app/models/channel.class';
+import { Firestore, doc, updateDoc, arrayUnion } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-add-to-channel',
@@ -43,7 +44,7 @@ export class AddToChannelComponent implements OnDestroy {
   allUsers: any = [];
   users: any = [];
   searchInput = new Subject<string>();
-  selectedUser: any = [];
+  selectedUsers: any = [];
 
 
   channel: channel = {
@@ -55,19 +56,28 @@ export class AddToChannelComponent implements OnDestroy {
     channelMember: [],
   };
 
-  constructor(private userService: FirebaseUserService) {
+
+  // channelId: string | undefined; 
+  newUserId: string | undefined; 
+
+
+  selectedUserName: string = '';
+
+  searchText: string = '';
+
+  selectedUser: string = '';
+
+  constructor(private userService: FirebaseUserService, private firestore: Firestore) {
     this.searchInput
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap((searchTerm) =>
-          this.userService.searchUsersByName(searchTerm)
-        ),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((users) => {
-        this.users = users;
-      });
+    .pipe(
+      debounceTime(300), // Verzögere die Ausführung, um Rapid-Fire-Anfragen zu vermeiden
+      distinctUntilChanged(), // Führe die Suche nur aus, wenn sich der Suchtext geändert hat
+      switchMap(searchTerm => this.userService.searchUsersByName(searchTerm)),
+      takeUntil(this.destroy$)
+    )
+    .subscribe(filteredUsers => {
+      this.users = filteredUsers;
+    });
   }
 
   ngOnInit(): void {
@@ -81,26 +91,56 @@ export class AddToChannelComponent implements OnDestroy {
   }
 
   onSearchChange(searchValue: string): void {
-    console.log(searchValue);
+    if (!searchValue) {
+      this.users = [];
+      return;
+    }
+  
     this.searchInput.next(searchValue);
   }
 
-  addUserToList(user: any) {
-    this.selectedUser.push(user.id);
+  // addUserToList(user: any) {
+  //   this.selectedUser.push(user.id);
+  // }
+
+  // selectChannel(channelId: string): void {
+  //   console.log(`Channel ausgewählt: ${channelId}`);
+  //   this.channelId = channelId;
+  // }
+  
+  selectUser(user: any): void {
+    this.selectedUser = user; // Direkte Zuweisung der Benutzer-ID
+    console.log(`Benutzer ausgewählt: ${user.name}, ID: ${user.id}`);
+  
+    // Reset der Suche und Auswahl
+    this.selectedUserName = '';
+    this.searchText = '';
+    this.users = [];
   }
 
-  async addToChannel() {
-    let relatedID = this.globalVariables.openChannel.id;
-    this.firebaseChannelService.updateDataChannel(this.data(), relatedID);
-    let chatData = await this.firebaseChannelService.loadChannelData(relatedID);
-    this.channel = new channel(chatData);
+
+  async addUsersToExistingChannel() {
+    if (!this.globalVariables.openChannel.id || !this.selectedUser) {
+      return;
+    }
+  
+    const channelRef = doc(this.firestore, 'channels', this.globalVariables.openChannel.id);
+  
+    try {
+      await updateDoc(channelRef, {
+        channelMember: arrayUnion(this.selectedUser)
+      });
+      console.log('Benutzer erfolgreich hinzugefügt');
+    } catch (error) {
+      console.error('Fehler beim Hinzufügen des Benutzers:', error);
+    }
   }
 
-  data(): {} {
-    const userChange = this.selectedUser !== this.channel.channelMember;
-    const data: { [key: string]: any } = {};
-    if (userChange) data['members'] = this.selectedUser;
-    return data;
-  }
+  // data(): {} {
+  //   const userChange = this.selectedUser !== this.channel.channelMember;
+  //   const data: { [key: string]: any } = {};
+  //   if (userChange) data['members'] = this.selectedUser;
+  //   return data;
+  // }
 
 }

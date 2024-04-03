@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, addDoc, updateDoc, doc, setDoc, onSnapshot, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, updateDoc, doc, setDoc, onSnapshot, getDoc, arrayUnion } from '@angular/fire/firestore';
 import { GlobalVariablesService } from '../app-services/global-variables.service';
 
 @Injectable({
@@ -85,4 +85,17 @@ export class FirebaseChannelService {
     }
 
 
-}
+    async addUserToChannel(channelId: string, userId: string): Promise<void> {
+      const channelRef = doc(this.firestore, 'channels', channelId);
+      try {
+        await updateDoc(channelRef, {
+          members: arrayUnion(userId)
+        });
+        console.log('Benutzer erfolgreich zum Kanal hinzugefügt');
+      } catch (error) {
+        console.error('Fehler beim Hinzufügen des Benutzers zum Kanal:', error);
+      }
+    }
+    }
+
+

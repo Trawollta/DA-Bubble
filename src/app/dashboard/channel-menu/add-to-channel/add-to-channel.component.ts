@@ -140,6 +140,8 @@ export class AddToChannelComponent implements OnDestroy {
     } catch (error) {
       console.error('Fehler beim Hinzufügen des Benutzers:', error);
     }
+
+    this.firebaseUserService.addChatIdToUser(this.userIdToAdd, this.globalVariables.openChannel.chatId);
   }
 
   // data(): {} {

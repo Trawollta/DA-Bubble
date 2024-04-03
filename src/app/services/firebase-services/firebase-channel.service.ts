@@ -15,6 +15,7 @@ import {
   deleteDoc,
 } from '@angular/fire/firestore';
 import { GlobalVariablesService } from '../app-services/global-variables.service';
+import { FirebaseChatService } from './firebase-chat.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,7 @@ import { GlobalVariablesService } from '../app-services/global-variables.service
 export class FirebaseChannelService {
   firestore: Firestore = inject(Firestore);
   globalVariables = inject(GlobalVariablesService);
+  firebaseChatService = inject(FirebaseChatService)
 
   constructor() {}
 
@@ -118,6 +120,7 @@ export class FirebaseChannelService {
     await this.deleteChannelIdFromUsers(channelId);
     const channelDocRef = doc(this.firestore, 'channels', docId[0]);
     await deleteDoc(channelDocRef);
+    this.firebaseChatService.changeActiveChannel();
   }
 
   async getDocId(chatId: string): Promise<string[]> {

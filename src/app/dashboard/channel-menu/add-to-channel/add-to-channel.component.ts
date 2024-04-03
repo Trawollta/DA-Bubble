@@ -39,12 +39,14 @@ export class AddToChannelComponent implements OnDestroy {
   globalVariables = inject(GlobalVariablesService);
   firebaseChannelService = inject(FirebaseChannelService);
   firebaseChatService = inject(FirebaseChatService);
+  firebaseUserService = inject(FirebaseUserService);
   addedChannelId: string = '';
   addedChatId: string = '';
   allUsers: any = [];
   users: any = [];
   searchInput = new Subject<string>();
   selectedUsers: any = [];
+  userIdToAdd: string = '';
 
 
   channel: channel = {
@@ -65,7 +67,7 @@ export class AddToChannelComponent implements OnDestroy {
 
   searchText: string = '';
 
-  selectedUser: string = '';
+  selectedUser: any = '';
 
   constructor(private userService: FirebaseUserService, private firestore: Firestore) {
     this.searchInput
@@ -108,9 +110,13 @@ export class AddToChannelComponent implements OnDestroy {
   //   this.channelId = channelId;
   // }
   
-  selectUser(user: any): void {
-    this.selectedUser = user; // Direkte Zuweisung der Benutzer-ID
-    console.log(`Benutzer ausgewählt: ${user.name}, ID: ${user.id}`);
+  async selectUser(user: any) {
+    this.selectedUser = user;
+    let name = this.selectedUser.name
+    let userId = await this.firebaseUserService.getUserDocIdWithName(name)
+    this.userIdToAdd = userId[0];
+    console.log(`Benutzer ausgewählt: ${user.name}`, 'ID:', this.userIdToAdd);
+
   
     // Reset der Suche und Auswahl
     this.selectedUserName = '';
@@ -128,7 +134,7 @@ export class AddToChannelComponent implements OnDestroy {
   
     try {
       await updateDoc(channelRef, {
-        channelMember: arrayUnion(this.selectedUser)
+        members: arrayUnion(this.userIdToAdd),
       });
       console.log('Benutzer erfolgreich hinzugefügt');
     } catch (error) {

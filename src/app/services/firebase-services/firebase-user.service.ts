@@ -16,7 +16,8 @@ export class FirebaseUserService {
   private authService = inject(AuthService);
   private auth = inject(Auth);
   private router = inject(Router);
-  constructor() { }
+  constructor() {
+   }
 
   getUsersRef() {
     return collection(this.firestore, 'users');
@@ -97,5 +98,21 @@ export class FirebaseUserService {
   async getUserData(id: string) {
     const docSnap = await getDoc(this.getSingleUserRef(id));
     return docSnap.data();
+  }
+
+  /** 
+   * NUR EIN TEST
+   */
+
+  async getUserDocIdWithName(name: string): Promise<string[]> {
+    const usersCollectionRef = collection(this.firestore, 'users');
+    const q = query(usersCollectionRef, where('name', '==', name));
+    const querySnapshot = await getDocs(q);
+    const docIds: string[] = [];
+    querySnapshot.forEach(doc => {
+      docIds.push(doc.id);
+      console.log(doc.id, " => ", doc.data());
+    });
+    return docIds;
   }
 }

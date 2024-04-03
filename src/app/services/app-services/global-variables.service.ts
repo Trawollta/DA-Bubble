@@ -13,7 +13,6 @@ export class GlobalVariablesService {
   desktop1200: boolean = window.innerWidth > 1200;
   login: boolean = false;
   signup: boolean = false;
-  imprintActiv: boolean = false;
   accountAdjustment: boolean = false;
 
   activeID: string = 'guest'; // this is the id of guest user of testusers
@@ -26,7 +25,7 @@ export class GlobalVariablesService {
   isProfileOfCurrentUser: boolean = true;
   profileUserId: string = '';
 
-  // insert from globalfunctions
+  // Flags to manage chat
   channel: boolean = false;
   adduser: boolean = false;
   openReaction: boolean = false;
@@ -36,6 +35,17 @@ export class GlobalVariablesService {
   memberlist: boolean = false;
   newChannelname: boolean = false;
   isEditingChannel: boolean = false;
+  headerShowMembers: boolean = false;
+  newMessage: string = '';
+  showEmojiContainer: boolean = false;
+  scrolledToBottom: boolean = false;
+
+  //take over selected Emoji
+  selectedEmoji = {
+    character: '',
+    codePoint: ''
+  };
+
 
   //flags for showing the dashboard main elements
   showChannelMenu: boolean = true;
@@ -58,6 +68,11 @@ export class GlobalVariablesService {
   showChannels: boolean = false;
   gotoChannel: any = [];
   isChannelVisible: boolean = true;
+
+
+  currentChannelId: string = '';
+
+
 
   //this is the object for collecting message data from input field in chat
   messageData = {
@@ -94,7 +109,17 @@ export class GlobalVariablesService {
     desc: '',
     id: 'fsjWrBdDhpg1SvocXmxS',
     chatId: 'NQMdt08FAcXbVroDLhvm',
+    creator: '',
   };
+
+  //this Array contains all users of the active chat
+  openChannelUser = [
+    {
+      id: '',
+      name: '',
+      img: ''
+    }
+  ]
 
 
   //wird in edit-channel.component, add-contacts.component und add-to-channel.component verwendet
@@ -102,6 +127,8 @@ export class GlobalVariablesService {
     description: '',
     channelName: '',
     chatId: '',
+    id: '',
+    creator: ''
     /* owner: '',
     allowedUser: ['id1', '1d2'] */
   };
@@ -117,12 +144,15 @@ export class GlobalVariablesService {
     email: 'muster@mail.de',
     img: 'assets/img/avatars/avatar_3.svg',
     isActive: true,
+    relatedChats: ['NQMdt08FAcXbVroDLhvm']
   };
 
   choosedEmoji: any = { icon: '', userID: '' }; // this is the emoji which is choosen in emoji-picker
   message: any;
 
   editMessage: boolean = false;
+
+  imprintActiv = false;
 
   constructor() { }
 

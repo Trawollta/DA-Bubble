@@ -39,7 +39,7 @@ export class ReactionsComponent {
   editMessage: boolean = false;
 
   emojiList: Array<any> = [];
-  allEmojis: Array<any> = [];
+  allEmojis: Array<any> = []; // wo wird das gebraucht? 
 
   url =
     'https://emoji-api.com/emojis?access_key=60ede231f07183acd1dbb4bdd7dde0797f62e95e';
@@ -49,7 +49,7 @@ export class ReactionsComponent {
    */
   ngOnInit(): void {
     this.getEmojis();
-   // console.log(this.originalMessage);
+    // console.log(this.originalMessage);
   }
 
   /**
@@ -77,7 +77,7 @@ export class ReactionsComponent {
    * @param {string} emoji - The selected emoji.
    */
   public showInInput(emoji: any): void {
-    
+
     this.newEmoji.emit(emoji);
     if (this.message.emoji[0].icon === '') {
       this.message.emoji[0].icon = emoji.character;
@@ -119,19 +119,19 @@ export class ReactionsComponent {
 
   addEmoji() {
     this.globaleVariables.messageData = this.message;
-   // console.log('Das ist die Nachricht die hochgeladen wird: ', this.message);
-    this.firebaseChatService.sendMessage(this.globaleVariables.openChannel.chatId, 'chatchannels');
-    this.remove(this.globaleVariables.openChannel.chatId);
+    let chatFamiliy = this.globaleVariables.isUserChat ? 'chatusers' : 'chatchannels';
+    this.firebaseChatService.sendMessage(this.globaleVariables.openChannel.chatId, chatFamiliy);
+    this.remove(this.globaleVariables.openChannel.chatId, chatFamiliy);
   }
 
-  
-  remove(chatId: string) {
-    return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
+
+  remove(chatId: string, chatFamiliy: string) {
+    return updateDoc(doc(this.firestore, chatFamiliy, chatId), {
       messages: arrayRemove(this.originalMessage),
     });
   }
 
-  editOpen() { 
+  editOpen() {
     this.globaleVariables.editMessage = true;
   }
 
@@ -142,15 +142,15 @@ export class ReactionsComponent {
    */
   helper(element: any): any {
     if (element) {
-        const activeID = this.globaleVariables.activeID;
-        if (!element.userId.includes(activeID)) {
-            element.userId.push(activeID);
-        }
+      const activeID = this.globaleVariables.activeID;
+      if (!element.userId.includes(activeID)) {
+        element.userId.push(activeID);
+      }
     }
     return {
-        icon: element.icon,
-        userId: element.userId,
-        iconId: element.iconId
+      icon: element.icon,
+      userId: element.userId,
+      iconId: element.iconId
     };
   }
 
@@ -189,10 +189,11 @@ export class ReactionsComponent {
   editSave() {
     this.globaleVariables.editMessage = false;
     this.globaleVariables.messageData = this.message;
+    let chatFamiliy = this.globaleVariables.isUserChat ? 'chatusers' : 'chatchannels';
     this.firebaseChatService.sendMessage(
-      this.globaleVariables.openChannel.chatId, 'chatchannels'
+      this.globaleVariables.openChannel.chatId, chatFamiliy
     );
     if (this.originalMessage.message !== this.message.message)
-      this.remove(this.globaleVariables.openChannel.chatId);
+      this.remove(this.globaleVariables.openChannel.chatId, chatFamiliy);
   }
 }

@@ -11,6 +11,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { FirebaseChatService } from '../firebase-services/firebase-chat.service';
+import { FirebaseChannelService } from '../firebase-services/firebase-channel.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,7 @@ export class GlobalFunctionsService {
 
   globalVariables = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
+  firebaseChannelService = inject (FirebaseChannelService);
 
   openProfile(ownProfile: boolean, userId: string) {
     this.globalVariables.profileUserId = userId;
@@ -34,9 +36,7 @@ export class GlobalFunctionsService {
   menuProfileClicked() {
     this.globalVariables.showProfileMenu =
       !this.globalVariables.showProfileMenu;
-    if (this.globalVariables.showProfileMenu)
-      document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
+      this.freezeBackground(this.globalVariables.showProfileMenu);
   }
 
   openChannelOverlay() {
@@ -48,6 +48,9 @@ export class GlobalFunctionsService {
   openEditChannelOverlay() {
     this.globalVariables.channelData.channelName = this.globalVariables.openChannel.titel;
     this.globalVariables.channelData.description = this.globalVariables.openChannel.desc;
+    this.globalVariables.channelData.chatId = this.globalVariables.openChannel.chatId;
+    this.globalVariables.channelData.id = this.globalVariables.openChannel.id;
+    this.globalVariables.channelData.creator = this.globalVariables.openChannel.creator;
 
     this.globalVariables.isEditingChannel = true;
 
@@ -80,6 +83,12 @@ export class GlobalFunctionsService {
   showMembers() {
     this.globalVariables.memberlist = !this.globalVariables.memberlist;
     if (this.globalVariables.memberlist)
+      document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }
+
+  freezeBackground(freeze: boolean){
+    if (freeze)
       document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
@@ -127,6 +136,7 @@ export class GlobalFunctionsService {
   stopPropagation(e: Event) {
     e.stopPropagation();
   }
+
 
   /**
  * this function provides all relevant information for the answer section
@@ -217,7 +227,6 @@ export class GlobalFunctionsService {
   }
 
 
-
   //warum existiert hier eine Firebasefunktion?
   //Alle Firebasefunktionen sollten in einem Firebaseservice sein
   async updateData(collectionPath: string, docId: string, data: Partial<any>): Promise<void> {
@@ -225,11 +234,14 @@ export class GlobalFunctionsService {
     await updateDoc(docRef, data);
   }
 
-
-
   showDashboardElement(screenWidth: number) {
     if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;
     else if (window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
+  }
+
+  submitChannelNameChange(newTitle: string): void {
+    const channelId = this.globalVariables.openChannel.id; // Die ID des aktuellen Kanals
+    this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
   }
 
 }

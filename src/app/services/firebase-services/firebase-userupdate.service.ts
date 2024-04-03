@@ -1,21 +1,26 @@
 import { Injectable, inject } from '@angular/core';
 import { User } from '../../models/user.class';
-import { Firestore, collection, addDoc, getDoc, updateDoc, doc, setDoc, onSnapshot } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  getDoc,
+  updateDoc,
+  doc,
+  setDoc,
+  onSnapshot,
+} from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 
-
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FirebaseUserupdateService {
-
-
   firestore: Firestore = inject(Firestore);
   globalVariablesService = inject(GlobalVariablesService);
 
   activeID: string = this.globalVariablesService.activeID;
-  userProfileData: User = new User; //das brauche ich nicht mehr. Ich habe das ersetzt durch currentUser in den globalen Variablen
+  userProfileData: User = new User(); //das brauche ich nicht mehr. Ich habe das ersetzt durch currentUser in den globalen Variablen
 
   unsubSingleUser;
 
@@ -30,17 +35,16 @@ export class FirebaseUserupdateService {
     this.unsubSingleUser();
   }
 
-
   /**
-  * this function returns a reference of collection testusers
-  * @returns reference to collection 'user'
-  */
+   * this function returns a reference of collection testusers
+   * @returns reference to collection 'user'
+   */
   getUserRef() {
     return collection(this.firestore, 'users');
   }
 
   /**
-   * this function returns the reference of the singe user with id... from collection testusers 
+   * this function returns the reference of the singe user with id... from collection testusers
    * @param docId - document which should read
    * @returns - returns a single document of collection 'user'
    */
@@ -50,19 +54,19 @@ export class FirebaseUserupdateService {
 
   /**
    * this function returns the user with id ... from collection testusers
-   * @param id - id of active user 
+   * @param id - id of active user
    * @returns - array with data of active user
    */
   getSingleUser(id: string) {
-
     return onSnapshot(this.getSingleUserRef(id), (user) => {
-
-      if (user.data() && this.globalVariablesService.currentUser.name != 'Guest') {
+      if (
+        user.data() &&
+        this.globalVariablesService.currentUser.name != 'Guest'
+      ) {
         let newUser = new User(user.data());
         this.globalVariablesService.currentUser = newUser;
         this.globalVariablesService.activeID = user.id;
       }
-
     });
   }
 
@@ -71,17 +75,16 @@ export class FirebaseUserupdateService {
    * @param userId - the id of the user which should be called
    */
   setActiveUserId(userId: string | undefined) {
-    userId ? this.activeID = userId : this.activeID;
-    this.getSingleUser(this.activeID)
+    userId ? (this.activeID = userId) : this.activeID;
+    this.getSingleUser(this.activeID);
   }
 
-
   /**
-   * this funktion updates the element 
+   * this funktion updates the element
    * @param data -Json
    */
-  async updateData(data: { [x: string]: any; }) {
-    await updateDoc(doc(this.firestore, "users", this.activeID), data);
+  async updateData(data: { [x: string]: any }) {
+    await updateDoc(doc(this.firestore, 'users', this.activeID), data);
   }
 
   /**

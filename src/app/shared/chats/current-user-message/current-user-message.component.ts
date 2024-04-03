@@ -21,7 +21,6 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
 import { ReactionsComponent } from 'app/shared/reactions/reactions.component';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { User } from 'app/models/user.class';
-import { ChatChannel } from 'app/models/chatChannel.class';
 import { FormsModule } from '@angular/forms';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
@@ -46,7 +45,6 @@ export class CurrentUserMessageComponent {
   firebaseChatService = inject(FirebaseChatService);
   firebaseUpdate = inject(FirebaseUserupdateService);
   openReaction: boolean = false;
-  selectedMessage: string = '';
 
   @Input() message: any;
   @Input() index: any;
@@ -61,11 +59,10 @@ export class CurrentUserMessageComponent {
     timestamp: 0,
     emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
   };
-  editMessage: boolean = false;
-  msgEmojis: any[] = []; // Initialisieren Sie msgEmojis als leeres Array
+  activeMessage: boolean = false;
 
-  profile: User = { img: '', name: '', isActive: false, email: '' };
-  mouseover:boolean = false;
+  profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
+  mouseover: boolean = false;
   hoverUser: string = '';
 
   unsubUser;
@@ -73,6 +70,8 @@ export class CurrentUserMessageComponent {
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
+  count = '';
+  isImage:boolean = false;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -118,7 +117,15 @@ export class CurrentUserMessageComponent {
     this.postingTime = this.message.timestamp;
     this.fillAnswerVariables();
     this.cloneOriginalMessage();
+    this.isImage = this.isValidURL(this.message.message);
+    //console.log('this.isImage', this.isImage  );
   }
+
+  isValidURL(url: string): boolean {
+    const urlPattern = /^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
+    return urlPattern.test(url);
+  }
+  
 
   /**
    * this function clones the original message object for later remove logic
@@ -130,7 +137,6 @@ export class CurrentUserMessageComponent {
       ...emoji,
       userId: [...emoji.userId], // clone third layer
     }));
-    // console.log('clonedMessage: ', this.originalMessage);
   }
 
   /**
@@ -143,16 +149,6 @@ export class CurrentUserMessageComponent {
     this.answerKey = answerInfo.answerKey;
   }
 
-  //Dise Funktion macht nichts, da sie mit nichts verlinkt ist
-  openEmojis() {
-    // console.log('openEmojis');
-    let emojiDiv = document.getElementById('emojis');
-    if (emojiDiv && emojiDiv.classList.contains('d-none')) {
-      emojiDiv.classList.remove('d-none');
-    } else if (emojiDiv && emojiDiv.classList.contains('d-none') == false) {
-      emojiDiv.classList.add('d-none');
-    }
-  }
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
@@ -177,14 +173,9 @@ export class CurrentUserMessageComponent {
     this.globalVariables.messageThreadStart.img = this.user.img;
   }
 
-  onSelectMessage(message: string) {
-    this.selectedMessage = message;
-    this.openReaction = true;
-  }
-
-  onCloseReactions() {
-    this.openReaction = false;
-    this.selectedMessage = '';
+  onSelectMessage() {
+   this.activeMessage = !this.activeMessage;
+    this.openReaction = !this.openReaction;
   }
 
   @HostListener('document:click', ['$event'])
@@ -194,57 +185,38 @@ export class CurrentUserMessageComponent {
     }
   }
 
-  remove(chatId: string) {
-    return updateDoc(doc(this.firestore, 'chatchannels', chatId), {
-      messages: arrayRemove(this.originalMessage),
-    });
+  onCloseReactions() {
+    this.activeMessage = false
+    this.openReaction = false;
   }
 
-  copyHelper() {
-    this.originalMessage.message = this.message.message;
-    this.originalMessage.answerto = this.message.answerto;
-    this.originalMessage.timestamp = this.message.timestamp;
-    this.originalMessage.userId = this.message.userId;
-    this.originalMessage.emoji = [];
-
-    this.message.emoji.forEach((element: any) => {
-      this.originalMessage.emoji.push({
-        icon: element.icon,
-        userId: [element.userId],
-        iconId: element.iconId,
-      });
-    });
-    console.log('current original Message: ', this.originalMessage);
-  }
-
-  addUserIdToEmoji(emoji: any, index: number): void {
-    if (emoji && emoji.userId && Array.isArray(emoji.userId)) {
-      const activeID = this.globalVariables.activeID;
-      if (emoji.userId.includes(activeID)) {
-        emoji.userId = emoji.userId.filter((id: any) => id !== activeID);
-      } else {
-        emoji.userId.push(activeID);
-      }
+  addUserIdToEmoji(emoji: any, index: number) {
+    const activeID = this.globalVariables.activeID;
+    if (emoji.userId.includes(activeID) && emoji.userId.length === 1) {
       if (this.message.emoji.length == 1) {
         emoji.userId = [];
         emoji.iconId = '';
         emoji.icon = '';
-      } else if (this.message.emoji[index].iconId) {
-        this.message.emoji.splice(index, 1)
-      }     
-    }
-
-    this.emojiCount(emoji);
-    this.globalVariables.messageData = this.message;
-    this.firebaseChatService.sendMessage(
-      this.globalVariables.openChannel.chatId,
-      'chatchannels'
-    );
-    this.remove(this.globalVariables.openChannel.chatId);
+      } else this.message.emoji.splice(index, 1);
+    } else if (emoji.userId.includes(activeID)) emoji.userId = emoji.userId.filter((id: string) => id !== activeID);
+    else emoji.userId.push(activeID);
+    this.updateMessage();
   }
 
-  emojiCount(emoji: any): number {
-    return emoji.userId.length;
+  updateMessage() {
+    this.globalVariables.messageData = this.message;
+    let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
+    this.firebaseChatService.sendMessage(
+      this.globalVariables.openChannel.chatId,
+      chatFamiliy
+    );
+    this.remove(this.globalVariables.openChannel.chatId, chatFamiliy); // es kommt zu einem Springen des chats, wenn Function ausgeführt wird
+  }
+
+  remove(chatId: string, chatFamiliy: string) {
+    return updateDoc(doc(this.firestore, chatFamiliy, chatId), {
+      messages: arrayRemove(this.originalMessage),
+    });
   }
 
   /**
@@ -252,17 +224,19 @@ export class CurrentUserMessageComponent {
    * @returns - name of first user of emoji
    */
   async getFirstUserOfEmoji() {
-    let userId = this.message.emoji[0].userId[0]; 
+    let lenght = this.message.emoji[0].userId.length - 1;
+    let userId = this.message.emoji[0].userId[0];
     if (userId !== '') {
       let x = await this.firebaseUpdate.getUserData(userId);
       this.profile = new User(x);
       this.hoverUser = this.profile.name;
+      this.count = lenght.toString();
     }
   }
 
   @HostListener('mouseover')
   onMouseOver() {
-    if(this.message.emoji[0].icon){
+    if (this.message.emoji[0].icon) {
       this.mouseover = true;
       this.getFirstUserOfEmoji();
     }
@@ -272,4 +246,7 @@ export class CurrentUserMessageComponent {
   onMouseOut() {
     this.mouseover = false;
   }
+
+  
+
 }

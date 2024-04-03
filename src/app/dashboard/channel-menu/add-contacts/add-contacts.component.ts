@@ -25,7 +25,6 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
     InputfieldComponent,
     AddNewChannelComponent,
     ChannelMenuComponent,
-    
     FormsModule
 
   ],
@@ -58,7 +57,6 @@ export class AddContactsComponent implements OnInit {
 
   constructor(
     private userService: FirebaseUserService, // Injizieren Sie den UserService
-    private firestore: Firestore,
     public globalFunctions: GlobalFunctionsService
   ) {}
 
@@ -114,18 +112,21 @@ export class AddContactsComponent implements OnInit {
     this.globalVariables.channelData.channelName = '';
     this.globalVariables.channelData.description = '';
     this.globalVariables.channelData.chatId = '';
+    this.globalVariables.channelData.id = '';
     this.globalFunctions.closeAddContactsOverlay();
   }
 
 
   addChannelwithChoosenMembers() {
     const selectedUserIds = this.selectedUsers.map(user => user.id);
-    console.log('this.selectedUsers: ', this.selectedUsers);
     const newChannelData = {
       channelName: this.globalVariables.channelData.channelName,
       description: this.globalVariables.channelData.description,
       chatId: '',
       members: selectedUserIds,
+      id: '',
+      creator: this.globalVariables.activeID
+
     };
     console.log('newChannelData: ', newChannelData);
     return newChannelData;

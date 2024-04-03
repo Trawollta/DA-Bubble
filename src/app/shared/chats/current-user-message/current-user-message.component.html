@@ -1,40 +1,61 @@
 <section class="message-current-user">
-    <div class="current-user-content">
-        <div class="info-area">
-            <div class="info-area-wrapper">
-                <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
-                <span class="username">{{ user.name }}</span>
-            </div>
-            <div class="speech-bubble-current-user" (click)="onSelectMessage(message.id)">
-                <!-- (click)="openEmojis()" -->
-                <span class="speech-bubble-current-user-text" *ngIf="!editMessage">{{
-          message.message
-        }}</span>
-                <div class="edit" (click)="globalFunctions.stopPropagation($event)">
-                    <app-inputfield type="text" [(ngModel)]="message.message" *ngIf="globalVariables.editMessage"></app-inputfield>
-                </div>
-            </div>
-            <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id" [message]="message" [originalMessage]="originalMessage"></app-reactions>
-
-            <div class="tooltip">
-                <div class="reaction-emojis">
-                    <ng-container *ngFor="let emoji of message.emoji let index = index">
-                        <span class="reaction-emoji-field" *ngIf="emoji.userId && emoji.userId.length > 0" (click)="addUserIdToEmoji(emoji, index)">
-              {{ emoji.icon }} {{ emojiCount(emoji) }}
+  <div class="current-user-content">
+    <div class="info-area">
+      <div class="info-area-wrapper">
+        <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
+        <span class="username">{{ user.name }}</span>
+      </div>
+      <div class="speech-bubble-current-user" (click)="onSelectMessage()">
+        <!-- (click)="openEmojis()" -->
+        <span
+          class="speech-bubble-current-user-text"
+          *ngIf="!isImage && (!globalVariables.editMessage || !activeMessage)"
+          >{{ message.message }}</span
+        >
+        <div class="loadedImg" *ngIf="isImage">
+          <img src="{{ message.message }}" alt="">
+        </div>
+        <div class="edit" (click)="globalFunctions.stopPropagation($event)">
+          <app-inputfield
+            type="text"
+            [(ngModel)]="message.message"
+            *ngIf="globalVariables.editMessage && activeMessage"
+          ></app-inputfield>
+        </div>
+      </div>
+      <app-reactions
+        class="reaction-field"
+        *ngIf="openReaction"
+        [message]="message"
+        [originalMessage]="originalMessage"
+      ></app-reactions>
+      <div class="tooltip">
+        <div class="reaction-emojis">
+          <ng-container *ngFor="let emoji of message.emoji; let index = index">
+            <span
+              class="reaction-emoji-field"
+              *ngIf="emoji.userId && emoji.userId.length > 0"
+              (click)="addUserIdToEmoji(emoji, index)"
+            >
+              {{ emoji.icon }} {{ emoji.userId.length }}
             </span>
-                    </ng-container>
-                    <span class="tooltiptext" *ngIf="mouseover"> {{ hoverUser }} & x Personen </span>
-                </div>
-            </div>
+          </ng-container>
+          <span class="tooltiptext" *ngIf="mouseover">
+            {{ hoverUser }} & {{ count }} Personen
+          </span>
+        </div>
+      </div>
 
-
-
-            <div *ngIf="!isThread" class="replie-wrapper">
-                <div class="replie-text" (click)="openAnswers()">
-                    <span *ngIf="answercount !== 0">{{ answercount }}</span
+      <div
+        *ngIf="!isThread && !globalVariables.isUserChat"
+        class="replie-wrapper"
+      >
+        <div class="replie-text" (click)="openAnswers()">
+          <span *ngIf="answercount !== 0">{{ answercount }}</span
           ><span> Antwort</span><span *ngIf="answercount !== 1">en</span>
-                </div>
-                <span *ngIf="answercount !== 0" class="timestamp-text">Letzte Antwort: {{ lastAnswerTime | date : "dd.MM.YY H:mm" }}</span
+        </div>
+        <span *ngIf="answercount !== 0" class="timestamp-text"
+          >Letzte Antwort: {{ lastAnswerTime | date : "dd.MM.YY H:mm" }}</span
         >
       </div>
     </div>

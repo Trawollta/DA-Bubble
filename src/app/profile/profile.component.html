@@ -1,7 +1,7 @@
 <section>
     <div class="cardOuterContainer" [ngClass]="{ 'cardCurrentUser': globalVariables.ownprofile }">
-        <div class="card ">
-            <div class="content">
+        <div class="card "  appClickedOutside (clickedOutside)="closeProfile()">
+            <div class="content" >
 
                 <!-- area head show name -->
                 <div *ngIf="!globalVariables.showEditProfile" class="head">
@@ -12,7 +12,11 @@
                 <!-- area head edit name -->
                 <div *ngIf="globalVariables.showEditProfile" class="head">
                     <h3>Dein Profil bearbeiten</h3>
-                    <img (click)="cancelEdit()" src="assets/img/icons/close.svg" alt="close profile">
+                    <img 
+                        (click)="cancelEdit()" 
+                        src="assets/img/icons/close.svg" 
+                        alt="close profile"
+                    >
                 </div>
 
                 <!-- area profile image -->
@@ -26,8 +30,15 @@
                 <!-- area show name -->
                 <div *ngIf="!globalVariables.showEditProfile" class="nameContainer">
                     <h2>{{profile.name}}</h2>
-                    <div class="editContainer" *ngIf="globalVariables.ownprofile" (click)="editProfile()">
-                        <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/edit.svg" alt="edit profile">
+                    <div class="editContainer" 
+                        *ngIf="globalVariables.ownprofile" 
+                        (click)="editProfile()"
+                    >
+                        <img 
+                            *ngIf="!globalVariables.desktop600" 
+                            src="assets/img/icons/edit.svg" 
+                            alt="edit profile"
+                        >
                         <span *ngIf="globalVariables.desktop600">Bearbeiten</span>
                     </div>
                 </div>
@@ -49,8 +60,15 @@
                 </div>
 
                 <div class="inputFieldContainer">
-                    <app-inputfield *ngIf="globalVariables.showEditProfile" [classes]="'noIcon standard'" name='profileName'  [(ngModel)]="nameBuffer" type="text" placeholder="Dein Name hier"></app-inputfield>
-                    <!-- <input type="text" placeholder="Dein Name hier"> -->
+                    <app-inputfield 
+                        *ngIf="globalVariables.showEditProfile" 
+                        [classes]="'noIcon standard'" 
+                        name='profileName'  
+                        [(ngModel)]="nameBuffer" 
+                        type="text" 
+                        placeholder="Dein Name hier"
+                    >
+                    </app-inputfield>
                 </div>
 
                 <!-- area mail -->
@@ -62,22 +80,48 @@
                     </div>
                     <div *ngIf="!globalVariables.showEditProfile" class="mailAdressContainer">
                         <a  href="mailto:{{profile.email}}">{{profile.email}}</a>
-                        <!--  --></div>
+                    </div>
                     <!-- area edit mail -->
                     <div *ngIf="globalVariables.showEditProfile" class="inputFieldContainer">
-                        <app-inputfield type="email" [classes]="'noIcon standard'" name='email'  [(ngModel)]="emailBuffer" placeholder="Deine E-Mail hier"></app-inputfield>
-                        <!-- <input type="email" placeholder="Deine E-Mail hier"> -->
+                        <app-inputfield 
+                            type="email" 
+                            [classes]="'noIcon standard'" 
+                            name='email'  
+                            [(ngModel)]="emailBuffer" 
+                            placeholder="Deine E-Mail hier"
+                            >
+                        </app-inputfield>
                     </div>
                 </div>
                 <!-- area button write message -->
-                <div class="messageBtn" *ngIf="!globalVariables.showEditProfile && globalVariables.ownprofile"></div>
-                <app-button class="messageBtn" *ngIf="!globalVariables.showEditProfile && !globalVariables.ownprofile" [classes]="['primary']" (clicked)="globalFunctions.openDirectMessageUser(profile)"
-                    caption="Nachricht" imgPath="assets/img/icons/mode_comment.svg"></app-button>
+                <div 
+                    class="messageBtn" 
+                    *ngIf="!globalVariables.showEditProfile && globalVariables.ownprofile"
+                >
+                </div>
+                <app-button 
+                    class="messageBtn" 
+                    type="button"
+                    *ngIf="!globalVariables.showEditProfile && !globalVariables.ownprofile" 
+                    [classes]="['primary']" 
+                    (click)="globalFunctions.openDirectMessageUser(profile)"
+                    (click)="close()"
+                    caption="Nachricht" imgPath="assets/img/icons/mode_comment.svg"
+                    >
+                </app-button>
                 <!-- area button cancel or submit change -->
                 <div *ngIf="globalVariables.showEditProfile" class="btnContainer">
-                    <app-button [classes]="['secondary noIcon']" (clicked)="cancelEdit()" caption="Abbrechen">
+                    <app-button 
+                        [classes]="['secondary noIcon']" 
+                        (clicked)="cancelEdit()" 
+                        caption="Abbrechen"
+                        >
                     </app-button>
-                    <app-button [classes]="['primary noIcon']" (clicked)="sumbitEdit()" caption="Speichern">
+                    <app-button 
+                        [classes]="['primary noIcon']" 
+                        (clicked)="sumbitEdit()" 
+                        caption="Speichern"
+                    >
                     </app-button>
                 </div>
 

@@ -1,0 +1,45 @@
+@import "../../../../styles.scss";
+
+
+
+.emojiContainer {
+    
+    min-width: 350px;
+    width: 300px;
+    background-color: $white;
+    border-radius: 20px;
+    box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    height: 200px;
+  
+    @media (max-width: 420px) {
+      height: 250px;
+      width: 100vw;
+      min-width: 396px;
+      border-radius: 0;
+    }
+    .emojiList {
+        @include dFlex($g:4px);
+        flex-wrap: wrap;
+        height: 100%;
+        width: calc(100% - 20px);
+        overflow-y: auto;
+        .emoji {
+            margin-top: 4px;
+            cursor: pointer;
+            height: auto;
+            width: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img{
+                height: 15px;
+                width: 15px;
+            }
+          }
+      }
+  }
+
+  
+  
+  

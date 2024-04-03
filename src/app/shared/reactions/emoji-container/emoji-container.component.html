@@ -1,0 +1,10 @@
+<div class="emojiContainer">
+    <div class="emojiList">
+      <span (click)="takeEmoji(emoji, true)"
+        class="emoji"
+        *ngFor="let emoji of emojiList"
+        
+        >{{ emoji["character"] }}
+      </span>
+    </div>
+  </div> <!--  -->

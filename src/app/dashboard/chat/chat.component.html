@@ -1,7 +1,10 @@
 <main>
 
-   <!-- container for header it is a channel chat -->
+  <!-- container for header it is a channel chat -->
   <section class="msg-header" *ngIf="!globalVariables.isUserChat">
+    <app-show-contacts class="showContactsHeader"
+      *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers" appClickedOutside
+      (clickedOutside)="closeMembers()"></app-show-contacts>
     <div class="topic-headline">
       <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
         <p></p>
@@ -11,10 +14,12 @@
     </div>
     <div class="active-contacts">
       <div class="contact-row" *ngIf="globalVariables.desktop700">
-        <div (click)="globalFunctions.showMembers()">
-        <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
-        <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
-      </div>
+        <div (click)="showMembers(true)">
+
+          <!-- Beide Varianten funktionieren! '../  oder ./' -->
+          <img src="./assets/img/avatars/Elias_Neumann.svg" alt="" />
+          <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
+        </div>
       </div>
       <div class="add-contact" (click)="globalFunctions.openAddContactsOverlay()">
         <img src="../../../assets/img/icons/person_add.svg" alt="" />
@@ -25,7 +30,7 @@
   <!-- container for header it is a user chat -->
   <section class="msg-header" *ngIf="globalVariables.isUserChat">
     <div class="topic-headline">
-      <div class="headline" (click)="globalFunctions.openProfile(false, this.globalVariables.userToChatWith.id)"> 
+      <div class="headline" (click)="globalFunctions.openProfile(false, this.globalVariables.userToChatWith.id)">
         <p></p>
         <img src="{{ globalVariables.userToChatWith.img }}" alt="">
         <p>{{ globalVariables.userToChatWith.name }}</p>
@@ -34,25 +39,54 @@
     </div>
   </section>
 
-<!-- container for all chat meassages -->
+  <!-- container for all chat meassages -->
   <div class="contentContainer">
     <div class="messages">
       <app-all-messages [isChat]="true"></app-all-messages>
+
     </div>
   </div>
 
-<!-- container for all inputfield and controll elements -->
+  <!-- container for all inputfield and controll elements -->
   <section class="inputfield">
-    <app-inputfield [classes]="['standard']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield>
+    <textarea class="'standard', 'inputFieldChat'" name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht"
+      [(ngModel)]="globalVariables.newMessage">
+    </textarea>
+    <!-- <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield> -->
     <div class="controllElementsContainer">
-      <div class="moreControlls"></div>
+      <app-show-contacts class="showContactsTextInput"
+        *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers" appClickedOutside
+        (clickedOutside)="closeMembers()"></app-show-contacts>
+      <app-emoji-container class="showContactsTextInput" *ngIf="globalVariables.showEmojiContainer" appClickedOutside
+        (clickedOutside)="closeEmoji()"></app-emoji-container>
+      <div class="moreControls">
+        <input type="file" id="getFile" #fileInput hidden (change)="onFileSelected($event)">
+        <img src="assets/img/input-imgs/add.svg" alt="" (click)="fileInput.click()">
+        <div class="inputFieldVerticalLine"></div>
+        <img src="assets/img/input-imgs/sentiment_satisfied.svg" alt="" (click)="showEmojiContainer()">
+        <img src="assets/img/input-imgs/alternate_email.svg" alt="" *ngIf="!globalVariables.isUserChat"
+          (click)="showMembers(false)">
+      </div>
       <img src="assets/img/input-imgs/send.svg" alt="send button" (click)="sendMessage()">
     </div>
   </section>
 
-   <!-- container popup elements -->
-  <app-show-contacts *ngIf="globalVariables.memberlist"></app-show-contacts>
-  <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel> 
+  <!-- error upload popup -->
+  <div *ngIf="showErrorPopup" class="errorPopupOuterContainer">
+    <div class="errorPopup" appClickedOutside (clickedOutside)="closeErrorPopup()">
+      <div class="errorPopupInnerContainer">
+        <div class="errorPopupTxtContainer">
+          <span>Das ausgewählte File ist zu groß. </span>
+          <span>{{fileSize}}</span>
+          <span>Maximalfilegröße<br>500KB </span>
+        </div>
+        <div class="okBtn" (click)="closeErrorPopup()">OK</div>
+      </div>
+    </div>
+  </div>
+
+
+  <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel>
   <app-edit-channel *ngIf="globalVariables.editChannelOverlayOpen"></app-edit-channel>
 
 

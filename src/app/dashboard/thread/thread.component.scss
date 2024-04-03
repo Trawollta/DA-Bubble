@@ -11,6 +11,8 @@ main {
   height: 100%;
   border-radius: 30px;
   background-color: $white;
+  padding-bottom: 16px;
+  box-sizing: border-box;
   @include dFlex($fd: column, $jc: space-between);
 
   @media screen and (min-width: 800px) {
@@ -154,15 +156,32 @@ main {
 }
 
 .inputfield {
-  width: 100%;
-  margin-bottom: 16px;
+  width: 90%;
+  height: 145px;
+  font-size: 18px !important;
+ /*  box-sizing: border-box;
+  margin-bottom: 16px; */
+  border: 1px solid $light_purple;
+  border-radius: 20px;
 
   .controllElementsContainer {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0px;
-    flex-direction: row;
+    @include dFlex($jc: space-between);
+    padding: 18px 16px;
+    box-sizing: border-box;
+
+    .moreControls {
+      @include dFlex($g: 8px);
+      .inputFieldVerticalLine{
+        height: 35px;
+        width: 0;
+        border: 0.5px solid $light_purple;
+      }
+      img {
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
+      }
+    }
   }
 }

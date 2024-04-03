@@ -1,45 +1,61 @@
+@import "../../../../styles.scss";
+
 .overlay {
-  position: fixed;
-  left: 72%;
-  transform: translate(-50%, -50%);
-  width: 350px;
+/*   position: fixed; 
+  top: 180px;
+  right: 60px; */
+  width: 300px;
   max-width: 500px;
   background: white;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+
+  @media (max-width: 800px) {
+    .overlay {
+      width: 100%;
+      height: 100vh;
+    }
+  }
+}
+
+.overlayChatHeader{
+  @include dFlex($fd: column, $g: 10px);
+  height: 300px;
   border-radius: 30px 0px 30px 30px;
-  top: 310px;
+}
+.overlayTextInputField{
+  @include dFlex($fd: column, $jc: flex-start, $g: 10px);
+  height: 200px;
+  border-radius: 30px;
 }
 
-.overlay-content {
-  width: 100%; 
-  height: 500px;
-}
+.contactListContainer {
+  overflow-y: auto;
+  width: 90%;
+  height: auto;
 
-.contact-list {
-  display: flex;
-  flex-direction: column;
-}
+  .contact-list {
+    @include dFlex($fd: column, $ai: flex-start, $g: 4px);
 
-.contact-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  cursor: pointer;
+  }
+
+  .contact-item {
+
+    cursor: pointer;
+  }
 }
 
 .contact-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
   margin-right: 15px;
 }
 
-.contact-name {
+.contactContainer {
+  @include dFlex();
   font-size: 16px;
 }
 

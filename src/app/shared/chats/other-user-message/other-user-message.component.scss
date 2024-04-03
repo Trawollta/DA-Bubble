@@ -1,4 +1,5 @@
 @import "../../../../styles.scss";
+
 .message {
   display: flex;
   gap: 20px;
@@ -9,19 +10,23 @@
   &:hover {
     background-color: #eceefe;
     cursor: pointer;
+
     .speech-bubble {
       background-color: white !important;
     }
   }
 
-  img {
+  .user {
     width: 50px;
-    height: 50px;
-    border-radius: 40px;
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 40px;
+    }
   }
 
   .info-area {
-    //gap: 8px;
+
 
     .info-area-wrapper {
       @include dFlex($g: 20px, $jc: flex-start);
@@ -35,17 +40,21 @@
       .messagetime {
         font-size: 14px;
         font-weight: 400;
-        line-height: 19px;
+        line-height: 25px;
         color: $text_grey;
       }
     }
 
     .speech-bubble {
+      white-space: pre-wrap;
       padding: 15px;
       box-sizing: border-box;
       border-radius: 0px 30px 30px 30px;
-      //gap: 8px;
       background-color: $background;
+
+      img {
+        max-width: 200px;
+      }
 
       .speech-bubble-text {
         font-size: 17px;
@@ -63,17 +72,16 @@
       border-radius: 25px 25px 0px 25px;
       border: 1px;
       gap: 5px;
+
       img {
         height: 15px;
         width: auto;
       }
     }
+
     .replie-wrapper {
       @include dFlex($g: 20px, $jc: flex-start);
-      //margin: 0 10px;
-      /*g ap: 20px;
-      display: flex;
-      flex-direction: row; */
+
       .replie-text {
         font-size: 16px;
         font-weight: 400;
@@ -85,15 +93,13 @@
         &:hover {
           cursor: pointer;
           font-weight: 700;
-          /* font-size: 16px;
-          line-height: 24.55px; */
         }
       }
+
       .timestamp-text {
         font-size: 12px;
         font-weight: 400;
-        /*  text-align: left;
-        display: flex; */
+
       }
     }
   }
@@ -101,8 +107,7 @@
 
 .reaction-field {
   @include dFlex($jc: flex-start, $ai: flex-end, $fd: column);
-  //display: flex;
-  //justify-content: flex-start;
+
   position: absolute;
   top: 0;
   right: 0;
@@ -124,10 +129,12 @@
   border: 1px solid rgba(173, 176, 217, 1);
   align-items: center;
   border-radius: 10px;
+
   &:hover {
     border-color: rgba(68, 77, 242, 1);
   }
 }
+
 .d-none {
   display: none;
 }

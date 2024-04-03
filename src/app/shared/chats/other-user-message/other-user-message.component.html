@@ -1,17 +1,20 @@
 <section class="message">
-  <div class="user" (click)="globalFunctions.openProfile(false, message.userId)">
-    <img [src]="user.img" alt="" />
+  <div class="user" (click)="globalFunctions.openProfile(false, message.userId)"  >
+    <img *ngIf="user.img" [src]="user.img" alt="" />
   </div>
   <div class="info-area">
     <div class="info-area-wrapper">
-      <span class="username">{{ user.name }}</span>
+      <span class="username"  *ngIf="user.name">{{ user.name }}</span>
       <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
     </div>
-    <div class="speech-bubble"(click)="onSelectMessage(message.id)"> <!--  (click)="openEmojis()"  -->
-      <span class="speech-bubble-text">{{ message.message }}</span>
+    <div class="speech-bubble"(click)="onSelectMessage()">
+      <span class="speech-bubble-text"  *ngIf="!isImage">{{ message.message }}</span>
+      <div class="loadedImg" *ngIf="isImage">
+        <img src="{{ message.message }}" alt="">
+      </div>
     </div>
-    <app-reactions class="reaction-field" *ngIf="openReaction && selectedMessage === message.id"
-      [message]="message" [originalMessage]="originalMessage"></app-reactions>
+    <app-reactions class="reaction-field" *ngIf="openReaction" 
+      [message]="message" [originalMessage]="originalMessage"></app-reactions><!--  && selectedMessage === message.id -->
       <div class="tooltip">
         <div class="reaction-emojis">
           <ng-container *ngFor="let emoji of message.emoji let index = index">
@@ -20,18 +23,18 @@
               *ngIf="emoji.userId && emoji.userId.length > 0"
               (click)="addUserIdToEmoji(emoji, index)"
             >
-              {{ emoji.icon }} {{ emojiCount(emoji) }}
+              {{ emoji.icon }} {{ emoji.userId.length }}
             </span>
           </ng-container>
-          <span class="tooltiptext" *ngIf="mouseover"> {{ hoverUser }} & x Personen </span>
+          <span class="tooltiptext" *ngIf="mouseover"> {{ hoverUser }} & {{ count }} Personen </span>
         </div>
       </div>
-    <div *ngIf="!isThread" class="replie-wrapper">
+    <div *ngIf="!isThread && !globalVariables.isUserChat" class="replie-wrapper">
       <div  class="replie-text" (click)="openAnswers()">
         <span *ngIf="answercount !== 0">{{ answercount }}</span><span> Antwort</span><span
           *ngIf="answercount !== 1">en</span>
       </div>
-      <span  *ngIf="answercount !== 0" class="timestamp-text" (click)="test(message.emoji)">Letzte Antwort: {{ lastAnswerTime | date : "dd.MM.YY H:mm" }}</span>
+      <span  *ngIf="answercount !== 0" class="timestamp-text">Letzte Antwort: {{ lastAnswerTime | date : "dd.MM.YY H:mm" }}</span>
     </div>
   </div>
 </section>

@@ -16,7 +16,8 @@ export class FirebaseUserService {
   private authService = inject(AuthService);
   private auth = inject(Auth);
   private router = inject(Router);
-  constructor() { }
+  constructor() {
+   }
 
   getUsersRef() {
     return collection(this.firestore, 'users');
@@ -32,6 +33,11 @@ export class FirebaseUserService {
 
   async addUser(uid: string, userData: any) {
     await setDoc(doc(this.firestore, "users", uid), this.getCleanJson(userData));
+  }
+
+  async userExists(uid: string): Promise<boolean> {
+    const userDoc = await getDoc(doc(this.firestore, "users", uid));
+    return userDoc.exists();
   }
 
   searchUsersByName(searchTerm: string): Observable<any[]> {
@@ -65,14 +71,17 @@ export class FirebaseUserService {
         let logedInUser = new User(user.data());
         this.globalVariables.currentUser = logedInUser;
         this.globalVariables.activeID = user.id;
+        this.updateUserStatus(this.globalVariables.activeID, true);
       }
     });
   }
 
   async logout() {
     try {
-      await this.updateUserStatus(this.auth.currentUser!.uid, false);
+      //await this.updateUserStatus(this.auth.currentUser.uid, false);
       await this.authService.logout();
+      await this.updateUserStatus(this.globalVariables.activeID, false);
+      this.globalVariables.activeID = '';
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {
@@ -89,5 +98,21 @@ export class FirebaseUserService {
   async getUserData(id: string) {
     const docSnap = await getDoc(this.getSingleUserRef(id));
     return docSnap.data();
+  }
+
+  /** 
+   * NUR EIN TEST
+   */
+
+  async getUserDocIdWithName(name: string): Promise<string[]> {
+    const usersCollectionRef = collection(this.firestore, 'users');
+    const q = query(usersCollectionRef, where('name', '==', name));
+    const querySnapshot = await getDocs(q);
+    const docIds: string[] = [];
+    querySnapshot.forEach(doc => {
+      docIds.push(doc.id);
+      console.log(doc.id, " => ", doc.data());
+    });
+    return docIds;
   }
 }

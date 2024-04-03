@@ -59,7 +59,7 @@ export class CurrentUserMessageComponent {
     timestamp: 0,
     emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
   };
-  activeMessage: boolean = false;
+  activeMessage: boolean = false; // for flagging this specific message
 
   profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
   mouseover: boolean = false;
@@ -71,8 +71,11 @@ export class CurrentUserMessageComponent {
   answercount: number = 0;
   lastAnswerTime: number = 0;
   messageImgUrl: string = '';
+  messageText: string = '';
+  textAfterUrl: string = '';
+
   count = '';
-  isImage:boolean = false;
+  isImage: boolean = false;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -118,19 +121,24 @@ export class CurrentUserMessageComponent {
     this.postingTime = this.message.timestamp;
     this.fillAnswerVariables();
     this.cloneOriginalMessage();
-    this.isImage = this.isValidURL(this.message.message);
-    
+    this.isImage = this.checkMessage(this.message.message);
+
   }
 
-  isValidURL(message: string): boolean {
-    //const urlPattern = /(https?:\/\/[^\s]+)/;
-    const urlPattern = /^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
+  checkMessage(message: string): boolean {
+    const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
     const urlMatch = message.match(urlPattern);
-    console.log('urlMatch', urlMatch  );
-    this.messageImgUrl = urlMatch ? urlMatch[0] : '';
-    return urlPattern.test(this.messageImgUrl);
+    if (urlMatch) {
+      this.messageImgUrl = urlMatch[0];
+      const textBeforeUrl = message.split(this.messageImgUrl)[0].trim();
+      this.textAfterUrl = message.split(this.messageImgUrl)[1].trim();
+      this.messageText = textBeforeUrl;
+    } else { // if no URL in message:
+      this.messageText = message;
+    }
+    return !!urlMatch;
   }
-  
+
 
   /**
    * this function clones the original message object for later remove logic
@@ -179,7 +187,7 @@ export class CurrentUserMessageComponent {
   }
 
   onSelectMessage() {
-   this.activeMessage = !this.activeMessage;
+    this.activeMessage = !this.activeMessage;
     this.openReaction = !this.openReaction;
   }
 
@@ -252,6 +260,6 @@ export class CurrentUserMessageComponent {
     this.mouseover = false;
   }
 
-  
+
 
 }

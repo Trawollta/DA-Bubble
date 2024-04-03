@@ -11,11 +11,11 @@
     </div>
     <div class="add">
         <div class="checkbox-container">
-            <input type="checkbox" id="addAllMembers" name="addMembers" value="all">
+            <input type="radio" id="addAllMembers" name="addMembers" value="all" (change)="!showCertainPeople = showCertainPeople">
             <label for="addAllMembers">Alle Mitglieder hinzufügen</label>
         </div>
         <div class="checkbox-container">
-            <input type="checkbox" id="addCertainPeople" name="addMembers" value="certain" (change)="showCertainPeople = !showCertainPeople">
+            <input type="radio" id="addCertainPeople" name="addMembers" value="certain" (change)="showCertainPeople = !showCertainPeople">
             <label for="addCertainPeople">Bestimmte Leute hinzufügen</label>
           </div>
 

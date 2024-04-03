@@ -1,10 +1,10 @@
 <section class="message">
-  <div class="user" (click)="globalFunctions.openProfile(false, message.userId)">
-    <img [src]="user.img" alt="" />
+  <div class="user" (click)="globalFunctions.openProfile(false, message.userId)"  >
+    <img *ngIf="user.img" [src]="user.img" alt="" />
   </div>
   <div class="info-area">
     <div class="info-area-wrapper">
-      <span class="username">{{ user.name }}</span>
+      <span class="username"  *ngIf="user.name">{{ user.name }}</span>
       <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
     </div>
     <div class="speech-bubble"(click)="onSelectMessage()">

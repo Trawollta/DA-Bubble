@@ -1,8 +1,11 @@
+@import "../../../styles.scss";
+
 $light-gray: #ccc;
 
 $border-width: 1px;
 
 main {
+  position: relative;
   display: flex;
   max-width: 120px;
   height: 23px;
@@ -16,6 +19,22 @@ main {
   img {
     width: 20px;
     height: 20px;
+  }
+  .errorPopUp{
+    position: absolute;
+    top: 0;
+    left: 200px;
+    width: 300px;
+    z-index: 20;
+    
+    @include dFlex($fd:column);
+    background-color: $white;
+    box-shadow:  3px 3px 7px 1px rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+
+    .popupTextContainer{
+      text-align: center;
+    }
   }
 }
 
@@ -168,3 +187,9 @@ main {
   visibility: visible;
   opacity: 1;
 }
+
+
+
+
+  
+

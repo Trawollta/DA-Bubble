@@ -59,6 +59,7 @@
         (clickedOutside)="closeMembers()"></app-show-contacts>
       <app-emoji-container class="showContactsTextInput" *ngIf="globalVariables.showEmojiContainer" appClickedOutside
         (clickedOutside)="closeEmoji()"></app-emoji-container>
+      
       <div class="moreControls">
         <input type="file" id="getFile" #fileInput hidden (change)="onFileSelected($event)">
         <img src="assets/img/input-imgs/add.svg" alt="" (click)="fileInput.click()">
@@ -69,7 +70,22 @@
       </div>
       <img src="assets/img/input-imgs/send.svg" alt="send button" (click)="sendMessage()">
     </div>
+
+
   </section>
+<!-- error Validation popup -->
+<div *ngIf="showValidationPopup" class="errorPopupOuterContainer">
+  <div class="errorPopup" >
+    <div class="errorPopupInnerContainer">
+      <div class="errorPopupTxtContainer">
+        <span>Dein Beitrag enthält unerlaubte Zeichen:</span>
+        <span>{{ forbiddenChars }}</span>
+        <span>Bitte entferne sie oder brich die Bearbeitung ab!</span>
+      </div>
+      <div class="okBtn" (click)="closevalidationPopup()">OK</div>
+    </div>
+  </div>
+</div>
 
   <!-- error upload popup -->
   <div *ngIf="showErrorPopup" class="errorPopupOuterContainer">

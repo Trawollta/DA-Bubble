@@ -51,6 +51,8 @@ export class ChatComponent {
   storage = getStorage();
   deleteFileRef = ref(this.storage, '');
   showErrorPopup = false;
+  showValidationPopup = false;
+  forbiddenChars: string = '';
   downloadURL = '';
   downloadURLAlias = ''
   fileSize = '';
@@ -58,7 +60,7 @@ export class ChatComponent {
 
 
   constructor() {
-    
+
   }
   openEmojis() {
     let emojiDiv = document.getElementById('emojis');
@@ -71,9 +73,9 @@ export class ChatComponent {
 
   ngOnInit() {
     this.globalVariables.scrolledToBottom = false;
-    
+
   }
-  
+
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
@@ -121,21 +123,32 @@ export class ChatComponent {
    * this function fills all relevant data to the messagData object and calls the send message function from firebase service
    */
   async sendMessage() {
+     this.forbiddenChars = this.globalFunctions.isMessageValid(this.globalVariables.newMessage);
 
-    if (this.globalVariables.newMessage !== '') {
-      this.globalVariables.messageData.userId = this.globalVariables.activeID;
-      this.globalVariables.messageData.timestamp = new Date().getTime();
-      this.globalVariables.messageData.answerto = '';
-      this.globalVariables.messageData.message = await this.buildMessage();
-      this.globalVariables.messageData.emoji = [{ icon: '', userId: [] as any[], iconId: '' }];
+    if (this.globalVariables.newMessage !== '' && this.forbiddenChars.length === 0) {
+      await this.preperDataForSendMessage();
       let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
       this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, chatFamiliy);
-      this.globalVariables.messageData.message = '';
-      this.globalVariables.newMessage = '';
-      this.selectedFile = null
-      this.globalVariables.scrolledToBottom = false;
+      this.cleardata();
+    } else {
+      this.showValidationPopup = true;
     }
 
+  }
+
+  async preperDataForSendMessage(){
+    this.globalVariables.messageData.userId = this.globalVariables.activeID;
+    this.globalVariables.messageData.timestamp = new Date().getTime();
+    this.globalVariables.messageData.answerto = '';
+    this.globalVariables.messageData.message = await this.buildMessage();
+    this.globalVariables.messageData.emoji = [{ icon: '', userId: [] as any[], iconId: '' }];
+  }
+
+  cleardata(){
+    this.globalVariables.messageData.message = '';
+    this.globalVariables.newMessage = '';
+    this.selectedFile = null
+    this.globalVariables.scrolledToBottom = false;
   }
 
   /**
@@ -157,6 +170,12 @@ export class ChatComponent {
     }
   }
 
+  checkIfFileIsValidImgFile() {
+
+  }
+
+
+
   /**
    * this function replaces the alias with the URL
    * @returns message which should send
@@ -166,8 +185,6 @@ export class ChatComponent {
     if (this.selectedFile) {
       await this.uploadfile(this.selectedFile);
       message = message.replace(this.downloadURLAlias, this.downloadURL);
-     // console.log(message);
-     // debugger;
     }
     return message;
   }
@@ -184,7 +201,7 @@ export class ChatComponent {
         const imageRef = ref(storageRef, file.name);
         await uploadBytes(imageRef, file);
         this.downloadURL = await getDownloadURL(imageRef);
-      } catch (error) { console.error("error while uploading:", error);}
+      } catch (error) { console.error("error while uploading:", error); }
     } else console.error("No file availabe");
   }
 
@@ -205,8 +222,17 @@ export class ChatComponent {
    * this function just sets the flag for closing the error popup
    */
   closeErrorPopup() {
+    console.log('showErrorPopup');
     this.showErrorPopup = false;
   }
+
+    /**
+   * this function just sets the flag for closing the error popup
+   */
+    closevalidationPopup() {
+      console.log('showValidationPopup');
+      this.showValidationPopup = false;
+    }
 
   /* doSomething(){
     

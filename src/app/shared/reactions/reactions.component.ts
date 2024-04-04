@@ -37,6 +37,8 @@ export class ReactionsComponent {
   // Variable für das ausgewählte Emoji
   choosedEmoji: string = '';
   editMessage: boolean = false;
+  showValidatePopup=false;
+  forbiddenChars: string = '';
 
   emojiList: Array<any> = [];
   allEmojis: Array<any> = []; // wo wird das gebraucht? 
@@ -49,7 +51,6 @@ export class ReactionsComponent {
    */
   ngOnInit(): void {
     this.getEmojis();
-    // console.log(this.originalMessage);
   }
 
   /**
@@ -140,7 +141,7 @@ export class ReactionsComponent {
    * @param element
    * @returns
    */
-  helper(element: any): any {
+/*   helper(element: any): any {
     if (element) {
       const activeID = this.globaleVariables.activeID;
       if (!element.userId.includes(activeID)) {
@@ -153,7 +154,7 @@ export class ReactionsComponent {
       iconId: element.iconId
     };
   }
-
+ */
 
   getEmojiUserId(element: any, userIdAsArray: any[]) {
     let userIds = element.userId;
@@ -184,16 +185,27 @@ export class ReactionsComponent {
 
   editClose() {
     this.globaleVariables.editMessage = false;
+    this.message.message = this.originalMessage.message;
   }
 
   editSave() {
-    this.globaleVariables.editMessage = false;
-    this.globaleVariables.messageData = this.message;
-    let chatFamiliy = this.globaleVariables.isUserChat ? 'chatusers' : 'chatchannels';
-    this.firebaseChatService.sendMessage(
-      this.globaleVariables.openChannel.chatId, chatFamiliy
-    );
-    if (this.originalMessage.message !== this.message.message)
-      this.remove(this.globaleVariables.openChannel.chatId, chatFamiliy);
+    this.forbiddenChars = this.globaleFunction.isMessageValid(this.message.message); 
+    if (this.forbiddenChars.length === 0) {
+      this.globaleVariables.editMessage = false;
+      this.globaleVariables.messageData = this.message;
+      let chatFamiliy = this.globaleVariables.isUserChat ? 'chatusers' : 'chatchannels';
+      this.firebaseChatService.sendMessage(
+        this.globaleVariables.openChannel.chatId, chatFamiliy
+      );
+      if (this.originalMessage.message !== this.message.message)
+        this.remove(this.globaleVariables.openChannel.chatId, chatFamiliy);
+    }
+    else{
+      this.showValidatePopup=true; 
+    }
+  }
+  
+  closeValidatePopup(){   
+    this.showValidatePopup=false;
   }
 }

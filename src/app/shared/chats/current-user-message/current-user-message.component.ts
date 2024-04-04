@@ -73,6 +73,7 @@ export class CurrentUserMessageComponent {
   messageImgUrl: string = '';
   messageText: string = '';
   textAfterUrl: string = '';
+  notAllowedChars: string = '';
 
   count = '';
   isImage: boolean = false;
@@ -125,19 +126,31 @@ export class CurrentUserMessageComponent {
 
   }
 
+  /**
+   * 
+   * @param message 
+   * @returns 
+   */
   checkMessage(message: string): boolean {
-    const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-    const urlMatch = message.match(urlPattern);
+   // const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+   // const urlMatch = message.match(urlPattern);
+  const urlMatch = this.globalFunctions.checkForURL(message);
     if (urlMatch) {
-      this.messageImgUrl = urlMatch[0];
-      const textBeforeUrl = message.split(this.messageImgUrl)[0].trim();
-      this.textAfterUrl = message.split(this.messageImgUrl)[1].trim();
-      this.messageText = textBeforeUrl;
+      this.messageImgUrl = urlMatch;
+      const textBeforeUrl = message.split(urlMatch)[0].trim();
+      this.textAfterUrl = message.split(urlMatch)[1].trim();
+      //this.notAllowedChars = this.globalFunctions.isMessageValid(this.textAfterUrl);
+     // this.notAllowedChars += this.globalFunctions.isMessageValid(textBeforeUrl);
+       this.messageText = textBeforeUrl;
     } else { // if no URL in message:
       this.messageText = message;
-    }
+      //der check, ob es sich um erlaupten Input handelst muss in die Eingabe
+     // this.notAllowedChars = this.globalFunctions.isMessageValid(message);
+     }
     return !!urlMatch;
   }
+
+
 
 
   /**

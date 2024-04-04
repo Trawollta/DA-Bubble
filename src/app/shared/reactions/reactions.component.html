@@ -1,54 +1,42 @@
 <main>
-  <div *ngIf="!globaleVariables.editMessage == true">
-    <img
-      class="hands-icon"
-      src="./assets/img/icons/emoji _person raising both hands in celebration_.svg"
-      alt=""
-    />
+  <div *ngIf="!globaleVariables.editMessage">
+    <img class="hands-icon" src="./assets/img/icons/emoji _person raising both hands in celebration_.svg" alt="" />
   </div>
-  <div *ngIf="!globaleVariables.editMessage == true">
-    <img
-      class="check-icon"
-      src="./assets/img/icons/emoji _white heavy check mark_.svg"
-      alt=""
-    />
+  <div *ngIf="!globaleVariables.editMessage">
+    <img class="check-icon" src="./assets/img/icons/emoji _white heavy check mark_.svg" alt="" />
   </div>
-  <div (click)="openEmojis()" *ngIf="!globaleVariables.editMessage == true">
-    <img
-      class="reaction-icon"
-      src="./assets/img/icons/add_reaction.svg"
-      alt=""
-    />
+  <div (click)="openEmojis()" *ngIf="!globaleVariables.editMessage">
+    <img class="reaction-icon" src="./assets/img/icons/add_reaction.svg" alt="" />
   </div>
-  <div *ngIf="globaleVariables.editMessage == true" >
-    <img
-    src="assets/img/input-imgs/send.svg"
-    alt=""
-    *ngIf="globaleVariables.editMessage"
-    (click)="editSave()"
-  />
-  <img
-    src="assets/img/icons/close.svg"
-    alt=""
-    *ngIf="globaleVariables.editMessage"
-    (click)="editClose()"
-  />
+  <div *ngIf="globaleVariables.editMessage" class="editContainer">
+    
+    <img src="assets/img/input-imgs/send.svg" alt="" *ngIf="globaleVariables.editMessage" (click)="editSave()" />
+   
+    <img src="assets/img/icons/close.svg" alt="" *ngIf="globaleVariables.editMessage" (click)="editClose()" />
   </div>
-  <div class="tooltip"
-    (click)="this.editOpen()"
-    *ngIf="globaleVariables.activeID == this.message.userId"
-  >
-    <img class="edit-icon" src="./assets/img/icons/comment.svg" alt=""/>
-      <span class="tooltiptext">Nachricht bearbeiten</span>
+  <div class="tooltip" (click)="this.editOpen()" *ngIf="globaleVariables.activeID == this.message.userId">
+    <img class="edit-icon" src="./assets/img/icons/comment.svg" alt="" />
+    <span class="tooltiptext">Nachricht bearbeiten</span>
   </div>
+
+<div class="errorPopUp" *ngIf="showValidatePopup" > 
+  <div class="popupTextContainer"> <!--  -->
+    <span>Deine Änderung enthält unerlaubte Zeichen:</span>
+    <br>
+    <span>{{ forbiddenChars }}</span>
+    <br>
+    <span>Bitte entferne sie oder brich die Bearbeitung ab!</span>
+  </div>
+  <div class="errorBtn" (click)="closeValidatePopup()">close</div>
+</div>
+
+
+
 </main>
 <div id="emoji-selector" class="emojis">
   <div id="emoji-list">
-    <span
-      class="emoji"
-      *ngFor="let emoji of emojiList"
-      (click)="showInInput(emoji)"
-      >{{ emoji["character"] }}
+    <span class="emoji" *ngFor="let emoji of emojiList" (click)="showInInput(emoji)">{{ emoji["character"] }}
     </span>
   </div>
 </div>
+

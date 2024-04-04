@@ -244,4 +244,31 @@ export class GlobalFunctionsService {
     this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
   }
 
+  /**
+   * this function returns url if the message >>contains<< one
+   * @param message - string
+   * @returns - string if url and null if not
+   */
+  checkForURL(message: string): string | null {
+    const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    const urlMatch = message.match(urlPattern);
+    return urlMatch ? urlMatch[0] : null;
+  }
+
+  
+  /**
+   * this function should return a a string of not allowed char, when message is not valid
+   * @param message string
+   * @returns string
+   */
+  isMessageValid(message: string) {
+  const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}]/u;
+  const messageWithoutEmojis = message.replace(emojiRegex, 'Emoji');
+  const allowedCharPattern = /[^a-zA-Z0-9\s.,!?/:;%&=@#'§$€°ÄäÖöÜüß-]/g;
+  const forbiddenCharacters = messageWithoutEmojis.match(allowedCharPattern) || [];
+  const uniqueChar = Array.from(new Set(forbiddenCharacters)).join(', ');
+  //const isValid = !(uniqueChar.length > 0);
+  //console.log('Is Message valid:', isValid, 'forbidden Character:', uniqueChar);
+  return uniqueChar; 
+  }
 }

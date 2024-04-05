@@ -29,6 +29,7 @@ export class InputfieldComponent implements OnInit, ControlValueAccessor {
   @Input() imgSize: string = "";
   @Input() required: boolean = false;
   @Output() inputChange = new EventEmitter<string>();
+  @Input() imgSrc?: string;
   imgActive: string = "";
   value: string = '';
   private onChange: (value: string) => void = () => { };

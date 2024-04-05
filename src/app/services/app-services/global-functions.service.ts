@@ -50,6 +50,8 @@ export class GlobalFunctionsService {
     this.globalVariables.channel = !this.globalVariables.channel;
     if (this.globalVariables.channel) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
+    this.globalVariables.channelData.channelName = '';
+    this.globalVariables.channelData.description = '';
   }
 
   openEditChannelOverlay() {

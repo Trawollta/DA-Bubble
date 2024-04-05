@@ -69,6 +69,8 @@ export class AddToChannelComponent implements OnDestroy {
 
   selectedUser: any = '';
 
+  selectedUserDetails: { name: string; img: string } = { name: '', img: '' };
+
   constructor(private userService: FirebaseUserService, private firestore: Firestore) {
     this.searchInput
     .pipe(
@@ -92,14 +94,14 @@ export class AddToChannelComponent implements OnDestroy {
     this.destroy$.complete();
   }
 
-  onSearchChange(searchValue: string): void {
-    if (!searchValue) {
-      this.users = [];
-      return;
-    }
+  // onSearchChange(searchValue: string): void {
+  //   if (!searchValue) {
+  //     this.users = [];
+  //     return;
+  //   }
   
-    this.searchInput.next(searchValue);
-  }
+  //   this.searchInput.next(searchValue);
+  // }
 
   // addUserToList(user: any) {
   //   this.selectedUser.push(user.id);
@@ -112,16 +114,23 @@ export class AddToChannelComponent implements OnDestroy {
   
   async selectUser(user: any) {
     this.selectedUser = user;
-    let name = this.selectedUser.name
-    let userId = await this.firebaseUserService.getUserDocIdWithName(name)
+    this.selectedUserDetails.name = user.name;
+    this.selectedUserDetails.img = user.img; // Stellen Sie sicher, dass 'img' ein gültiger Schlüssel im Benutzerobjekt ist
+  
+    let userId = await this.firebaseUserService.getUserDocIdWithName(user.name);
     this.userIdToAdd = userId[0];
     console.log(`Benutzer ausgewählt: ${user.name}`, 'ID:', this.userIdToAdd);
-
   
     // Reset der Suche und Auswahl
-    this.selectedUserName = '';
+    this.selectedUserName = user.name;
     this.searchText = '';
     this.users = [];
+  }
+
+  clearSelectedUser() {
+    this.selectedUserName = '';
+    this.selectedUserDetails = { img: '', name: '' }; // Stellen Sie sicher, dass dies die Struktur von selectedUserDetails entspricht
+    // Führen Sie hier zusätzliche Bereinigungsaktionen durch, falls erforderlich
   }
 
 
@@ -151,4 +160,12 @@ export class AddToChannelComponent implements OnDestroy {
   //   return data;
   // }
 
+
+  onSearchChange(searchValue: string): void {
+    if (!searchValue) {
+        this.users = [];
+        return;
+    }
+    this.searchInput.next(searchValue);
+}
 }

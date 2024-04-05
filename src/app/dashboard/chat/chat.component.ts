@@ -234,6 +234,10 @@ export class ChatComponent {
       this.showValidationPopup = false;
     }
 
+    openContactsPopup(){
+      this.globalVariables.desktop700 ? this.globalFunctions.openAddContactsOverlay() : this.showMembers(true);
+    }
+
   /* doSomething(){
     
     console.log('nicht im Element');

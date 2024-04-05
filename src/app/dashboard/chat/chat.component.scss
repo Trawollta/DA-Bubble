@@ -33,33 +33,51 @@ main {
   @media screen and (min-width: 700px) {
     height: 96px;
   }
+
   .showContactsHeader {
     position: absolute;
     z-index: 1000;
-    top: 51px;
-    left: 50%;
+    top: 50px;
+    right: 4px;
+
+    @media screen and (min-width: 340px) {
+      right: 4%;
+    }
+
+    @media screen and (min-width: 700px) {
+      top: 57px;
+      right: 54px;
+    }
   }
- 
+
 
 }
 
 .topic-headline {
-  max-width: 278px;
-  max-height: 45px;
-  border-radius: 100px;
-  gap: 10px;
-  display: flex;
+  flex: 1;
+  @include dFlex($g: 10px, $jc:flex-start);
+  
+  
 
   .headline {
     height: 33px;
-    gap: 10px;
-    display: flex;
-    align-items: center;
+    @include dFlex($g: 10px);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 22px;
+    border-radius: 20px;
+    padding: 4px 20px;
+
+    @media screen and (min-width: 700px) {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 28px;
+    }
 
     &:hover {
-      background-color: #eceefe;
-      color: #535af1;
-      border-radius: 20px;
+      background-color: $background;
+      color: $purple3;
+      
       cursor: pointer;
 
       img {
@@ -67,13 +85,6 @@ main {
       }
     }
 
-    p {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 33px;
-      letter-spacing: 0em;
-      text-align: left;
-    }
 
     img {
       width: 30px;
@@ -87,28 +98,49 @@ main {
 .active-contacts {
   max-width: 192px;
   max-height: 46px;
-  gap: 10px;
-  @include dFlex();
+  @include dFlex($g: 10px);
 
   .contact-row {
     height: 40px;
     @include dFlex();
+    border-radius: 30px;
+    padding: 4px 20px;
+    box-sizing: border-box;
+
+    &:hover {
+      background-color: $background;
+      cursor: pointer;
+    }
 
     img {
       border-radius: 100%;
       margin-left: 10px;
+      width: 33px;
+      height: 33px;
+      border: 2px solid $white;
+    }
+
+    .secondHeadIcon {
+      margin-left: -12px;
     }
   }
 
   .add-contact {
     @include dFlex();
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    background-color: $background;
+
+    &:hover {
+      cursor: pointer;
+
+      img {
+        filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+      }
+    }
   }
 
-  img {
-    width: 34px;
-    height: 34px;
-    cursor: pointer;
-  }
 }
 
 .contentContainer {
@@ -126,8 +158,6 @@ main {
   width: 90%;
   height: 145px;
   font-size: 18px !important;
-  /*  box-sizing: border-box;
-  margin-bottom: 16px; */
   border: 1px solid $light_purple;
   border-radius: 20px;
   @include dFlex($fd: column, $ai: normal);
@@ -161,9 +191,9 @@ main {
       position: absolute;
       z-index: 1000;
       top: -280px;
-      
+
     }
-   
+
 
     img {
       height: 20px;
@@ -185,7 +215,7 @@ main {
 }
 
 
-.errorPopupOuterContainer{
+.errorPopupOuterContainer {
   width: 100vw;
   height: 100vh;
   @include dFlex();
@@ -194,31 +224,31 @@ main {
   left: 0;
   z-index: 1000;
 
-  .errorPopup{
+  .errorPopup {
     width: 240px;
     height: auto;
     @include dFlex();
     background-color: $white;
-    box-shadow:  3px 3px 7px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.6);
     border-radius: 20px;
 
-    .errorPopupInnerContainer{
+    .errorPopupInnerContainer {
       margin: 16px;
       height: 100%;
-      @include dFlex($fd: column, $jc:space-around, $g:16px);
+      @include dFlex($fd: column, $jc: space-around, $g: 16px);
       text-align: center;
-      .errorPopupTxtContainer{
-        @include dFlex($fd: column, $g:8px);
+
+      .errorPopupTxtContainer {
+        @include dFlex($fd: column, $g: 8px);
       }
-      .okBtn{
-      width: 60px;
-      border: 1px solid;
-      border-radius: 20px;
+
+      .okBtn {
+        width: 60px;
+        border: 1px solid;
+        border-radius: 20px;
+      }
+
     }
-    
   }
-    }
-    
+
 }
-
-

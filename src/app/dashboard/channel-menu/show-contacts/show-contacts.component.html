@@ -1,12 +1,9 @@
-<div class="overlay overlayChatHeader" [ngClass]="globalVariables.headerShowMembers ? 'overlayChatHeader' : 'overlayTextInputField'">
+<div class="overlay overlayChatHeader"
+  [ngClass]="globalVariables.headerShowMembers ? 'overlayChatHeader' : 'overlayTextInputField'">
   <div class="headline">
-    <div>
-      <span class="top"   *ngIf="globalVariables.headerShowMembers"> Channel-Mitglieder</span>
-    </div>
-    <div>
-      <img (click)="globalFunctions.closeMembers()" src="assets/img/icons/close.svg" class="close-btn"
-        alt="close profile">
-    </div>
+    <span>Mitglieder</span>
+    <img (click)="globalFunctions.closeMembers()" src="assets/img/icons/close.svg" class="close-btn"
+      alt="close profile">
   </div>
   <div class="contactListContainer">
     <div class="contact-list">
@@ -15,14 +12,13 @@
         <div class="userContainer">
           <!-- version highlight member in message -->
           <label class="contactContainer" *ngIf="!globalVariables.headerShowMembers">
-            <input type="checkbox"  (change)="checkboxChanged(user.name)" [(ngModel)]="user.checked">
-            {{ user.name }}
-            
+            <input type="checkbox" (change)="checkboxChanged(user.name)" [(ngModel)]="user.checked">
+            <span>{{ user.name }}</span>
           </label>
           <!-- version open member list in header -->
           <div class="contactContainer" *ngIf="globalVariables.headerShowMembers">
             <img [src]="user.img" alt="user image" class="contact-img">
-            <span >{{ user.name }}</span>
+            <span>{{ user.name }}</span>
           </div>
         </div>
       </div>

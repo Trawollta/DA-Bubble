@@ -1,22 +1,28 @@
 @import "../../../../styles.scss";
 
 .overlay {
-/*   position: fixed; 
-  top: 180px;
-  right: 60px; */
-  width: 300px;
-  max-width: 500px;
-  background: white;
+  width: 280px;
+  background: $white;
   padding: 20px;
   box-sizing: border-box;
   box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.6);
   overflow: hidden;
-
-  @media (max-width: 800px) {
-    .overlay {
-      width: 100%;
-      height: 100vh;
+ 
+  .contactContainer {
+    @include dFlex($g:15px);
+    font-size: 16px;
+    .contact-img {
+      width: 30px;
+      height: 30px;
+      border-radius: 100%; 
     }
+  }
+  
+ .headline {
+    width: 95%;
+    @include dFlex($jc:space-between);
+    font-size: 18px;
+    font-weight: 600;
   }
 }
 
@@ -38,31 +44,12 @@
 
   .contact-list {
     @include dFlex($fd: column, $ai: flex-start, $g: 4px);
-
   }
 
   .contact-item {
-
     cursor: pointer;
   }
 }
 
-.contact-img {
-  width: 30px;
-  height: 30px;
-  border-radius: 100%;
-  margin-right: 15px;
-}
-
-.contactContainer {
-  @include dFlex();
-  font-size: 16px;
-}
 
 
-.headline {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}

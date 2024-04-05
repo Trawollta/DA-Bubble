@@ -7,22 +7,22 @@
       (clickedOutside)="closeMembers()"></app-show-contacts>
     <div class="topic-headline">
       <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
-        <p></p>
-        <p class="header-hover"># {{ globalVariables.openChannel.titel }}</p>
-        <img src="./assets/img/icons/keyboard_arrow_down.svg" alt="" />
+        <!-- <p></p> -->
+        <div class="header-hover"># {{ globalVariables.openChannel.titel }}</div>
+        <img src="assets/img/icons/keyboard_arrow_down.svg" alt="" />
       </div>
     </div>
     <div class="active-contacts">
-      <div class="contact-row" *ngIf="globalVariables.desktop700">
-        <div (click)="showMembers(true)">
-
-          <!-- Beide Varianten funktionieren! '../  oder ./' -->
-          <img src="./assets/img/avatars/Elias_Neumann.svg" alt="" />
-          <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
-        </div>
+      <div class="contact-row" *ngIf="globalVariables.desktop700" (click)="showMembers(true)">
+        
+        <!-- hier kommt eine ngFor rein, die die Plaketten der Member rein rendert -->
+        <img src="assets/img/avatars/Elias_Neumann.svg" alt="" />
+        <img class="secondHeadIcon" src="assets/img/avatars/Elias_Neumann.svg" alt="" />
+        <span class="memberCount">3</span>
+        
       </div>
-      <div class="add-contact" (click)="globalFunctions.openAddContactsOverlay()">
-        <img src="../../../assets/img/icons/person_add.svg" alt="" />
+      <div class="add-contact" (click)="openContactsPopup()">
+        <img src="assets/img/icons/person_add_w.svg" alt="" />
       </div>
     </div>
   </section>
@@ -59,7 +59,7 @@
         (clickedOutside)="closeMembers()"></app-show-contacts>
       <app-emoji-container class="showContactsTextInput" *ngIf="globalVariables.showEmojiContainer" appClickedOutside
         (clickedOutside)="closeEmoji()"></app-emoji-container>
-      
+
       <div class="moreControls">
         <input type="file" id="getFile" #fileInput hidden (change)="onFileSelected($event)">
         <img src="assets/img/input-imgs/add.svg" alt="" (click)="fileInput.click()">
@@ -73,19 +73,19 @@
 
 
   </section>
-<!-- error Validation popup -->
-<div *ngIf="showValidationPopup" class="errorPopupOuterContainer">
-  <div class="errorPopup" >
-    <div class="errorPopupInnerContainer">
-      <div class="errorPopupTxtContainer">
-        <span>Dein Beitrag enthält unerlaubte Zeichen:</span>
-        <span>{{ forbiddenChars }}</span>
-        <span>Bitte entferne sie oder brich die Bearbeitung ab!</span>
+  <!-- error Validation popup -->
+  <div *ngIf="showValidationPopup" class="errorPopupOuterContainer">
+    <div class="errorPopup">
+      <div class="errorPopupInnerContainer">
+        <div class="errorPopupTxtContainer">
+          <span>Dein Beitrag enthält unerlaubte Zeichen:</span>
+          <span>{{ forbiddenChars }}</span>
+          <span>Bitte entferne sie oder brich die Bearbeitung ab!</span>
+        </div>
+        <div class="okBtn" (click)="closevalidationPopup()">OK</div>
       </div>
-      <div class="okBtn" (click)="closevalidationPopup()">OK</div>
     </div>
   </div>
-</div>
 
   <!-- error upload popup -->
   <div *ngIf="showErrorPopup" class="errorPopupOuterContainer">

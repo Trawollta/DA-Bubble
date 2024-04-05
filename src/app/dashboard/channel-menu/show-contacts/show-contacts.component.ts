@@ -27,7 +27,7 @@ export class ShowContactsComponent implements OnInit {
   GlobalVariablesService = inject(GlobalVariablesService)
 
   constructor(public globalVariables: GlobalVariablesService) {
-    console.log(this.globalVariables)
+    //console.log(this.globalVariables)
   }
 
   ngOnInit() {

@@ -40,6 +40,12 @@ export class FirebaseChannelService {
   //   }
   // }
 
+  addData(goalCollection: string, input: any) {
+    let data = input;
+    let dataCollection = collection(this.firestore, goalCollection);
+    return addDoc(dataCollection, data);
+  }
+
   updateChannel(channelId: string, item: any) {
     console.log(`Aktualisiere Kanal ${channelId} mit `, item);
     const docRef = doc(this.firestore, 'channels', channelId);

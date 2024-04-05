@@ -205,12 +205,20 @@ export class GlobalFunctionsService {
   constructor(private firestore: Firestore) { }
 
   // simple function to get data from firestore returns a collection
-  getData(item: string) {
+ /*  getData(item: string) {
     let dataCollection = collection(this.firestore, item);
     return collectionData(dataCollection, { idField: 'id' });
-  }
+  } */
 
   // function to get data from firebase and save it into an local Array
+  // Alex: 5.4.24: Diese Funktion wird in den Komponenten
+  // add-to-Channel
+  // add-contacts
+  // channel-menu
+  // benutzt. 
+  // Ich werde diese Funktion nach analyse in den einzelnen Komponenten verschieben
+  // und aus dem onSnapshot ggf eine getDoc machen.
+  // das Problem. Hier wird ein Snapshot aboniert der auch wieder deaboniert werden sollte
   getCollection(item: string, targetArray: any) {
     const collectionReference = collection(this.firestore, item);
     onSnapshot(collectionReference, (querySnapshot) => {
@@ -225,21 +233,19 @@ export class GlobalFunctionsService {
 
   // hab die Funktion geänder 26.2, Alex
   // function to add data to a Collection you choose
-  addData(goalCollection: string, input: any) {
-    /* desc: string, , description: string */
-    //let toGo = description;
+/*   addData(goalCollection: string, input: any) {
     let data = input;
     let dataCollection = collection(this.firestore, goalCollection);
     return addDoc(dataCollection, data);
-  }
+  } */
 
 
   //warum existiert hier eine Firebasefunktion?
   //Alle Firebasefunktionen sollten in einem Firebaseservice sein
-  async updateData(collectionPath: string, docId: string, data: Partial<any>): Promise<void> {
+ /*  async updateData(collectionPath: string, docId: string, data: Partial<any>): Promise<void> {
     const docRef = doc(this.firestore, collectionPath, docId);
     await updateDoc(docRef, data);
-  }
+  } */
 
   showDashboardElement(screenWidth: number) {
     if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;

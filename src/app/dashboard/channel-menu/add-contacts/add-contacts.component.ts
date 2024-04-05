@@ -94,7 +94,7 @@ export class AddContactsComponent implements OnInit {
   async addNewChannel() {
 
     //add new chanel and return channelId
-    await this.globalFunctions.addData('channels', this.addChannelwithChoosenMembers() ).then(response => {
+    await this.firebaseChannelService.addData('channels', this.addChannelwithChoosenMembers() ).then(response => {
       this.addedChannelId = response.id; 
     }).catch(error => {
       console.error('Fehler beim Hinzufügen des Kanals:', error);

@@ -100,7 +100,7 @@ export class GlobalVariablesService {
     userId: '',
     timestamp: 0,
     userName: '',
-    img: '',
+    userImgPath: '',
   };
 
   //this is the object for the active channel information. Used in channel-menu

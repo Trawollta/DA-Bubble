@@ -60,6 +60,7 @@ export class CurrentUserMessageComponent {
     emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
   };
   activeMessage: boolean = false; // for flagging this specific message
+  messageInfo = { hasUrl: false, message: '', textAfterUrl: '', messageImgUrl: '' };
 
   profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
   mouseover: boolean = false;
@@ -70,10 +71,10 @@ export class CurrentUserMessageComponent {
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
-  messageImgUrl: string = '';
-  messageText: string = '';
-  textAfterUrl: string = '';
-  notAllowedChars: string = '';
+  //messageImgUrl: string = '';
+  // messageText: string = '';
+  // textAfterUrl: string = '';
+  // notAllowedChars: string = '';
 
   count = '';
   isImage: boolean = false;
@@ -122,8 +123,8 @@ export class CurrentUserMessageComponent {
     this.postingTime = this.message.timestamp;
     this.fillAnswerVariables();
     this.cloneOriginalMessage();
-    this.isImage = this.checkMessage(this.message.message);
-
+    this.messageInfo = this.globalFunctions.checkMessage(this.message.message);
+    this.isImage = this.messageInfo.hasUrl;
   }
 
   /**
@@ -131,24 +132,24 @@ export class CurrentUserMessageComponent {
    * @param message 
    * @returns 
    */
-  checkMessage(message: string): boolean {
-   // const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-   // const urlMatch = message.match(urlPattern);
-  const urlMatch = this.globalFunctions.checkForURL(message);
-    if (urlMatch) {
-      this.messageImgUrl = urlMatch;
-      const textBeforeUrl = message.split(urlMatch)[0].trim();
-      this.textAfterUrl = message.split(urlMatch)[1].trim();
-      //this.notAllowedChars = this.globalFunctions.isMessageValid(this.textAfterUrl);
-     // this.notAllowedChars += this.globalFunctions.isMessageValid(textBeforeUrl);
-       this.messageText = textBeforeUrl;
-    } else { // if no URL in message:
-      this.messageText = message;
-      //der check, ob es sich um erlaupten Input handelst muss in die Eingabe
-     // this.notAllowedChars = this.globalFunctions.isMessageValid(message);
-     }
-    return !!urlMatch;
-  }
+  /*  checkMessage(message: string): boolean {
+    // const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    // const urlMatch = message.match(urlPattern);
+   const urlMatch = this.globalFunctions.checkForURL(message);
+     if (urlMatch) {
+       this.messageImgUrl = urlMatch;
+       const textBeforeUrl = message.split(urlMatch)[0].trim();
+       this.textAfterUrl = message.split(urlMatch)[1].trim();
+       //this.notAllowedChars = this.globalFunctions.isMessageValid(this.textAfterUrl);
+      // this.notAllowedChars += this.globalFunctions.isMessageValid(textBeforeUrl);
+        this.messageText = textBeforeUrl;
+     } else { // if no URL in message:
+       this.messageText = message;
+       //der check, ob es sich um erlaupten Input handelst muss in die Eingabe
+      // this.notAllowedChars = this.globalFunctions.isMessageValid(message);
+      }
+     return !!urlMatch;
+   } */
 
 
 
@@ -192,11 +193,9 @@ export class CurrentUserMessageComponent {
   }
 
   fillInitialUserObj() {
-    this.globalVariables.messageThreadStart.message = this.message.message;
-    this.globalVariables.messageThreadStart.userId = this.message.userId;
-    this.globalVariables.messageThreadStart.timestamp = this.message.timestamp;
-    this.globalVariables.messageThreadStart.userName = this.user.name;
-    this.globalVariables.messageThreadStart.img = this.user.img;
+    const { message, userId, timestamp } = this.message;
+    const { name: userName, img: userImgPath } = this.user;
+    this.globalVariables.messageThreadStart = { message, userId, timestamp, userName, userImgPath };
   }
 
   onSelectMessage() {

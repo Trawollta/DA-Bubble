@@ -5,6 +5,7 @@ main {
  /*  width: auto;
   max-width: 600px; */
   width: 90dvw;
+  min-width: 280px;
  
   /* das hier muss ich später noch anpassen, damit es dynamischer wird */
   max-height: 940px;
@@ -16,7 +17,8 @@ main {
   @include dFlex($fd: column, $jc: space-between);
 
   @media screen and (min-width: 800px) {
-    max-width: 366px;
+   // max-width: 366px;
+   
     width: auto;
   }
 }
@@ -111,6 +113,20 @@ main {
           padding: 15px;
           border-radius: 20px 0px 20px 20px;
           background-color: $purple2;
+
+          img {
+            max-width: 200px;
+            width: 100%;
+            height: auto;
+          }
+    
+          .speech-bubble-text {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 23px;
+            letter-spacing: 0em;
+            text-align: left;
+          }
         }
       }
     }

@@ -9,16 +9,16 @@
         <!-- (click)="openEmojis()" -->
         <span
           class="speech-bubble-current-user-text"
-          *ngIf="messageText !== '' || !globalVariables.editMessage || !activeMessage"
-          >{{ messageText }}</span
+          *ngIf="messageInfo.message !== '' || !globalVariables.editMessage || !activeMessage"
+          >{{ messageInfo.message }}</span
         >
         <div class="loadedImg" *ngIf="isImage">
-          <img src="{{ messageImgUrl }}" alt="">
+          <img src="{{ messageInfo.messageImgUrl }}" alt="">
         </div>
         <span
         class="speech-bubble-current-user-text"
-        *ngIf="textAfterUrl !== ''"
-        >{{ textAfterUrl }}</span
+        *ngIf="messageInfo.textAfterUrl !== ''"
+        >{{ messageInfo.textAfterUrl }}</span
       >
         <div class="edit" (click)="globalFunctions.stopPropagation($event)">
           <app-inputfield

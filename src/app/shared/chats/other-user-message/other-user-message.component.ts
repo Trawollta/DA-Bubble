@@ -48,7 +48,7 @@ export class OtherUserMessageComponent {
   openReaction: boolean = false;
   @Input() message: any;
   @Input() isThread: boolean = false;
- // @Input() userName: string = '';
+  // @Input() userName: string = '';
 
   emojiArray: Emoji[] = [];
   postingTime: string | null = null;
@@ -61,27 +61,28 @@ export class OtherUserMessageComponent {
     emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
   };
 
+  messageInfo = { hasUrl: false, message: '', textAfterUrl: '', messageImgUrl: '' };
   userId: string = 'guest';
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
-  messageImgUrl: string = '';
-  messageText: string = '';
-  textAfterUrl: string = '';
+  // messageImgUrl: string = '';
+  // messageText: string = '';
+  // textAfterUrl: string = '';
 
   profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
   mouseover: boolean = false;
   hoverUser: string = '';
   count: string = '';
-  isImage:boolean = false;
+  isImage: boolean = false;
 
   constructor(private elementRef: ElementRef) {
-   
+
   }
 
 
- async getUser2(id: string) {     
-        this.user = new User(await this.firebaseUser.getUserData(id));  
+  async getUser2(id: string) {
+    this.user = new User(await this.firebaseUser.getUserData(id));
   }
 
   /**
@@ -92,23 +93,30 @@ export class OtherUserMessageComponent {
     this.postingTime = this.message.timestamp;
     this.fillAnswerVariables();
     this.cloneOriginalMessage();
-    this.isImage = this.checkMessage(this.message.message);
+    this.messageInfo = this.globalFunctions.checkMessage(this.message.message);
+    // this.isImage = this.globalFunctions.checkMessage(this.message.message).hasUrl;
+    this.isImage = this.messageInfo.hasUrl;
 
   }
 
-  checkMessage(message: string): boolean {
-    const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-    const urlMatch = message.match(urlPattern);
-    if (urlMatch) {
-      this.messageImgUrl = urlMatch[0];
-      const textBeforeUrl = message.split(this.messageImgUrl)[0].trim();
-      this.textAfterUrl = message.split(this.messageImgUrl)[1].trim();
-      this.messageText = textBeforeUrl;
-    } else { // if no URL in message:
-      this.messageText = message;
-    }
-    return !!urlMatch;
-  }
+  /*  getMessageInfo(message: string): void {
+     this.messageInfo = this.globalFunctions.checkMessage(message);
+     console.log(this.messageInfo); // Hier kannst du auf die Rückgabewerte zugreifen und sie nutzen
+   } */
+
+  /*  checkMessage(message: string): boolean {
+     const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+     const urlMatch = message.match(urlPattern);
+     if (urlMatch) {
+       this.messageImgUrl = urlMatch[0];
+       const textBeforeUrl = message.split(this.messageImgUrl)[0].trim();
+       this.textAfterUrl = message.split(this.messageImgUrl)[1].trim();
+       this.messageText = textBeforeUrl;
+     } else { // if no URL in message:
+       this.messageText = message;
+     }
+     return !!urlMatch;
+   } */
 
   /**
    * this function clones the original message object for later remove logic
@@ -132,15 +140,7 @@ export class OtherUserMessageComponent {
     this.answerKey = answerInfo.answerKey;
   }
 
- /*  //Dise Funktion macht nichts, da sie mit nichts verlinkt ist
-  openEmojis() {
-    let emojiDiv = document.getElementById('emojis');
-    if (emojiDiv && emojiDiv.classList.contains('d-none')) {
-      emojiDiv.classList.remove('d-none');
-    } else if (emojiDiv && emojiDiv.classList.contains('d-none') == false) {
-      emojiDiv.classList.add('d-none');
-    }
-  } */
+
 
   openAnswers() {
     this.globalVariables.showThread = !this.globalVariables.showThread;
@@ -158,11 +158,9 @@ export class OtherUserMessageComponent {
   }
 
   fillInitialUserObj() {
-    this.globalVariables.messageThreadStart.message = this.message.message;
-    this.globalVariables.messageThreadStart.userId = this.message.userId;
-    this.globalVariables.messageThreadStart.timestamp = this.message.timestamp;
-    this.globalVariables.messageThreadStart.userName = this.user.name;
-    this.globalVariables.messageThreadStart.img = this.user.img;
+    const { message, userId, timestamp } = this.message;
+    const { name: userName, img: userImgPath } = this.user;
+    this.globalVariables.messageThreadStart = { message, userId, timestamp, userName, userImgPath };
   }
 
   onSelectMessage() {

@@ -17,12 +17,26 @@
               <span class="userName">{{ globalVariables.messageThreadStart.userName }}</span>
             </div>
             <div class="speechBubble" [ngClass]="checkIfCurrentuser() ? '':'otherSpeachbubble'">
-              <span class="speech-bubble-current-user-text">{{ globalVariables.messageThreadStart.message }}</span>
+
+              
+                 <span class="speech-bubble-text"  *ngIf="messageInfo.message !== ''">{{ messageInfo.message }}</span>
+                <div class="loadedImg" *ngIf="isImage">
+                  <img src="{{ messageInfo.messageImgUrl }}" alt="">
+                </div>
+                <span class="speech-bubble-text"  *ngIf="messageInfo.textAfterUrl !== ''">{{ messageInfo.textAfterUrl }}</span>
+               
+
+
+
+
+
+
+              <!-- <span class="speech-bubble-current-user-text">{{ globalVariables.messageThreadStart.message }}</span> -->
             </div>
           </div>
         </div>
         <div class="user">
-          <img [src]="globalVariables.messageThreadStart.img" alt="" />
+          <img [src]="globalVariables.messageThreadStart.userImgPath" alt="" />
         </div>
 
       </div>

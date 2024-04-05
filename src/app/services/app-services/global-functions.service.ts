@@ -13,6 +13,13 @@ import {
 import { FirebaseChatService } from '../firebase-services/firebase-chat.service';
 import { FirebaseChannelService } from '../firebase-services/firebase-channel.service';
 
+export interface MessageInfo {
+  hasUrl: boolean;
+  message: string;
+  textAfterUrl: string;
+  messageImgUrl: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -264,11 +271,27 @@ export class GlobalFunctionsService {
   isMessageValid(message: string) {
   const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}]/u;
   const messageWithoutEmojis = message.replace(emojiRegex, 'Emoji');
-  const allowedCharPattern = /[^a-zA-Z0-9\s.,!?/:;%&=@#'§$€°ÄäÖöÜüß-]/g;
+  const allowedCharPattern = /[^a-zA-Z0-9\s.,!?/:;%&=@#'§$€°ÄäÖöÜüß_-]/g;
   const forbiddenCharacters = messageWithoutEmojis.match(allowedCharPattern) || [];
   const uniqueChar = Array.from(new Set(forbiddenCharacters)).join(', ');
-  //const isValid = !(uniqueChar.length > 0);
-  //console.log('Is Message valid:', isValid, 'forbidden Character:', uniqueChar);
   return uniqueChar; 
+  }
+
+  /**
+   * This function checks the message if there is a URL inside and split message string if so
+   * @param message - string- contains the message text
+   * @returns - MessageInfo object with splited message information
+   */
+  checkMessage(message: string): MessageInfo {
+    const result: MessageInfo = { hasUrl: false, message: message, textAfterUrl: '', messageImgUrl: '' };
+    const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    const urlMatch = message.match(urlPattern);
+    if (urlMatch) {
+      result.hasUrl = true;
+      result.messageImgUrl = urlMatch[0];
+      result.message = message.split(result.messageImgUrl)[0].trim();
+      result.textAfterUrl = message.split(result.messageImgUrl)[1].trim();
+    } 
+    return result;
   }
 }

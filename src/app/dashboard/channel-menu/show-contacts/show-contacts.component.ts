@@ -24,10 +24,10 @@ export class ShowContactsComponent implements OnInit {
 
   globalFunctions = inject(GlobalFunctionsService);
   firebaseUserService = inject(FirebaseUserService)
-  GlobalVariablesService = inject(GlobalVariablesService)
+  globalVariables = inject(GlobalVariablesService)
 
-  constructor(public globalVariables: GlobalVariablesService) {
-    //console.log(this.globalVariables)
+  constructor() {
+   
   }
 
   ngOnInit() {
@@ -75,11 +75,6 @@ export class ShowContactsComponent implements OnInit {
     this.globalVariables.newMessage = newMessage;
   }
   
-
-  closeMembers() {
-    // Setze die Variable, die das "Show Contacts"-Overlay steuert, auf false
-    this.globalVariables.memberlist = false;
-  }
 }
 
 

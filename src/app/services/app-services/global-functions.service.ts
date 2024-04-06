@@ -80,21 +80,11 @@ export class GlobalFunctionsService {
 
   openAddContactsOverlay() {
     this.globalVariables.showContacts = true;
-    /* console.log(
-      'Overlay should open now. showContacts:',
-      this.globalVariables.showContacts
-    ); */
     if (this.globalVariables.showContacts)
       document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
 
-  showMembers() {
-    this.globalVariables.memberlist = !this.globalVariables.memberlist;
-    if (this.globalVariables.memberlist)
-      document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
-  }
 
   freezeBackground(freeze: boolean){
     if (freeze)
@@ -125,13 +115,19 @@ export class GlobalFunctionsService {
     document.body.style.overflow = 'auto';
   }
 
-  //diese close funktion weicht etwas ab von den anderen
-  closeMembers() {
-    this.globalVariables.memberlist = false;
-    if (this.globalVariables.memberlist)
-      document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
-  }
+    /**
+   * this function closes the showContacts popup by using appClickedOutside from ClickedOutsideDirective
+   * but it closes the popup immediately if no additional check will happen >> is the popup open?
+   */
+    closeMembers() {
+      if (this.globalVariables.memberlist && !this.globalVariables.isMembersPopupOpen) {  
+       this.globalVariables.isMembersPopupOpen = true;
+     } else if (this.globalVariables.memberlist && this.globalVariables.isMembersPopupOpen) {
+       this.globalVariables.memberlist = false;
+       this.globalVariables.isMembersPopupOpen = false;
+     } 
+   }
+
 
   toggleOverlays() {
     // console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);

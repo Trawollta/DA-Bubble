@@ -83,10 +83,10 @@ export class ChatComponent {
       this.globalVariables.showChannelMenu = false;
   }
 
-  showMembers(headerShowMembers: boolean) {
+  showMembers(headerShowMembers: boolean) { 
     this.globalVariables.memberlist = true;
     this.globalVariables.headerShowMembers = this.globalVariables.memberlist && headerShowMembers ? true : false;
-    this.globalFunctions.freezeBackground(this.globalVariables.memberlist);
+    this.globalFunctions.freezeBackground(this.globalVariables.memberlist);   
   }
 
   showEmojiContainer() {
@@ -94,28 +94,18 @@ export class ChatComponent {
     this.globalFunctions.freezeBackground(this.globalVariables.showEmojiContainer);
   }
 
-  /**
-   * this function closes the showContacts popup by using appClickedOutside from ClickedOutsideDirective
-   */
-  closeMembers() {
-    if (this.globalVariables.memberlist && !this.isPopupOpen) {
-      this.isPopupOpen = true;
-    } else if (this.globalVariables.memberlist && this.isPopupOpen) {
-      this.globalVariables.memberlist = false;
-      this.isPopupOpen = false;
-    }
-  }
 
   /**
    * this function closes the emoji popup by using appClickedOutside from ClickedOutsideDirective
+   * but it closes the popup immediately if no additional check will happen >> is the popup open?
    */
   closeEmoji() {
-    if (this.globalVariables.showEmojiContainer && !this.isPopupOpen) {
+      if (this.globalVariables.showEmojiContainer && !this.isPopupOpen) {
       this.isPopupOpen = true;
     } else if (this.globalVariables.showEmojiContainer && this.isPopupOpen) {
       this.globalVariables.showEmojiContainer = false;
       this.isPopupOpen = false;
-    }
+    }    
   }
 
 

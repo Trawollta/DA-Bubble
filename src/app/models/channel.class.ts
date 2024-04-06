@@ -1,3 +1,5 @@
+import { User } from "./user.class";
+
 //import { User } from "./user.class";
 export class channel {
 
@@ -6,7 +8,7 @@ export class channel {
     creator: string;
     id:string;
     chatId: string;
-   // members: User[];
+    /* members: User[]; */
     channelMember: {
         userId: string
     }[];
@@ -20,7 +22,7 @@ export class channel {
         this.channelMember = obj && obj.channelMember ? obj.channelMember : [{
             userId: ''
         }]
-        //this.members = obj && obj.members ? obj.members.map((member: any) => new User(member)) : [];
+      /*   this.members = obj && obj.members ? obj.members.map((member: any) => new User(member)) : []; */
 
     }
 }

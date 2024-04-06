@@ -78,6 +78,7 @@
         caption="Channel Löschen"
         (click)="firebaseChannelService.deleteChanel(globalVariables.channelData.chatId)"
         imgPath=""
+        *ngIf="globalVariables.activeID == globalVariables.openChannel.creator"
       ></app-button>
     
       <app-button

@@ -217,7 +217,7 @@ export class GlobalFunctionsService {
   // Ich werde diese Funktion nach analyse in den einzelnen Komponenten verschieben
   // und aus dem onSnapshot ggf eine getDoc machen.
   // das Problem. Hier wird ein Snapshot aboniert der auch wieder deaboniert werden sollte
-  getCollection(item: string, targetArray: any) {
+  async getCollection(item: string, targetArray: any) {
     const collectionReference = collection(this.firestore, item);
     onSnapshot(collectionReference, (querySnapshot) => {
       targetArray.length = 0;

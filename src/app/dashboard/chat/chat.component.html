@@ -4,7 +4,7 @@
   <section class="msg-header" *ngIf="!globalVariables.isUserChat">
     <app-show-contacts class="showContactsHeader"
       *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers" appClickedOutside
-      (clickedOutside)="closeMembers()"></app-show-contacts>
+      (clickedOutside)="globalFunctions.closeMembers()"></app-show-contacts>
     <div class="topic-headline">
       <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
         <!-- <p></p> -->
@@ -56,7 +56,7 @@
     <div class="controllElementsContainer">
       <app-show-contacts class="showContactsTextInput"
         *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers" appClickedOutside
-        (clickedOutside)="closeMembers()"></app-show-contacts>
+        (clickedOutside)="globalFunctions.closeMembers()"></app-show-contacts>
       <app-emoji-container class="showContactsTextInput" *ngIf="globalVariables.showEmojiContainer" appClickedOutside
         (clickedOutside)="closeEmoji()"></app-emoji-container>
 

@@ -13,19 +13,14 @@
                 </div>
         </div>
         
-        <div class="custom" *ngIf="selectedUserDetails">
-            <img [src]="selectedUserDetails.img" class="user-img">
-            <span>{{ selectedUserDetails.name }}</span>
-            <button (click)="clearSelectedUser()">X</button>
-        </div>
-        <input *ngIf="!selectedUserName" [(ngModel)]="searchText" class="form-control" type="search" placeholder="Mitglieder suchen">
+        <app-inputfield [(ngModel)]="selectedUserName" [classes]="['standard']" type="search" placeholder="Mitglieder suchen" (inputChange)="onSearchChange($event)"></app-inputfield>
+        
 
-
-        <!-- <ul *ngIf="users.length > 0">
+        <ul *ngIf="users.length > 0">
             <li *ngFor="let user of users" (click)="selectUser(user)">
                 <img [src]="user.img" alt="userImage" class="user-img">{{ user.name }}
             </li>
-        </ul> -->
+        </ul> 
 
         <div class="add">
             <div class="button-area">

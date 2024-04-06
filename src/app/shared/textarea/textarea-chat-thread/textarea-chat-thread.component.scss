@@ -1,0 +1,99 @@
+@import './../../../../styles.scss';
+
+.inputfield {
+    width: 90%;
+    height: 145px;
+    font-size: 18px !important;
+    border: 1px solid $light_purple;
+    border-radius: 20px;
+    @include dFlex($fd: column, $ai: normal);
+  
+  
+    textarea {
+      background-color: none;
+      border: 0;
+      padding-left: 16px;
+      padding-top: 18px;
+      font-size: 18px;
+      flex: 1;
+      border-radius: 20px;
+      resize: none;
+  
+      &:focus-visible {
+        outline: 0;
+      }
+    }
+  
+  
+  
+    .controllElementsContainer {
+      position: relative;
+      width: 100%;
+      @include dFlex($jc: space-between);
+      padding: 18px 16px;
+      box-sizing: border-box;
+  
+      .showContactsTextInput {
+        position: absolute;
+        z-index: 1000;
+        top: -280px;
+  
+      }
+  
+  
+      img {
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
+      }
+  
+      .moreControls {
+        @include dFlex($g: 8px);
+  
+        .inputFieldVerticalLine {
+          height: 35px;
+          width: 0;
+          border: 0.5px solid $light_purple;
+        }
+  
+      }
+    }
+    
+  }
+  .errorPopupOuterContainer {
+        width: 100vw;
+        height: 100vh;
+        @include dFlex();
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+      
+        .errorPopup {
+          width: 240px;
+          height: auto;
+          @include dFlex();
+          background-color: $white;
+          box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.6);
+          border-radius: 20px;
+      
+          .errorPopupInnerContainer {
+            margin: 16px;
+            height: 100%;
+            @include dFlex($fd: column, $jc: space-around, $g: 16px);
+            text-align: center;
+      
+            .errorPopupTxtContainer {
+              @include dFlex($fd: column, $g: 8px);
+            }
+      
+            .okBtn {
+              width: 60px;
+              border: 1px solid;
+              border-radius: 20px;
+            }
+      
+          }
+        }
+      
+      }

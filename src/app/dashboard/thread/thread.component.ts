@@ -9,6 +9,7 @@ import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component'
 //import { User } from 'app/models/user.class';
 import { CommonModule, DatePipe } from '@angular/common';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
+import { TextareaChatThreadComponent } from 'app/shared/textarea/textarea-chat-thread/textarea-chat-thread.component';
 
 interface Message {
   message: string;
@@ -26,7 +27,8 @@ interface Message {
     FormsModule,
     AllMessagesComponent,
     CommonModule,
-    DatePipe
+    DatePipe,
+    TextareaChatThreadComponent
   ],
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'

@@ -183,6 +183,7 @@ export class EditChannelComponent {
 
   leaveChannel() {
     this.firebaseUpdate.leaveChannel(this.channel.chatId, this.globalVariables.activeID);
+    this.firebaseUpdate.leaveChannelUser(this.channel.chatId, this.globalVariables.activeID);
     this.globalFunctions.closeEditOverlay()
   }
   

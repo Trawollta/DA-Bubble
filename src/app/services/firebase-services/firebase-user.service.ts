@@ -176,4 +176,37 @@ export class FirebaseUserService {
         console.error('Fehler beim Abrufen des Benutzerdokuments:', error);
       });
   }
+
+  async leaveChannelUser(channelId: string, userId: string) {
+    let docId = await this.getChannelDocIdWithChatId(channelId)
+    let channelDocRef = doc(this.firestore, 'channels', docId[0]);
+    getDoc(channelDocRef)
+      .then((docSnapshot) => {
+        if (docSnapshot.exists()) {
+          let channelData = docSnapshot.data();
+          const updatedRelatedChats = channelData['members'].filter(
+            (chatId: string) => chatId !== userId
+          );
+          updateDoc(channelDocRef, { members: updatedRelatedChats });
+          console.log('Erfolgreich');
+        } else {
+          console.log('Benutzerdokument nicht gefunden');
+        }
+      })
+      .catch((error) => {
+        console.error('Fehler beim Abrufen des Benutzerdokuments:', error);
+      });
+  }
+
+  async getChannelDocIdWithChatId(id: string): Promise<string[]> {
+    const usersCollectionRef = collection(this.firestore, 'channels');
+    const q = query(usersCollectionRef, where('chatId', '==', id));
+    const querySnapshot = await getDocs(q);
+    const docIds: string[] = [];
+    querySnapshot.forEach((doc) => {
+      docIds.push(doc.id);
+      console.log(doc.id, ' => ', doc.data());
+    });
+    return docIds;
+  }
 }

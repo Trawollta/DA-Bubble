@@ -49,6 +49,7 @@ export class ChannelMenuComponent {
         }
       } else {
         channelDiv.classList.add('d-none');
+        this.channelToDisplay = [];
         if (channelMsg) {
           channelMsg.src = './assets/img/icons/arrow_drop_down_default.svg';
         }
@@ -132,7 +133,6 @@ export class ChannelMenuComponent {
       (userData) => userData !== null
     ) as { id: string; name: string; img: string }[];
     this.globalVariables.openChannelUser.push(...filteredUserDataList);
-    //console.log('Benutzerdaten:', this.globalVariables.openChannelUser);
   }
 
   /**

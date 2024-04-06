@@ -13,6 +13,14 @@
         <div class="checkbox-container">
             <input type="radio" id="addAllMembers" name="addMembers" value="all" (change)="!showCertainPeople = showCertainPeople">
             <label for="addAllMembers">Alle Mitglieder hinzufügen</label>
+
+            <div class="button-area">
+              <app-button 
+              [classes]="['primary']"
+              caption="Erstellen"
+              imgPath=""
+              (click)="addNewChannelWithAllUser()"
+              ></app-button>
         </div>
         <div class="checkbox-container">
             <input type="radio" id="addCertainPeople" name="addMembers" value="certain" (change)="showCertainPeople = !showCertainPeople">

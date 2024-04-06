@@ -27,18 +27,6 @@ export class FirebaseChannelService {
 
   constructor() {}
 
-  // async getChannelById(channelId: string): Promise<any> {
-  //   const docRef = doc(this.firestore, 'channels', channelId);
-  //   const docSnap = await getDoc(docRef);
-
-  //   if (docSnap.exists()) {
-  //     console.log("Dokumentdaten:", docSnap.data());
-  //     return docSnap.data();
-  //   } else {
-  //     console.log("Kein Dokument gefunden!");
-  //     return null;
-  //   }
-  // }
 
   addData(goalCollection: string, input: any) {
     let data = input;
@@ -46,7 +34,7 @@ export class FirebaseChannelService {
     return addDoc(dataCollection, data);
   }
 
-  updateChannel(channelId: string, item: any) {
+  async updateChannel(channelId: string, item: any) {
     console.log(`Aktualisiere Kanal ${channelId} mit `, item);
     const docRef = doc(this.firestore, 'channels', channelId);
     return updateDoc(docRef, item)
@@ -109,6 +97,11 @@ export class FirebaseChannelService {
     });
   }
 
+/**
+ * 
+ * @param channelId mostlikly docRefId to channel
+ * @param userId docRefId to User
+ */
   async addUserToChannel(channelId: string, userId: string): Promise<void> {
     const channelRef = doc(this.firestore, 'channels', channelId);
     try {
@@ -121,6 +114,10 @@ export class FirebaseChannelService {
     }
   }
 
+  /**
+   * delete Channel and the Id from the choosen Person inside
+   * @param channelId 
+   */
   async deleteChanel(channelId: string) {
     const docId = await this.getDocId(channelId);
     await this.deleteChannelIdFromUsers(channelId);
@@ -129,6 +126,11 @@ export class FirebaseChannelService {
     this.firebaseChatService.changeActiveChannel();
   }
 
+  /**
+   * Helper to convert ID into DocRef
+   * @param chatId 
+   * @returns docRef
+   */
   async getDocId(chatId: string): Promise<string[]> {
     const usersCollectionRef = collection(this.firestore, 'channels');
     const q = query(usersCollectionRef, where('chatId', '==', chatId));

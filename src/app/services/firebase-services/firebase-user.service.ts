@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { User } from 'app/models/user.class';
-import { Firestore, collection, doc, setDoc, updateDoc, onSnapshot, getDoc, getDocs, query, where, arrayUnion } from '@angular/fire/firestore';
+import { Firestore, collection, doc, setDoc, updateDoc, onSnapshot, getDoc, getDocs, query, where, arrayUnion, arrayRemove } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
@@ -133,6 +133,15 @@ export class FirebaseUserService {
       }
     } else {
       console.error('Benutzer mit der angegebenen UID wurde nicht gefunden.');
+    }
+  }
+
+  leaveChannel(channelId: any, UserId: any) {
+    console.log("leaveChannel", channelId, UserId);
+    let userDocRef = doc(this.firestore, 'users', UserId);
+    if (userDocRef) {
+      updateDoc(userDocRef, { relatedChats: arrayRemove(channelId) });
+      console.log('Erfolgreich')
     }
   }
 }

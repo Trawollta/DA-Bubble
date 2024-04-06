@@ -128,7 +128,8 @@ export class GlobalVariablesService {
     channelName: '',
     chatId: '',
     id: '',
-    creator: ''
+    creator: '',
+    members: [] as any[],
     /* owner: '',
     allowedUser: ['id1', '1d2'] */
   };

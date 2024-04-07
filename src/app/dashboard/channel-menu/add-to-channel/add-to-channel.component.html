@@ -36,9 +36,15 @@
       </ul>
 
       <ul *ngIf="selectedUser.length > 0">
-        <li *ngFor="let user of selectedUser">
+        <li *ngFor="let user of selectedUser, let i = index">
           <img [src]="user.img" alt="" />
           {{ user.name }}
+          <img
+          (click)="deleteUserFromSelect(i)"
+          src="assets/img/icons/close.svg"
+          class="close-btn"
+          alt="close profile"
+        />
         </li>
       </ul>
     </div>

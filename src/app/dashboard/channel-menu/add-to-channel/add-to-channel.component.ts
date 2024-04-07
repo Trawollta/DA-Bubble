@@ -48,7 +48,6 @@ export class AddToChannelComponent implements OnDestroy {
   selectedUsers: any = [];
   userIdToAdd: string = '';
 
-
   channel: channel = {
     description: '',
     channelName: '',
@@ -58,10 +57,8 @@ export class AddToChannelComponent implements OnDestroy {
     channelMember: [],
   };
 
-
-  // channelId: string | undefined; 
-  newUserId: string | undefined; 
-
+  // channelId: string | undefined;
+  newUserId: string | undefined;
 
   selectedUserName: string = '';
 
@@ -71,21 +68,26 @@ export class AddToChannelComponent implements OnDestroy {
 
   selectedUserDetails: { name: string; img: string } = { name: '', img: '' };
 
-  constructor(private userService: FirebaseUserService, private firestore: Firestore) {
+  constructor(
+    private userService: FirebaseUserService,
+    private firestore: Firestore
+  ) {
     this.searchInput
-    .pipe(
-      debounceTime(300), // Verzögere die Ausführung, um Rapid-Fire-Anfragen zu vermeiden
-      distinctUntilChanged(), // Führe die Suche nur aus, wenn sich der Suchtext geändert hat
-      switchMap(searchTerm => this.userService.searchUsersByName(searchTerm)),
-      takeUntil(this.destroy$)
-    )
-    .subscribe(filteredUsers => {
-      this.users = filteredUsers;
-    });
+      .pipe(
+        debounceTime(300), // Verzögere die Ausführung, um Rapid-Fire-Anfragen zu vermeiden
+        distinctUntilChanged(), // Führe die Suche nur aus, wenn sich der Suchtext geändert hat
+        switchMap((searchTerm) =>
+          this.userService.searchUsersByName(searchTerm)
+        ),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((filteredUsers) => {
+        this.users = filteredUsers;
+      });
   }
 
   ngOnInit(): void {
-    this.globalFunctions.getCollection('users', this.allUsers); 
+    this.globalFunctions.getCollection('users', this.allUsers);
     console.log(this.allUsers);
   }
 
@@ -99,7 +101,7 @@ export class AddToChannelComponent implements OnDestroy {
   //     this.users = [];
   //     return;
   //   }
-  
+
   //   this.searchInput.next(searchValue);
   // }
 
@@ -111,23 +113,26 @@ export class AddToChannelComponent implements OnDestroy {
   //   console.log(`Channel ausgewählt: ${channelId}`);
   //   this.channelId = channelId;
   // }
-  
+
   async selectUser(user: any) {
     if (!Array.isArray(this.selectedUser)) {
       this.selectedUser = [];
-  }
+    }
     this.selectedUser.push(user);
-    console.log(this.selectedUser)
+    console.log(this.selectedUser);
 
-  
     let userId = await this.firebaseUserService.getUserDocIdWithName(user.name);
     this.userIdToAdd = userId[0];
     console.log(`Benutzer ausgewählt: ${user.name}`, 'ID:', this.userIdToAdd);
-  
+
     // Reset der Suche und Auswahl
     this.selectedUserName = user.name;
     this.searchText = '';
     this.users = [];
+  }
+
+  deleteUserFromSelect(i: number) {
+    this.selectedUser.splice(i, 1);
   }
 
   clearSelectedUser() {
@@ -136,14 +141,17 @@ export class AddToChannelComponent implements OnDestroy {
     // Führen Sie hier zusätzliche Bereinigungsaktionen durch, falls erforderlich
   }
 
-
   async addUsersToExistingChannel() {
     if (!this.globalVariables.openChannel.id || !this.selectedUser) {
       return;
     }
-  
-    const channelRef = doc(this.firestore, 'channels', this.globalVariables.openChannel.id);
-  
+
+    const channelRef = doc(
+      this.firestore,
+      'channels',
+      this.globalVariables.openChannel.id
+    );
+
     try {
       await updateDoc(channelRef, {
         members: arrayUnion(this.userIdToAdd),
@@ -153,7 +161,10 @@ export class AddToChannelComponent implements OnDestroy {
       console.error('Fehler beim Hinzufügen des Benutzers:', error);
     }
 
-    this.firebaseUserService.addChatIdToUser(this.userIdToAdd, this.globalVariables.openChannel.chatId);
+    this.firebaseUserService.addChatIdToUser(
+      this.userIdToAdd,
+      this.globalVariables.openChannel.chatId
+    );
   }
 
   // data(): {} {
@@ -163,12 +174,11 @@ export class AddToChannelComponent implements OnDestroy {
   //   return data;
   // }
 
-
   onSearchChange(searchValue: string): void {
     if (!searchValue) {
-        this.users = [];
-        return;
+      this.users = [];
+      return;
     }
     this.searchInput.next(searchValue);
-}
+  }
 }

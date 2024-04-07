@@ -165,6 +165,8 @@ export class AddToChannelComponent implements OnDestroy {
       this.userIdToAdd,
       this.globalVariables.openChannel.chatId
     );
+
+    this.globalFunctions.closeAddContactsOverlay()
   }
 
   // data(): {} {

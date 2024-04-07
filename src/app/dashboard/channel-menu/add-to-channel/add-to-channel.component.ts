@@ -113,9 +113,12 @@ export class AddToChannelComponent implements OnDestroy {
   // }
   
   async selectUser(user: any) {
-    this.selectedUser = user;
-    this.selectedUserDetails.name = user.name;
-    this.selectedUserDetails.img = user.img; // Stellen Sie sicher, dass 'img' ein gültiger Schlüssel im Benutzerobjekt ist
+    if (!Array.isArray(this.selectedUser)) {
+      this.selectedUser = [];
+  }
+    this.selectedUser.push(user);
+    console.log(this.selectedUser)
+
   
     let userId = await this.firebaseUserService.getUserDocIdWithName(user.name);
     this.userIdToAdd = userId[0];

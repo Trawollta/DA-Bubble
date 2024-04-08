@@ -115,42 +115,74 @@ export class AddContactsComponent implements OnInit {
   }
 
   /**
-   * this function add a new channel inklusive relatet chatId
-   * it calls also addChatIdIntoUser() to add chatId to each user
-   */
+  * this function add a new channel inklusive relatet chatId
+  * it calls also addChatIdIntoUser() to add chatId to each user
+  */
   async addNewChannel() {
-    await this.firebaseChannelService
-      .addData('channels', this.addChannelwithChoosenMembers())
-      .then((response) => {
-        this.addedChannelId = response.id;
-      })
-      .catch((error) => {
-        console.error('Fehler beim Hinzufügen des Kanals:', error);
-      });
-
-    await this.firebaseChatService
-      .addChat(this.addedChannelId, 'chatchannels')
-      .then((response) => {
-        this.addedChatId = response.id;
-      })
-      .catch((error) => {
-        console.error('Fehler beim Hinzufügen des Chats:', error);
-      });
-    //add chatId to channel
-    await this.firebaseChannelService.updateChannel(this.addedChannelId, {
-      chatId: this.addedChatId,
-    });
+    this.addedChannelId = await this.addChannelGetId();
+    console.log(this.addedChannelId);
+    //debugger;
+    const addedChatId: string = await this.addChatForChannelGetChatId();
+    await this.updateChannelWithChatId(addedChatId);
     this.addChatIdIntoUser(this.selectedUsers);
-    //this was missing to switch to the new chat
-    this.globalVariables.openChannel.chatId = this.addedChatId;
-    this.firebaseChatService.activeChatId = this.addedChatId;
+    if (addedChatId) {
+      this.firebaseChatService.activeChatId = addedChatId;
+      this.globalVariables.openChannel.chatId = addedChatId;
+    }
     this.firebaseChatService.changeActiveChannel();
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this.globalVariables.openChannel.titel =
-      this.globalVariables.channelData.channelName;
+    this.globalVariables.openChannel.titel = this.globalVariables.channelData.channelName;
     this.resetAndCloseOverlay();
   }
 
+  /**
+   * this function adds a new channeldoc and returns the id
+   * @returns -string - channelId
+   */
+  async addChannelGetId(): Promise<string> {
+    let id = '';
+    await this.firebaseChannelService
+      .addData('channels', this.addChannelwithChoosenMembers())
+      .then((response) => {
+        id = response.id;
+      })
+      .catch((error) => {
+        console.error('Fehler beim Hinzufügen des Kanals:', error);
+        id = '';
+      });
+    return id;
+  }
+
+  /**
+   * this function adds the chat for channel and returns chatId
+   * @param channelId - string
+   * @returns - string - chatId
+   */
+  async addChatForChannelGetChatId(): Promise<string> {
+    console.log('channelId in add chat:', this.addedChannelId);
+    let id = '';
+    await this.firebaseChatService
+      .addChat(this.addedChannelId, 'chatchannels')
+      .then((response) => {
+        id = response.id;
+      })
+      .catch((error) => {
+        console.error('Fehler beim Hinzufügen des Chats:', error);
+        id = '';
+      });
+    return id;
+  }
+
+  /**
+   * this function updates the channel with chat Id
+   * @param chatId - string
+   */
+  async updateChannelWithChatId(chatId: string) {
+    console.log('channelId in update chat:', this.addedChannelId);
+    console.log('chatId in update chat:', chatId);
+    await this.firebaseChannelService.updateChannel(this.addedChannelId, {
+      chatId: chatId,
+    });
+  }
   /**
    * this function adds the chatId to each user on firebase
    * @param setectedUsers - array

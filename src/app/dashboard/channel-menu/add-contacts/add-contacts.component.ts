@@ -142,6 +142,7 @@ export class AddContactsComponent implements OnInit {
     });
     this.addChatIdIntoUser(this.selectedUsers);
     //this was missing to switch to the new chat
+    this.globalVariables.openChannel.chatId = this.addedChatId;
     this.firebaseChatService.activeChatId = this.addedChatId;
     this.firebaseChatService.changeActiveChannel();
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

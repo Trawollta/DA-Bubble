@@ -17,6 +17,19 @@
       border-radius: 100%; 
     }
   }
+
+  .alert {
+    display: flex;
+    position: relative;
+  }
+
+  .d-none {
+    display: none !important;
+  }
+
+  .alert-message{
+    color: red;
+  }
   
  .headline {
     width: 95%;

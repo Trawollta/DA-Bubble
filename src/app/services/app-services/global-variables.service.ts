@@ -52,6 +52,7 @@ export class GlobalVariablesService {
   showChannelMenu: boolean = true;
   isChatVisable: boolean = false;
   showThread: boolean = false;
+  bufferThreadOpen: boolean = false;
 
   openChat: string = ''; // used in openAnswers() to come back to the chat
   isUserChat: boolean = false; //used as flag to show in chat the header for user chat

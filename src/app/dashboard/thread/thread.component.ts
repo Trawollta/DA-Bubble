@@ -56,6 +56,7 @@ export class ThreadComponent {
   }
 
   closeThread() {
+    this.globalVariables.bufferThreadOpen = false;
     this.globalVariables.showThread = false;
     this.globalVariables.messageData.answerto = '';
     this.globalVariables.isChatVisable = true;
@@ -66,17 +67,4 @@ export class ThreadComponent {
     }
   }
 
-
-  sendMessage() {
-    
-    if (this.globalVariables.messageData.message !== '') {
-      this.globalVariables.messageData.userId = this.globalVariables.activeID;
-      this.globalVariables.messageData.timestamp = new Date().getTime();
-      this.firebaseChatService.sendMessage(this.globalVariables.openChannel.chatId, 'chatchannels');
-      console.log('was ist in activeID: ',this.globalVariables.activeID);
-      console.log('was ist in messageData: ',this.globalVariables.messageData);
-      this.globalVariables.messageData.message = '';
-
-    }
-  }
 }

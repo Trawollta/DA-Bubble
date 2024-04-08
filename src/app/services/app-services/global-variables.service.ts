@@ -26,7 +26,7 @@ export class GlobalVariablesService {
   profileUserId: string = '';
 
   // Flags to manage chat
-  channel: boolean = false;
+  showAddChannel: boolean = false;
   adduser: boolean = false;
   openReaction: boolean = false;
   editChannelOverlayOpen: boolean = false;

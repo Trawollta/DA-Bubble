@@ -47,8 +47,8 @@ export class GlobalFunctionsService {
   }
 
   openChannelOverlay() {
-    this.globalVariables.channel = !this.globalVariables.channel;
-    if (this.globalVariables.channel) document.body.style.overflow = 'hidden';
+    this.globalVariables.showAddChannel = !this.globalVariables.showAddChannel;
+    if (this.globalVariables.showAddChannel) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
     this.globalVariables.channelData.channelName = '';
     this.globalVariables.channelData.description = '';
@@ -95,8 +95,9 @@ export class GlobalFunctionsService {
   //Diese CloseOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
 
   closeChannelOverlay() {
-    this.globalVariables.showProfile = false;
-    this.globalVariables.channel = false;
+    this.globalVariables.showAddChannel = false;
+    this.globalVariables.showContacts = false;
+    this.globalVariables.adduser = false;
   }
 
   closeReactionDialog() {
@@ -112,6 +113,8 @@ export class GlobalFunctionsService {
 
   closeAddContactsOverlay() {
     this.globalVariables.showContacts = false;
+    this.globalVariables.showAddChannel = false;
+    this.globalVariables.adduser = false;
     document.body.style.overflow = 'auto';
   }
 
@@ -131,7 +134,7 @@ export class GlobalFunctionsService {
 
   toggleOverlays() {
     // console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);
-    this.globalVariables.channel = false;
+    this.globalVariables.showAddChannel = false;
     this.globalVariables.adduser = true;
     // console.log('input feld Channel: ', this.globalVariables.newChannel);
     // console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);

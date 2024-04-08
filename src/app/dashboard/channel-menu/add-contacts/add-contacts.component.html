@@ -20,20 +20,12 @@
           id="addAllMembers"
           name="addMembers"
           value="all"
-          (change)="toggleShowAllUser()"
+          checked
+          (change)="toggleSelectAllUser()"
         />
         <label for="addAllMembers">Alle Mitglieder hinzufügen</label>
 
-        <div class="button-area">
-          <app-button
-            *ngIf="showAllUser && !showCertainPeople"
-            [classes]="['primary']"
-            caption="Erstellen"
-            imgPath=""
-            (click)="addNewChannelWithAllUser()"
-            value="0"
-          ></app-button>
-        </div>
+       
       </div>
 
       <div class="checkbox-container">
@@ -42,29 +34,19 @@
           id="addCertainPeople"
           name="addMembers"
           value="certain"
-          (change)="toggleShowCertainPeople()"
+          (change)="toggleSelectAllUser()"
         />
         <label for="addCertainPeople">Bestimmte Leute hinzufügen</label>
       </div>
 
-      <div *ngIf="showCertainPeople && !showAllUser" class="input-icon">
+      <div *ngIf="!showAllUsers" class="input-icon">
         <app-inputfield
           [classes]="['standard']"
           type="search"
           placeholder="Mitglieder suchen"
         ></app-inputfield>
 
-        <div class="button-area">
-          <app-button
-            [classes]="['primary']"
-            caption="Erstellen"
-            imgPath=""
-            (click)="addNewChannel()"
-          ></app-button>
-        </div>
-      </div>
-
-      <ul class="user-list" *ngIf="showCertainPeople && !showAllUser">
+      <ul class="user-list" *ngIf="!showAllUsers">
         <li *ngFor="let user of allUsers; let i = index">
           <input
             type="checkbox"
@@ -79,6 +61,16 @@
           </label>
         </li>
       </ul>
+    </div>
+    <div class="button-area">
+      <app-button
+        
+        [classes]="['primary']"
+        caption="Erstellen"
+        imgPath=""
+        (click)="addNewChannel()"
+        value="0"
+      ></app-button>
     </div>
   </div>
 </div>

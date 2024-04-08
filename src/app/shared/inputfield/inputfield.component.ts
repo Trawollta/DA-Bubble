@@ -1,7 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgForm } from '@angular/forms';
-
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  forwardRef,
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  NgForm,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-inputfield',
@@ -18,22 +29,21 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgForm } from '@a
   ],
 })
 export class InputfieldComponent implements OnInit, ControlValueAccessor {
-
   @Input() readonly: boolean = false;
-  @Input() type: string = "";
-  @Input() id: string = "";
-  @Input() placeholder: string = "";
+  @Input() type: string = '';
+  @Input() id: string = '';
+  @Input() placeholder: string = '';
   @Input() classes?: string | string[] = [];
   @Input() optionClasses?: string | string[] = [];
-  @Input() imgName: string = "";
-  @Input() imgSize: string = "";
+  @Input() imgName: string = '';
+  @Input() imgSize: string = '';
   @Input() required: boolean = false;
   @Output() inputChange = new EventEmitter<string>();
   @Input() imgSrc?: string;
-  imgActive: string = "";
+  imgActive: string = '';
   value: string = '';
-  private onChange: (value: string) => void = () => { };
-  private onTouched: () => void = () => { };
+  private onChange: (value: string) => void = () => {};
+  private onTouched: () => void = () => {};
 
   onInputChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;

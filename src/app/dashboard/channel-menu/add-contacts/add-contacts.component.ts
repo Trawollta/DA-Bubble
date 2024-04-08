@@ -86,7 +86,7 @@ export class AddContactsComponent implements OnInit {
     );
     if (activeUserIndex === -1) {
       const activeUser = this.allUsers.find(
-        (user:any) => user.id === this.globalVariables.activeID
+        (user: any) => user.id === this.globalVariables.activeID
       );
       if (activeUser) {
         this.selectedUsers.push(activeUser);
@@ -173,7 +173,6 @@ export class AddContactsComponent implements OnInit {
       description: this.globalVariables.channelData.description,
       chatId: '',
       members: selectedUserIds,
-      id: '',
       creator: this.globalVariables.activeID,
     };
     //console.log('newChannelData: ', newChannelData);

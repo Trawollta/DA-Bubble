@@ -57,7 +57,6 @@ export class AddToChannelComponent implements OnDestroy {
     channelMember: [],
   };
 
-  // channelId: string | undefined;
   newUserId: string | undefined;
 
   selectedUserName: string = '';
@@ -74,8 +73,8 @@ export class AddToChannelComponent implements OnDestroy {
   ) {
     this.searchInput
       .pipe(
-        debounceTime(300), // Verzögere die Ausführung, um Rapid-Fire-Anfragen zu vermeiden
-        distinctUntilChanged(), // Führe die Suche nur aus, wenn sich der Suchtext geändert hat
+        debounceTime(300),
+        distinctUntilChanged(),
         switchMap((searchTerm) =>
           this.userService.searchUsersByName(searchTerm)
         ),
@@ -96,36 +95,15 @@ export class AddToChannelComponent implements OnDestroy {
     this.destroy$.complete();
   }
 
-  // onSearchChange(searchValue: string): void {
-  //   if (!searchValue) {
-  //     this.users = [];
-  //     return;
-  //   }
-
-  //   this.searchInput.next(searchValue);
-  // }
-
-  // addUserToList(user: any) {
-  //   this.selectedUser.push(user.id);
-  // }
-
-  // selectChannel(channelId: string): void {
-  //   console.log(`Channel ausgewählt: ${channelId}`);
-  //   this.channelId = channelId;
-  // }
-
   async selectUser(user: any) {
     if (!Array.isArray(this.selectedUser)) {
       this.selectedUser = [];
     }
     this.selectedUser.push(user);
-    console.log(this.selectedUser);
 
     let userId = await this.firebaseUserService.getUserDocIdWithName(user.name);
     this.userIdToAdd = userId[0];
-    console.log(`Benutzer ausgewählt: ${user.name}`, 'ID:', this.userIdToAdd);
 
-    // Reset der Suche und Auswahl
     this.selectedUserName = user.name;
     this.searchText = '';
     this.users = [];
@@ -133,12 +111,6 @@ export class AddToChannelComponent implements OnDestroy {
 
   deleteUserFromSelect(i: number) {
     this.selectedUser.splice(i, 1);
-  }
-
-  clearSelectedUser() {
-    this.selectedUserName = '';
-    this.selectedUserDetails = { img: '', name: '' }; // Stellen Sie sicher, dass dies die Struktur von selectedUserDetails entspricht
-    // Führen Sie hier zusätzliche Bereinigungsaktionen durch, falls erforderlich
   }
 
   async addUsersToExistingChannel() {
@@ -166,15 +138,8 @@ export class AddToChannelComponent implements OnDestroy {
       this.globalVariables.openChannel.chatId
     );
 
-    this.globalFunctions.closeAddContactsOverlay()
+    this.globalFunctions.closeAddContactsOverlay();
   }
-
-  // data(): {} {
-  //   const userChange = this.selectedUser !== this.channel.channelMember;
-  //   const data: { [key: string]: any } = {};
-  //   if (userChange) data['members'] = this.selectedUser;
-  //   return data;
-  // }
 
   onSearchChange(searchValue: string): void {
     if (!searchValue) {

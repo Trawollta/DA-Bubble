@@ -39,6 +39,7 @@ export class AddContactsComponent implements OnInit {
   addedChatId: string = '';
   allUsers: any = [];
   showCertainPeople: boolean = false;
+  showAllUser: boolean = false;
 
   selectedUsers: any[] = [];
 
@@ -53,6 +54,16 @@ export class AddContactsComponent implements OnInit {
     private userService: FirebaseUserService, // Injizieren Sie den UserService
     public globalFunctions: GlobalFunctionsService
   ) {}
+
+  toggleShowAllUser() {
+    this.showAllUser = true;
+    this.showCertainPeople = false;
+  }
+
+  toggleShowCertainPeople() {
+    this.showAllUser = false;
+    this.showCertainPeople = true;;
+  }
 
   ngOnInit(): void {
     this.globalFunctions.getCollection('users', this.allUsers);
@@ -134,10 +145,7 @@ export class AddContactsComponent implements OnInit {
     console.log(this.selectedUsers);
     console.log('this.addedChatId: ', this.addedChatId);
     for (let i = 0; i < this.allUsers.length; i++) {
-      this.userService.addChatIdToUser(
-        this.allUsers[i].id,
-        this.addedChatId
-      );
+      this.userService.addChatIdToUser(this.allUsers[i].id, this.addedChatId);
     }
   }
 

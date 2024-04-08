@@ -85,6 +85,9 @@ export class AddContactsComponent implements OnInit {
     console.log('selectedUsers:', this.selectedUsers);
   }
 
+
+  //wozu diese Funktion? die Funktion addNewChannel existiert bereits.
+  // alles was man im Grunde machen muss, wenn man bestimmte User statt aller hinzufügen will ist der Austausch des Arguments this.addChannelwithAllMembers()
   async addNewChannelWithAllUser() {
     console.log(this.allUsers);
     await this.firebaseChannelService
@@ -111,6 +114,11 @@ export class AddContactsComponent implements OnInit {
     });
     this.addChatIdIntoAllUser();
 
+    //this was missing to switch to the new chat
+    this.firebaseChatService.activeChatId = this.addedChatId;
+    this.firebaseChatService.changeActiveChannel();
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     this.globalVariables.openChannel.titel =
       this.globalVariables.channelData.channelName;
     this.globalVariables.channelData.channelName = '';
@@ -120,18 +128,7 @@ export class AddContactsComponent implements OnInit {
     this.globalFunctions.closeAddContactsOverlay();
   }
 
-  addChannelwithAllMembers() {
-    const allUserIds = this.allUsers.map((user: any) => user.id);
-    const newChannelData = {
-      channelName: this.globalVariables.channelData.channelName,
-      description: this.globalVariables.channelData.description,
-      chatId: '',
-      members: allUserIds,
-      id: '',
-      creator: this.globalVariables.activeID,
-    };
-    return newChannelData;
-  }
+//Diese Funktion ist überflüssig, wenn die addNewChannelWithAllUser entfernt wird
 
   async addChatIdIntoAllUser() {
     console.log(this.selectedUsers);
@@ -168,6 +165,11 @@ export class AddContactsComponent implements OnInit {
     });
     this.addChatIdIntoUser();
 
+    //this was missing to switch to the new chat
+    this.firebaseChatService.activeChatId = this.addedChatId;
+    this.firebaseChatService.changeActiveChannel();
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     this.globalVariables.openChannel.titel =
       this.globalVariables.channelData.channelName;
     this.globalVariables.channelData.channelName = '';
@@ -186,6 +188,21 @@ export class AddContactsComponent implements OnInit {
         this.addedChatId
       );
     }
+  }
+
+  //Diese beiden Funktionen zu einer zusammenfassen!
+  
+  addChannelwithAllMembers() {
+    const allUserIds = this.allUsers.map((user: any) => user.id);
+    const newChannelData = {
+      channelName: this.globalVariables.channelData.channelName,
+      description: this.globalVariables.channelData.description,
+      chatId: '',
+      members: allUserIds,
+      id: '',
+      creator: this.globalVariables.activeID,
+    };
+    return newChannelData;
   }
 
   addChannelwithChoosenMembers() {

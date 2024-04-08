@@ -50,7 +50,6 @@ export class AddContactsComponent implements OnInit {
   [x: string]: any;
   private searchTerms = new Subject<string>();
 
-
   async ngOnInit() {
     await this.globalFunctions.getCollection('users', this.allUsers);
     this.setupSearch();
@@ -74,10 +73,24 @@ export class AddContactsComponent implements OnInit {
 
   onChange(index: number) {
     this.isChecked[index] = !this.isChecked[index];
+    const currentUser = this.allUsers[index];
+
     if (this.isChecked[index]) {
-      this.selectedUsers.push(this.allUsers[index]);
+      this.selectedUsers.push(currentUser);
     } else {
       this.selectedUsers = this.selectedUsers.filter((user, i) => i !== index);
+    }
+
+    const activeUserIndex = this.selectedUsers.findIndex(
+      (user) => user.id === this.globalVariables.activeID
+    );
+    if (activeUserIndex === -1) {
+      const activeUser = this.allUsers.find(
+        (user:any) => user.id === this.globalVariables.activeID
+      );
+      if (activeUser) {
+        this.selectedUsers.push(activeUser);
+      }
     }
   }
 
@@ -90,7 +103,7 @@ export class AddContactsComponent implements OnInit {
   }
 
   /**
-   * this function select all Users 
+   * this function select all Users
    */
   selectAllUsers() {
     if (this.showAllUsers) {
@@ -101,10 +114,10 @@ export class AddContactsComponent implements OnInit {
     }
   }
 
-/**
- * this function add a new channel inklusive relatet chatId
- * it calls also addChatIdIntoUser() to add chatId to each user
- */
+  /**
+   * this function add a new channel inklusive relatet chatId
+   * it calls also addChatIdIntoUser() to add chatId to each user
+   */
   async addNewChannel() {
     await this.firebaseChannelService
       .addData('channels', this.addChannelwithChoosenMembers())
@@ -126,14 +139,14 @@ export class AddContactsComponent implements OnInit {
     //add chatId to channel
     await this.firebaseChannelService.updateChannel(this.addedChannelId, {
       chatId: this.addedChatId,
-      creator: this.globalVariables.activeID
     });
     this.addChatIdIntoUser(this.selectedUsers);
     //this was missing to switch to the new chat
     this.firebaseChatService.activeChatId = this.addedChatId;
     this.firebaseChatService.changeActiveChannel();
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this.globalVariables.openChannel.titel = this.globalVariables.channelData.channelName;
+    this.globalVariables.openChannel.titel =
+      this.globalVariables.channelData.channelName;
     this.resetAndCloseOverlay();
   }
 
@@ -141,16 +154,15 @@ export class AddContactsComponent implements OnInit {
    * this function adds the chatId to each user on firebase
    * @param setectedUsers - array
    */
-  addChatIdIntoUser(setectedUsers: Array<any>) {
-    for (let i = 0; i < setectedUsers.length; i++) {
-      this.userService.addChatIdToUser(setectedUsers[i].id, this.addedChatId);
+  addChatIdIntoUser(selectedUsers: Array<any>) {
+    for (let i = 0; i < selectedUsers.length; i++) {
+      this.userService.addChatIdToUser(selectedUsers[i].id, this.addedChatId);
     }
   }
 
-
   /**
    * this function retuns the newChannelData object for addNewChannel()
-   * @returns - object 
+   * @returns - object
    */
   addChannelwithChoosenMembers() {
     this.selectAllUsers();
@@ -180,6 +192,4 @@ export class AddContactsComponent implements OnInit {
     this.showAllUsers = true;
     this.globalFunctions.closeAddContactsOverlay();
   }
-
-  
 }

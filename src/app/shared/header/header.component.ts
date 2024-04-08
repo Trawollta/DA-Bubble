@@ -76,8 +76,6 @@ export class HeaderComponent {
       
     } else {
       console.log('Keine Kanäle gefunden oder ungültige Daten');
-    }
-   
-    
+    } 
   }
 }

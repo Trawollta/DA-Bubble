@@ -126,6 +126,7 @@ export class AddContactsComponent implements OnInit {
     //add chatId to channel
     await this.firebaseChannelService.updateChannel(this.addedChannelId, {
       chatId: this.addedChatId,
+      creator: this.globalVariables.activeID
     });
     this.addChatIdIntoUser(this.selectedUsers);
     //this was missing to switch to the new chat

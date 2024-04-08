@@ -178,6 +178,7 @@ export class CurrentUserMessageComponent {
 
 
   openAnswers() {
+    this.globalVariables.bufferThreadOpen = !this.globalVariables.bufferThreadOpen; 
     this.globalVariables.showThread = !this.globalVariables.showThread;
     this.globalVariables.answerKey = this.answerKey;
     this.globalVariables.answerCount = this.answercount;

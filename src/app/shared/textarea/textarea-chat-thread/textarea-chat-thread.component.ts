@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { getDownloadURL, getStorage, ref, uploadBytes } from '@angular/fire/storage';
 import { FormsModule } from '@angular/forms';
 import { ShowContactsComponent } from 'app/dashboard/channel-menu/show-contacts/show-contacts.component';
@@ -22,6 +22,7 @@ import { EmojiContainerComponent } from 'app/shared/reactions/emoji-container/em
   styleUrl: './textarea-chat-thread.component.scss'
 })
 export class TextareaChatThreadComponent {
+  @Input() chatArea: string = '';
 
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
@@ -39,11 +40,21 @@ export class TextareaChatThreadComponent {
   downloadURLAlias = ''
   fileSize = '';
   selectedFile: File | null = null;
+  answerToKey: string = '';
+  newMessage: string = '';
 
+
+  ngOnInit(){
+    if(this.globalVariables.messageThreadStart.userId !== '')
+    this.answerToKey = this.globalVariables.messageThreadStart.userId + '_' + this.globalVariables.messageThreadStart.timestamp.toString();
+  }
+
+  
   /**
    * this function fills all relevant data to the messagData object and calls the send message function from firebase service
    */
   async sendMessage() {
+    this.globalVariables.newMessage = this.newMessage;
     this.forbiddenChars = this.globalFunctions.isMessageValid(this.globalVariables.newMessage);
 
     if (this.globalVariables.newMessage !== '' && this.forbiddenChars.length === 0) {
@@ -60,11 +71,12 @@ export class TextareaChatThreadComponent {
   async preperDataForSendMessage() {
     this.globalVariables.messageData.userId = this.globalVariables.activeID;
     this.globalVariables.messageData.timestamp = new Date().getTime();
-    this.globalVariables.messageData.answerto = '';
+    this.globalVariables.messageData.answerto = this.globalVariables.showThread? this.answerToKey : '';
     this.globalVariables.messageData.message = await this.buildMessage();
     this.globalVariables.messageData.emoji = [{ icon: '', userId: [] as any[], iconId: '' }];
   }
   cleardata() {
+    this.newMessage = '';
     this.globalVariables.messageData.message = '';
     this.globalVariables.newMessage = '';
     this.selectedFile = null
@@ -148,7 +160,6 @@ export class TextareaChatThreadComponent {
    * this function just sets the flag for closing the error popup
    */
  closeErrorPopup() {
-  console.log('showErrorPopup');
   this.showErrorPopup = false;
 }
 
@@ -162,9 +173,6 @@ export class TextareaChatThreadComponent {
       this.showValidationPopup = false;
       this.isPopupOpen = false;
     } 
-    console.log('showValidationPopup');
-   // this.showValidationPopup = false;
   }
-
 
 }

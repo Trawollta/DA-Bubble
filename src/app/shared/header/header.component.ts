@@ -38,7 +38,6 @@ export class HeaderComponent {
     ); // this will be all User Data
     if (user) {
       this.saveRelatedChats(user['relatedChats']);
-      console.log(this.relatedChats);
       this.searchForWord(value);
     } else {
       console.log('Benutzer nicht gefunden oder fehlerhafte Daten');
@@ -57,10 +56,16 @@ export class HeaderComponent {
   }
 
   async searchForWord(word: string) {
-    await this.getChatMessages()
+    await this.getChatMessages();
     await this.getChats();
     this.connectChannelWithChannelMsg();
-    console.log(this.allRelatedChatMsgs);
+    this.compareInputWithChannelMessages(word);
+    this.clearPreviousResult();
+    console.log(this.result);
+  }
+
+  clearPreviousResult(){
+    this.result = [];
   }
 
   /**
@@ -68,10 +73,11 @@ export class HeaderComponent {
    */
   async getChatMessages() {
     for (let i = 0; i < this.relatedChats.length; i++) {
-      let messages = await this.firebaseChannelService.getChannelMessages(this.relatedChats[i]);
-      this.allMessages.push(messages)
+      let messages = await this.firebaseChannelService.getChannelMessages(
+        this.relatedChats[i]
+      );
+      this.allMessages.push(messages);
     }
-    console.log('All MSG', this.allMessages);
   }
 
   /**
@@ -79,38 +85,82 @@ export class HeaderComponent {
    */
   async getChats() {
     for (let i = 0; i < this.relatedChats.length; i++) {
-      let channels = await this.firebaseChannelService.loadChannelDataWithChatID(this.relatedChats[i]);
-      this.allChannels.push(channels)
+      let channels =
+        await this.firebaseChannelService.loadChannelDataWithChatID(
+          this.relatedChats[i]
+        );
+      this.allChannels.push(channels);
     }
-    this.getEachChannelWithDocID()
+    this.getEachChannelWithDocID();
   }
 
   /**
    * functions saves all connected chats in this.info
    */
-  getEachChannelWithDocID(){
+  getEachChannelWithDocID() {
     for (let i = 0; i < this.allChannels.length; i++) {
-      this.firebaseChannelService.loadChannelData(this.allChannels[i][0]).then(data => {
-        this.info.push(data);
-      });
+      this.firebaseChannelService
+        .loadChannelData(this.allChannels[i][0])
+        .then((data) => {
+          this.info.push(data);
+        });
     }
-    console.log(this.info);
   }
 
   connectChannelWithChannelMsg() {
-    if (this.allChannels && this.allChannels.length > 0) {
+    if (
+      this.allChannels &&
+      this.allChannels.length > 0 &&
+      this.allChannels.chatId
+    ) {
       this.allChannels.chatId.forEach((id: any) => {
-        this.firebaseChannelService.getConnectionOfChannel(id).then(data => {
+        this.firebaseChannelService.getConnectionOfChannel(id).then((data) => {
           this.allRelatedChatMsgs.push(data);
         });
       });
-/*       let allChannelsId = this.allChannels[0].chatId;
-      this.firebaseChannelService.getConnectionOfChannel(allChannelsId).then(data => {
-        this.allRelatedChatMsgs.push(data);
-      }); */
-      
     } else {
       console.log('Keine Kanäle gefunden oder ungültige Daten');
-    } 
+    }
+  }
+
+  async compareInputWithChannelMessages(input: string) {
+    this.result = await this.compareMsgFromInput(input);
+    this.compareMsgFromInputWithMemebers();
+  }
+
+  compareMsgFromInput(input: string) {
+    let bestMatches: any = [];
+    let highestSimilarity = -1;
+
+    for (const messageGroup of this.allMessages) {
+        for (const message of messageGroup.messages) {
+            const similarity = this.similarityScore(input, message.message);
+            if (similarity > highestSimilarity) {
+                highestSimilarity = similarity;
+                bestMatches = [{ message: message.message, userId: message.userId }];
+            } else if (similarity === highestSimilarity) {
+                bestMatches.push({ message: message.message, userId: message.userId });
+            }
+        }
+    }
+
+    console.log('Die besten Matches:', bestMatches);
+    return bestMatches;
+}
+
+  similarityScore(str1: string, str2: string): number {
+    const set1 = new Set(str1.split(''));
+    const set2 = new Set(str2.split(''));
+    const intersection = new Set([...set1].filter((char) => set2.has(char)));
+    const union = new Set([...set1, ...set2]);
+    return intersection.size / union.size;
+  }
+
+  addUserToMessage(messageArray: any) {
+    console.log(messageArray.userId)
+  }
+
+  compareMsgFromInputWithMemebers() {
+    return;
   }
 }

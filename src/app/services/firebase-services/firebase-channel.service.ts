@@ -151,7 +151,6 @@ export class FirebaseChannelService {
     const docIds: string[] = [];
     querySnapshot.forEach((doc) => {
       docIds.push(doc.id);
-      console.log(doc.id, ' => ', doc.data());
     });
     return docIds;
   }

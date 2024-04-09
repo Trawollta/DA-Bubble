@@ -20,8 +20,10 @@ export class HeaderComponent {
   result: any;
   allDataWithCurrentId: any;
   allChannels: any = [];
+  allMessages: any = [];
   relatedChats: any = [];
   allRelatedChatMsgs: any = [];
+  info: any = [];
 
   constructor() {}
   openChannels() {
@@ -55,24 +57,57 @@ export class HeaderComponent {
   }
 
   async searchForWord(word: string) {
+    await this.getChatMessages()
     await this.getChats();
     this.connectChannelWithChannelMsg();
     console.log(this.allRelatedChatMsgs);
   }
 
+  /**
+   * here for chahnnels to get the messages inside channels
+   */
+  async getChatMessages() {
+    for (let i = 0; i < this.relatedChats.length; i++) {
+      let messages = await this.firebaseChannelService.getChannelMessages(this.relatedChats[i]);
+      this.allMessages.push(messages)
+    }
+    console.log('All MSG', this.allMessages);
+  }
+
+  /**
+   * functions convert all data to docIds
+   */
   async getChats() {
     for (let i = 0; i < this.relatedChats.length; i++) {
-      let channels = await this.firebaseChannelService.loadChannelData(this.relatedChats[i]);
+      let channels = await this.firebaseChannelService.loadChannelDataWithChatID(this.relatedChats[i]);
       this.allChannels.push(channels)
     }
+    this.getEachChannelWithDocID()
+  }
+
+  /**
+   * functions saves all connected chats in this.info
+   */
+  getEachChannelWithDocID(){
+    for (let i = 0; i < this.allChannels.length; i++) {
+      this.firebaseChannelService.loadChannelData(this.allChannels[i][0]).then(data => {
+        this.info.push(data);
+      });
+    }
+    console.log(this.info);
   }
 
   connectChannelWithChannelMsg() {
     if (this.allChannels && this.allChannels.length > 0) {
-      let allChannelsId = this.allChannels[0].chatId;
+      this.allChannels.chatId.forEach((id: any) => {
+        this.firebaseChannelService.getConnectionOfChannel(id).then(data => {
+          this.allRelatedChatMsgs.push(data);
+        });
+      });
+/*       let allChannelsId = this.allChannels[0].chatId;
       this.firebaseChannelService.getConnectionOfChannel(allChannelsId).then(data => {
         this.allRelatedChatMsgs.push(data);
-      });
+      }); */
       
     } else {
       console.log('Keine Kanäle gefunden oder ungültige Daten');

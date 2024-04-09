@@ -25,9 +25,16 @@
       imgName="search"
       placeholder="Code learning durchsuchen"
     ></app-inputfield>
-    <ul>
-      <li>{{ bestMatches | json }}</li>
-    </ul>
+    <div *ngIf="bestMatchesArray.length > 0">
+        <ul  *ngFor="let msg of bestMatchesArray; let i = index">
+            Nachricht: {{ bestMatchesArray[i].message }}
+            Benutzer-ID: {{ bestMatchesArray[i].userId }}
+            Dokument-ID: {{ bestMatchesArray[i].docId }}
+        </ul>
+    </div>
+    
+    
+
 
     <app-header-menu></app-header-menu>
   </div>

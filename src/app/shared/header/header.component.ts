@@ -25,13 +25,7 @@ export class HeaderComponent {
   allRelatedChatMsgs: any = [];
   info: any = [];
   bestMatches: any = [];
-  bestMatchesArray: any[] = [
-    {
-      message: '',
-      userId: '',
-      relatedChats: '',
-    },
-  ];
+  bestMatchesArray: any = [];
 
   constructor() {}
   openChannels() {
@@ -40,6 +34,10 @@ export class HeaderComponent {
     this.globalVariables.showThread = false;
   }
 
+  /**
+   * main function to direct the value to various function and save relatedChats of msg
+   * @param value input string
+   */
   async handleInputChange(value: string) {
     let user = await this.getDataConnectedWithID(
       this.globalVariables.currentUser.name
@@ -53,23 +51,45 @@ export class HeaderComponent {
     this.result = value;
   }
 
+  /**
+   *
+   * @param data
+   */
+  async saveRelatedChats(data: any) {
+    this.relatedChats = data;
+  }
+
+  /**
+   * gives me the docID of the user to give better workflow and get data of him
+   * @param id user id
+   * @returns
+   */
   async getDataConnectedWithID(id: string) {
     let docID = await this.firebaseUserService.getUserDocIdWithName(id);
     let data = this.firebaseUserService.getUserData(docID[0]);
     return data;
   }
 
-  async saveRelatedChats(data: any) {
-    this.relatedChats = data;
-  }
-
+  /**
+   * all function which are connected with searching in the database for the msg and or channel and or Member
+   * @param word 
+   */
   async searchForWord(word: string) {
     await this.getChatMessages();
     await this.getChats();
-    this.connectChannelWithChannelMsg();
-    this.compareInputWithChannelMessages(word);
+    await this.connectChannelWithChannelMsg();
+    await this.compareInputWithChannelMessages(word);
     this.clearPreviousResult();
+    this.jsonConvert();
     console.log(this.bestMatches);
+  }
+
+  /**
+   * convert the object into a array to work with
+   */
+  async jsonConvert() {
+    let jsonstring = JSON.stringify(this.bestMatches);
+    this.bestMatchesArray = await JSON.parse(jsonstring);
   }
 
   clearPreviousResult() {
@@ -115,7 +135,10 @@ export class HeaderComponent {
     }
   }
 
-  connectChannelWithChannelMsg() {
+  /**
+   * functions connect the channel with the channel messages
+   */
+  async connectChannelWithChannelMsg() {
     if (
       this.allChannels &&
       this.allChannels.length > 0 &&
@@ -131,12 +154,21 @@ export class HeaderComponent {
     }
   }
 
+  /**
+   * 
+   * @param input 
+   */
   async compareInputWithChannelMessages(input: string) {
     this.result = await this.compareMsgFromInput(input);
-    this.compareMsgFromInputWithMemebers();
   }
 
-  compareMsgFromInput(input: string) {
+
+  /**
+   * search in all messages.message for the input signs, second one is getting the similarity of message and input
+   * @param input 
+   * @returns matched msges with input
+   */
+  async compareMsgFromInput(input: string) {
     let highestSimilarity = -1;
     for (let messageGroup of this.allMessages) {
       for (let message of messageGroup.messages) {
@@ -167,6 +199,12 @@ export class HeaderComponent {
     return this.bestMatches;
   }
 
+  /**
+   * returns the score of the similarity of two strings(as number)
+   * @param str1 
+   * @param str2 
+   * @returns 
+   */
   similarityScore(str1: string, str2: string): number {
     const set1 = new Set(str1.split(''));
     const set2 = new Set(str2.split(''));
@@ -178,9 +216,4 @@ export class HeaderComponent {
   addUserToMessage(messageArray: any) {
     console.log(messageArray.userId);
   }
-
-  compareMsgFromInputWithMemebers() {
-    return;
-  }
-
 }

@@ -24,6 +24,14 @@ export class HeaderComponent {
   relatedChats: any = [];
   allRelatedChatMsgs: any = [];
   info: any = [];
+  bestMatches: any = [];
+  bestMatchesArray: any[] = [
+    {
+      message: '',
+      userId: '',
+      relatedChats: '',
+    },
+  ];
 
   constructor() {}
   openChannels() {
@@ -61,10 +69,10 @@ export class HeaderComponent {
     this.connectChannelWithChannelMsg();
     this.compareInputWithChannelMessages(word);
     this.clearPreviousResult();
-    console.log(this.result);
+    console.log(this.bestMatches);
   }
 
-  clearPreviousResult(){
+  clearPreviousResult() {
     this.result = [];
   }
 
@@ -129,24 +137,35 @@ export class HeaderComponent {
   }
 
   compareMsgFromInput(input: string) {
-    let bestMatches: any = [];
     let highestSimilarity = -1;
-
-    for (const messageGroup of this.allMessages) {
-        for (const message of messageGroup.messages) {
-            const similarity = this.similarityScore(input, message.message);
-            if (similarity > highestSimilarity) {
-                highestSimilarity = similarity;
-                bestMatches = [{ message: message.message, userId: message.userId }];
-            } else if (similarity === highestSimilarity) {
-                bestMatches.push({ message: message.message, userId: message.userId });
-            }
+    for (let messageGroup of this.allMessages) {
+      for (let message of messageGroup.messages) {
+        let similarity = this.similarityScore(input, message.message);
+        if (similarity > highestSimilarity) {
+          highestSimilarity = similarity;
+          this.bestMatches = [
+            {
+              message: message.message,
+              userId: message.userId,
+              docId: messageGroup.relatedChannelId,
+            },
+          ];
+        } else if (similarity === highestSimilarity) {
+          let existingMatchIndex = this.bestMatches.findIndex(
+            (match: any) => match.message === message.message
+          );
+          if (existingMatchIndex === -1) {
+            this.bestMatches.push({
+              message: message.message,
+              userId: message.userId,
+              docId: messageGroup.relatedChannelId,
+            });
+          }
         }
+      }
     }
-
-    console.log('Die besten Matches:', bestMatches);
-    return bestMatches;
-}
+    return this.bestMatches;
+  }
 
   similarityScore(str1: string, str2: string): number {
     const set1 = new Set(str1.split(''));
@@ -157,10 +176,11 @@ export class HeaderComponent {
   }
 
   addUserToMessage(messageArray: any) {
-    console.log(messageArray.userId)
+    console.log(messageArray.userId);
   }
 
   compareMsgFromInputWithMemebers() {
     return;
   }
+
 }

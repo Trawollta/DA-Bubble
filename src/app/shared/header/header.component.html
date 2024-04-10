@@ -15,19 +15,11 @@
       <img src="assets/img/icons/Workspace logo.svg" alt="logo" />
       <h3>Code Learning</h3>
     </div>
-    <app-inputfield
-      (inputChange)="handleInputChange($event)"
-      [optionClasses]="['search-icon']"
-      [classes]="'searchBar'"
-      *ngIf="globalVariables.desktop900"
-      class="searchBarContainer"
-      type="search"
-      imgName="search"
-      placeholder="Code learning durchsuchen"
-    ></app-inputfield>
-    <ul>
-      <li>{{ bestMatches | json }}</li>
-    </ul>
+    
+    <app-searchbar></app-searchbar>
+    
+    
+
 
     <app-header-menu></app-header-menu>
   </div>

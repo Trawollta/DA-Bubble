@@ -11,7 +11,7 @@
     <div *ngIf="bestMatchesArray.length > 0">
         <ul  *ngFor="let msg of bestMatchesArray; let i = index">
             Nachricht: {{ bestMatchesArray[i].message }}
-            Benutzer-ID: {{ bestMatchesArray[i].userId }}
-            Dokument-ID: {{ bestMatchesArray[i].docId }}
+            Benutzer-ID: {{ bestMatchesArray[i].name }}
+            Dokument-ID: {{ bestMatchesArray[i].channelName }}
         </ul>
     </div>

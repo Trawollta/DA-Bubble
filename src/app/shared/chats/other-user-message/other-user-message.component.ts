@@ -99,24 +99,6 @@ export class OtherUserMessageComponent {
 
   }
 
-  /*  getMessageInfo(message: string): void {
-     this.messageInfo = this.globalFunctions.checkMessage(message);
-     console.log(this.messageInfo); // Hier kannst du auf die Rückgabewerte zugreifen und sie nutzen
-   } */
-
-  /*  checkMessage(message: string): boolean {
-     const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-     const urlMatch = message.match(urlPattern);
-     if (urlMatch) {
-       this.messageImgUrl = urlMatch[0];
-       const textBeforeUrl = message.split(this.messageImgUrl)[0].trim();
-       this.textAfterUrl = message.split(this.messageImgUrl)[1].trim();
-       this.messageText = textBeforeUrl;
-     } else { // if no URL in message:
-       this.messageText = message;
-     }
-     return !!urlMatch;
-   } */
 
   /**
    * this function clones the original message object for later remove logic
@@ -166,6 +148,7 @@ export class OtherUserMessageComponent {
 
   onSelectMessage() {
     this.openReaction = !this.openReaction; //geändert, damit man es auch wieder schließen kann, wenn mannochmal auf das Element klickt
+    this.globalVariables.editMessage = false;
   }
 
   /**

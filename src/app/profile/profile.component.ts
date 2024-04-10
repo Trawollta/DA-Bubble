@@ -50,12 +50,9 @@ export class ProfileComponent {
    */
   async ngOnInit() {
     this.isPopupOpen = true;  
-    console.log(this.globalVariables);
-     
     this.globalVariables.userToChatWith.id = this.globalVariables.profileUserId; 
     const userData = await this.firebaseService.getUserData(this.globalVariables.profileUserId);
     this.profile = new User(userData); 
-    //console.log('this.profile: ',this.profile);
   }
 
   /**
@@ -92,9 +89,6 @@ export class ProfileComponent {
   */
   async sumbitEdit() {
     this.firebaseService.updateData(this.data());
-   // console.log('this.profile: ',this.profile);
-  //  console.log('activeID: ',this.globalVariables.activeID);
-  //  console.log('profileUserId: ',this.globalVariables.profileUserId);
     const userData = await this.firebaseService.getUserData(this.globalVariables.profileUserId);
     this.profile = new User(userData);
     this.cancelEdit();

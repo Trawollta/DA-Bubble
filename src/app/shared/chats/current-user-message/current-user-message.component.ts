@@ -44,9 +44,7 @@ export class CurrentUserMessageComponent {
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
   firebaseUpdate = inject(FirebaseUserupdateService);
-  openReaction: boolean = false;
-  downloadURL = '';
-  downloadURLAlias = ''
+
 
   @Input() message: any;
   @Input() index: any;
@@ -67,12 +65,17 @@ export class CurrentUserMessageComponent {
   profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
   mouseover: boolean = false;
   hoverUser: string = '';
+  openReaction: boolean = false;
+  
 
   unsubUser;
   userId: string = 'guest';
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
+  //for edit message
+  //downloadURL = '';
+  //downloadURLAlias = ''
   //messageImgUrl: string = '';
   // messageText: string = '';
   // textAfterUrl: string = '';
@@ -127,12 +130,8 @@ export class CurrentUserMessageComponent {
     this.cloneOriginalMessage();
     this.messageInfo = this.globalFunctions.checkMessage(this.message.message);
     this.isImage = this.messageInfo.hasUrl;
-    //hier muss der Alias für das Bild reingeladen werden
   }
 
- switchUrlWithAlias(){
-  
- }
 
 
 
@@ -182,13 +181,16 @@ export class CurrentUserMessageComponent {
   }
 
   onSelectMessage() {
-    this.activeMessage = !this.activeMessage;
-    this.openReaction = !this.openReaction;
+    if(!this.activeMessage)this.globalVariables.editMessage = false;
+    this.activeMessage = true;
+    this.openReaction = true;
+    
   }
 
   @HostListener('document:click', ['$event'])
   onClick(event: any) {
     if (!this.elementRef.nativeElement.contains(event.target)) {
+      if(!this.globalVariables.editMessage)
       this.onCloseReactions();
     }
   }

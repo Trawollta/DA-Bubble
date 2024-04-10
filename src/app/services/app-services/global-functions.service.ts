@@ -2,13 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { GlobalVariablesService } from './global-variables.service';
 import {
   Firestore,
-  addDoc,
   collection,
-  collectionData,
-  deleteDoc,
-  doc,
   onSnapshot,
-  updateDoc,
 } from '@angular/fire/firestore';
 import { FirebaseChatService } from '../firebase-services/firebase-chat.service';
 import { FirebaseChannelService } from '../firebase-services/firebase-channel.service';
@@ -33,10 +28,6 @@ export class GlobalFunctionsService {
     this.globalVariables.profileUserId = userId;
     this.globalVariables.ownprofile = ownProfile ? true : false;
     this.globalVariables.showProfile = true;
-    /*    console.log(
-         'this.globalVariables.ownprofile: ',
-         this.globalVariables.ownprofile
-       ); */
   }
 
   //Diese openOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
@@ -232,21 +223,6 @@ export class GlobalFunctionsService {
     });
   }
 
-  // hab die Funktion geänder 26.2, Alex
-  // function to add data to a Collection you choose
-/*   addData(goalCollection: string, input: any) {
-    let data = input;
-    let dataCollection = collection(this.firestore, goalCollection);
-    return addDoc(dataCollection, data);
-  } */
-
-
-  //warum existiert hier eine Firebasefunktion?
-  //Alle Firebasefunktionen sollten in einem Firebaseservice sein
- /*  async updateData(collectionPath: string, docId: string, data: Partial<any>): Promise<void> {
-    const docRef = doc(this.firestore, collectionPath, docId);
-    await updateDoc(docRef, data);
-  } */
 
   showDashboardElement(screenWidth: number) {
     if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;

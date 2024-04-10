@@ -32,8 +32,19 @@ export class HeaderComponent {
   constructor() {}
 
   ngOnInit(){
-    console.log(this.globalVariables);
-    console.log('Der aktuelle Nutzer: ',this.globalVariables.currentUser);
+   /*  console.log('Die globalen Variablen:', this.globalVariables);
+    setTimeout(() => {
+      console.log('Der aktuelle Nutzer 200: ',this.globalVariables.currentUser);
+  }, 200);
+  setTimeout(() => {
+    console.log('Der aktuelle Nutzer 400: ',this.globalVariables.currentUser);
+}, 400);
+setTimeout(() => {
+  console.log('Der aktuelle Nutzer 600: ',this.globalVariables.currentUser);
+}, 600);
+    setTimeout(() => {
+      console.log('Der aktuelle Nutzer 1000: ',this.globalVariables.currentUser);
+  }, 1000); */
     
   }
 

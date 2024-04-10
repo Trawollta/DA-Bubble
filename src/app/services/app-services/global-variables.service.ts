@@ -26,7 +26,7 @@ export class GlobalVariablesService {
   profileUserId: string = '';
 
   // Flags to manage chat
-  channel: boolean = false;
+  showAddChannel: boolean = false;
   adduser: boolean = false;
   openReaction: boolean = false;
   editChannelOverlayOpen: boolean = false;
@@ -39,6 +39,7 @@ export class GlobalVariablesService {
   newMessage: string = '';
   showEmojiContainer: boolean = false;
   scrolledToBottom: boolean = false;
+  isMembersPopupOpen: boolean = false;
 
   //take over selected Emoji
   selectedEmoji = {
@@ -51,6 +52,7 @@ export class GlobalVariablesService {
   showChannelMenu: boolean = true;
   isChatVisable: boolean = false;
   showThread: boolean = false;
+  bufferThreadOpen: boolean = false;
 
   openChat: string = ''; // used in openAnswers() to come back to the chat
   isUserChat: boolean = false; //used as flag to show in chat the header for user chat
@@ -100,7 +102,7 @@ export class GlobalVariablesService {
     userId: '',
     timestamp: 0,
     userName: '',
-    img: '',
+    userImgPath: '',
   };
 
   //this is the object for the active channel information. Used in channel-menu
@@ -128,7 +130,8 @@ export class GlobalVariablesService {
     channelName: '',
     chatId: '',
     id: '',
-    creator: ''
+    creator: '',
+    members: [] as any[],
     /* owner: '',
     allowedUser: ['id1', '1d2'] */
   };

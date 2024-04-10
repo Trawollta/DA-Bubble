@@ -8,6 +8,8 @@ import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component'
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { channel } from 'app/models/channel.class';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+import { user } from '@angular/fire/auth';
+import { SearchbarComponent } from 'app/shared/searchbar/searchbar/searchbar.component';
 
 @Component({
   selector: 'app-channel-menu',
@@ -19,6 +21,7 @@ import { FirebaseUserService } from 'app/services/firebase-services/firebase-use
     CommonModule,
     AddNewChannelComponent,
     InputfieldComponent,
+    SearchbarComponent
   ],
 })
 export class ChannelMenuComponent {
@@ -27,14 +30,18 @@ export class ChannelMenuComponent {
   firebasUserService = inject(FirebaseUserService);
   allChannels: any = [];
   allUsers: any = [];
+  channelToDisplay: any = [];
 
-  constructor(public globalFunctions: GlobalFunctionsService) { }
+  constructor(public globalFunctions: GlobalFunctionsService) {}
 
   /**
    * this function just opens and close the menu for selecting a channel
    */
-  openChannelMenu() {
-    const channelMsg = document.getElementById('channelMsgArrow') as HTMLImageElement | null;
+  async openChannelMenu() {
+    await this.getChannel();
+    const channelMsg = document.getElementById(
+      'channelMsgArrow'
+    ) as HTMLImageElement | null;
     let channelDiv = document.getElementById('channels');
     if (channelDiv) {
       if (channelDiv.classList.contains('d-none')) {
@@ -44,6 +51,7 @@ export class ChannelMenuComponent {
         }
       } else {
         channelDiv.classList.add('d-none');
+        this.channelToDisplay = [];
         if (channelMsg) {
           channelMsg.src = './assets/img/icons/arrow_drop_down_default.svg';
         }
@@ -75,11 +83,30 @@ export class ChannelMenuComponent {
     }
   }
 
-  ngOnInit() {
-    this.globalFunctions.getCollection('channels', this.allChannels);
-    this.globalFunctions.getCollection('users', this.allUsers);
+  async ngOnInit() {
+    await this.globalFunctions.getCollection('channels', this.allChannels);
+    await this.globalFunctions.getCollection('users', this.allUsers);
   }
 
+  async filterChannelsByActiveID(activeID: string) {
+    let channelsWithActiveID: any[] = [];
+    this.allChannels.forEach((channel: any) => {
+      if (channel.members.includes(activeID)) {
+        channelsWithActiveID.push(channel);
+      }
+    })
+    return channelsWithActiveID;
+  }
+
+  async getChannel(){
+    console.log('HALLO')
+    const filteredChannels = await this.filterChannelsByActiveID(this.globalVariables.activeID);
+    if (filteredChannels.length > 0) {
+      this.channelToDisplay.push(...filteredChannels);
+    }
+    console.log(this.channelToDisplay);
+  }
+  
 
   /**
    * this funktion sets the flag to show the header for channels and take over information of the related channel object to global variables
@@ -104,9 +131,10 @@ export class ChannelMenuComponent {
   async getChatUserData(member: string[]) {
     this.globalVariables.openChannelUser = [];
     const userDataList = await Promise.all(this.getMemberData(member));
-    const filteredUserDataList = userDataList.filter(userData => userData !== null) as { id: string, name: string, img: string }[];
+    const filteredUserDataList = userDataList.filter(
+      (userData) => userData !== null
+    ) as { id: string; name: string; img: string }[];
     this.globalVariables.openChannelUser.push(...filteredUserDataList);
-    //console.log('Benutzerdaten:', this.globalVariables.openChannelUser);
   }
 
   /**
@@ -124,5 +152,4 @@ export class ChannelMenuComponent {
       }
     });
   }
-
 }

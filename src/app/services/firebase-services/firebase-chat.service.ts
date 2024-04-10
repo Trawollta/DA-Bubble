@@ -134,7 +134,6 @@ export class FirebaseChatService {
   changeActiveChannel() {
     if (this.unsubChat) this.unsubChat();
     this.chatExist = false;
-    //this.activeChatId = newChatId;
     this.globalVariables.chatChannel = new ChatChannel();
     let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
     this.unsubChat = this.getChat(chatFamiliy);

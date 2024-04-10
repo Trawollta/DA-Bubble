@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { ChannelMenuComponent } from '../channel-menu.component';
@@ -11,31 +11,36 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-show-contacts',
   standalone: true,
-  imports: [CommonModule, ChannelMenuComponent, AddContactsComponent, FormsModule],
+  imports: [
+    CommonModule,
+    ChannelMenuComponent,
+    AddContactsComponent,
+    FormsModule,
+  ],
   templateUrl: './show-contacts.component.html',
-  styleUrls: ['./show-contacts.component.scss']
+  styleUrls: ['./show-contacts.component.scss'],
 })
 export class ShowContactsComponent implements OnInit {
-
   selectedUserIds: string[] = [];
   selectedUsers: any[] = [];
   allUsers: any[] = [];
   checked: boolean = false;
 
   globalFunctions = inject(GlobalFunctionsService);
-  firebaseUserService = inject(FirebaseUserService)
-  GlobalVariablesService = inject(GlobalVariablesService)
+  firebaseUserService = inject(FirebaseUserService);
+  globalVariables = inject(GlobalVariablesService);
 
-  constructor(public globalVariables: GlobalVariablesService) {
-    console.log(this.globalVariables)
-  }
+  constructor() {}
 
   ngOnInit() {
     this.getChannelMembers(this.globalVariables.openChannel.id);
   }
 
   getChannelMembers(channelId: string) {
-    const channelRef = this.firebaseUserService.getSingleDocRef('channels', channelId);
+    const channelRef = this.firebaseUserService.getSingleDocRef(
+      'channels',
+      channelId
+    );
     onSnapshot(channelRef, (snapshot) => {
       const channelData = snapshot.data();
       if (channelData && channelData['members']) {
@@ -47,7 +52,7 @@ export class ShowContactsComponent implements OnInit {
 
   fetchUsersDetails(userIds: string[]) {
     this.selectedUsers = []; // Reset the array to ensure it's clean before adding new users
-    userIds.forEach(userId => {
+    userIds.forEach((userId) => {
       const userRef = this.firebaseUserService.getSingleDocRef('users', userId);
       onSnapshot(userRef, (userSnapshot) => {
         if (userSnapshot.exists()) {
@@ -57,29 +62,34 @@ export class ShowContactsComponent implements OnInit {
     });
   }
 
-
   openOtherContactsOverlay() {
-    this.globalVariables.showContacts = true;
-    this.globalFunctions.closeMembers();
+    if (this.globalVariables.activeID == this.globalVariables.openChannel.creator) {
+      this.globalVariables.showContacts = true;
+    } else {
+      this.openAlertForm();
+    }
   }
 
-
-/**
- * 
- * @param user - string- contains the name of the selected user
- */
-  checkboxChanged(user: string) {
-    let userName = '@' + user + ', ';let newMessage = this.globalVariables.newMessage;
-    if (newMessage.includes(userName)) newMessage = newMessage.replace(userName, '');
-    else newMessage += userName;
-    this.globalVariables.newMessage = newMessage;
+  openAlertForm() {
+    setTimeout(() => {
+      document.getElementById('alertDiv')?.classList.remove('d-none');
+      setTimeout(() => {
+        this.globalFunctions.closeMembers();
+      }, 4500);
+    }, 100); 
   }
   
 
-  closeMembers() {
-    // Setze die Variable, die das "Show Contacts"-Overlay steuert, auf false
-    this.globalVariables.memberlist = false;
+  /**
+   *
+   * @param user - string- contains the name of the selected user
+   */
+  checkboxChanged(user: string) {
+    let userName = '@' + user + ', ';
+    let newMessage = this.globalVariables.newMessage;
+    if (newMessage.includes(userName))
+      newMessage = newMessage.replace(userName, '');
+    else newMessage += userName;
+    this.globalVariables.newMessage = newMessage;
   }
 }
-
-

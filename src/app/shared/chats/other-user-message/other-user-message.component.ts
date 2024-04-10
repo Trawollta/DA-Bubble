@@ -48,7 +48,7 @@ export class OtherUserMessageComponent {
   openReaction: boolean = false;
   @Input() message: any;
   @Input() isThread: boolean = false;
- // @Input() userName: string = '';
+  // @Input() userName: string = '';
 
   emojiArray: Emoji[] = [];
   postingTime: string | null = null;
@@ -61,25 +61,28 @@ export class OtherUserMessageComponent {
     emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
   };
 
+  messageInfo = { hasUrl: false, message: '', textAfterUrl: '', messageImgUrl: '' };
   userId: string = 'guest';
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
-  userMessage: string = '';
+  // messageImgUrl: string = '';
+  // messageText: string = '';
+  // textAfterUrl: string = '';
 
   profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
   mouseover: boolean = false;
   hoverUser: string = '';
   count: string = '';
-  isImage:boolean = false;
+  isImage: boolean = false;
 
   constructor(private elementRef: ElementRef) {
-   
+
   }
 
 
- async getUser2(id: string) {     
-        this.user = new User(await this.firebaseUser.getUserData(id));  
+  async getUser2(id: string) {
+    this.user = new User(await this.firebaseUser.getUserData(id));
   }
 
   /**
@@ -90,13 +93,12 @@ export class OtherUserMessageComponent {
     this.postingTime = this.message.timestamp;
     this.fillAnswerVariables();
     this.cloneOriginalMessage();
-    this.isImage = this.isValidURL(this.message.message);
+    this.messageInfo = this.globalFunctions.checkMessage(this.message.message);
+    // this.isImage = this.globalFunctions.checkMessage(this.message.message).hasUrl;
+    this.isImage = this.messageInfo.hasUrl;
+
   }
 
-  isValidURL(url: string): boolean {
-    const urlPattern = /^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
-    return urlPattern.test(url);
-  }
 
   /**
    * this function clones the original message object for later remove logic
@@ -120,17 +122,10 @@ export class OtherUserMessageComponent {
     this.answerKey = answerInfo.answerKey;
   }
 
- /*  //Dise Funktion macht nichts, da sie mit nichts verlinkt ist
-  openEmojis() {
-    let emojiDiv = document.getElementById('emojis');
-    if (emojiDiv && emojiDiv.classList.contains('d-none')) {
-      emojiDiv.classList.remove('d-none');
-    } else if (emojiDiv && emojiDiv.classList.contains('d-none') == false) {
-      emojiDiv.classList.add('d-none');
-    }
-  } */
+
 
   openAnswers() {
+    this.globalVariables.bufferThreadOpen = !this.globalVariables.bufferThreadOpen;
     this.globalVariables.showThread = !this.globalVariables.showThread;
     this.globalVariables.answerKey = this.answerKey;
     this.globalVariables.answerCount = this.answercount;
@@ -146,15 +141,14 @@ export class OtherUserMessageComponent {
   }
 
   fillInitialUserObj() {
-    this.globalVariables.messageThreadStart.message = this.message.message;
-    this.globalVariables.messageThreadStart.userId = this.message.userId;
-    this.globalVariables.messageThreadStart.timestamp = this.message.timestamp;
-    this.globalVariables.messageThreadStart.userName = this.user.name;
-    this.globalVariables.messageThreadStart.img = this.user.img;
+    const { message, userId, timestamp } = this.message;
+    const { name: userName, img: userImgPath } = this.user;
+    this.globalVariables.messageThreadStart = { message, userId, timestamp, userName, userImgPath };
   }
 
   onSelectMessage() {
     this.openReaction = !this.openReaction; //geändert, damit man es auch wieder schließen kann, wenn mannochmal auf das Element klickt
+    this.globalVariables.editMessage = false;
   }
 
   /**
@@ -172,7 +166,7 @@ export class OtherUserMessageComponent {
    */
   onCloseReactions() {
     this.openReaction = false;
-    }
+  }
 
   addUserIdToEmoji(emoji: any, index: number) {
     const activeID = this.globalVariables.activeID;

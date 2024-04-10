@@ -44,7 +44,7 @@ export class CurrentUserMessageComponent {
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
   firebaseUpdate = inject(FirebaseUserupdateService);
-  openReaction: boolean = false;
+
 
   @Input() message: any;
   @Input() index: any;
@@ -59,19 +59,30 @@ export class CurrentUserMessageComponent {
     timestamp: 0,
     emoji: [{ icon: '', userId: [] as any[], iconId: '' }],
   };
-  activeMessage: boolean = false;
+  activeMessage: boolean = false; // for flagging this specific message
+  messageInfo = { hasUrl: false, message: '', textAfterUrl: '', messageImgUrl: '' };
 
   profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
   mouseover: boolean = false;
   hoverUser: string = '';
+  openReaction: boolean = false;
+  
 
   unsubUser;
   userId: string = 'guest';
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
+  //for edit message
+  //downloadURL = '';
+  //downloadURLAlias = ''
+  //messageImgUrl: string = '';
+  // messageText: string = '';
+  // textAfterUrl: string = '';
+  // notAllowedChars: string = '';
+
   count = '';
-  isImage:boolean = false;
+  isImage: boolean = false;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -117,15 +128,12 @@ export class CurrentUserMessageComponent {
     this.postingTime = this.message.timestamp;
     this.fillAnswerVariables();
     this.cloneOriginalMessage();
-    this.isImage = this.isValidURL(this.message.message);
-    //console.log('this.isImage', this.isImage  );
+    this.messageInfo = this.globalFunctions.checkMessage(this.message.message);
+    this.isImage = this.messageInfo.hasUrl;
   }
 
-  isValidURL(url: string): boolean {
-    const urlPattern = /^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
-    return urlPattern.test(url);
-  }
-  
+
+
 
   /**
    * this function clones the original message object for later remove logic
@@ -151,6 +159,7 @@ export class CurrentUserMessageComponent {
 
 
   openAnswers() {
+    this.globalVariables.bufferThreadOpen = !this.globalVariables.bufferThreadOpen; 
     this.globalVariables.showThread = !this.globalVariables.showThread;
     this.globalVariables.answerKey = this.answerKey;
     this.globalVariables.answerCount = this.answercount;
@@ -166,21 +175,22 @@ export class CurrentUserMessageComponent {
   }
 
   fillInitialUserObj() {
-    this.globalVariables.messageThreadStart.message = this.message.message;
-    this.globalVariables.messageThreadStart.userId = this.message.userId;
-    this.globalVariables.messageThreadStart.timestamp = this.message.timestamp;
-    this.globalVariables.messageThreadStart.userName = this.user.name;
-    this.globalVariables.messageThreadStart.img = this.user.img;
+    const { message, userId, timestamp } = this.message;
+    const { name: userName, img: userImgPath } = this.user;
+    this.globalVariables.messageThreadStart = { message, userId, timestamp, userName, userImgPath };
   }
 
   onSelectMessage() {
-   this.activeMessage = !this.activeMessage;
-    this.openReaction = !this.openReaction;
+    if(!this.activeMessage)this.globalVariables.editMessage = false;
+    this.activeMessage = true;
+    this.openReaction = true;
+    
   }
 
   @HostListener('document:click', ['$event'])
   onClick(event: any) {
     if (!this.elementRef.nativeElement.contains(event.target)) {
+      if(!this.globalVariables.editMessage)
       this.onCloseReactions();
     }
   }
@@ -247,6 +257,6 @@ export class CurrentUserMessageComponent {
     this.mouseover = false;
   }
 
-  
+
 
 }

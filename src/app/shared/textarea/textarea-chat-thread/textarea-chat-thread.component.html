@@ -1,0 +1,51 @@
+<section class="inputfield">
+    <textarea  name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht"
+      [(ngModel)]="newMessage">
+    </textarea>
+    <div class="controllElementsContainer">
+      <app-show-contacts class="showContactsTextInput"
+        *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers" appClickedOutside
+        (clickedOutside)="globalFunctions.closeMembers()"></app-show-contacts>
+      <app-emoji-container class="showContactsTextInput" *ngIf="globalVariables.showEmojiContainer" appClickedOutside
+        (clickedOutside)="closeEmoji()"></app-emoji-container>
+
+      <div class="moreControls">
+        <input type="file" id="getFile" #fileInput hidden (change)="onFileSelected($event)">
+        <img src="assets/img/input-imgs/add.svg" alt="" (click)="fileInput.click()">
+        <div class="inputFieldVerticalLine"></div>
+        <img src="assets/img/input-imgs/sentiment_satisfied.svg" alt="" (click)="showEmojiContainer()">
+        <img src="assets/img/input-imgs/alternate_email.svg" alt="" *ngIf="!globalVariables.isUserChat"
+          (click)="showMembers(false)">
+      </div>
+      <img src="assets/img/input-imgs/send.svg" alt="send button" (click)="sendMessage()">
+    </div>
+
+
+  </section>
+   <!-- error Validation popup -->
+   <div *ngIf="showValidationPopup" class="errorPopupOuterContainer">
+    <div class="errorPopup" appClickedOutside (clickedOutside)="closeValidationPopup()">
+      <div class="errorPopupInnerContainer">
+        <div class="errorPopupTxtContainer">
+          <span>Dein Beitrag enthält unerlaubte Zeichen:</span>
+          <span>{{ forbiddenChars }}</span>
+          <span>Bitte entferne sie oder brich die Bearbeitung ab!</span>
+        </div>
+        <div class="okBtn" (click)="closeValidationPopup()">OK</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- error upload popup -->
+  <div *ngIf="showErrorPopup" class="errorPopupOuterContainer">
+    <div class="errorPopup" appClickedOutside (clickedOutside)="closeErrorPopup()">
+      <div class="errorPopupInnerContainer">
+        <div class="errorPopupTxtContainer">
+          <span>Das ausgewählte File ist zu groß. </span>
+          <span>{{fileSize}}</span>
+          <span>Maximalfilegröße<br>500KB </span>
+        </div>
+        <div class="okBtn" (click)="closeErrorPopup()">OK</div>
+      </div>
+    </div>
+  </div>

@@ -2,16 +2,18 @@ import { Injectable, inject } from '@angular/core';
 import { GlobalVariablesService } from './global-variables.service';
 import {
   Firestore,
-  addDoc,
   collection,
-  collectionData,
-  deleteDoc,
-  doc,
   onSnapshot,
-  updateDoc,
 } from '@angular/fire/firestore';
 import { FirebaseChatService } from '../firebase-services/firebase-chat.service';
 import { FirebaseChannelService } from '../firebase-services/firebase-channel.service';
+
+export interface MessageInfo {
+  hasUrl: boolean;
+  message: string;
+  textAfterUrl: string;
+  messageImgUrl: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -26,10 +28,6 @@ export class GlobalFunctionsService {
     this.globalVariables.profileUserId = userId;
     this.globalVariables.ownprofile = ownProfile ? true : false;
     this.globalVariables.showProfile = true;
-    /*    console.log(
-         'this.globalVariables.ownprofile: ',
-         this.globalVariables.ownprofile
-       ); */
   }
 
   //Diese openOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
@@ -40,9 +38,11 @@ export class GlobalFunctionsService {
   }
 
   openChannelOverlay() {
-    this.globalVariables.channel = !this.globalVariables.channel;
-    if (this.globalVariables.channel) document.body.style.overflow = 'hidden';
+    this.globalVariables.showAddChannel = !this.globalVariables.showAddChannel;
+    if (this.globalVariables.showAddChannel) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
+    this.globalVariables.channelData.channelName = '';
+    this.globalVariables.channelData.description = '';
   }
 
   openEditChannelOverlay() {
@@ -71,21 +71,11 @@ export class GlobalFunctionsService {
 
   openAddContactsOverlay() {
     this.globalVariables.showContacts = true;
-    /* console.log(
-      'Overlay should open now. showContacts:',
-      this.globalVariables.showContacts
-    ); */
     if (this.globalVariables.showContacts)
       document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
   }
 
-  showMembers() {
-    this.globalVariables.memberlist = !this.globalVariables.memberlist;
-    if (this.globalVariables.memberlist)
-      document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
-  }
 
   freezeBackground(freeze: boolean){
     if (freeze)
@@ -96,8 +86,9 @@ export class GlobalFunctionsService {
   //Diese CloseOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
 
   closeChannelOverlay() {
-    this.globalVariables.showProfile = false;
-    this.globalVariables.channel = false;
+    this.globalVariables.showAddChannel = false;
+    this.globalVariables.showContacts = false;
+    this.globalVariables.adduser = false;
   }
 
   closeReactionDialog() {
@@ -113,20 +104,28 @@ export class GlobalFunctionsService {
 
   closeAddContactsOverlay() {
     this.globalVariables.showContacts = false;
+    this.globalVariables.showAddChannel = false;
+    this.globalVariables.adduser = false;
     document.body.style.overflow = 'auto';
   }
 
-  //diese close funktion weicht etwas ab von den anderen
-  closeMembers() {
-    this.globalVariables.memberlist = false;
-    if (this.globalVariables.memberlist)
-      document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
-  }
+    /**
+   * this function closes the showContacts popup by using appClickedOutside from ClickedOutsideDirective
+   * but it closes the popup immediately if no additional check will happen >> is the popup open?
+   */
+    closeMembers() {
+      if (this.globalVariables.memberlist && !this.globalVariables.isMembersPopupOpen) {  
+       this.globalVariables.isMembersPopupOpen = true;
+     } else if (this.globalVariables.memberlist && this.globalVariables.isMembersPopupOpen) {
+       this.globalVariables.memberlist = false;
+       this.globalVariables.isMembersPopupOpen = false;
+     } 
+   }
+
 
   toggleOverlays() {
     // console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);
-    this.globalVariables.channel = false;
+    this.globalVariables.showAddChannel = false;
     this.globalVariables.adduser = true;
     // console.log('input feld Channel: ', this.globalVariables.newChannel);
     // console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);
@@ -198,13 +197,21 @@ export class GlobalFunctionsService {
   constructor(private firestore: Firestore) { }
 
   // simple function to get data from firestore returns a collection
-  getData(item: string) {
+ /*  getData(item: string) {
     let dataCollection = collection(this.firestore, item);
     return collectionData(dataCollection, { idField: 'id' });
-  }
+  } */
 
   // function to get data from firebase and save it into an local Array
-  getCollection(item: string, targetArray: any) {
+  // Alex: 5.4.24: Diese Funktion wird in den Komponenten
+  // add-to-Channel
+  // add-contacts
+  // channel-menu
+  // benutzt. 
+  // Ich werde diese Funktion nach analyse in den einzelnen Komponenten verschieben
+  // und aus dem onSnapshot ggf eine getDoc machen.
+  // das Problem. Hier wird ein Snapshot aboniert der auch wieder deaboniert werden sollte
+  async getCollection(item: string, targetArray: any) {
     const collectionReference = collection(this.firestore, item);
     onSnapshot(collectionReference, (querySnapshot) => {
       targetArray.length = 0;
@@ -216,23 +223,6 @@ export class GlobalFunctionsService {
     });
   }
 
-  // hab die Funktion geänder 26.2, Alex
-  // function to add data to a Collection you choose
-  addData(goalCollection: string, input: any) {
-    /* desc: string, , description: string */
-    //let toGo = description;
-    let data = input;
-    let dataCollection = collection(this.firestore, goalCollection);
-    return addDoc(dataCollection, data);
-  }
-
-
-  //warum existiert hier eine Firebasefunktion?
-  //Alle Firebasefunktionen sollten in einem Firebaseservice sein
-  async updateData(collectionPath: string, docId: string, data: Partial<any>): Promise<void> {
-    const docRef = doc(this.firestore, collectionPath, docId);
-    await updateDoc(docRef, data);
-  }
 
   showDashboardElement(screenWidth: number) {
     if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;
@@ -244,4 +234,47 @@ export class GlobalFunctionsService {
     this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
   }
 
+  /**
+   * this function returns url if the message >>contains<< one
+   * @param message - string
+   * @returns - string if url and null if not
+   */
+  checkForURL(message: string): string | null {
+    const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    const urlMatch = message.match(urlPattern);
+    return urlMatch ? urlMatch[0] : null;
+  }
+
+  
+  /**
+   * this function should return a a string of not allowed char, when message is not valid
+   * @param message string
+   * @returns string
+   */
+  isMessageValid(message: string) {
+  const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}]/u;
+  const messageWithoutEmojis = message.replace(emojiRegex, 'Emoji');
+  const allowedCharPattern = /[^a-zA-Z0-9\s.,!?/:;%&=@#'§$€°ÄäÖöÜüß_-]/g;
+  const forbiddenCharacters = messageWithoutEmojis.match(allowedCharPattern) || [];
+  const uniqueChar = Array.from(new Set(forbiddenCharacters)).join(', ');
+  return uniqueChar; 
+  }
+
+  /**
+   * This function checks the message if there is a URL inside and split message string if so
+   * @param message - string- contains the message text
+   * @returns - MessageInfo object with splited message information
+   */
+  checkMessage(message: string): MessageInfo {
+    const result: MessageInfo = { hasUrl: false, message: message, textAfterUrl: '', messageImgUrl: '' };
+    const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    const urlMatch = message.match(urlPattern);
+    if (urlMatch) {
+      result.hasUrl = true;
+      result.messageImgUrl = urlMatch[0];
+      result.message = message.split(result.messageImgUrl)[0].trim();
+      result.textAfterUrl = message.split(result.messageImgUrl)[1].trim();
+    } 
+    return result;
+  }
 }

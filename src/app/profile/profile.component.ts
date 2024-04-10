@@ -49,7 +49,7 @@ export class ProfileComponent {
    * this function sets the isPopupOpen flag and take over profile data for the choosen user
    */
   async ngOnInit() {
-    this.isPopupOpen = true;   
+    this.isPopupOpen = true;  
     this.globalVariables.userToChatWith.id = this.globalVariables.profileUserId; 
     const userData = await this.firebaseService.getUserData(this.globalVariables.profileUserId);
     this.profile = new User(userData); 
@@ -66,6 +66,8 @@ export class ProfileComponent {
    * this function just shows the edit elements
    */
   editProfile() {
+    console.log('this.profile: ',this.profile);
+    console.log('Der aktuelle Nutzer: ',this.globalVariables.currentUser);
     this.nameBuffer = this.profile.name;
     this.emailBuffer = this.profile.email;
     this.globalVariables.showEditProfile = true;

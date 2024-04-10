@@ -15,6 +15,13 @@
       background-color: white !important;
     }
   }
+  .reaction-field {
+    @include dFlex($jc: flex-start, $ai: flex-end, $fd: column);
+  
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 
   .user {
     width: 50px;
@@ -54,6 +61,8 @@
 
       img {
         max-width: 200px;
+        width: 100%;
+        height: auto;
       }
 
       .speech-bubble-text {
@@ -105,13 +114,7 @@
   }
 }
 
-.reaction-field {
-  @include dFlex($jc: flex-start, $ai: flex-end, $fd: column);
 
-  position: absolute;
-  top: 0;
-  right: 0;
-}
 
 .reaction-emojis {
   display: flex;

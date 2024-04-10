@@ -5,52 +5,88 @@
         <span class="top">#{{ globalVariables.openChannel.titel }}</span>
       </div>
       <div>
-        <img (click)="globalFunctions.closeEditOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="Schließen">
+        <img
+          (click)="globalFunctions.closeEditOverlay()"
+          src="assets/img/icons/close.svg"
+          class="close-btn"
+          alt="Schließen"
+        />
       </div>
     </div>
 
     <!-- Description Input -->
-    <div class="editName-area" [ngClass]="{'no-border': editChannelDM}">
-        <div class="first-row">
-          <label for="channelName" class="description">Channel-Name:</label>
-          <div class="edit-btn" *ngIf="creator">
-            <span *ngIf="!editChannelDM" (click)="editChannelName()">Bearbeiten</span>
-            <span *ngIf="editChannelDM" (click)="sumbitEdit()">Speichern</span>
-          </div>
+    <div class="editName-area" [ngClass]="{ 'no-border': editChannelDM }">
+      <div class="first-row">
+        <label for="channelName" class="description">Channel-Name:</label>
+        <div class="edit-btn" *ngIf="creator">
+          <span *ngIf="!editChannelDM" (click)="editChannelName()"
+            >Bearbeiten</span
+          >
+          <span *ngIf="editChannelDM" (click)="sumbitEdit()">Speichern</span>
         </div>
-        <div *ngIf="!editChannelDM" class="edited-field">#{{ globalVariables.openChannel.titel }}</div>
-        <app-inputfield *ngIf="editChannelDM" [(ngModel)]="editedName" [placeholder]="globalVariables.openChannel.titel" [classes]="['standard']" type="text"></app-inputfield>
       </div>
+      <div *ngIf="!editChannelDM" class="edited-field">
+        #{{ globalVariables.openChannel.titel }}
+      </div>
+      <app-inputfield
+        *ngIf="editChannelDM"
+        [(ngModel)]="editedName"
+        [placeholder]="globalVariables.openChannel.titel"
+        [classes]="['standard']"
+        type="text"
+      ></app-inputfield>
+    </div>
 
     <!-- Bereich für die Beschreibung -->
-      <div class="editDescription-area" [ngClass]="{'no-border': editChannelDES}">
-        <div class="second-row">
-          <label class="description" for="description">Beschreibung:</label>
-          <div class="edit-btn" *ngIf="creator">
-            <span *ngIf="!editChannelDES" (click)="editChannelDescripition()">Bearbeiten</span>
-            <span *ngIf="editChannelDES" (click)="submitEdit()">Speichern</span>
-          </div>
+    <div
+      class="editDescription-area"
+      [ngClass]="{ 'no-border': editChannelDES }"
+    >
+      <div class="second-row">
+        <label class="description" for="description">Beschreibung:</label>
+        <div class="edit-btn" *ngIf="creator">
+          <span *ngIf="!editChannelDES" (click)="editChannelDescripition()"
+            >Bearbeiten</span
+          >
+          <span *ngIf="editChannelDES" (click)="submitEdit()">Speichern</span>
         </div>
-        <div class="desc-area">
-          <span *ngIf="!editChannelDES" class="edited-field">{{ globalVariables.channelData.description }}</span>
-        </div>
-          
-
-            <app-inputfield *ngIf="editChannelDES" [(ngModel)]="editedDescription" [placeholder]="globalVariables.channelData.description"[classes]="['standard']" type="text"></app-inputfield>
-
-            <div class="line">
-            </div>
-                <div class="creator">
-                  <label>Erstellt von:</label>
-                  <span class="publisher">{{ creatorName }}</span>
-                </div>
       </div>
-          <div class="button-area">
-            <app-button 
-              [classes]="['primary']" 
-              caption="Channel verlassen" (click)="globalFunctions.closeEditOverlay()"
-              imgPath=""
-            ></app-button>
-          </div>
+      <div class="desc-area">
+        <span *ngIf="!editChannelDES" class="edited-field">{{
+          globalVariables.channelData.description
+        }}</span>
+      </div>
+
+      <app-inputfield
+        *ngIf="editChannelDES"
+        [(ngModel)]="editedDescription"
+        [placeholder]="globalVariables.channelData.description"
+        [classes]="['standard']"
+        type="text"
+      ></app-inputfield>
+
+      <div class="line"></div>
+      <div class="creator">
+        <label>Erstellt von:</label>
+        <span class="publisher">{{ creatorName }}</span>
+      </div>
+    </div>
+
+    <div class="button-area">
+      <app-button
+        [classes]="['primary']"
+        caption="Channel Löschen"
+        (click)="firebaseChannelService.deleteChanel(globalVariables.channelData.chatId)"
+        imgPath=""
+        *ngIf="globalVariables.activeID == globalVariables.openChannel.creator"
+      ></app-button>
+    
+      <app-button
+        [classes]="['primary']"
+        caption="Channel verlassen"
+        (click)="leaveChannel()"
+        imgPath=""
+      ></app-button>
+    </div>
   </div>
 </div>

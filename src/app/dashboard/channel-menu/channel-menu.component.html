@@ -12,7 +12,7 @@
       />
     </div>
   </section>
-  <app-inputfield [optionClasses]="['search-icon']" [classes]="'searchBar'" *ngIf="!globalVariables.desktop700" class="searchBarContainer" type="search" imgName="search" placeholder="Code learning durchsuchen"></app-inputfield>
+  <app-searchbar></app-searchbar>
       
   <section class="contentSection">
     <div class="all-channel">
@@ -27,13 +27,13 @@
           </div>
         </div>
         <div class="add-channel" (click)="globalFunctions.openChannelOverlay()">
-          <img src="../../../assets/img/icons/add.svg" alt="" />
+          <img src="../../../assets/img/icons/add.svg" alt=""/>
         </div>
       </div>
       <div class="channel-overview d-none" id="channels">
         <div class="channel-overview">
-          <div class="channel-wrapper" *ngFor="let channel of allChannels" (click)="openChannel(channel)"> <!-- globalFunctions. -->
-            <p><span>#</span>{{ channel.channelName }}</p> <!--  (click)="openChannelChat()" -->
+          <div class="channel-wrapper" *ngFor="let channel of channelToDisplay" (click)="openChannel(channel)"> 
+            <p><span>#</span>{{ channel.channelName }}</p> 
           </div>
           </div>
         </div>

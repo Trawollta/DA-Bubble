@@ -1,6 +1,6 @@
 <app-header *ngIf="!globalVariables.login"></app-header>
 <app-profile *ngIf="globalVariables.showProfile"></app-profile>
-<app-add-new-channel *ngIf="globalVariables.channel"></app-add-new-channel>
+<app-add-new-channel *ngIf="globalVariables.showAddChannel"></app-add-new-channel>
 <app-add-contacts *ngIf="globalVariables.adduser"></app-add-contacts>
 <router-outlet></router-outlet>
 <app-footer *ngIf="!globalVariables.imprintActive"></app-footer>

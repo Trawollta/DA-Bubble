@@ -1,16 +1,26 @@
 <section>
-    <div class="content">
-        <div class="logoContainer"  *ngIf="globalVariables.desktop800 || globalVariables.showChannelMenu ">
-            <img  src="./assets/img/icons/logo.svg" alt="logo">
-            <h3>DABubble</h3>
-        </div>
-        <div class="logoContainer logoHover" *ngIf="!globalVariables.desktop800 && !globalVariables.showChannelMenu" (click)="openChannels()" >
-            <img  src="assets/img/icons/Workspace logo.svg" alt="logo">
-            <h3>Code Learning</h3>
-        </div>
-        <app-inputfield [optionClasses]="['search-icon']" [classes]="'searchBar'" *ngIf="globalVariables.desktop900" class="searchBarContainer" type="search" imgName="search" placeholder="Code learning durchsuchen"></app-inputfield>
-       
-        <app-header-menu></app-header-menu>
-
+  <div class="content">
+    <div
+      class="logoContainer"
+      *ngIf="globalVariables.desktop800 || globalVariables.showChannelMenu"
+    >
+      <img src="./assets/img/icons/logo.svg" alt="logo" />
+      <h3>DABubble</h3>
     </div>
+    <div
+      class="logoContainer logoHover"
+      *ngIf="!globalVariables.desktop800 && !globalVariables.showChannelMenu"
+      (click)="openChannels()"
+    >
+      <img src="assets/img/icons/Workspace logo.svg" alt="logo" />
+      <h3>Code Learning</h3>
+    </div>
+    
+    <app-searchbar></app-searchbar>
+    
+    
+
+
+    <app-header-menu></app-header-menu>
+  </div>
 </section>

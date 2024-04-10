@@ -7,36 +7,28 @@
       </div>
       <div class="speech-bubble-current-user" (click)="onSelectMessage()">
         <!-- (click)="openEmojis()" -->
-        <span
-          class="speech-bubble-current-user-text"
-          *ngIf="!isImage && (!globalVariables.editMessage || !activeMessage)"
-          >{{ message.message }}</span
-        >
+        <span class="speech-bubble-current-user-text"
+          *ngIf="messageInfo.message !== '' || !globalVariables.editMessage || !activeMessage">{{ messageInfo.message
+          }}</span>
         <div class="loadedImg" *ngIf="isImage">
-          <img src="{{ message.message }}" alt="">
+          <img src="{{ messageInfo.messageImgUrl }}" alt="">
         </div>
+        <span class="speech-bubble-current-user-text" *ngIf="messageInfo.textAfterUrl !== ''">{{
+          messageInfo.textAfterUrl }}</span>
         <div class="edit" (click)="globalFunctions.stopPropagation($event)">
-          <app-inputfield
-            type="text"
-            [(ngModel)]="message.message"
-            *ngIf="globalVariables.editMessage && activeMessage"
-          ></app-inputfield>
+          <textarea name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="message.message"
+            *ngIf="globalVariables.editMessage && activeMessage">
+        </textarea>
+
         </div>
       </div>
-      <app-reactions
-        class="reaction-field"
-        *ngIf="openReaction"
-        [message]="message"
-        [originalMessage]="originalMessage"
-      ></app-reactions>
+      <app-reactions class="reaction-field" *ngIf="openReaction" [message]="message"
+        [originalMessage]="originalMessage"></app-reactions>
       <div class="tooltip">
         <div class="reaction-emojis">
           <ng-container *ngFor="let emoji of message.emoji; let index = index">
-            <span
-              class="reaction-emoji-field"
-              *ngIf="emoji.userId && emoji.userId.length > 0"
-              (click)="addUserIdToEmoji(emoji, index)"
-            >
+            <span class="reaction-emoji-field" *ngIf="emoji.userId && emoji.userId.length > 0"
+              (click)="addUserIdToEmoji(emoji, index)">
               {{ emoji.icon }} {{ emoji.userId.length }}
             </span>
           </ng-container>
@@ -46,24 +38,19 @@
         </div>
       </div>
 
-      <div
-        *ngIf="!isThread && !globalVariables.isUserChat"
-        class="replie-wrapper"
-      >
+      <div *ngIf="!isThread && !globalVariables.isUserChat" class="replie-wrapper">
         <div class="replie-text" (click)="openAnswers()">
-          <span *ngIf="answercount !== 0">{{ answercount }}</span
-          ><span> Antwort</span><span *ngIf="answercount !== 1">en</span>
+          <span *ngIf="answercount !== 0">{{ answercount }}</span><span> Antwort</span><span
+            *ngIf="answercount !== 1">en</span>
         </div>
-        <span *ngIf="answercount !== 0" class="timestamp-text"
-          >Letzte Antwort: {{ lastAnswerTime | date : "dd.MM.YY H:mm" }}</span
-        >
+        <span *ngIf="answercount !== 0" class="timestamp-text">
+          Letzte Antwort:
+          {{ lastAnswerTime | date : "dd.MM.YY H:mm" }}
+        </span>
       </div>
     </div>
   </div>
-  <div
-    class="user"
-    (click)="globalFunctions.openProfile(true, globalVariables.activeID)"
-  >
+  <div class="user" (click)="globalFunctions.openProfile(true, globalVariables.activeID)">
     <img [src]="user.img" alt="" />
   </div>
 </section>

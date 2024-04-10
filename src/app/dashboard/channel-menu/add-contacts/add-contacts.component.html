@@ -1,50 +1,75 @@
 <div class="main-content">
-
-    <div class="overlay" *ngIf="globalVariables.adduser">
-        <div class="headline">
-    <div>
+  <div class="overlay" *ngIf="globalVariables.adduser">
+    <div class="headline">
+      <div>
         <span class="top"> Leute hinzufügen</span>
-        </div>
-        <div>
-        <img (click)="globalFunctions.closeReactionDialog()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
-        </div>
-    </div>
-    <div class="add">
-        <div class="checkbox-container">
-            <input type="radio" id="addAllMembers" name="addMembers" value="all" (change)="!showCertainPeople = showCertainPeople">
-            <label for="addAllMembers">Alle Mitglieder hinzufügen</label>
-        </div>
-        <div class="checkbox-container">
-            <input type="radio" id="addCertainPeople" name="addMembers" value="certain" (change)="showCertainPeople = !showCertainPeople">
-            <label for="addCertainPeople">Bestimmte Leute hinzufügen</label>
-          </div>
-
-          <div *ngIf="showCertainPeople" class="input-icon">
-            <app-inputfield
-              [classes]="['standard']"
-              type="search" 
-              placeholder="Mitglieder suchen"
-            ></app-inputfield> 
-
-            <div class="button-area">
-              <app-button 
-              [classes]="['primary']"
-              caption="Erstellen"
-              imgPath=""
-              (click)="addNewChannel()"
-              ></app-button>
-          </div>
-        
-            <ul class="user-list">
-              <li *ngFor="let user of allUsers; let i =index"  >
-                <input type="checkbox" [id]="user.id" [checked]="isChecked[i]" (change)="onChange(i)">
-                <label [for]="user.id" class="user-label">
-                  <img [src]="user.img" alt="userImage" class="user-img">{{ user.name }}
-                </label>
-              </li>
-            </ul>
-          </div>
-
+      </div>
+      <div>
+        <img
+          (click)="globalFunctions.closeReactionDialog()"
+          src="assets/img/icons/close.svg"
+          class="close-btn"
+          alt="close profile"
+        />
       </div>
     </div>
+    <div class="add">
+      <div class="checkbox-container">
+        <input
+          type="radio"
+          id="addAllMembers"
+          name="addMembers"
+          value="all"
+          checked
+          (change)="toggleSelectAllUser()"
+        />
+        <label for="addAllMembers">Alle Mitglieder hinzufügen</label>
+
+       
+      </div>
+
+      <div class="checkbox-container">
+        <input
+          type="radio"
+          id="addCertainPeople"
+          name="addMembers"
+          value="certain"
+          (change)="toggleSelectAllUser()"
+        />
+        <label for="addCertainPeople">Bestimmte Leute hinzufügen</label>
+      </div>
+
+      <div *ngIf="!showAllUsers" class="input-icon">
+        <app-inputfield
+          [classes]="['standard']"
+          type="search"
+          placeholder="Mitglieder suchen"
+        ></app-inputfield>
+
+      <ul class="user-list" *ngIf="!showAllUsers">
+        <li *ngFor="let user of allUsers; let i = index">
+          <input
+            type="checkbox"
+            [id]="user.id"
+            [checked]="isChecked[i]"
+            (change)="onChange(i)"
+          />
+          <label [for]="user.id" class="user-label">
+            <img [src]="user.img" alt="userImage" class="user-img" />{{
+              user.name
+            }}
+          </label>
+        </li>
+      </ul>
     </div>
+    <div class="button-area">
+      <app-button
+        [classes]="['primary']"
+        caption="Erstellen"
+        imgPath=""
+        (click)="addNewChannel()"
+        value="0"
+      ></app-button>
+    </div>
+  </div>
+</div>

@@ -17,12 +17,17 @@
               <span class="userName">{{ globalVariables.messageThreadStart.userName }}</span>
             </div>
             <div class="speechBubble" [ngClass]="checkIfCurrentuser() ? '':'otherSpeachbubble'">
-              <span class="speech-bubble-current-user-text">{{ globalVariables.messageThreadStart.message }}</span>
+              <span class="speech-bubble-text" *ngIf="messageInfo.message !== ''">{{ messageInfo.message }}</span>
+              <div class="loadedImg" *ngIf="isImage">
+                <img src="{{ messageInfo.messageImgUrl }}" alt="">
+              </div>
+              <span class="speech-bubble-text" *ngIf="messageInfo.textAfterUrl !== ''">{{ messageInfo.textAfterUrl
+                }}</span>
             </div>
           </div>
         </div>
         <div class="user">
-          <img [src]="globalVariables.messageThreadStart.img" alt="" />
+          <img [src]="globalVariables.messageThreadStart.userImgPath" alt="" />
         </div>
 
       </div>
@@ -34,22 +39,11 @@
         <div class="partingLine"></div>
       </div>
     </div>
+    <!-- messages -->
     <app-all-messages class="allMessages" [isChat]="false" [isThread]="true"></app-all-messages>
 
   </section>
-  <!-- input marnie-->
-  <!-- container for all inputfield and controll elements -->
-  <section class="inputfield">
-    <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht"
-      [(ngModel)]="globalVariables.messageData.message"></app-inputfield>
-    <div class="controllElementsContainer">
-      <div class="moreControls">
-        <img src="assets/img/input-imgs/add.svg" alt="">
-        <div class="inputFieldVerticalLine"></div>
-        <img src="assets/img/input-imgs/sentiment_satisfied.svg" alt="">
-        <img src="assets/img/input-imgs/alternate_email.svg" alt="">
-      </div>
-      <img src="assets/img/input-imgs/send.svg" alt="send button" (click)="sendMessage()">
-    </div>
-  </section>
+
+  <app-textarea-chat-thread [chatArea]="'thread'"></app-textarea-chat-thread>
+
 </main>

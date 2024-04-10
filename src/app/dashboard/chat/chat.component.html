@@ -4,25 +4,24 @@
   <section class="msg-header" *ngIf="!globalVariables.isUserChat">
     <app-show-contacts class="showContactsHeader"
       *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers" appClickedOutside
-      (clickedOutside)="closeMembers()"></app-show-contacts>
+      (clickedOutside)="globalFunctions.closeMembers()"></app-show-contacts>
     <div class="topic-headline">
       <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
-        <p></p>
-        <p class="header-hover"># {{ globalVariables.openChannel.titel }}</p>
-        <img src="./assets/img/icons/keyboard_arrow_down.svg" alt="" />
+        <div class="header-hover"># {{ globalVariables.openChannel.titel }}</div>
+        <img src="assets/img/icons/keyboard_arrow_down.svg" alt="" />
       </div>
     </div>
     <div class="active-contacts">
-      <div class="contact-row" *ngIf="globalVariables.desktop700">
-        <div (click)="showMembers(true)">
+      <div class="contact-row" *ngIf="globalVariables.desktop700" (click)="showMembers(true)">
 
-          <!-- Beide Varianten funktionieren! '../  oder ./' -->
-          <img src="./assets/img/avatars/Elias_Neumann.svg" alt="" />
-          <img src="../../../assets/img/avatars/Elias_Neumann.svg" alt="" />
-        </div>
+        <!-- hier kommt eine ngFor rein, die die Plaketten der Member rein rendert -->
+        <img src="assets/img/avatars/Elias_Neumann.svg" alt="" />
+        <img class="secondHeadIcon" src="assets/img/avatars/Elias_Neumann.svg" alt="" />
+        <span class="memberCount">3</span>
+
       </div>
-      <div class="add-contact" (click)="globalFunctions.openAddContactsOverlay()">
-        <img src="../../../assets/img/icons/person_add.svg" alt="" />
+      <div class="add-contact" (click)="openContactsPopup()">
+        <img src="assets/img/icons/person_add_w.svg" alt="" />
       </div>
     </div>
   </section>
@@ -43,47 +42,11 @@
   <div class="contentContainer">
     <div class="messages">
       <app-all-messages [isChat]="true"></app-all-messages>
-
     </div>
   </div>
 
   <!-- container for all inputfield and controll elements -->
-  <section class="inputfield">
-    <textarea class="'standard', 'inputFieldChat'" name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht"
-      [(ngModel)]="globalVariables.newMessage">
-    </textarea>
-    <!-- <app-inputfield [classes]="['standard', 'inputFieldChat']" type="text" placeholder="Deine Nachricht" [(ngModel)]="newMessage"></app-inputfield> -->
-    <div class="controllElementsContainer">
-      <app-show-contacts class="showContactsTextInput"
-        *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers" appClickedOutside
-        (clickedOutside)="closeMembers()"></app-show-contacts>
-      <app-emoji-container class="showContactsTextInput" *ngIf="globalVariables.showEmojiContainer" appClickedOutside
-        (clickedOutside)="closeEmoji()"></app-emoji-container>
-      <div class="moreControls">
-        <input type="file" id="getFile" #fileInput hidden (change)="onFileSelected($event)">
-        <img src="assets/img/input-imgs/add.svg" alt="" (click)="fileInput.click()">
-        <div class="inputFieldVerticalLine"></div>
-        <img src="assets/img/input-imgs/sentiment_satisfied.svg" alt="" (click)="showEmojiContainer()">
-        <img src="assets/img/input-imgs/alternate_email.svg" alt="" *ngIf="!globalVariables.isUserChat"
-          (click)="showMembers(false)">
-      </div>
-      <img src="assets/img/input-imgs/send.svg" alt="send button" (click)="sendMessage()">
-    </div>
-  </section>
-
-  <!-- error upload popup -->
-  <div *ngIf="showErrorPopup" class="errorPopupOuterContainer">
-    <div class="errorPopup" appClickedOutside (clickedOutside)="closeErrorPopup()">
-      <div class="errorPopupInnerContainer">
-        <div class="errorPopupTxtContainer">
-          <span>Das ausgewählte File ist zu groß. </span>
-          <span>{{fileSize}}</span>
-          <span>Maximalfilegröße<br>500KB </span>
-        </div>
-        <div class="okBtn" (click)="closeErrorPopup()">OK</div>
-      </div>
-    </div>
-  </div>
+  <app-textarea-chat-thread  [chatArea]="'chat'"></app-textarea-chat-thread>
 
 
   <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel>

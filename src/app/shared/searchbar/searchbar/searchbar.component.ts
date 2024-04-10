@@ -62,32 +62,33 @@ export class SearchbarComponent {
 
   async ngOnInit() {
     setTimeout(() => {
-      this.getRelatedChats(); 
+      this.getRelatedChats();
     }, 600);
 
     setTimeout(() => {
       this.getChatMessages();
     }, 2000);
-    
+
+    console.log(this.allMessages);
   }
+  
   /**
    * all function which are connected with searching in the database for the msg and or channel and or Member
    * @param word
    */
   async searchForWord(word: string) {
-    await this.getChats();
-    await this.connectChannelWithChannelMsg();
-    this.jsonConvert();
-    this.getCleanNames();
-    this.getCleanChannels();
+    await Promise.all([
+      this.getChats(),
+      this.connectChannelWithChannelMsg(),
+      this.getCleanNames(),
+      this.getCleanChannels(),
+    ]);
+
     await this.compareInputWithChannelMessages(word);
-    this.clearPreviousResult();
   }
 
   getRelatedChats() {
-    console.log('MNoin', this.globalVariables.currentUser.relatedChats);
     this.relatedChats = this.globalVariables.currentUser.relatedChats;
-    console.log(this.relatedChats)
   }
 
   /**
@@ -178,6 +179,7 @@ export class SearchbarComponent {
    */
   async compareMsgFromInput(input: string) {
     let highestSimilarity = -1;
+    console.log('input', this.allMessages);
     for (let messageGroup of this.allMessages) {
       for (let message of messageGroup.messages) {
         let similarity = this.similarityScore(input, message.message);
@@ -189,6 +191,8 @@ export class SearchbarComponent {
               userId: message.userId,
               docId: messageGroup.relatedChannelId,
               timestamp: message.timestamp,
+              name: message.name,
+              channelName: message.channelName,
             },
           ];
         } else if (similarity === highestSimilarity) {
@@ -201,6 +205,8 @@ export class SearchbarComponent {
               userId: message.userId,
               docId: messageGroup.relatedChannelId,
               timestamp: message.timestamp,
+              name: message.name,
+              channelName: message.channelName,
             });
           }
         }
@@ -231,50 +237,64 @@ export class SearchbarComponent {
    * convert live bestmatches.userId into best matches.name, firebase connection to revert the original name depended on id
    */
   async getCleanNames() {
-    console.log(this.bestMatchesArray);
-    if (this.bestMatchesArray && this.bestMatchesArray.length > 0) {
-      for (let i = 0; i < this.bestMatchesArray.length; i++) {
-        if (this.bestMatchesArray[i] && this.bestMatchesArray[i].userId) {
-          await this.firebaseUserService
-            .getUserData(this.bestMatchesArray[i].userId)
-            .then((data: any) => {
-              if (data && data.name) {
-                this.bestMatchesArray[i].name = data.name;
-              }
-            })
-            .catch((error: any) => {
-              console.error('Error fetching user data:', error);
-            });
-        } else {
-          console.error('Invalid entry in bestMatchesArray at index', i);
+    if (Array.isArray(this.allMessages) && this.allMessages.length > 0) {
+      for (let i = 0; i < this.allMessages.length; i++) {
+        if (
+          this.allMessages[i] &&
+          Array.isArray(this.allMessages[i].messages) &&
+          this.allMessages[i].messages.length > 0
+        ) {
+          for (let j = 0; j < this.allMessages[i].messages.length; j++) {
+            if (
+              this.allMessages[i].messages[j] &&
+              this.allMessages[i].messages[j].userId
+            ) {
+              await this.firebaseUserService
+                .getUserData(this.allMessages[i].messages[j].userId)
+                .then((data: any) => {
+                  if (data && data.name) {
+                    this.allMessages[i].messages[j].name = data.name;
+                  }
+                })
+                .catch((error: any) => {
+                  console.log(error);
+                });
+            }
+          }
         }
       }
-    } else {
-      console.warn('bestMatchesArray is empty or not defined.');
     }
   }
 
   async getCleanChannels() {
-    console.log(this.bestMatchesArray);
-    if (this.bestMatchesArray && this.bestMatchesArray.length > 0) {
-      for (let i = 0; i < this.bestMatchesArray.length; i++) {
-        if (this.bestMatchesArray[i] && this.bestMatchesArray[i].docId) {
-          await this.firebaseChannelService
-            .getChannelData(this.bestMatchesArray[i].docId)
-            .then((data: any) => {
-              if (data && data.channelName) {
-                this.bestMatchesArray[i].channelName = data.channelName;
-              }
-            })
-            .catch((error: any) => {
-              console.error('Error fetching user data:', error);
-            });
-        } else {
-          console.error('Invalid entry in bestMatchesArray at index', i);
+    if (Array.isArray(this.allMessages) && this.allMessages.length > 0) {
+      for (let i = 0; i < this.allMessages.length; i++) {
+        if (
+          this.allMessages[i] &&
+          Array.isArray(this.allMessages[i].messages) &&
+          this.allMessages[i].messages.length > 0
+        ) {
+          for (let j = 0; j < this.allMessages[i].messages.length; j++) {
+            if (
+              this.allMessages[i].messages[j] &&
+              this.allMessages[i].relatedChannelId // Assuming relatedChannelId exists
+            ) {
+              await this.firebaseChannelService
+                .getChannelData(this.allMessages[i].relatedChannelId)
+                .then((data: any) => {
+                  if (data && data.channelName) {
+                    this.allMessages[i].messages[j].channelName =
+                      data.channelName;
+                  }
+                })
+                .catch((error: any) => {
+                  console.error(error);
+                });
+            }
+          }
         }
       }
-    } else {
-      console.warn('bestMatchesArray is empty or not defined.');
+      console.log(this.allMessages);
     }
   }
 }

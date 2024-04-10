@@ -8,10 +8,10 @@
       imgName="search"
       placeholder="Code learning durchsuchen"
     ></app-inputfield>
-    <div *ngIf="bestMatchesArray.length > 0">
-        <ul  *ngFor="let msg of bestMatchesArray; let i = index">
-            Nachricht: {{ bestMatchesArray[i].message }}
-            Benutzer-ID: {{ bestMatchesArray[i].name }}
-            Dokument-ID: {{ bestMatchesArray[i].channelName }}
+    <div *ngIf="bestMatches.length > 0">
+        <ul  *ngFor="let msg of bestMatches; let i = index">
+            Nachricht: {{ bestMatches[i].message }}
+            Benutzer-ID: {{ bestMatches[i].name }}
+            Dokument-ID: {{ bestMatches[i].channelName }}
         </ul>
     </div>

@@ -86,7 +86,7 @@ export class FirebaseUserService {
     await updateDoc(userDocRef, { isActive });
   }
 
-  updateCurrentUser(uid: string) {
+  updateCurrentUser(uid: string) { 
     return onSnapshot(this.getSingleUserRef(uid), (user) => {
       if (user.data()) {
         let logedInUser = new User(user.data());

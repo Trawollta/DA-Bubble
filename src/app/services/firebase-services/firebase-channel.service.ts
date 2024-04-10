@@ -186,4 +186,17 @@ export class FirebaseChannelService {
       }
     });
   }
+
+  async getChannelData(id: string) {
+    const docSnap = await getDoc(this.getSingleChannelRef(id));
+    return docSnap.data();
+  }
+
+  getSingleChannelRef(docId: string) {
+    return doc(this.getChannelRef(), docId);
+  }
+
+  getChannelRef() {
+    return collection(this.firestore, 'channels');
+  }
 }

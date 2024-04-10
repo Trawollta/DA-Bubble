@@ -1,17 +1,36 @@
 <app-inputfield
-      (inputChange)="handleInputChange($event)"
-      [optionClasses]="['search-icon']"
-      [classes]="'searchBar'"
-      *ngIf="globalVariables.desktop900"
-      class="searchBarContainer"
-      type="search"
-      imgName="search"
-      placeholder="Code learning durchsuchen"
-    ></app-inputfield>
-    <div *ngIf="bestMatchesArray.length > 0">
-        <ul  *ngFor="let msg of bestMatchesArray; let i = index">
-            Nachricht: {{ bestMatchesArray[i].message }}
-            Benutzer-ID: {{ bestMatchesArray[i].userId }}
-            Dokument-ID: {{ bestMatchesArray[i].docId }}
-        </ul>
-    </div>
+  (inputChange)="handleInputChange($event)"
+  [optionClasses]="['search-icon']"
+  [classes]="'searchBar'"
+  *ngIf="globalVariables.desktop900"
+  class="searchBarContainer"
+  type="search"
+  imgName="search"
+  placeholder="Code learning durchsuchen"
+></app-inputfield>
+
+<div class="search-container" *ngIf="bestMatches.length > 0">
+  <ul class="filtered" *ngIf="bestMatches.length > 0">
+    <span class="categoryName">Users:</span>
+    <li *ngFor="let msg of bestMatches; let i = index">User: {{ bestMatches[i].name }}</li>
+  </ul>
+  <ul class="filtered" *ngIf="bestMatches.length > 0">
+    <span class="categoryName">Channels:</span>
+    <li *ngFor="let msg of bestMatches; let i = index">
+      <div class="channelList">
+        <div class="img-channel-hash"></div>
+        <span class="channel-name"> # {{ bestMatches[i].channelName }}</span>
+      </div>
+    </li>
+  </ul>
+  <ul class="filtered" *ngIf="bestMatches.length > 0">
+    <span class="categoryName">Messages:</span>
+    <li *ngFor="let msg of bestMatches; let i = index">
+      <div class="channelList">
+        <div class="messageContainer">
+          <span> {{ bestMatches[i].message }}</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

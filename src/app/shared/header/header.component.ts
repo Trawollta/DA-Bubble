@@ -34,6 +34,15 @@ export class HeaderComponent {
   ];
 
   constructor() {}
+
+  ngOnInit(){
+    console.log(this.globalVariables);
+    console.log('Der aktuelle Nutzer: ',this.globalVariables.currentUser);
+    
+  }
+
+
+
   openChannels() {
     this.globalVariables.showChannelMenu = true;
     this.globalVariables.isChatVisable = false;

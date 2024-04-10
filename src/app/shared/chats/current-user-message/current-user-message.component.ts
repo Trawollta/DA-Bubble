@@ -45,6 +45,8 @@ export class CurrentUserMessageComponent {
   firebaseChatService = inject(FirebaseChatService);
   firebaseUpdate = inject(FirebaseUserupdateService);
   openReaction: boolean = false;
+  downloadURL = '';
+  downloadURLAlias = ''
 
   @Input() message: any;
   @Input() index: any;
@@ -125,32 +127,12 @@ export class CurrentUserMessageComponent {
     this.cloneOriginalMessage();
     this.messageInfo = this.globalFunctions.checkMessage(this.message.message);
     this.isImage = this.messageInfo.hasUrl;
+    //hier muss der Alias für das Bild reingeladen werden
   }
 
-  /**
-   * 
-   * @param message 
-   * @returns 
-   */
-  /*  checkMessage(message: string): boolean {
-    // const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-    // const urlMatch = message.match(urlPattern);
-   const urlMatch = this.globalFunctions.checkForURL(message);
-     if (urlMatch) {
-       this.messageImgUrl = urlMatch;
-       const textBeforeUrl = message.split(urlMatch)[0].trim();
-       this.textAfterUrl = message.split(urlMatch)[1].trim();
-       //this.notAllowedChars = this.globalFunctions.isMessageValid(this.textAfterUrl);
-      // this.notAllowedChars += this.globalFunctions.isMessageValid(textBeforeUrl);
-        this.messageText = textBeforeUrl;
-     } else { // if no URL in message:
-       this.messageText = message;
-       //der check, ob es sich um erlaupten Input handelst muss in die Eingabe
-      // this.notAllowedChars = this.globalFunctions.isMessageValid(message);
-      }
-     return !!urlMatch;
-   } */
-
+ switchUrlWithAlias(){
+  
+ }
 
 
 

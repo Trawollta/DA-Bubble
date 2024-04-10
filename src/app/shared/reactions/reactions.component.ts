@@ -25,6 +25,7 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
   templateUrl: './reactions.component.html',
   styleUrl: './reactions.component.scss',
 })
+
 export class ReactionsComponent {
   firestore: Firestore = inject(Firestore);
   globaleVariables = inject(GlobalVariablesService);
@@ -136,25 +137,6 @@ export class ReactionsComponent {
     this.globaleVariables.editMessage = true;
   }
 
-  /**
-   * diese funktion sollte vergleichen, hinzufügen
-   * @param element
-   * @returns
-   */
-/*   helper(element: any): any {
-    if (element) {
-      const activeID = this.globaleVariables.activeID;
-      if (!element.userId.includes(activeID)) {
-        element.userId.push(activeID);
-      }
-    }
-    return {
-      icon: element.icon,
-      userId: element.userId,
-      iconId: element.iconId
-    };
-  }
- */
 
   getEmojiUserId(element: any, userIdAsArray: any[]) {
     let userIds = element.userId;

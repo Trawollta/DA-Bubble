@@ -19,13 +19,13 @@ export class FirebaseUserupdateService {
   firestore: Firestore = inject(Firestore);
   globalVariablesService = inject(GlobalVariablesService);
 
-  activeID: string = this.globalVariablesService.activeID;
+  //activeID: string = this.globalVariablesService.activeID;
   userProfileData: User = new User(); //das brauche ich nicht mehr. Ich habe das ersetzt durch currentUser in den globalen Variablen
 
   unsubSingleUser;
 
   constructor() {
-    this.unsubSingleUser = this.getSingleUser(this.activeID);
+    this.unsubSingleUser = this.getSingleUser(this.globalVariablesService.activeID);
   }
 
   /**
@@ -75,8 +75,8 @@ export class FirebaseUserupdateService {
    * @param userId - the id of the user which should be called
    */
   setActiveUserId(userId: string | undefined) {
-    userId ? (this.activeID = userId) : this.activeID;
-    this.getSingleUser(this.activeID);
+    userId ? (this.globalVariablesService.activeID = userId) : this.globalVariablesService.activeID;
+    this.getSingleUser(this.globalVariablesService.activeID);
   }
 
   /**
@@ -84,7 +84,7 @@ export class FirebaseUserupdateService {
    * @param data -Json
    */
   async updateData(data: { [x: string]: any }) {
-    await updateDoc(doc(this.firestore, 'users', this.activeID), data);
+    await updateDoc(doc(this.firestore, 'users', this.globalVariablesService.activeID), data);
   }
 
   /**
@@ -97,14 +97,5 @@ export class FirebaseUserupdateService {
     return docSnap.data();
   }
 
-  // erst mal auskommentiert
-
-  /* toJson(user: User): {} {
-    return {
-      name: user.name,
-      email: user.email,
-      isActive: user.isActive, //Alex 27.2.24--changed from status to active because it is only a boolean
-      img: user.img
-    };
-  } */
+  
 }

@@ -65,24 +65,20 @@ export class SearchbarComponent {
       this.getRelatedChats();
     }, 600);
 
-    setTimeout(() => {
-      this.getChatMessages();
-    }, 2000);
-
+    await Promise.all([
+      setTimeout(() => {
+        this.getChatMessages();
+      }, 2000),
+    ]);
     console.log(this.allMessages);
   }
-  
+
   /**
    * all function which are connected with searching in the database for the msg and or channel and or Member
    * @param word
    */
   async searchForWord(word: string) {
-    await Promise.all([
-      this.getChats(),
-      this.connectChannelWithChannelMsg(),
-      this.getCleanNames(),
-      this.getCleanChannels(),
-    ]);
+    await Promise.all([this.getChats(), this.connectChannelWithChannelMsg()]);
 
     await this.compareInputWithChannelMessages(word);
   }
@@ -114,7 +110,8 @@ export class SearchbarComponent {
       );
       this.allMessages.push(messages);
     }
-    console.log('init?', this.allMessages);
+    this.getCleanNames();
+    this.getCleanChannels();
   }
 
   /**

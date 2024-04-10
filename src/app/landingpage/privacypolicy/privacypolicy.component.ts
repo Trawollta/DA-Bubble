@@ -13,7 +13,7 @@ import { GoBackButtonComponent } from 'app/shared/go-back-button/go-back-button.
 export class PrivacypolicyComponent {
   globalVariables = inject(GlobalVariablesService);
   constructor() {
-    this.globalVariables.imprintActiv = true;
+    this.globalVariables.imprintActive = true;
     this.globalVariables.signup = true;
   }
 

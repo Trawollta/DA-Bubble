@@ -8,23 +8,37 @@
     position: absolute;
     top: 0;
     left: 0;
-}
-
-.animate-move-to-top-left {
-    position: absolute;
-    top: 50px;
-    left: 75px;
-    z-index: 10;
-    @include dFlex($g: 10px);
+    .background-container {
+        position: absolute;
+        left: 0;
+        background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
+        width: 45%;
+        height: 100%;
+        z-index: 2;
+    }
     .logo {
         height: 56px;
+        transform: scale(3);
+        z-index: 3;
     }
-    .text {}
+    .logo2 {
+        height: 56px;
+        z-index: 3;
+    }
+    .text {
+        color: white;
+        transform: translateX(-300%) scale(3);
+    }
+    .text2 {
+        color: white;
+    }
 }
 
-.text-container {
-    overflow: hidden;
-    width: 200px;
+.animated-container {
+    @include dFlex($g: 8px);
+    width: fit-content;
+    z-index: 4;
+    transform: scale(3);
 }
 
 .loginheader {

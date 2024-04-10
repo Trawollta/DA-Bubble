@@ -17,7 +17,7 @@ export class FirebaseUserService {
   private auth = inject(Auth);
   private router = inject(Router);
   constructor() {
-   }
+  }
 
   getUsersRef() {
     return collection(this.firestore, 'users');
@@ -78,9 +78,7 @@ export class FirebaseUserService {
 
   async logout() {
     try {
-      //await this.updateUserStatus(this.auth.currentUser.uid, false);
       await this.authService.logout();
-      await this.updateUserStatus(this.globalVariables.activeID, false);
       this.globalVariables.activeID = '';
     } catch (error) {
       console.error("Logout failed:", error);

@@ -1,6 +1,6 @@
 <section>
     <div class="loginheader">
-        <div class="login-header-left" *ngIf="!globalVariables.showSplashScreen">
+        <div class="login-header-left">
             <img src="assets/img/icons/logo.svg">
             <h1>DABubble</h1>
         </div>
@@ -13,12 +13,13 @@
     <app-footer *ngIf="!globalVariables.imprintActive"></app-footer>
 </section>
 
-<div class="splash-screen" *ngIf="globalVariables.showSplashScreen" [@splashAnimation]="splashAnimationState">
-
-</div>
-<div class="animate-move-to-top-left" *ngIf="globalVariables.showSplashScreen" [@moveTopLeft]="moveTopLeftState">
-    <img class="logo" [@animateLogo]="animateLogoState" src="assets/img/icons/logo.svg">
-    <div class="text-container">
-        <h1 class="text" [@revealText]="revealTextState" (@revealText.done)="revealTextDone($event)">DABubble</h1>
+<div class="splash-screen" *ngIf="globalVariables.showSplashScreen">
+    <div class="background-container">
+    </div>
+    <img *ngIf="!showAnimatedContainer" class="logo" [@animateLogo]="logoState" src="assets/img/icons/logo.svg">
+    <h1 *ngIf="!showAnimatedContainer" class="text" [@revealText]="textState">DABubble</h1>
+    <div *ngIf="showAnimatedContainer" [@moveTogether]="togetherState" class="animated-container">
+        <img class="logo2" src="assets/img/icons/logo.svg">
+        <h1 class="text2">DABubble</h1>
     </div>
 </div>

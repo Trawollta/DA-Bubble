@@ -5,11 +5,13 @@ import { GlobalVariablesService } from 'app/services/app-services/global-variabl
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
+import { timestamp } from 'rxjs';
+import { SearchbarComponent } from '../searchbar/searchbar/searchbar.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, HeaderMenuComponent, InputfieldComponent],
+  imports: [CommonModule, HeaderMenuComponent, InputfieldComponent, SearchbarComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -119,6 +121,7 @@ export class HeaderComponent {
         );
       this.allChannels.push(channels);
     }
+    console.log(this.allChannels);
     this.getEachChannelWithDocID();
   }
 
@@ -180,6 +183,7 @@ export class HeaderComponent {
               message: message.message,
               userId: message.userId,
               docId: messageGroup.relatedChannelId,
+              timestamp: message.timestamp,
             },
           ];
         } else if (similarity === highestSimilarity) {
@@ -191,6 +195,7 @@ export class HeaderComponent {
               message: message.message,
               userId: message.userId,
               docId: messageGroup.relatedChannelId,
+              timestamp: message.timestamp,
             });
           }
         }

@@ -15,23 +15,8 @@
       <img src="assets/img/icons/Workspace logo.svg" alt="logo" />
       <h3>Code Learning</h3>
     </div>
-    <app-inputfield
-      (inputChange)="handleInputChange($event)"
-      [optionClasses]="['search-icon']"
-      [classes]="'searchBar'"
-      *ngIf="globalVariables.desktop900"
-      class="searchBarContainer"
-      type="search"
-      imgName="search"
-      placeholder="Code learning durchsuchen"
-    ></app-inputfield>
-    <div *ngIf="bestMatchesArray.length > 0">
-        <ul  *ngFor="let msg of bestMatchesArray; let i = index">
-            Nachricht: {{ bestMatchesArray[i].message }}
-            Benutzer-ID: {{ bestMatchesArray[i].userId }}
-            Dokument-ID: {{ bestMatchesArray[i].docId }}
-        </ul>
-    </div>
+    
+    <app-searchbar></app-searchbar>
     
     
 

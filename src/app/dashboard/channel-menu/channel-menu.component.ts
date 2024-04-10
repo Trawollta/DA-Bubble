@@ -9,6 +9,7 @@ import { FirebaseChatService } from 'app/services/firebase-services/firebase-cha
 import { channel } from 'app/models/channel.class';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { user } from '@angular/fire/auth';
+import { SearchbarComponent } from 'app/shared/searchbar/searchbar/searchbar.component';
 
 @Component({
   selector: 'app-channel-menu',
@@ -20,6 +21,7 @@ import { user } from '@angular/fire/auth';
     CommonModule,
     AddNewChannelComponent,
     InputfieldComponent,
+    SearchbarComponent
   ],
 })
 export class ChannelMenuComponent {

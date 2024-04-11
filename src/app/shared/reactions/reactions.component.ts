@@ -70,7 +70,6 @@ export class ReactionsComponent {
    */
   switchUrlWithAlias(){
     if(this.isImage){
-      //console.log(this.messageInfo.messageImgUrl);
       this.downloadURL = this.messageInfo.messageImgUrl;
       if (this.downloadURL) {
         const url = new URL(decodeURIComponent(this.downloadURL));
@@ -80,7 +79,7 @@ export class ReactionsComponent {
         this.message.message = this.message.message.replace(this.downloadURL, this.downloadURLAlias);
       }
     }
-    this.isImage =false; // habe hier noch das Problem, dass das Bild nicht erkannst wird, wenn ich das element erneut öffnen will zum Bearbeiten
+    this.isImage =false; 
    }
 
   /**
@@ -141,29 +140,45 @@ export class ReactionsComponent {
     this.showEmojiList = !this.showEmojiList;
   }
 
-  addEmoji() {
+  /**
+   * this function adds the new object to firebase and hemoves the old one
+   */
+  addEmoji() {  
     this.globaleVariables.messageData = this.message;
-    
+    this.globaleVariables.messageData.message = this.originalMessage.message;
     this.firebaseChatService.sendMessage(this.globaleVariables.openChannel.chatId, this.chatFamiliy);
     this.remove(this.globaleVariables.openChannel.chatId, this.chatFamiliy);
   }
 
-
+/**
+ * this function removes the old message from firebase
+ * @param chatId - string - id of doc which needs to be deleted
+ * @param chatFamiliy - string - userchat or chanelchat
+ */
   remove(chatId: string, chatFamiliy: string) {
-    return updateDoc(doc(this.firestore, chatFamiliy, chatId), {
+     updateDoc(doc(this.firestore, chatFamiliy, chatId), {
       messages: arrayRemove(this.originalMessage),
     });
   }
 
+  /**
+   * this function opens shows the edit Message options
+   */
   editOpen() { 
     this.globaleVariables.editMessage = true; 
   }
-
+  /**
+   * this function opens hides the edit Message options
+   */
   closeEdit(){
     this.globaleVariables.editMessage = false;
   }
 
-
+/**
+ * 
+ * @param element 
+ * @param userIdAsArray 
+ */
   getEmojiUserId(element: any, userIdAsArray: any[]) {
     let userIds = element.userId;
     if (Array.isArray(userIds)) {
@@ -191,11 +206,17 @@ export class ReactionsComponent {
     }
   }
 
+  /**
+   * this function closes the edit message 
+   */
   editClose() {
     this.globaleVariables.editMessage = false;
     this.message.message = this.originalMessage.message;
   }
 
+  /**
+   * this function replaces the old message with the new message
+   */
   editSave() {
     this.forbiddenChars = this.globalFunctions.isMessageValid(this.message.message); 
     this.message.message = this.message.message.replace(this.downloadURLAlias, this.downloadURL);
@@ -214,6 +235,9 @@ export class ReactionsComponent {
     }
   }
   
+  /**
+   * this function hides the validationPopup
+   */
   closeValidatePopup(){   
     this.showValidatePopup=false;
   }

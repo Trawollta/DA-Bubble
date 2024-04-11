@@ -112,7 +112,7 @@ main {
   transition: opacity 0.3s;
 }
 
-.tooltip .tooltiptext::after {
+.tooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -126,4 +126,22 @@ main {
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+.firstTT{
+  left: 50px !important;
+  &::after{
+    left: 15%;
+  }
+}
+  .secondTT{
+    left: 15px !important;
+    &::after{
+      left: 46%;
+    }
+}
+.openEmojiTT{
+  left: -12px !important;
+  &::after{
+    left: 69%;
+  }
 }

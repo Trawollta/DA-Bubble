@@ -1,12 +1,12 @@
 <section class="inputfield">
     <textarea  name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht"
-      [(ngModel)]="globalVariables.newMessage">
+      [(ngModel)]="newMessage">
     </textarea>
-    <div class="controllElementsContainer">
+    <div class="controllElementsContainer"> 
       <app-show-contacts class="showContactsTextInput"
-        *ngIf="globalVariables.memberlist && !globalVariables.headerShowMembers" appClickedOutside
-        (clickedOutside)="globalFunctions.closeMembers()"></app-show-contacts>
-      <app-emoji-container class="showContactsTextInput" *ngIf="globalVariables.showEmojiContainer" appClickedOutside
+        *ngIf="isMemberContainerOpen" appClickedOutside
+        (clickedOutside)="closeMembers()"></app-show-contacts>
+      <app-emoji-container class="showContactsTextInput" *ngIf="isEmojiContainerOpen" appClickedOutside
         (clickedOutside)="closeEmoji()"></app-emoji-container>
 
       <div class="moreControls">

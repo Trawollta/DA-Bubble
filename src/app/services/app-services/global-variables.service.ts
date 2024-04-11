@@ -37,7 +37,7 @@ export class GlobalVariablesService {
   isEditingChannel: boolean = false;
   headerShowMembers: boolean = false;
   newMessage: string = '';
-  showEmojiContainer: boolean = false;
+  //showEmojiContainer: boolean = false;
   scrolledToBottom: boolean = false;
   isMembersPopupOpen: boolean = false;
 

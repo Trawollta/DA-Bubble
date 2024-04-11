@@ -22,13 +22,16 @@ import { EmojiContainerComponent } from 'app/shared/reactions/emoji-container/em
   styleUrl: './textarea-chat-thread.component.scss'
 })
 export class TextareaChatThreadComponent {
-  @Input() chatArea: string = '';
+  @Input() areaType: string = '';
 
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
 
   isPopupOpen: boolean = false;
+  isEmojiContainerOpen: boolean = false;
+  isMemberContainerOpen: boolean = false;
+  isValidationPopupOpen: boolean = false;
 
   // for file upload 
   storage = getStorage();
@@ -44,17 +47,18 @@ export class TextareaChatThreadComponent {
   newMessage: string = '';
 
 
-  ngOnInit(){
-    if(this.globalVariables.messageThreadStart.userId !== '')
-    this.answerToKey = this.globalVariables.messageThreadStart.userId + '_' + this.globalVariables.messageThreadStart.timestamp.toString();
+
+  ngOnInit() {
+    if (this.globalVariables.messageThreadStart.userId !== '')
+      this.answerToKey = this.globalVariables.messageThreadStart.userId + '_' + this.globalVariables.messageThreadStart.timestamp.toString();
   }
 
-  
+
   /**
    * this function fills all relevant data to the messagData object and calls the send message function from firebase service
    */
   async sendMessage() {
-    //this.globalVariables.newMessage = this.newMessage;
+    this.globalVariables.newMessage = this.newMessage;
     this.forbiddenChars = this.globalFunctions.isMessageValid(this.globalVariables.newMessage);
 
     if (this.globalVariables.newMessage !== '' && this.forbiddenChars.length === 0) {
@@ -71,7 +75,7 @@ export class TextareaChatThreadComponent {
   async preperDataForSendMessage() {
     this.globalVariables.messageData.userId = this.globalVariables.activeID;
     this.globalVariables.messageData.timestamp = new Date().getTime();
-    this.globalVariables.messageData.answerto = this.globalVariables.showThread? this.answerToKey : '';
+    this.globalVariables.messageData.answerto = this.globalVariables.showThread ? this.answerToKey : '';
     this.globalVariables.messageData.message = await this.buildMessage();
     this.globalVariables.messageData.emoji = [{ icon: '', userId: [] as any[], iconId: '' }];
   }
@@ -96,8 +100,9 @@ export class TextareaChatThreadComponent {
         this.selectedFile = null;
       }
       else {
-        this.downloadURLAlias = this.selectedFile.name
-        this.globalVariables.newMessage += this.downloadURLAlias;
+        this.downloadURLAlias = this.selectedFile.name;
+        this.newMessage += this.downloadURLAlias;
+        // this.globalVariables.newMessage += this.downloadURLAlias;
       }
     }
   }
@@ -132,36 +137,12 @@ export class TextareaChatThreadComponent {
     } else console.error("No file availabe");
   }
 
-  showMembers(headerShowMembers: boolean) { 
-    this.globalVariables.memberlist = true;
-    this.globalVariables.headerShowMembers = this.globalVariables.memberlist && headerShowMembers ? true : false;
-    this.globalFunctions.freezeBackground(this.globalVariables.memberlist);   
-  }
-
-  showEmojiContainer() {
-    this.globalVariables.showEmojiContainer = true;
-    this.globalFunctions.freezeBackground(this.globalVariables.showEmojiContainer);
-  }
-
   /**
-   * this function closes the emoji popup by using appClickedOutside from ClickedOutsideDirective
-   * but it closes the popup immediately if no additional check will happen >> is the popup open?
-   */
-  closeEmoji() {
-    if (this.globalVariables.showEmojiContainer && !this.isPopupOpen) {
-    this.isPopupOpen = true;
-  } else if (this.globalVariables.showEmojiContainer && this.isPopupOpen) {
-    this.globalVariables.showEmojiContainer = false;
-    this.isPopupOpen = false;
-  }    
-}
-
- /**
-   * this function just sets the flag for closing the error popup
-   */
- closeErrorPopup() {
-  this.showErrorPopup = false;
-}
+    * this function just sets the flag for closing the error popup
+    */
+  closeErrorPopup() {
+    this.showErrorPopup = false;
+  }
 
   /**
  * this function just sets the flag for closing the error popup
@@ -172,7 +153,43 @@ export class TextareaChatThreadComponent {
     } else if (this.showValidationPopup && this.isPopupOpen) {
       this.showValidationPopup = false;
       this.isPopupOpen = false;
-    } 
+    }
+  }
+
+
+  showEmojiContainer() {
+    this.isEmojiContainerOpen = true;
+    this.globalFunctions.freezeBackground(this.isEmojiContainerOpen);
+    console.log('isEmojiContainerOpen', this.isEmojiContainerOpen)
+
+  }
+
+  /**
+  * this function closes the emoji popup by using appClickedOutside from ClickedOutsideDirective
+  * but it closes the popup immediately if no additional check will happen >> is the popup open?
+  */
+  closeEmoji() {
+    if (this.isEmojiContainerOpen && !this.isPopupOpen) {
+      this.isPopupOpen = true;
+    } else if (this.isEmojiContainerOpen && this.isPopupOpen) {
+      this.isPopupOpen = false;
+      this.isEmojiContainerOpen = false;
+    }
+  }
+
+  showMembers(headerShowMembers: boolean) {
+    this.isMemberContainerOpen = true;
+    this.globalVariables.headerShowMembers = this.globalVariables.memberlist && headerShowMembers ? true : false;
+    this.globalFunctions.freezeBackground(this.isMemberContainerOpen);
+  }
+
+  closeMembers() {
+    if (this.isMemberContainerOpen && !this.isPopupOpen) {
+      this.isPopupOpen = true;
+    } else if (this.isMemberContainerOpen && this.isPopupOpen) {
+      this.isMemberContainerOpen = false;
+      this.isPopupOpen = false;
+    }
   }
 
 }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { emojis } from 'assets/emojis';
 
 interface Emoji {
   character: string;
@@ -27,7 +28,8 @@ export class EmojiContainerComponent {
    * Fetch on init of the API.
    */
   ngOnInit(): void {
-    this.getEmojis();
+    this.emojiList = emojis;
+    //this.getEmojis();
   }
 
 
@@ -48,15 +50,19 @@ export class EmojiContainerComponent {
   loadEmoji(data: Emoji[]) {
     data.forEach((emoji) => {
       const { character, codePoint } = emoji;
-      this.emojiList.push({ character, codePoint });
+      this.emojiList.push({ character, codePoint });      
     });
+    console.log(this.emojiList);
   }
 
   takeEmoji(emoji: Emoji, isAddToMessage: boolean){
+    
     this.globalVariables.selectedEmoji.character = emoji.character;
     this.globalVariables.selectedEmoji.codePoint = emoji.codePoint;
+    
     if(isAddToMessage){
       this.globalVariables.newMessage += emoji.character;
+      console.log(this.globalVariables.newMessage);
     }
   }
 }

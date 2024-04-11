@@ -54,7 +54,7 @@ export class TextareaChatThreadComponent {
    * this function fills all relevant data to the messagData object and calls the send message function from firebase service
    */
   async sendMessage() {
-    this.globalVariables.newMessage = this.newMessage;
+    //this.globalVariables.newMessage = this.newMessage;
     this.forbiddenChars = this.globalFunctions.isMessageValid(this.globalVariables.newMessage);
 
     if (this.globalVariables.newMessage !== '' && this.forbiddenChars.length === 0) {
@@ -97,7 +97,7 @@ export class TextareaChatThreadComponent {
       }
       else {
         this.downloadURLAlias = this.selectedFile.name
-        this.globalVariables.newMessage = this.downloadURLAlias;
+        this.globalVariables.newMessage += this.downloadURLAlias;
       }
     }
   }
@@ -107,7 +107,7 @@ export class TextareaChatThreadComponent {
 * @returns message which should send
 */
   async buildMessage() {
-    let message = this.globalVariables.newMessage
+    let message = this.globalVariables.newMessage;
     if (this.selectedFile) {
       await this.uploadfile(this.selectedFile);
       message = message.replace(this.downloadURLAlias, this.downloadURL);

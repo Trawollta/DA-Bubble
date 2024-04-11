@@ -155,7 +155,8 @@ export class GlobalVariablesService {
 
   editMessage: boolean = false;
 
-  imprintActiv = false;
+  imprintActive = false;
+  showSplashScreen = false;
 
   constructor() { }
 

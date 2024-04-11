@@ -29,7 +29,7 @@ export class FirebaseUserService {
   private authService = inject(AuthService);
   private auth = inject(Auth);
   private router = inject(Router);
-  constructor() {}
+  constructor() { }
 
   getUsersRef() {
     return collection(this.firestore, 'users');
@@ -86,7 +86,7 @@ export class FirebaseUserService {
     await updateDoc(userDocRef, { isActive });
   }
 
-  updateCurrentUser(uid: string) { 
+  updateCurrentUser(uid: string) {
     return onSnapshot(this.getSingleUserRef(uid), (user) => {
       if (user.data()) {
         let logedInUser = new User(user.data());
@@ -99,9 +99,7 @@ export class FirebaseUserService {
 
   async logout() {
     try {
-      //await this.updateUserStatus(this.auth.currentUser.uid, false);
       await this.authService.logout();
-      await this.updateUserStatus(this.globalVariables.activeID, false);
       this.globalVariables.activeID = '';
     } catch (error) {
       console.error('Logout failed:', error);

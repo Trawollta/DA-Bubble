@@ -16,13 +16,14 @@ import { Router } from '@angular/router';
   styleUrl: './log-in.component.scss',
   imports: [CommonModule, InputfieldComponent, ButtonComponent, FormsModule, DialogComponent]
 })
+
 export class LogInComponent {
   globalVariables = inject(GlobalVariablesService);
   private userService = inject(FirebaseUserService);
   private authService = inject(AuthService);
   private router = inject(Router);
   constructor() {
-    this.globalVariables.imprintActiv = false;
+    this.globalVariables.imprintActive = false;
     this.globalVariables.signup = false;
   }
 

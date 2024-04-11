@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { ChannelMenuComponent } from '../channel-menu.component';
@@ -21,10 +21,15 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./show-contacts.component.scss'],
 })
 export class ShowContactsComponent implements OnInit {
+
+  @Output() messageUpdated = new EventEmitter<string>();
+  @Output() closeMember = new EventEmitter<boolean>();
+
   selectedUserIds: string[] = [];
   selectedUsers: any[] = [];
   allUsers: any[] = [];
   checked: boolean = false;
+  checkedUsers: string = '';
 
   globalFunctions = inject(GlobalFunctionsService);
   firebaseUserService = inject(FirebaseUserService);
@@ -74,7 +79,8 @@ export class ShowContactsComponent implements OnInit {
     setTimeout(() => {
       document.getElementById('alertDiv')?.classList.remove('d-none');
       setTimeout(() => {
-        this.globalFunctions.closeMembers();
+        this.closeMembers();
+        //this.globalFunctions.closeMembers();
       }, 4500);
     }, 100); 
   }
@@ -86,10 +92,24 @@ export class ShowContactsComponent implements OnInit {
    */
   checkboxChanged(user: string) {
     let userName = '@' + user + ', ';
-    let newMessage = this.globalVariables.newMessage;
-    if (newMessage.includes(userName))
-      newMessage = newMessage.replace(userName, '');
-    else newMessage += userName;
-    this.globalVariables.newMessage = newMessage;
+    if (this.checkedUsers.includes(userName))
+      this.checkedUsers = this.checkedUsers.replace(userName, '');
+    else this.checkedUsers += userName;
+    this.messageUpdated.emit(this.checkedUsers);
+  }
+
+   /**
+ * this function closes the showContacts popup by using appClickedOutside from ClickedOutsideDirective
+ * but it closes the popup immediately if no additional check will happen >> is the popup open?
+ */
+   closeMembers() {
+    this.closeMember.emit(true);
+    //Alex:Ich muss hier nochmal ran. Die Frage: Ist der folgende Code notwendig, wenn ich das Signal raus schicke, dass das Popup geschlossen werden muss?
+    if (this.globalVariables.memberlist && !this.globalVariables.isMembersPopupOpen) {
+      this.globalVariables.isMembersPopupOpen = true;
+    } else if (this.globalVariables.memberlist && this.globalVariables.isMembersPopupOpen) {
+      this.globalVariables.memberlist = false;
+      this.globalVariables.isMembersPopupOpen = false;
+    }
   }
 }

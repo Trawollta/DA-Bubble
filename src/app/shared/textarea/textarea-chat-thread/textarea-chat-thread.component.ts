@@ -53,6 +53,32 @@ export class TextareaChatThreadComponent {
       this.answerToKey = this.globalVariables.messageThreadStart.userId + '_' + this.globalVariables.messageThreadStart.timestamp.toString();
   }
 
+/**
+ * this function overwrites the lokal newMessage with the seleceted members of app-show-contacts
+ * @param newMessage - string - contains selected member
+ */
+  onMessageUpdated(newMessage: string) {
+    this.newMessage = newMessage; // Update newMessage when received from event
+    //Ich muss hier nochmal ran.
+    //this.newMessage muss durchsucht werden nach allen @ Einträgen und verglichen werden newMessage 
+  }
+
+  /**
+   * this function closes the member popup if the close button within app-show-contacts was hit
+   * @param close - boolean - true if close button was hit
+   */
+  popUpClosed(close: boolean) {
+    this.isMemberContainerOpen = !close;
+  }
+
+  /**
+   * this function adds the selected emoji to the local newMessage
+   * @param emoji - string - selceted emoji
+   */
+  addEmoji(emoji:string){
+    this.newMessage += emoji;
+  }
+
 
   /**
    * this function fills all relevant data to the messagData object and calls the send message function from firebase service
@@ -160,8 +186,6 @@ export class TextareaChatThreadComponent {
   showEmojiContainer() {
     this.isEmojiContainerOpen = true;
     this.globalFunctions.freezeBackground(this.isEmojiContainerOpen);
-    console.log('isEmojiContainerOpen', this.isEmojiContainerOpen)
-
   }
 
   /**
@@ -179,6 +203,7 @@ export class TextareaChatThreadComponent {
 
   showMembers(headerShowMembers: boolean) {
     this.isMemberContainerOpen = true;
+    this.globalVariables.memberlist = true;
     this.globalVariables.headerShowMembers = this.globalVariables.memberlist && headerShowMembers ? true : false;
     this.globalFunctions.freezeBackground(this.isMemberContainerOpen);
   }

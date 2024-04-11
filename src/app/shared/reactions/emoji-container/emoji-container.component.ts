@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { emojis } from 'assets/emojis';
 
@@ -16,6 +16,8 @@ interface Emoji {
   styleUrl: './emoji-container.component.scss'
 })
 export class EmojiContainerComponent {
+
+  @Output() addEmoji = new EventEmitter<string>();
 
   globalVariables = inject(GlobalVariablesService);
   emojiList: Emoji[] = [];
@@ -52,17 +54,16 @@ export class EmojiContainerComponent {
       const { character, codePoint } = emoji;
       this.emojiList.push({ character, codePoint });      
     });
-    console.log(this.emojiList);
+    //console.log(this.emojiList);
   }
 
   takeEmoji(emoji: Emoji, isAddToMessage: boolean){
     
-    this.globalVariables.selectedEmoji.character = emoji.character;
-    this.globalVariables.selectedEmoji.codePoint = emoji.codePoint;
+   /*  this.globalVariables.selectedEmoji.character = emoji.character;
+    this.globalVariables.selectedEmoji.codePoint = emoji.codePoint; */
     
     if(isAddToMessage){
-      this.globalVariables.newMessage += emoji.character;
-      console.log(this.globalVariables.newMessage);
+      this.addEmoji.emit(emoji.character);
     }
   }
 }

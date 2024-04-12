@@ -79,7 +79,6 @@ export class SearchbarComponent {
    */
   async searchForWord(word: string) {
     await Promise.all([this.getChats(), this.connectChannelWithChannelMsg()]);
-
     await this.compareInputWithChannelMessages(word);
   }
 

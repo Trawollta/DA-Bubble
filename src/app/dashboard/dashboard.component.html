@@ -1,6 +1,6 @@
 <section class="dashboard">
     <div class="menu-toggle-btn" *ngIf="globalVariables.desktop800" (click)="toggleChannelMenu()">
-        <span>Workspace-Menu schließen</span>
+        <span>{{ globalVariables.isMenuOpen ? 'Workspace-Menu schließen' : 'Workspace-Menu öffnen' }}</span>
     </div>
     <div class="app-container">
         <div class="channel-menu" *ngIf="globalVariables.showChannelMenu">

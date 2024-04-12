@@ -17,8 +17,12 @@ import { CommonModule } from '@angular/common';
     CommonModule,
   ],
 })
+
+
 export class DashboardComponent {
   globalVariables = inject(GlobalVariablesService);
+
+  
 
   
   constructor() {
@@ -33,6 +37,7 @@ export class DashboardComponent {
     this.globalVariables.showChannelMenu = !this.globalVariables.showChannelMenu;
     if(this.globalVariables.desktop800 && !this.globalVariables.desktop1200 && this.globalVariables.bufferThreadOpen)
     this.globalVariables.showThread = !this.globalVariables.showThread;
+    this.globalVariables.isMenuOpen = !this.globalVariables.isMenuOpen;
   }
 
   

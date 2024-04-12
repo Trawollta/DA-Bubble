@@ -30,8 +30,12 @@ export class SearchbarComponent {
    * main function to direct the value to various function and save relatedChats of msg
    * @param value input string
    */
-  async handleInputChange(value: string) {
-    this.searchForWord(value);
+  handleInputChange(event: string): void {
+    if (!event.trim()) {
+      this.bestMatches = [];
+    } else {
+      this.searchForWord(event);
+    }
   }
 
   /**
@@ -161,7 +165,7 @@ export class SearchbarComponent {
   }
 
   compareMsg(input: string) {
-    debugger;
+    this.bestMatches = [];
     for (let i = 0; i < this.allMessages.length; i++) {
       for (let j = 0; j < this.allMessages[i].messages.length; j++) {
         const message = this.allMessages[i].messages[j].message;

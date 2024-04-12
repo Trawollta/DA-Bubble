@@ -25,28 +25,13 @@ export class SearchbarComponent {
   info: any = [];
   bestMatches: any = [];
   bestMatchesArray: any = [];
+  SIMILARITY_THRESHOLD = 0.5;
   /**
    * main function to direct the value to various function and save relatedChats of msg
    * @param value input string
    */
   async handleInputChange(value: string) {
-    let user = await this.getDataConnectedWithID(
-      this.globalVariables.currentUser.name
-    ); // this will be all User Data
-    if (user) {
-      this.saveRelatedChats(user['relatedChats']);
-      this.searchForWord(value);
-    } else {
-      console.log('Benutzer nicht gefunden oder fehlerhafte Daten');
-    }
-  }
-
-  /**
-   *
-   * @param data
-   */
-  async saveRelatedChats(data: any) {
-    this.relatedChats = data;
+    this.searchForWord(value);
   }
 
   /**
@@ -78,7 +63,7 @@ export class SearchbarComponent {
    * @param word
    */
   async searchForWord(word: string) {
-    await Promise.all([this.getChats(), this.connectChannelWithChannelMsg()]);
+    /* await Promise.all([this.getChats(), this.connectChannelWithChannelMsg()]); */
     await this.compareInputWithChannelMessages(word);
   }
 
@@ -111,18 +96,21 @@ export class SearchbarComponent {
     }
     this.getCleanNames();
     this.getCleanChannels();
+    console.log('Alle Msg:', this.allMessages)
   }
 
   /**
    * functions convert all data to docIds
    */
   async getChats() {
-    for (let i = 0; i < this.relatedChats.length; i++) {
-      let channels =
-        await this.firebaseChannelService.loadChannelDataWithChatID(
-          this.relatedChats[i]
-        );
-      this.allChannels.push(channels);
+    if (this.allMessages == 0) {
+      for (let i = 0; i < this.relatedChats.length; i++) {
+        let channels =
+          await this.firebaseChannelService.loadChannelDataWithChatID(
+            this.relatedChats[i]
+          );
+        this.allChannels.push(channels);
+      }
     }
     console.log(this.allChannels);
     this.getEachChannelWithDocID();
@@ -169,42 +157,37 @@ export class SearchbarComponent {
   }
 
   /**
-   * search in all messages.message for the input signs, second one is getting the similarity of message and input
-   * @param input
-   * @returns matched msges with input
+   * Vergleicht den Eingabestring mit den Nachrichten im Array und gibt die am besten übereinstimmenden Nachrichten zurück.
+   * @param {string} input - Der Eingabestring, der mit den Nachrichten verglichen werden soll.
+   * @returns {object[]} - Ein Array mit den am besten übereinstimmenden Nachrichten.
    */
   async compareMsgFromInput(input: string) {
-    let highestSimilarity = -1;
-    console.log('input', this.allMessages);
+    const inputWords = this.preprocess(input);
+    const allWords: string[] = [];
     for (let messageGroup of this.allMessages) {
       for (let message of messageGroup.messages) {
-        let similarity = this.similarityScore(input, message.message);
-        if (similarity > highestSimilarity) {
-          highestSimilarity = similarity;
-          this.bestMatches = [
-            {
-              message: message.message,
-              userId: message.userId,
-              docId: messageGroup.relatedChannelId,
-              timestamp: message.timestamp,
-              name: message.name,
-              channelName: message.channelName,
-            },
-          ];
-        } else if (similarity === highestSimilarity) {
-          let existingMatchIndex = this.bestMatches.findIndex(
-            (match: any) => match.message === message.message
-          );
-          if (existingMatchIndex === -1) {
-            this.bestMatches.push({
-              message: message.message,
-              userId: message.userId,
-              docId: messageGroup.relatedChannelId,
-              timestamp: message.timestamp,
-              name: message.name,
-              channelName: message.channelName,
-            });
-          }
+        const messageWords = this.preprocess(message.message);
+        allWords.push(...messageWords);
+      }
+    }
+    const uniqueWords = Array.from(new Set(allWords));
+    const inputVector = this.getFeatureVector(inputWords, uniqueWords);
+    this.bestMatches = [];
+    for (let messageGroup of this.allMessages) {
+      for (let message of messageGroup.messages) {
+        const messageWords = this.preprocess(message.message);
+        const messageVector = this.getFeatureVector(messageWords, uniqueWords);
+        const similarity = this.calculateSimilarity(inputVector, messageVector);
+        if (similarity > this.SIMILARITY_THRESHOLD) {
+          this.bestMatches.push({
+            message: message.message,
+            userId: message.userId,
+            docId: messageGroup.relatedChannelId,
+            timestamp: message.timestamp,
+            name: message.name,
+            channelName: message.channelName,
+            similarity: similarity,
+          });
         }
       }
     }
@@ -212,17 +195,50 @@ export class SearchbarComponent {
   }
 
   /**
-   * returns the score of the similarity of two strings(as number)
-   * @param str1
-   * @param str2
-   * @returns
+   * Führt die Vorverarbeitung des Textes durch, indem Satzzeichen entfernt und der Text in Kleinbuchstaben konvertiert wird.
+   * @param {string} text - Der zu verarbeitende Text.
+   * @returns {string[]} - Ein Array mit den vorverarbeiteten Wörtern.
    */
-  similarityScore(str1: string, str2: string): number {
-    const set1 = new Set(str1.split(''));
-    const set2 = new Set(str2.split(''));
-    const intersection = new Set([...set1].filter((char) => set2.has(char)));
-    const union = new Set([...set1, ...set2]);
-    return intersection.size / union.size;
+  preprocess(text: string): string[] {
+    return text
+      .toLowerCase()
+      .replace(/[^\w\s]|_/g, '') // Entfernt Satzzeichen und Unterstriche
+      .replace(/\n/g, '') // Entfernt Zeilenumbrüche
+      .split(' ');
+  }
+
+  /**
+   * Erstellt den Feature-Vektor für eine Liste von Wörtern basierend auf einem Satz von einzigartigen Wörtern.
+   * @param {string[]} words - Die Liste der Wörter, für die der Feature-Vektor erstellt werden soll.
+   * @param {string[]} allWords - Ein Satz von einzigartigen Wörtern.
+   * @returns {number[]} - Der Feature-Vektor für die Liste der Wörter.
+   */
+  getFeatureVector(words: string[], allWords: string[]): number[] {
+    const featureVector: number[] = [];
+    for (const word of allWords) {
+      featureVector.push(words.filter((w) => w === word).length);
+    }
+    return featureVector;
+  }
+
+  /**
+   * calculate the cosine similarity between two vectors
+   * @param {number[]} vector1 - first vector
+   * @param {number[]} vector2 - second vector
+   * @returns {number} - the consine similarity between the two vectors
+   */
+  calculateSimilarity(vector1: number[], vector2: number[]): number {
+    const dotProduct = vector1.reduce(
+      (acc, val, i) => acc + val * vector2[i],
+      0
+    );
+    const magnitude1 = Math.sqrt(
+      vector1.reduce((acc, val) => acc + val ** 2, 0)
+    );
+    const magnitude2 = Math.sqrt(
+      vector2.reduce((acc, val) => acc + val ** 2, 0)
+    );
+    return dotProduct / (magnitude1 * magnitude2);
   }
 
   addUserToMessage(messageArray: any) {

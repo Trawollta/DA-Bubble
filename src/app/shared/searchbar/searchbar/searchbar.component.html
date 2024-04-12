@@ -12,7 +12,9 @@
 <div class="search-container" *ngIf="bestMatches.length > 0">
   <ul class="filtered" *ngIf="bestMatches.length > 0">
     <span class="categoryName">Users:</span>
-    <li *ngFor="let msg of bestMatches; let i = index">User: {{ bestMatches[i].name }}</li>
+    <li *ngFor="let msg of bestMatches; let i = index">
+      User: {{ bestMatches[i].name }}
+    </li>
   </ul>
   <ul class="filtered" *ngIf="bestMatches.length > 0">
     <span class="categoryName">Channels:</span>

@@ -37,13 +37,13 @@ export class GlobalFunctionsService {
     this.freezeBackground(this.globalVariables.showProfileMenu);
   }
 
-  openChannelOverlay() {
+/*   openChannelOverlay() {
     this.globalVariables.showAddChannel = !this.globalVariables.showAddChannel;
     if (this.globalVariables.showAddChannel) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
     this.globalVariables.channelData.channelName = '';
     this.globalVariables.channelData.description = '';
-  }
+  } */
 
   openEditChannelOverlay() {
     this.globalVariables.channelData.channelName = this.globalVariables.openChannel.titel;
@@ -122,7 +122,7 @@ export class GlobalFunctionsService {
     }
   }
 
-
+/* 
   toggleOverlays() {
     // console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);
     this.globalVariables.showAddChannel = false;
@@ -130,7 +130,7 @@ export class GlobalFunctionsService {
     // console.log('input feld Channel: ', this.globalVariables.newChannel);
     // console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);
     document.body.style.overflow = 'hidden';
-  }
+  } */
 
   stopPropagation(e: Event) {
     e.stopPropagation();

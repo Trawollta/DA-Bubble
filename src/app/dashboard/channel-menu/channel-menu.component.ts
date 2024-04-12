@@ -152,4 +152,9 @@ export class ChannelMenuComponent {
       }
     });
   }
+
+  openChannelOverlay() {
+    this.globalVariables.showAddChannel = true;
+    document.body.style.overflow = 'hidden';
+  }
 }

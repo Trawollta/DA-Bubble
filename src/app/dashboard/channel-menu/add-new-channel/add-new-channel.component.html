@@ -5,35 +5,39 @@
                 <span class="top"> Channel erstellen</span>
             </div>
             <div>
-                <img (click)="globalFunctions.closeChannelOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile" />
+                <img (click)="globalFunctions.closeChannelOverlay()" src="assets/img/icons/close.svg" class="close-btn"
+                    alt="close profile" />
             </div>
         </div>
         <div class="about">
             <span class="text">
-        Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
-        themenbezogen sein #marketing zum Beispiel.
-      </span>
+                Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
+                themenbezogen sein #marketing zum Beispiel.
+            </span>
         </div>
+             <div class="inputarea">
+                <div>
+                    <h3>Channel-Name</h3>
+                </div>
 
-        <div>
-            <h3>Channel-Name</h3>
-        </div>
+                <div class="input-icon">
+                    <img src="" />
+                    <!-- <input type="text" #newChannel="ngModel" [(ngModel)]="globalVariables.channelData.channelName"> -->
+                    <app-inputfield [(ngModel)]="channelName" [classes]="['standard']"
+                        type="text" placeholder="Kooperationsprojekte" [required]="true"></app-inputfield>
+                </div>
+                <div>
+                    <h3>Beschreibung</h3>
+                </div>
 
-        <div class="input-icon">
-            <img src="" />
-            <!-- <input type="text" #newChannel="ngModel" [(ngModel)]="globalVariables.channelData.channelName"> -->
-            <app-inputfield [(ngModel)]="globalVariables.channelData.channelName" [classes]="['standard']" type="text" placeholder="Kooperationsprojekte"></app-inputfield>
-        </div>
-        <div>
-            <h3>Beschreibung</h3>
-        </div>
-
-        <div class="input-icon">
-            <img src="" />
-            <app-inputfield [(ngModel)]="globalVariables.channelData.description" [classes]="['standard']" type="text" placeholder="Dein Text hier"></app-inputfield>
-        </div>
-
-        <div class="button-area" *ngIf="globalVariables.channelData.channelName && globalVariables.channelData.description">
-            <app-button [classes]="['primary']" (clicked)="globalFunctions.toggleOverlays()" caption="weiter" imgPath=""></app-button>
-        </div>
+                <div class="input-icon">
+                    <img src="" />
+                    <app-inputfield [(ngModel)]="description" [classes]="['standard']"
+                        type="text" placeholder="Dein Text hier"></app-inputfield>
+                </div>
+            </div>
+            <div class="button-area"> 
+                <app-button [classes]="['primary']" [isDisabled]="isValid()" (clicked)="onSubmit()" type="submit"
+                    caption="weiter" imgPath=""></app-button>
+            </div>
     </div>

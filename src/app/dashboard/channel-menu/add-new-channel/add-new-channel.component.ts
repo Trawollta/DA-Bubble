@@ -1,6 +1,6 @@
-import { RouterLink } from '@angular/router';
+//import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-add-new-channel',
   standalone: true,
   imports: [
-    RouterLink,
+    //RouterLink,
     CommonModule,
     InputfieldComponent,
     ButtonComponent,
@@ -26,7 +26,22 @@ export class AddNewChannelComponent {
 
   [x: string]: any;
 
-  
+  channelName: string | null = null;
+  description: string | null = null;
+
+  onSubmit() {
+    if (this.channelName && this.description) {
+      this.globalVariables.channelData.channelName = this.channelName;
+      this.globalVariables.channelData.description = this.description;
+      this.globalVariables.showAddChannel = false;
+      this.globalVariables.adduser = true;
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  isValid(): boolean {
+    return this.channelName && this.description ? false : true;
+  }
 }
 
 

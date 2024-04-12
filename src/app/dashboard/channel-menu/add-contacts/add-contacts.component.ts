@@ -224,4 +224,10 @@ export class AddContactsComponent implements OnInit {
     this.showAllUsers = true;
     this.globalFunctions.closeAddContactsOverlay();
   }
+
+  close() {
+    //this.globalVariables.showProfile = false;
+    this.globalVariables.adduser = false;
+    document.body.style.overflow = 'auto';
+  }
 }

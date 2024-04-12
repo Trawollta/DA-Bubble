@@ -91,10 +91,10 @@ export class GlobalFunctionsService {
     this.globalVariables.adduser = false;
   }
 
-  closeReactionDialog() {
+/*   closeReactionDialog() {
     this.globalVariables.showProfile = false;
     this.globalVariables.adduser = false;
-  }
+  } */
 
   closeEditOverlay() {
     this.globalVariables.editChannelOverlayOpen = false;

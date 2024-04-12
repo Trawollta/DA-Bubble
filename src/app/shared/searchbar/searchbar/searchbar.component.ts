@@ -38,6 +38,10 @@ export class SearchbarComponent {
     }
   }
 
+  log(data: any) {
+    console.log(data);
+  }
+
   /**
    * gives me the docID of the user to give better workflow and get data of him
    * @param id user id
@@ -157,7 +161,7 @@ export class SearchbarComponent {
    * @param input
    */
   async compareInputWithChannelMessages(input: string) {
-    this.result = await this.compareMsg(input);
+    this.result = this.compareMsg(input);
   }
 
   newCompare(input: string) {
@@ -169,7 +173,7 @@ export class SearchbarComponent {
     for (let i = 0; i < this.allMessages.length; i++) {
       for (let j = 0; j < this.allMessages[i].messages.length; j++) {
         const message = this.allMessages[i].messages[j].message;
-        if (message && message.toLowerCase().includes(input)) {
+        if (message && message.includes(input)) {
           this.bestMatches.push({
             message: message,
             userId: this.allMessages[i].messages[j].userId,

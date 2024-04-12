@@ -28,7 +28,7 @@
   <ul class="filtered" *ngIf="bestMatches.length > 0">
     <span class="categoryName">Messages:</span>
     <li *ngFor="let msg of bestMatches; let i = index">
-      <div class="channelList">
+      <div class="channelList" (click)="log(this.bestMatches[i])">
         <div class="messageContainer">
           <span> {{ bestMatches[i].message }}</span>
         </div>

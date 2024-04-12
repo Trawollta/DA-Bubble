@@ -96,7 +96,7 @@ export class SearchbarComponent {
     }
     this.getCleanNames();
     this.getCleanChannels();
-    console.log('Alle Msg:', this.allMessages)
+    console.log('Alle Msg:', this.allMessages);
   }
 
   /**
@@ -153,7 +153,31 @@ export class SearchbarComponent {
    * @param input
    */
   async compareInputWithChannelMessages(input: string) {
-    this.result = await this.compareMsgFromInput(input);
+    this.result = await this.compareMsg(input);
+  }
+
+  newCompare(input: string) {
+    this.compareMsg(input);
+  }
+
+  compareMsg(input: string) {
+    debugger;
+    for (let i = 0; i < this.allMessages.length; i++) {
+      for (let j = 0; j < this.allMessages[i].messages.length; j++) {
+        const message = this.allMessages[i].messages[j].message;
+        if (message && message.toLowerCase().includes(input)) {
+          this.bestMatches.push({
+            message: message,
+            userId: this.allMessages[i].messages[j].userId,
+            docId: this.allMessages[i].messages[j].relatedChannelId,
+            timestamp: this.allMessages[i].messages[j].timestamp,
+            name: this.allMessages[i].messages[j].name,
+            channelName: this.allMessages[i].messages[j].channelName,
+          });
+        }
+      }
+      console.log(this.bestMatches);
+    }
   }
 
   /**

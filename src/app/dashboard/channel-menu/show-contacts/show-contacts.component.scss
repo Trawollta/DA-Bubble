@@ -62,6 +62,19 @@
   .contact-item {
     cursor: pointer;
   }
+
+  .delete-btn {
+    background-color: transparent;
+  }
+
+  .close-btn {
+    cursor: pointer;
+  }
+
+  .delete-contact {
+    width: 10px;
+    height: 10px;
+  }
 }
 
 

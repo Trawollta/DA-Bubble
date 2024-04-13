@@ -4,6 +4,7 @@ import { InputfieldComponent } from '../../inputfield/inputfield.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
+import { ChatChannel } from 'app/models/chatChannel.class';
 
 @Component({
   selector: 'app-searchbar',
@@ -24,13 +25,16 @@ export class SearchbarComponent {
   allRelatedChatMsgs: any = [];
   info: any = [];
   bestMatches: any = [];
-  bestMatchesArray: any = [];
-  SIMILARITY_THRESHOLD = 0.5;
+  allMessagesLoaded: boolean = false;
+
   /**
    * main function to direct the value to various function and save relatedChats of msg
    * @param value input string
    */
-  handleInputChange(event: string): void {
+  async handleInputChange(event: string) {
+    if (!this.allMessagesLoaded) {
+      return;
+    }
     if (!event.trim()) {
       this.bestMatches = [];
     } else {
@@ -39,7 +43,37 @@ export class SearchbarComponent {
   }
 
   openChannelWhereMsgIs(data: any) {
-    console.log(data);
+    console.log(data.docId);
+    this.firebaseChannelService
+      .loadChannelData(data.docId)
+      .then((result) => {
+        if (result !== null) {
+          this.globalVariables.openChannel.chatId = result['chatId'];
+          this.globalVariables.openChannel.creator = result['creator'];
+          this.globalVariables.openChannel.desc = result['description'];
+          this.globalVariables.openChannel.id = data;
+          this.globalVariables.openChannel.titel = result['channelName'];
+          console.log(result);
+          console.log(this.globalVariables);
+          this.overwriteChannel();
+        } else {
+          console.error('Das Ergebnis der Kanaldaten ist null.');
+        }
+      })
+      .catch((error) => {
+        console.error('Fehler beim Laden der Kanaldaten:', error);
+      });
+  }
+
+  overwriteChannel() {
+    this.firebaseChannelService
+      .getChannelMessages(this.globalVariables.openChannel.chatId)
+      .then((ergebnis) => {
+        this.globalVariables.chatChannel = new ChatChannel(ergebnis);
+      })
+      .catch((error) => {
+        console.error('Fehler beim Laden der Kanalnachrichten:', error);
+      });
   }
 
   /**
@@ -57,16 +91,8 @@ export class SearchbarComponent {
    * init function which get data and convert them (name/chatId etc.)
    */
   async ngOnInit() {
-    setTimeout(() => {
-      this.getRelatedChats();
-    }, 600);
-
-    await Promise.all([
-      setTimeout(() => {
-        this.getChatMessages();
-      }, 2000),
-    ]);
-    console.log(this.allMessages);
+    await this.getRelatedChats();
+    await this.getChatMessages();
   }
 
   /**
@@ -80,7 +106,7 @@ export class SearchbarComponent {
   /**
    * related chats get initialized with currentUser relatedChats
    */
-  getRelatedChats() {
+  async getRelatedChats() {
     this.relatedChats = this.globalVariables.currentUser.relatedChats;
   }
 
@@ -98,8 +124,8 @@ export class SearchbarComponent {
     this.getCleanNames();
     this.getCleanChannels();
     console.log('Alle Msg:', this.allMessages);
+    this.allMessagesLoaded = true; // Setze die Variable auf true, wenn alle Nachrichten geladen sind
   }
-
   /**
    * functions convert all data to docIds
    */
@@ -166,7 +192,8 @@ export class SearchbarComponent {
    * @param input from inputfield
    */
   compareMsg(input: string) {
-    console.log(this.allMessages)
+    debugger;
+    console.log(this.allMessages);
     this.bestMatches = [];
     for (let i = 0; i < this.allMessages.length; i++) {
       for (let j = 0; j < this.allMessages[i].messages.length; j++) {

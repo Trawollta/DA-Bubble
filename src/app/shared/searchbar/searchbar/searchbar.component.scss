@@ -40,83 +40,31 @@
   clip-path: inset(0 round 30px);
   width: 200px;
   max-width: 500px;
-
-  ul {
-    padding: 0;
-    list-style-type: none;
-
-    li {
-      margin-top: 16px;
-    }
-
-    .categoryName {
-      margin-left: 20px;
-      font-size: 18px;
-      font-weight: 600;
-    }
-  }
 }
 
-.channelList {
+.results {
   border-radius: 20px;
   padding: 4px 20px 4px 20px;
-
-  .img-channel-hash {
-    height: 16px;
-    width: 16px;
-
-  }
-
-  .channel-name {
-    font-size: 18px;
-    font-weight: 400;
-  }
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 
   &:hover {
     background-color: grey;
     cursor: pointer;
 
 
-    .channel-name {
+    .results {
       color: blue;
       font-weight: 700;
     }
   }
 }
 
-.user-chip {
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  transform: scale(0.8);
-
-  &:hover {
-    transform: scale(0.9);
-  }
+.channel-result {
+  display: flex;
+  justify-content: flex-start;
+  font-size: 10px;
+  color: blue;
 }
 
-.user-avatar {
-  height: 35px;
-  width: 35px;
-  border-radius: 50%;
-}
-
-.messageContainer {
-  flex-direction: column;
-
-  .messageHeader {
-    .message-time {
-      font-size: 10px;
-      color: #808080;
-    }
-
-    .user-name {
-      font-size: 16px;
-      font-weight: 500;
-    }
-  }
-
-  .message-channel-name {
-    font-size: 12px;
-    color: #808080;
-  }
-}

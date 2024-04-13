@@ -38,7 +38,7 @@ export class SearchbarComponent {
     }
   }
 
-  log(data: any) {
+  openChannelWhereMsgIs(data: any) {
     console.log(data);
   }
 
@@ -53,6 +53,9 @@ export class SearchbarComponent {
     return data;
   }
 
+  /**
+   * init function which get data and convert them (name/chatId etc.)
+   */
   async ngOnInit() {
     setTimeout(() => {
       this.getRelatedChats();
@@ -71,28 +74,18 @@ export class SearchbarComponent {
    * @param word
    */
   async searchForWord(word: string) {
-    /* await Promise.all([this.getChats(), this.connectChannelWithChannelMsg()]); */
     await this.compareInputWithChannelMessages(word);
   }
 
+  /**
+   * related chats get initialized with currentUser relatedChats
+   */
   getRelatedChats() {
     this.relatedChats = this.globalVariables.currentUser.relatedChats;
   }
 
   /**
-   * convert the object into a array to work with
-   */
-  async jsonConvert() {
-    let jsonstring = JSON.stringify(this.bestMatches);
-    this.bestMatchesArray = await JSON.parse(jsonstring);
-  }
-
-  clearPreviousResult() {
-    this.result = [];
-  }
-
-  /**
-   * here for chahnnels to get the messages inside channels
+   * here for channels to get the messages inside channels
    */
   async getChatMessages() {
     console.log('getChatMessages', this.relatedChats);
@@ -157,7 +150,7 @@ export class SearchbarComponent {
   }
 
   /**
-   *
+   * compare function
    * @param input
    */
   async compareInputWithChannelMessages(input: string) {
@@ -168,7 +161,12 @@ export class SearchbarComponent {
     this.compareMsg(input);
   }
 
+  /**
+   * initilize bestMatches and push all data which include the input to bestMatches
+   * @param input from inputfield
+   */
   compareMsg(input: string) {
+    console.log(this.allMessages)
     this.bestMatches = [];
     for (let i = 0; i < this.allMessages.length; i++) {
       for (let j = 0; j < this.allMessages[i].messages.length; j++) {
@@ -177,19 +175,14 @@ export class SearchbarComponent {
           this.bestMatches.push({
             message: message,
             userId: this.allMessages[i].messages[j].userId,
-            docId: this.allMessages[i].messages[j].relatedChannelId,
+            docId: this.allMessages[i].relatedChannelId,
             timestamp: this.allMessages[i].messages[j].timestamp,
             name: this.allMessages[i].messages[j].name,
             channelName: this.allMessages[i].messages[j].channelName,
           });
         }
       }
-      console.log(this.bestMatches);
     }
-  }
-
-  addUserToMessage(messageArray: any) {
-    console.log(messageArray.userId);
   }
 
   /**
@@ -225,6 +218,9 @@ export class SearchbarComponent {
     }
   }
 
+  /**
+   * convert channels in real channel names
+   */
   async getCleanChannels() {
     if (Array.isArray(this.allMessages) && this.allMessages.length > 0) {
       for (let i = 0; i < this.allMessages.length; i++) {
@@ -253,7 +249,6 @@ export class SearchbarComponent {
           }
         }
       }
-      console.log(this.allMessages);
     }
   }
 }

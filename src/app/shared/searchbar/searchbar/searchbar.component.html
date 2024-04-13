@@ -11,7 +11,7 @@
 
 <div class="search-container" *ngIf="bestMatches.length > 0">
   <!--    -->
-  <div *ngFor="let msg of bestMatches; let i = index" class="results">
+  <div *ngFor="let msg of bestMatches; let i = index" class="results" (click)="openChannelWhereMsgIs(bestMatches[i])">
     <span> {{ bestMatches[i].name }}: </span>
     <span> {{ bestMatches[i].message.substring(0, 10) }}{{ bestMatches[i].message.length > 20 ? '...' : '' }} </span>
     <span class="channel-result"> #{{ bestMatches[i].channelName }} </span>

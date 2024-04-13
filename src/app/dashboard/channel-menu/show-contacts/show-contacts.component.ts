@@ -122,8 +122,9 @@ async log(user:any){
 }
 
  leaveChannel(docId: any) {
-   this.firebaseUserService.leaveChannel(this.globalVariables.channelData.chatId, docId);
-   this.firebaseUserService.leaveChannelUser(this.globalVariables.channelData.chatId, docId);
-   this.globalFunctions.closeEditOverlay()
+  console.log(this.globalVariables)
+    this.firebaseUserService.leaveChannel(this.globalVariables.openChannel.chatId, docId[0]);
+    this.firebaseUserService.leaveChannelUser(this.globalVariables.openChannel.chatId, docId[0]);
+    this.globalFunctions.closeEditOverlay()
  }
 }

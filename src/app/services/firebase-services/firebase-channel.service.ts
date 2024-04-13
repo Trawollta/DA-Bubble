@@ -135,7 +135,9 @@ export class FirebaseChannelService {
     const docId = await this.getDocId(channelId);
     await this.deleteChannelIdFromUsers(channelId);
     const channelDocRef = doc(this.firestore, 'channels', docId[0]);
-    await deleteDoc(channelDocRef);
+    await deleteDoc(channelDocRef)
+    const chatChannelRef = doc(this.firestore, 'chatchannels', channelId)
+    await deleteDoc (chatChannelRef);
     this.firebaseChatService.changeActiveChannel();
   }
 

@@ -34,6 +34,7 @@ export class ShowContactsComponent implements OnInit {
   globalFunctions = inject(GlobalFunctionsService);
   firebaseUserService = inject(FirebaseUserService);
   globalVariables = inject(GlobalVariablesService);
+  
 
   constructor() {}
 
@@ -112,4 +113,17 @@ export class ShowContactsComponent implements OnInit {
       this.globalVariables.isMembersPopupOpen = false;
     }
   }
+
+async log(user:any){
+  console.log(user);
+  let docId = await this.firebaseUserService.getUserDocIdWithName(user.name)
+ this.leaveChannel(docId)
+  console.log(docId);
+}
+
+ leaveChannel(docId: any) {
+   this.firebaseUserService.leaveChannel(this.globalVariables.channelData.chatId, docId);
+   this.firebaseUserService.leaveChannelUser(this.globalVariables.channelData.chatId, docId);
+   this.globalFunctions.closeEditOverlay()
+ }
 }

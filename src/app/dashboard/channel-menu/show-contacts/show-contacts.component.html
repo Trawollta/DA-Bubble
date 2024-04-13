@@ -19,6 +19,7 @@
           <div class="contactContainer" *ngIf="globalVariables.headerShowMembers">
             <img [src]="user.img" alt="user image" class="contact-img">
             <span>{{ user.name }}</span>
+            <button (click)="log(user)" class="delete-btn">X</button>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ export class EditChannelComponent {
     description: false,
   };
 
-  profile: User = { img: '', name: '', isActive: false, email: '', relatedChats:[] };
+  profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
 
   channelBuffer = '';
   descriptionBuffer = '';
@@ -50,23 +50,23 @@ export class EditChannelComponent {
   channelId: string = '';
 
   editChannelDM = false;
-  editChannelDES= false;
+  editChannelDES = false;
   editedName = '';
   editedDescription = '';
   creator: boolean = false;
 
   creatorName: string = '';
 
-  descriptionEdited= false;
+  descriptionEdited = false;
 
-  constructor(private channelService: FirebaseChannelService) {}
+  constructor(private channelService: FirebaseChannelService) { }
 
   async ngOnInit() {
     let idToSearch = this.globalVariables.channelData.id;
     const channelData = await this.firebaseChannelService.loadChannelData(
       idToSearch
     );
-    console.log(channelData);
+    //console.log(channelData);
     if (channelData) {
       this.channel = {
         description: channelData['description'],
@@ -76,11 +76,22 @@ export class EditChannelComponent {
         creator: channelData['creator'],
         channelMember: channelData['members'],
       };
+      this.copyChannelInformationToGlobal();
+
     }
     this.getUserIdToName();
     this.compareCreator();
   }
 
+
+  copyChannelInformationToGlobal() {
+    this.globalVariables.openChannel.chatId = this.channel.chatId;
+    this.globalVariables.openChannel.titel = this.channel.channelName;
+    this.globalVariables.openChannel.creator = this.channel.creator;
+    this.globalVariables.openChannel.desc = this.channel.description;
+  }
+
+  
   compareCreator() {
     if (this.globalVariables.activeID === this.channel.creator) {
       this.creator = true;
@@ -186,5 +197,5 @@ export class EditChannelComponent {
     this.firebaseUpdate.leaveChannelUser(this.channel.chatId, this.globalVariables.activeID);
     this.globalFunctions.closeEditOverlay()
   }
-  
+
 }

@@ -120,6 +120,7 @@ export class ChannelMenuComponent {
     this.globalVariables.openChannel.titel = channel.channelName;
     this.globalVariables.openChannel.id = channel.id;
     this.globalVariables.openChannel.chatId = channel.chatId;
+    this.globalVariables.openChannel.creator = channel.creator;
     this.firebaseChatService.activeChatId = channel.chatId;
     this.globalFunctions.showChat();
   }

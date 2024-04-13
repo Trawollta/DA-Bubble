@@ -7,14 +7,32 @@
   box-sizing: border-box;
   box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.6);
   overflow: hidden;
- 
+
   .contactContainer {
-    @include dFlex($g:15px);
+    @include dFlex($jc: flex-start, $g: 15px);
+    width: 95%;
     font-size: 16px;
-    .contact-img {
-      width: 30px;
-      height: 30px;
-      border-radius: 100%; 
+
+    .userImgName {
+      @include dFlex($g: 15px);
+      cursor: pointer;
+      .contactImg {
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+      }
+    }
+
+  }
+
+  .cCHeader {
+    justify-content: space-between !important;
+    gap: 0;
+
+    .deleteContact {
+      cursor: pointer;
+      width: 10px;
+      height: 10px;
     }
   }
 
@@ -27,24 +45,25 @@
     display: none !important;
   }
 
-  .alert-message{
+  .alert-message {
     color: red;
   }
-  
- .headline {
-    width: 95%;
-    @include dFlex($jc:space-between);
+
+  .headline {
+    width: 100%;
+    @include dFlex($jc: space-between);
     font-size: 18px;
     font-weight: 600;
   }
 }
 
-.overlayChatHeader{
+.overlayChatHeader {
   @include dFlex($fd: column, $g: 10px);
   height: 300px;
   border-radius: 30px 0px 30px 30px;
 }
-.overlayTextInputField{
+
+.overlayTextInputField {
   @include dFlex($fd: column, $jc: flex-start, $g: 10px);
   height: 200px;
   border-radius: 30px;
@@ -52,30 +71,21 @@
 
 .contactListContainer {
   overflow-y: auto;
-  width: 90%;
+  width: 97%;
   height: auto;
 
-  .contact-list {
+  .contactList {
     @include dFlex($fd: column, $ai: flex-start, $g: 4px);
   }
 
-  .contact-item {
-    cursor: pointer;
-  }
-
-  .delete-btn {
-    background-color: transparent;
+  .contactItem {
+    width: 100%;
+    @include dFlex($fd: column, $g: 4px);
   }
 
   .close-btn {
     cursor: pointer;
   }
 
-  .delete-contact {
-    width: 10px;
-    height: 10px;
-  }
+
 }
-
-
-

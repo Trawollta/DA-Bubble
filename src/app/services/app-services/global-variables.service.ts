@@ -110,10 +110,10 @@ export class GlobalVariablesService {
   //this is the object for the active channel information. Used in channel-menu
   openChannel = {
     titel: 'Willkommen',
-    desc: '',
+    desc: 'moin',
     id: 'fsjWrBdDhpg1SvocXmxS',
     chatId: 'NQMdt08FAcXbVroDLhvm',
-    creator: '',
+    creator: 'v7pZ6K5geifCK8a30Epa1YuSlER2',
   };
 
   //this Array contains all users of the active chat

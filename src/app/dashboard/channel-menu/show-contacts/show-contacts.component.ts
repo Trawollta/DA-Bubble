@@ -34,9 +34,9 @@ export class ShowContactsComponent implements OnInit {
   globalFunctions = inject(GlobalFunctionsService);
   firebaseUserService = inject(FirebaseUserService);
   globalVariables = inject(GlobalVariablesService);
-  
 
-  constructor() {}
+
+  constructor() { }
 
   ngOnInit() {
     this.getChannelMembers(this.globalVariables.openChannel.id);
@@ -69,7 +69,7 @@ export class ShowContactsComponent implements OnInit {
   }
 
   openOtherContactsOverlay() {
-    if (this.globalVariables.activeID == this.globalVariables.openChannel.creator) {
+    if (this.checkPermission()) {
       this.globalVariables.showContacts = true;
     } else {
       this.openAlertForm();
@@ -83,9 +83,9 @@ export class ShowContactsComponent implements OnInit {
         this.closeMembers();
         //this.globalFunctions.closeMembers();
       }, 4500);
-    }, 100); 
+    }, 100);
   }
-  
+
 
   /**
    *
@@ -99,11 +99,11 @@ export class ShowContactsComponent implements OnInit {
     this.messageUpdated.emit(this.checkedUsers);
   }
 
-   /**
- * this function closes the showContacts popup by using appClickedOutside from ClickedOutsideDirective
- * but it closes the popup immediately if no additional check will happen >> is the popup open?
- */
-   closeMembers() {
+  /**
+* this function closes the showContacts popup by using appClickedOutside from ClickedOutsideDirective
+* but it closes the popup immediately if no additional check will happen >> is the popup open?
+*/
+  closeMembers() {
     this.closeMember.emit(true);
     //Alex:Ich muss hier nochmal ran. Die Frage: Ist der folgende Code notwendig, wenn ich das Signal raus schicke, dass das Popup geschlossen werden muss?
     if (this.globalVariables.memberlist && !this.globalVariables.isMembersPopupOpen) {
@@ -114,17 +114,19 @@ export class ShowContactsComponent implements OnInit {
     }
   }
 
-async log(user:any){
-  console.log(user);
-  let docId = await this.firebaseUserService.getUserDocIdWithName(user.name)
- this.leaveChannel(docId)
-}
+  async log(user: any) {
+    let docId = await this.firebaseUserService.getUserDocIdWithName(user.name)
+    this.leaveChannel(docId)
+  }
 
- leaveChannel(docId: any) {
-  this.firebaseUserService.leaveChannel(this.globalVariables.openChannel.chatId, docId[0]);
-  this.firebaseUserService.leaveChannelUser(this.globalVariables.openChannel.chatId, docId[0]);
+  leaveChannel(docId: any) {
+    this.firebaseUserService.leaveChannel(this.globalVariables.openChannel.chatId, docId[0]);
+    this.firebaseUserService.leaveChannelUser(this.globalVariables.openChannel.chatId, docId[0]);
+    this.globalFunctions.closeEditOverlay()
+  }
 
-  this.globalFunctions.closeEditOverlay()
- }
+  checkPermission(): boolean {
+    return this.globalVariables.activeID === this.globalVariables.openChannel.creator;
+  }
 
 }

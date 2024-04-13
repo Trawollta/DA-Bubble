@@ -118,13 +118,11 @@ async log(user:any){
   console.log(user);
   let docId = await this.firebaseUserService.getUserDocIdWithName(user.name)
  this.leaveChannel(docId)
-  console.log(docId);
 }
 
  leaveChannel(docId: any) {
-  console.log(this.globalVariables)
-    this.firebaseUserService.leaveChannel(this.globalVariables.openChannel.chatId, docId[0]);
-    this.firebaseUserService.leaveChannelUser(this.globalVariables.openChannel.chatId, docId[0]);
-    this.globalFunctions.closeEditOverlay()
+  this.firebaseUserService.leaveChannel(this.globalVariables.openChannel.chatId, docId[0]);
+  this.firebaseUserService.leaveChannelUser(this.globalVariables.openChannel.chatId, docId[0]);
+  this.globalFunctions.closeEditOverlay()
  }
 }

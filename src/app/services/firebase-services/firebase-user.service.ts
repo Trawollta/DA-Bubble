@@ -29,7 +29,16 @@ export class FirebaseUserService {
   private authService = inject(AuthService);
   private auth = inject(Auth);
   private router = inject(Router);
+
+  unsubUpdateCurrentUser!: () => void;
+
   constructor() { }
+
+  ngOnDestroy() {
+    if (this.unsubUpdateCurrentUser) {
+      this.unsubUpdateCurrentUser(); 
+    }
+  }
 
   getUsersRef() {
     return collection(this.firestore, 'users');
@@ -87,7 +96,7 @@ export class FirebaseUserService {
   }
 
   updateCurrentUser(uid: string) {
-    return onSnapshot(this.getSingleUserRef(uid), (user) => {
+    this.unsubUpdateCurrentUser = onSnapshot(this.getSingleUserRef(uid), (user) => {
       if (user.data()) {
         let logedInUser = new User(user.data());
         this.globalVariables.currentUser = logedInUser;
@@ -99,6 +108,10 @@ export class FirebaseUserService {
 
   async logout() {
     try {
+      if (this.unsubUpdateCurrentUser) {
+        this.unsubUpdateCurrentUser();
+        this.updateUserStatus(this.globalVariables.activeID, false);
+      }
       await this.authService.logout();
       this.globalVariables.activeID = '';
     } catch (error) {

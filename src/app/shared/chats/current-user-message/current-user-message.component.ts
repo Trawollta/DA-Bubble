@@ -95,7 +95,7 @@ export class CurrentUserMessageComponent {
    * this function unsubscribes the containing content
    */
   ngOnDestroy() {
-    this.unsubUser;
+    this.unsubUser();
   }
 
   /**

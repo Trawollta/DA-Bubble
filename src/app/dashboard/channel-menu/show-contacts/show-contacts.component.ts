@@ -70,9 +70,20 @@ export class ShowContactsComponent implements OnInit {
 
   openOtherContactsOverlay() {
     if (this.checkPermission()) {
+      this.closeMembers();
       this.globalVariables.showContacts = true;
     } else {
       this.openAlertForm();
+    }
+  }
+
+  closeMembers() {
+    this.closeMember.emit(true);
+    if (this.globalVariables.memberlist && !this.globalVariables.isMembersPopupOpen) {
+      this.globalVariables.isMembersPopupOpen = true;
+    } else if (this.globalVariables.memberlist && this.globalVariables.isMembersPopupOpen) {
+      this.globalVariables.memberlist = false;
+      this.globalVariables.isMembersPopupOpen = false;
     }
   }
 
@@ -103,16 +114,7 @@ export class ShowContactsComponent implements OnInit {
 * this function closes the showContacts popup by using appClickedOutside from ClickedOutsideDirective
 * but it closes the popup immediately if no additional check will happen >> is the popup open?
 */
-  closeMembers() {
-    this.closeMember.emit(true);
-    //Alex:Ich muss hier nochmal ran. Die Frage: Ist der folgende Code notwendig, wenn ich das Signal raus schicke, dass das Popup geschlossen werden muss?
-    if (this.globalVariables.memberlist && !this.globalVariables.isMembersPopupOpen) {
-      this.globalVariables.isMembersPopupOpen = true;
-    } else if (this.globalVariables.memberlist && this.globalVariables.isMembersPopupOpen) {
-      this.globalVariables.memberlist = false;
-      this.globalVariables.isMembersPopupOpen = false;
-    }
-  }
+
 
   async log(user: any) {
     let docId = await this.firebaseUserService.getUserDocIdWithName(user.name)

@@ -15,10 +15,10 @@ main {
   width: 90dvw;
   max-width: 500px;
 
-   @media screen and (min-width: 800px) {
+  @media screen and (min-width: 800px) {
     max-width: 366px;
     width: auto;
-  } 
+  }
 
   @media screen and (min-width: 900px) {
     width: 366px;
@@ -28,7 +28,7 @@ main {
 .header-wrapper {
   height: 60px;
   border-radius: 30px;
-  @include dFlex($jc:space-between);
+  @include dFlex($jc: space-between);
   text-align: center;
 }
 
@@ -60,8 +60,7 @@ main {
     color: $purple3;
 
     img {
-      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
-        brightness(93%) contrast(103%);
+      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
     }
   }
 }
@@ -123,8 +122,7 @@ main {
     color: #535af1;
 
     img {
-      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
-        brightness(93%) contrast(103%);
+      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
     }
   }
 }
@@ -145,15 +143,16 @@ main {
   align-items: center;
   gap: 0px;
   flex-direction: row;
+
   &:hover {
     color: rgb(83, 90, 241);
     background-color: rgb(236, 238, 254);
   }
+
   img:hover {
     cursor: pointer;
     border-radius: 40px;
-    filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
-      brightness(93%) contrast(103%);
+    filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
   }
 }
 
@@ -196,9 +195,9 @@ main {
   img:hover {
     cursor: pointer;
     border-radius: 40px;
-    filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
-      brightness(93%) contrast(103%);
+    filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
   }
+
   &:hover {
     color: blue;
   }
@@ -211,6 +210,7 @@ main {
   padding: 4px 10px 4px 10px;
   gap: 10px;
   align-items: center;
+
   p {
     font-size: 18px;
     font-weight: 400;
@@ -218,13 +218,15 @@ main {
     letter-spacing: 0em;
     text-align: left;
   }
+
   &:hover {
     color: blue;
     cursor: pointer;
+
     img {
-      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
-        brightness(93%) contrast(103%);
+      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
     }
+
     p {
       color: #535af1;
     }
@@ -264,47 +266,56 @@ main {
     color: #535af1;
 
     img {
-      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg)
-        brightness(93%) contrast(103%);
+      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
     }
   }
 }
 
 .user-wrapper {
-  overflow: auto;
-  height: 93%;
-  border-radius: 30px;
-  display: flex;
-  flex-direction: column;
+ 
+  width: 100%;
+  @include dFlex($fd: column, $g: 8px, $jc: flex-start);
 
-  p {
-    font-family: Nunito;
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 23px;
-    letter-spacing: 0em;
-    text-align: left;
-    align-items: center;
-    display: flex;
-    gap: 10px;
+  .user-detail {
+    width: 100%;
+    @include dFlex($jc: flex-start, $g: 10px);
+  
+
+    :hover {
+      color: #535af1;
+      cursor: pointer;
+    }
+    span{
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 23px;
+    }
+
+    .userImgWithStatus {
+      @include dFlex($ai: flex-end);
+      .userImg {
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+      }
+
+      .status {
+        width: 12px;
+        height: 12px;
+        margin-left: -10px;
+        margin-bottom: 2px;
+        border: 1px solid $white;
+        border-radius: 100%;
+        position: relative;
+        z-index: 2;
+      }
+    }
   }
 
-  img {
-    width: 50px;
-    height: 50px;
-    border-radius: 30px;
-  }
+
 }
 
-.user-detail {
-  display: flex;
-  align-items: center;
 
-  :hover {
-    color: #535af1;
-    cursor: pointer;
-  }
-}
 
 .d-none {
   display: none;

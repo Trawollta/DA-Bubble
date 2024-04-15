@@ -86,6 +86,7 @@ export class ChannelMenuComponent {
   async ngOnInit() {
     await this.globalFunctions.getCollection('channels', this.allChannels);
     await this.globalFunctions.getCollection('users', this.allUsers);
+    console.log(this.allUsers);
   }
 
   async filterChannelsByActiveID(activeID: string) {

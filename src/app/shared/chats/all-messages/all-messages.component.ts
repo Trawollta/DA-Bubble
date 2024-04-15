@@ -122,19 +122,22 @@ export class AllMessagesComponent implements AfterViewChecked {
    * @param messageTimestamp - timestamp of message
    * @returns - boolean
    */
-  showDateBar(messageTimestamp: number, answerTo: string, index: number): boolean {
+  showDateBar(messageTimestamp: number, index: number, message: string): boolean {
     let displayDate = false;
+    if(message === ''){
+      return displayDate = false;
+    }
     if (this.isChat || this.isThread) {
       if (index == 0)
-        displayDate = true;
+        return displayDate = true;
       else {
-        displayDate = (this.lastDisplayedDate.toLocaleDateString() !== new Date(messageTimestamp).toLocaleDateString())
-          && answerTo == '';
+        displayDate = (this.lastDisplayedDate.toLocaleDateString() !== new Date(messageTimestamp).toLocaleDateString());
       }
     }
     if (displayDate && messageTimestamp != 0) {
       this.lastDisplayedDate = new Date(messageTimestamp);
     }
+    //console.log('displayDate',displayDate);
     return displayDate;
   }
 

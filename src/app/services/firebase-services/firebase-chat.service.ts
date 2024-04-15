@@ -154,7 +154,7 @@ export class FirebaseChatService {
 
   toJson(): {} {
     return {
-      messages: this.chatChannel.messages,
+      messages: [],
       relatedChannelId: this.chatChannel.relatedChannelId,
     };
   }

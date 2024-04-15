@@ -17,7 +17,7 @@
         <!-- hier kommt eine ngFor rein, die die Plaketten der Member rein rendert -->
         <img src="assets/img/avatars/Elias_Neumann.svg" alt="" />
         <img class="secondHeadIcon" src="assets/img/avatars/Elias_Neumann.svg" alt="" />
-        <span class="memberCount">3</span>
+        <span class="memberCount">{{ globalVariables.openChannel.memberCount }}</span>
 
       </div>
       <div class="add-contact" (click)="openContactsPopup()">

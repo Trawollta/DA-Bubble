@@ -115,6 +115,7 @@ export class GlobalVariablesService {
     id: 'fsjWrBdDhpg1SvocXmxS',
     chatId: 'NQMdt08FAcXbVroDLhvm',
     creator: 'v7pZ6K5geifCK8a30Epa1YuSlER2',
+    memberCount: 11
   };
 
   //this Array contains all users of the active chat

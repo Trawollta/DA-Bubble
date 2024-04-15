@@ -100,12 +100,12 @@ export class ChannelMenuComponent {
   }
 
   async getChannel(){
-    console.log('HALLO')
+    //console.log('HALLO')
     const filteredChannels = await this.filterChannelsByActiveID(this.globalVariables.activeID);
     if (filteredChannels.length > 0) {
       this.channelToDisplay.push(...filteredChannels);
     }
-    console.log(this.channelToDisplay);
+    //console.log(this.channelToDisplay);
   }
   
 
@@ -122,7 +122,9 @@ export class ChannelMenuComponent {
     this.globalVariables.openChannel.id = channel.id;
     this.globalVariables.openChannel.chatId = channel.chatId;
     this.globalVariables.openChannel.creator = channel.creator;
+    this.globalVariables.openChannel.memberCount = channel.members.length;
     this.firebaseChatService.activeChatId = channel.chatId;
+    console.log('channel',this.globalVariables.openChannel.memberCount);
     this.globalFunctions.showChat();
   }
 

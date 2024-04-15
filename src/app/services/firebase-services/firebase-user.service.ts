@@ -96,6 +96,7 @@ export class FirebaseUserService {
   }
 
   updateCurrentUser(uid: string) {
+    //console.log('this.globalVariables.logout in Update',this.globalVariables.logout);
     this.unsubUpdateCurrentUser = onSnapshot(this.getSingleUserRef(uid), (user) => {
       if (user.data()) {
         let logedInUser = new User(user.data());
@@ -112,6 +113,7 @@ export class FirebaseUserService {
         this.unsubUpdateCurrentUser();
         this.updateUserStatus(this.globalVariables.activeID, false);
       }
+      this.globalVariables.logout = true;
       await this.authService.logout();
       this.globalVariables.activeID = '';
     } catch (error) {

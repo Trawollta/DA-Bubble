@@ -63,6 +63,8 @@ export class SearchbarComponent {
       .catch((error) => {
         console.error('Fehler beim Laden der Kanaldaten:', error);
       });
+
+    this.bestMatches = [];
   }
 
   overwriteChannel() {
@@ -192,8 +194,6 @@ export class SearchbarComponent {
    * @param input from inputfield
    */
   compareMsg(input: string) {
-    debugger;
-    console.log(this.allMessages);
     this.bestMatches = [];
     for (let i = 0; i < this.allMessages.length; i++) {
       for (let j = 0; j < this.allMessages[i].messages.length; j++) {

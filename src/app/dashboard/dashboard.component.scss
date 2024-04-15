@@ -3,16 +3,10 @@
 .dashboard {
   width: 100vw;
   @include dFlex($ai:normal);
- /*  display: flex;
-  justify-content: center; */
   height: calc(100vh - 145px);
   
   .app-container {
     @include dFlex($g:16px, $ai:normal);
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 16px; */
     width: 90%;
     margin-top: 20px;
 
@@ -33,28 +27,21 @@
 
 
 .menu-toggle-btn {
-  @include dFlex($jc:flex-start);
-  /* display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0px; */
-  position: fixed;
-  left: -88px;
+  @include dFlex();
+   position: fixed;
+   width: 238px;
+   height: 46px;
+  left: -96px;
   bottom: 30%;
   transform: rotate(270deg);
   border-radius: 0 0 30px 30px;
   background: $white;
-  // background: var(--White, #fff);
   box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.2);
-  padding: 12px;
   cursor: pointer;
   z-index: 1;
 }
 
 .menu-toggle-btn:hover {
-  // background: var(--purple1, #444df2);
   background: $purple1;
   color: $white;
-  // box-shadow: 0 0 15px var(--purple1, #444df2);
- // box-shadow: 0 0 15px $purple1;
 }

@@ -33,7 +33,7 @@ main {
   padding: 0 24px;
 
   @media screen and (min-width: 700px) {
-    height: 80px;
+    height: 96px;
   }
 
   .headline {
@@ -79,6 +79,7 @@ main {
   .initialuserCurrent {
     @include dFlex($g: 15px, $jc: flex-end, $ai: flex-start);
     position: relative;
+    margin-bottom: 8px;
 
     .userContent {
       .info-area {

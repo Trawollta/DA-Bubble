@@ -51,7 +51,7 @@ export class LogInComponent {
     try {
       const userCredential = await this.authService.loginWithGoogle();
       if (userCredential) {
-        console.log("Erfolgreich mit Google angemeldet", userCredential);
+        //console.log("Erfolgreich mit Google angemeldet", userCredential);
         const uid = userCredential.uid;
         this.globalVariables.activeID = uid;
         this.userService.updateCurrentUser(uid);

@@ -55,29 +55,32 @@ main {
 
 .topic-headline {
   flex: 1;
-  @include dFlex($g: 10px, $jc:flex-start);
-  
-  
+  @include dFlex($g: 10px, $jc: flex-start);
+
+
 
   .headline {
     height: 33px;
     @include dFlex($g: 10px);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     line-height: 22px;
     border-radius: 20px;
-    padding: 4px 20px;
 
-    @media screen and (min-width: 700px) {
+    @media screen and (min-width: 800px) {
+      font-size: 20px;
+      line-height: 22px;
+    }
+
+    @media screen and (min-width: 1000px) {
       font-size: 24px;
-      font-weight: 700;
       line-height: 28px;
     }
 
     &:hover {
       background-color: $background;
       color: $purple3;
-      
+
       cursor: pointer;
 
       img {
@@ -85,12 +88,9 @@ main {
       }
     }
 
-
     img {
       width: 30px;
       height: 30.19px;
-      padding: 11px 8px 11px 8px;
-      gap: 10px;
     }
   }
 }
@@ -104,8 +104,12 @@ main {
     height: 40px;
     @include dFlex();
     border-radius: 30px;
-    padding: 4px 20px;
-    box-sizing: border-box;
+
+    @media screen and (min-width: 900px) {
+      padding: 4px 20px;
+      box-sizing: border-box;
+    }
+
 
     &:hover {
       background-color: $background;
@@ -153,7 +157,8 @@ main {
     height: 100%;
   }
 }
-app-textarea-chat-thread{
+
+app-textarea-chat-thread {
   width: 100%;
   @include dFlex();
 }

@@ -1,19 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputfieldComponent } from '../../inputfield/inputfield.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { ChatChannel } from 'app/models/chatChannel.class';
+import { ClickedOutsideDirective } from 'app/directives/clicked-outside.directive';
 
 @Component({
   selector: 'app-searchbar',
   standalone: true,
   templateUrl: './searchbar.component.html',
   styleUrl: './searchbar.component.scss',
-  imports: [InputfieldComponent, CommonModule],
+  imports: [InputfieldComponent, CommonModule, ClickedOutsideDirective],
 })
 export class SearchbarComponent {
+  @Input() imgName: string = 'search';
   globalVariables = inject(GlobalVariablesService);
   firebaseUserService = inject(FirebaseUserService);
   firebaseChannelService = inject(FirebaseChannelService);
@@ -43,14 +45,9 @@ export class SearchbarComponent {
     }
   }
 
-  handleInputFocus() {
-    const searchIcon = document.querySelector('.search-icon') as HTMLElement;
-    if (searchIcon) {
-      searchIcon.remove(); 
-    }
+  closeUser() {
+    this.bestMatches = [];
   }
-  
-  
 
   openChannelWhereMsgIs(data: any) {
     this.firebaseChannelService

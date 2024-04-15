@@ -81,12 +81,20 @@ export class InputfieldComponent implements OnInit, ControlValueAccessor {
   }
 
   // Funktion zum Wechseln des Bildes bei Fokus
-  onFokus() {
-    this.imgActive = this.imgName + '_black';
+  onFokus(hasFocus: boolean) {
+    if (hasFocus) {
+      this.imgName = '';
+    } else {
+      this.imgName = 'search';
+    }
   }
 
   // Funktion zum Zurücksetzen des Bildes, wenn der Fokus verloren geht
-  onBlur() {
-    this.imgActive = this.imgName;
+  onBlur(hasFocus: boolean) {
+    if (hasFocus) {
+      this.imgName = 'search';
+    } else {
+      this.imgName = '';
+    }
   }
 }

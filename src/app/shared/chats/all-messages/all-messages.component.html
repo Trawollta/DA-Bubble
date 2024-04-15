@@ -1,7 +1,7 @@
 <div class="allMessages">
     <div *ngFor="let message of filterMessages(); let i = index" > 
         <div class="dateBlockContainer">
-            <ng-container *ngIf="showDateBar(message.timestamp, message.answerto, i) && message.message != ''"> <!--  && message.answerto == ''" -->
+            <ng-container *ngIf="showDateBar(message.timestamp, i, message.message)"> 
                 <div class="newDate">
                     <div class="leftBar"></div>
                     <div class="dateContainer">

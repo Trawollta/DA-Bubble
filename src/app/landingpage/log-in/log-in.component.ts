@@ -41,6 +41,7 @@ export class LogInComponent {
       this.globalVariables.activeID = uid;
       await this.userService.updateUserStatus(uid, true);
       this.userService.updateCurrentUser(uid);
+      this.globalVariables.logout = false;
       this.router.navigate(['/dashboard']);
     } catch (error) {
     }
@@ -54,6 +55,7 @@ export class LogInComponent {
         const uid = userCredential.uid;
         this.globalVariables.activeID = uid;
         this.userService.updateCurrentUser(uid);
+        this.globalVariables.logout = false;
         const userExists = await this.userService.userExists(uid);
         if (!userExists) {
           await this.userService.addUser(userCredential.uid, {

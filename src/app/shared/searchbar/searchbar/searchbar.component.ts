@@ -25,6 +25,7 @@ export class SearchbarComponent {
   allRelatedChatMsgs: any = [];
   info: any = [];
   bestMatches: any = [];
+  inputOptionClasses: string[] = ['search-icon'];
   allMessagesLoaded: boolean = false;
 
   /**
@@ -42,8 +43,16 @@ export class SearchbarComponent {
     }
   }
 
+  handleInputFocus() {
+    const searchIcon = document.querySelector('.search-icon') as HTMLElement;
+    if (searchIcon) {
+      searchIcon.remove(); 
+    }
+  }
+  
+  
+
   openChannelWhereMsgIs(data: any) {
-    console.log(data.docId);
     this.firebaseChannelService
       .loadChannelData(data.docId)
       .then((result) => {
@@ -53,8 +62,6 @@ export class SearchbarComponent {
           this.globalVariables.openChannel.desc = result['description'];
           this.globalVariables.openChannel.id = data;
           this.globalVariables.openChannel.titel = result['channelName'];
-          console.log(result);
-          console.log(this.globalVariables);
           this.overwriteChannel();
         } else {
           console.error('Das Ergebnis der Kanaldaten ist null.');
@@ -116,7 +123,6 @@ export class SearchbarComponent {
    * here for channels to get the messages inside channels
    */
   async getChatMessages() {
-    console.log('getChatMessages', this.relatedChats);
     for (let i = 0; i < this.relatedChats.length; i++) {
       let messages = await this.firebaseChannelService.getChannelMessages(
         this.relatedChats[i]
@@ -125,9 +131,9 @@ export class SearchbarComponent {
     }
     this.getCleanNames();
     this.getCleanChannels();
-    console.log('Alle Msg:', this.allMessages);
-    this.allMessagesLoaded = true; // Setze die Variable auf true, wenn alle Nachrichten geladen sind
+    this.allMessagesLoaded = true;
   }
+
   /**
    * functions convert all data to docIds
    */

@@ -9,11 +9,11 @@
   placeholder="Code learning durchsuchen"
 ></app-inputfield>
 
-<div class="search-container" *ngIf="bestMatches.length > 0">
+<div class="search-results" *ngIf="bestMatches.length > 0">
   <!--    -->
-  <div *ngFor="let msg of bestMatches; let i = index" class="results" (click)="openChannelWhereMsgIs(bestMatches[i])">
-    <span> {{ bestMatches[i].name }}: </span>
-    <span> {{ bestMatches[i].message.substring(0, 10) }}{{ bestMatches[i].message.length > 20 ? '...' : '' }} </span>
+  <div *ngFor="let msg of bestMatches; let i = index" class="search-result" (click)="openChannelWhereMsgIs(bestMatches[i])">
+    <span class="name-content"> {{ bestMatches[i].name }}: </span>
+    <span class="name-content"> {{ bestMatches[i].message.substring(0, 10) }}{{ bestMatches[i].message.length > 20 ? '...' : '' }} </span>
     <span class="channel-result"> #{{ bestMatches[i].channelName }} </span>
   </div>
 </div>

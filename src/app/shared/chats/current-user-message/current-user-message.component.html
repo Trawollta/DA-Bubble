@@ -6,7 +6,6 @@
         <span class="username">{{ user.name }}</span>
       </div>
       <div class="speech-bubble-current-user" (click)="onSelectMessage()">
-        <!-- (click)="openEmojis()" -->
         <span class="speech-bubble-current-user-text"
           *ngIf="messageInfo.message !== '' || !globalVariables.editMessage || !activeMessage">{{ messageInfo.message
           }}</span>
@@ -22,26 +21,29 @@
 
         </div>
       </div>
-      <app-reactions class="reaction-field" *ngIf="openReaction" [message]="message"
-        [originalMessage]="originalMessage"></app-reactions>
-      <div class="tooltip">
-        <div class="reaction-emojis">
-          <ng-container *ngFor="let emoji of message.emoji; let index = index">
-            <span class="reaction-emoji-field" *ngIf="emoji.userId && emoji.userId.length > 0"
-              (click)="addUserIdToEmoji(emoji, index)">
-              {{ emoji.icon }} {{ emoji.userId.length }}
-            </span>
-          </ng-container>
-          <span class="tooltiptext" *ngIf="mouseover">
-            {{ hoverUser }}
-            <ng-container *ngIf="+count > 1">
-              & {{ count }} Personen
-            </ng-container>
-          </span>
-          
-        </div>
-      </div>
+      <app-reactions class="reaction-field" 
+        *ngIf="openReaction" [message]="message"
+        [originalMessage]="originalMessage">
+      </app-reactions>
 
+        <div class="reaction-emojis">
+          <ng-container *ngFor="let emoji of message.emoji let index = index">
+            <div class="singleEmojiContainer"
+            (mouseenter)="onMouseOver(index)"
+            (mouseleave)="onMouseOut()">
+              <span class="reaction-emoji-field" 
+                *ngIf="emoji.userId && emoji.userId.length > 0"
+                (click)="addUserIdToEmoji(emoji, index)">
+                {{ emoji.icon }} {{ emoji.userId.length }}
+              </span>
+              <div class="tooltiptext">
+                <span *ngIf="mouseover && hoverIndex === index">{{ hoverUser }}</span>
+                <span *ngIf="count > 0 && hoverIndex === index"> & {{ count }} Person</span><span
+                  *ngIf="count > 1">en</span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
       <div *ngIf="!isThread && !globalVariables.isUserChat" class="replie-wrapper">
         <div class="replie-text" (click)="openAnswers()">
           <span *ngIf="answercount !== 0">{{ answercount }}</span><span> Antwort</span><span

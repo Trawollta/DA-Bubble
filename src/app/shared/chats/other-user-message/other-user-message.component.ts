@@ -11,9 +11,6 @@ import { FirebaseChatService } from 'app/services/firebase-services/firebase-cha
 import {
   Firestore,
   doc,
-  collection,
-  onSnapshot,
-  getDoc,
   updateDoc,
   arrayRemove,
 } from '@angular/fire/firestore';
@@ -48,7 +45,6 @@ export class OtherUserMessageComponent {
   openReaction: boolean = false;
   @Input() message: any;
   @Input() isThread: boolean = false;
-  // @Input() userName: string = '';
 
   emojiArray: Emoji[] = [];
   postingTime: string | null = null;
@@ -66,20 +62,17 @@ export class OtherUserMessageComponent {
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
-  // messageImgUrl: string = '';
-  // messageText: string = '';
-  // textAfterUrl: string = '';
 
   profile: User = { img: '', name: '', isActive: false, email: '', relatedChats: [] };
   mouseover: boolean = false;
   hoverUser: string = '';
-  count: string = '';
+  hoverIndex: number = 0;
+  count: number = 0;
   isImage: boolean = false;
 
   constructor(private elementRef: ElementRef) {
 
   }
-
 
   async getUser2(id: string) {
     this.user = new User(await this.firebaseUser.getUserData(id));
@@ -94,9 +87,7 @@ export class OtherUserMessageComponent {
     this.fillAnswerVariables();
     this.cloneOriginalMessage();
     this.messageInfo = this.globalFunctions.checkMessage(this.message.message);
-    // this.isImage = this.globalFunctions.checkMessage(this.message.message).hasUrl;
     this.isImage = this.messageInfo.hasUrl;
-
   }
 
 
@@ -203,27 +194,27 @@ export class OtherUserMessageComponent {
    *
    * @returns - name of first user of emoji
    */
-  async getFirstUserOfEmoji() {
-    let lenght = this.message.emoji[0].userId.length - 1;
-    let userId = this.message.emoji[0].userId[0];
+  async getFirstUserOfEmoji(index: number) {
+    let length = this.message.emoji[index].userId.length;
+    let userId = this.message.emoji[index].userId[0];
     if (userId !== '') {
-      let x = await this.firebaseUpdate.getUserData(userId);
-      this.profile = new User(x);
+      let userData = await this.firebaseUpdate.getUserData(userId);
+      this.profile = new User(userData);
       this.hoverUser = this.profile.name;
-      this.count = lenght.toString();
+      this.count = length - 1;
     }
   }
 
-  @HostListener('mouseover')
-  onMouseOver() {
-    if (this.message.emoji[0].icon) {
+  onMouseOver(index: number) {
+    if (this.message.emoji[index].icon) {
       this.mouseover = true;
-      this.getFirstUserOfEmoji();
+      this.hoverIndex = index;
+      this.getFirstUserOfEmoji(index);
     }
   }
 
-  @HostListener('mouseout')
   onMouseOut() {
     this.mouseover = false;
   }
+ 
 }

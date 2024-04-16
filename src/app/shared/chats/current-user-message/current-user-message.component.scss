@@ -11,12 +11,12 @@
 
   .current-user-content {
     @include dFlex($g: 8px);
-  
+
 
     .info-area {
 
       .info-area-wrapper {
-  
+
         @include dFlex($g: 20px, $jc: flex-end);
         height: 25px;
 
@@ -50,18 +50,18 @@
           flex: 1;
           border-radius: 20px;
           resize: none;
-      
+
           &:focus-visible {
             outline: 0;
           }
         }
-       
-        img{
-            max-width: 200px;
-            width: 100%;
-            height: auto;
-          }
-       
+
+        img {
+          max-width: 200px;
+          width: 100%;
+          height: auto;
+        }
+
       }
 
       .reaction-btn {
@@ -70,16 +70,17 @@
         border-radius: 20px;
         gap: 10px;
       }
+
       .replie-wrapper {
         max-height: 25px;
-        @include dFlex($g: 20px, $fd: row, $jc: flex-start);
+        @include dFlex($g: 20px, $jc: flex-start, $fd:row-reverse);
 
         .replie-text {
           font-size: 16px;
           font-weight: 400;
           line-height: 25px;
           letter-spacing: 0em;
-          text-align: left;
+          text-align: right;
           color: $purple3;
           width: 100px;
 
@@ -92,15 +93,13 @@
         .timestamp-text {
           font-size: 12px;
           font-weight: 400;
-          /* text-align: left;
-          display: flex; */
         }
       }
     }
   }
 
   .user {
-   
+
     img {
       width: 50px;
       height: 50px;
@@ -110,69 +109,38 @@
 }
 
 .reaction-field {
-  @include dFlex($jc:flex-start, $fd:column, $ai:flex-start);
+  @include dFlex($jc: flex-start, $fd: column, $ai: flex-start);
   position: absolute;
   top: 0;
   left: 0;
-}
-
-.reaction-emojis {
-  @include dFlex($jc:flex-start);
-  gap: 5px;
-  padding-top: 10px;
-  padding-bottom: 5px;
-}
-
-.reaction-emoji-field {
-  @include dFlex();
-  width: 40px;
-  height: 20px;
-  border: 1px solid $light_purple;
-  
-  border-radius: 10px;
-  &:hover {
-    border-color: $purple1;
-  }
 }
 
 .d-none {
   display: none;
 }
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-} 
+.reaction-emojis {
+  @include dFlex($g: 4px, $jc: flex-end);
+  height: 37px;
 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
+  .singleEmojiContainer {
+    position: relative;
+
+    .reaction-emoji-field {
+      @include dFlex($g: 4px, $jc: flex-start);
+      width: 40px;
+      height: 20px;
+      border: 1px solid $light_purple;
+      border-radius: 10px;
+
+      &:hover {
+        border-color: $purple1;
+      }
+    }
+  }
 }
 
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
-
-.tooltip:hover .tooltiptext {
+.singleEmojiContainer:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
 }

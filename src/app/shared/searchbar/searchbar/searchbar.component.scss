@@ -47,3 +47,13 @@
   color: #007bff;
   cursor: pointer;
 }
+
+@media (max-width: 900px) {
+  .search-results {
+    width: 250px;
+  }
+
+  .searchBarContainer {
+    width: 250px;
+  }
+}

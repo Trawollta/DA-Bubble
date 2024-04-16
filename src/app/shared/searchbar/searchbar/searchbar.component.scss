@@ -1,16 +1,16 @@
 .searchBarContainer {
-  width: 500px;
+/*   width: 500px; */
   display: flex;
 }
 
 
 .search-results {
   position: absolute;
-  width: 480px;
+  width: 100%;
   display: flex;
-  background-color: #fff; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-  z-index: 2; 
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
   border: 1px solid black;
   border-radius: 20px;
   overflow: hidden;
@@ -18,6 +18,7 @@
   max-height: 300px;
   overflow-y: auto;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .search-result {
@@ -48,12 +49,3 @@
   cursor: pointer;
 }
 
-@media (max-width: 900px) {
-  .search-results {
-    width: 250px;
-  }
-
-  .searchBarContainer {
-    width: 250px;
-  }
-}

@@ -50,10 +50,9 @@ section {
         }
     }
 
-    .searchBarContainer {
-        display: block;
-        min-width: 50px;
+    app-searchbar {
         flex: 1;
+        position: relative;
     }
 
 

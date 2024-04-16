@@ -4,6 +4,12 @@ main {
   background-color: $background;
 }
 
+app-searchbar {
+  flex: 1;
+  position: relative;
+}
+
+
 .channel-menu {
   overflow: hidden;
   height: 100%;

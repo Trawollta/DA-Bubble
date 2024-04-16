@@ -1,12 +1,18 @@
 @import './../../../styles.scss';
 section {
     @include dFlex($fd: column, $g: 30px);
-    margin: 800px 200px;
+    margin: 80px 20px;
     width: 90%;
+    overflow:hidden;
 }
 
 header {
     @include dFlex($jc: flex-start);
+    width: 100%;
+}
+
+.content {
+    overflow-y: auto;
     width: 100%;
 }
 
@@ -24,7 +30,13 @@ header {
 }
 
 h2 {
-    font-size: 46px;
+    font-size: 24px;
+    color: $purple1;
+    margin: 0;
+}
+
+h3 {
+    font-size: 18px;
     color: $purple1;
     margin: 0;
 }
@@ -48,7 +60,7 @@ h2 {
         font-size: 14px;
     }
     h2 {
-        font-size: 30px;
+        font-size: 24px;
         margin: 0;
     }
     .info {

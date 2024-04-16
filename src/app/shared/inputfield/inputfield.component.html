@@ -2,8 +2,8 @@
     <div *ngIf="imgName!=''" class="input-icon-img" [ngClass]="optionClasses">
         <img [ngStyle]="{'height': imgSize}" src="assets/img/input-imgs/{{imgActive}}.svg">
     </div>
-    <input *ngIf="type === 'email'" [ngClass]="classes" type={{type}} id={{id}} placeholder={{placeholder}} [(ngModel)]="value" (ngModelChange)="onValueChange($event)" [required]="required" email (focus)="onFokus(true)" (blur)="onFocusOut()" />
-    <input *ngIf="type === 'password'" [ngClass]="classes" type={{type}} id={{id}} placeholder={{placeholder}} [(ngModel)]="value" (ngModelChange)="onValueChange($event)" [required]="required" (focus)="onFokus(true)" (blur)="onFocusOut()">
-    <input *ngIf="type === 'text'" [ngClass]="classes" type={{type}} id={{id}} placeholder={{placeholder}} [(ngModel)]="value" (ngModelChange)="onValueChange($event)" [required]="required" (focus)="onFokus(true)" (blur)="onFocusOut()">
-    <input *ngIf="type === 'search'" [ngClass]="classes" type={{type}} placeholder={{placeholder}} [(ngModel)]="value" (focus)="onFokus(true)" (blur)="onBlur(false)" (input)="onInputChange($event)">
+    <input *ngIf="type === 'email'" [ngClass]="classes" type={{type}} id={{id}} placeholder={{placeholder}} [(ngModel)]="value" (ngModelChange)="onValueChange($event)" [required]="required" email (focus)="onFokus()" (blur)="onFocusOut()" />
+    <input *ngIf="type === 'password'" [ngClass]="classes" type={{type}} id={{id}} placeholder={{placeholder}} [(ngModel)]="value" (ngModelChange)="onValueChange($event)" [required]="required" (focus)="onFokus()" (blur)="onFocusOut()">
+    <input *ngIf="type === 'text'" [ngClass]="classes" type={{type}} id={{id}} placeholder={{placeholder}} [(ngModel)]="value" (ngModelChange)="onValueChange($event)" [required]="required" (focus)="onFokus()" (blur)="onFocusOut()">
+    <input *ngIf="type === 'search'" [ngClass]="classes" type={{type}} placeholder={{placeholder}} [(ngModel)]="value" (focus)="onFokus()" (blur)="onBlur()"  (mouseenter)="onMouseEnter()" (input)="onInputChange($event)">
 </div>

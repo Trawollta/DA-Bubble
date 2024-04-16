@@ -66,7 +66,6 @@ export class CurrentUserMessageComponent {
   mouseover: boolean = false;
   hoverUser: string = '';
   openReaction: boolean = false;
-  
 
   unsubUser;
   userId: string = 'guest';
@@ -256,6 +255,7 @@ export class CurrentUserMessageComponent {
   onMouseOut() {
     this.mouseover = false;
   }
+
 
 
 

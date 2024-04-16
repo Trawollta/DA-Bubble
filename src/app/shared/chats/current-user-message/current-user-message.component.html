@@ -33,8 +33,12 @@
             </span>
           </ng-container>
           <span class="tooltiptext" *ngIf="mouseover">
-            {{ hoverUser }} & {{ count }} Personen
+            {{ hoverUser }}
+            <ng-container *ngIf="+count > 1">
+              & {{ count }} Personen
+            </ng-container>
           </span>
+          
         </div>
       </div>
 

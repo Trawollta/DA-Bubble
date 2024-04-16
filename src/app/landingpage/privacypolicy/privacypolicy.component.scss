@@ -1,7 +1,7 @@
 @import './../../../styles.scss';
 section {
     @include dFlex($fd: column, $g: 30px);
-    margin: 80px 20px;
+    margin: 800px 200px;
     width: 90%;
 }
 

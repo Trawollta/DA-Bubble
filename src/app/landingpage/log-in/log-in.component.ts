@@ -39,7 +39,6 @@ export class LogInComponent {
       const userCredential = await this.authService.login(email, password);
       const uid = userCredential.user.uid;
       this.globalVariables.activeID = uid;
-      await this.userService.updateUserStatus(uid, true);
       this.userService.updateCurrentUser(uid);
       this.globalVariables.logout = false;
       this.router.navigate(['/dashboard']);

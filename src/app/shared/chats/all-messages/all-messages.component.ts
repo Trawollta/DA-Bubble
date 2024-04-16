@@ -137,7 +137,6 @@ export class AllMessagesComponent implements AfterViewChecked {
     if (displayDate && messageTimestamp != 0) {
       this.lastDisplayedDate = new Date(messageTimestamp);
     }
-    //console.log('displayDate',displayDate);
     return displayDate;
   }
 

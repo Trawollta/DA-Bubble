@@ -54,14 +54,9 @@ export class EmojiContainerComponent {
       const { character, codePoint } = emoji;
       this.emojiList.push({ character, codePoint });      
     });
-    //console.log(this.emojiList);
   }
 
   takeEmoji(emoji: Emoji, isAddToMessage: boolean){
-    
-   /*  this.globalVariables.selectedEmoji.character = emoji.character;
-    this.globalVariables.selectedEmoji.codePoint = emoji.codePoint; */
-    
     if(isAddToMessage){
       this.addEmoji.emit(emoji.character);
     }

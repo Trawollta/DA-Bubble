@@ -32,20 +32,6 @@ export class HeaderComponent {
   constructor() {}
 
   ngOnInit(){
-   /*  console.log('Die globalen Variablen:', this.globalVariables);
-    setTimeout(() => {
-      console.log('Der aktuelle Nutzer 200: ',this.globalVariables.currentUser);
-  }, 200);
-  setTimeout(() => {
-    console.log('Der aktuelle Nutzer 400: ',this.globalVariables.currentUser);
-}, 400);
-setTimeout(() => {
-  console.log('Der aktuelle Nutzer 600: ',this.globalVariables.currentUser);
-}, 600);
-    setTimeout(() => {
-      console.log('Der aktuelle Nutzer 1000: ',this.globalVariables.currentUser);
-  }, 1000); */
-    
   }
 
 
@@ -103,7 +89,6 @@ setTimeout(() => {
     await this.compareInputWithChannelMessages(word);
     this.clearPreviousResult();
     this.jsonConvert();
-    console.log(this.bestMatches);
   }
 
   /**
@@ -141,7 +126,6 @@ setTimeout(() => {
         );
       this.allChannels.push(channels);
     }
-    console.log(this.allChannels);
     this.getEachChannelWithDocID();
   }
 
@@ -239,6 +223,5 @@ setTimeout(() => {
   }
 
   addUserToMessage(messageArray: any) {
-    console.log(messageArray.userId);
   }
 }

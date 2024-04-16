@@ -122,16 +122,6 @@ export class GlobalFunctionsService {
     }
   }
 
-/* 
-  toggleOverlays() {
-    // console.log(`Vorher - channel: ${this.channel}, adduser: ${this.adduser}`);
-    this.globalVariables.showAddChannel = false;
-    this.globalVariables.adduser = true;
-    // console.log('input feld Channel: ', this.globalVariables.newChannel);
-    // console.log(`Nachher - channel: ${this.channel}, adduser: ${this.adduser}`);
-    document.body.style.overflow = 'hidden';
-  } */
-
   stopPropagation(e: Event) {
     e.stopPropagation();
   }

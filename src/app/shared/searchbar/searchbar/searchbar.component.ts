@@ -144,7 +144,6 @@ export class SearchbarComponent {
         this.allChannels.push(channels);
       }
     }
-    console.log(this.allChannels);
     this.getEachChannelWithDocID();
   }
 

@@ -66,7 +66,6 @@ export class EditChannelComponent {
     const channelData = await this.firebaseChannelService.loadChannelData(
       idToSearch
     );
-    //console.log(channelData);
     if (channelData) {
       this.channel = {
         description: channelData['description'],

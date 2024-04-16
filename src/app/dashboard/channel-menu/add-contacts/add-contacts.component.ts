@@ -155,7 +155,6 @@ export class AddContactsComponent implements OnInit {
    * @returns - string - chatId
    */
   async addChatForChannelGetChatId(): Promise<string> {
-    console.log('channelId in add chat:', this.addedChannelId);
     let id = '';
     await this.firebaseChatService
       .addChat(this.addedChannelId, 'chatchannels')
@@ -174,8 +173,6 @@ export class AddContactsComponent implements OnInit {
    * @param chatId - string
    */
   async updateChannelWithChatId(chatId: string) {
-    console.log('channelId in update chat:', this.addedChannelId);
-    console.log('chatId in update chat:', chatId);
     await this.firebaseChannelService.updateChannel(this.addedChannelId, {
       chatId: chatId,
     });
@@ -204,7 +201,6 @@ export class AddContactsComponent implements OnInit {
       members: selectedUserIds,
       creator: this.globalVariables.activeID,
     };
-    //console.log('newChannelData: ', newChannelData);
     return newChannelData;
   }
 

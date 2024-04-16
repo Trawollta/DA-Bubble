@@ -34,7 +34,6 @@ export class FirebaseChannelService {
   }
 
   async updateChannel(channelId: string, item: any) {
-    console.log(`Aktualisiere Kanal ${channelId} mit `, item);
     const docRef = doc(this.firestore, 'channels', channelId);
     return updateDoc(docRef, item)
       .then(() => console.log('Daten erfolgreich aktualisiert'))
@@ -81,8 +80,6 @@ export class FirebaseChannelService {
     const docRef = doc(this.firestore, 'channels', channelId);
     return onSnapshot(docRef, (doc) => {
       if (doc.exists()) {
-        console.log('Aktuelle Kanaldaten:', doc.data());
-        // Behandle die aktualisierten Daten, z.B. durch Aktualisierung des UI
       } else {
         console.log('Kein Dokument gefunden!');
       }
@@ -121,7 +118,6 @@ export class FirebaseChannelService {
       await updateDoc(channelRef, {
         members: arrayUnion(userId),
       });
-      console.log('Benutzer erfolgreich zum Kanal hinzugefügt');
     } catch (error) {
       console.error('Fehler beim Hinzufügen des Benutzers zum Kanal:', error);
     }
@@ -158,7 +154,6 @@ export class FirebaseChannelService {
   }
 
   async deleteChannelIdFromUsers(chatId: string) {
-    debugger;
     let usersCollectionRef = collection(this.firestore, 'users');
     const querySnapshot = await getDocs(usersCollectionRef);
     querySnapshot.forEach(async (userDoc) => {
@@ -173,7 +168,6 @@ export class FirebaseChannelService {
         );
         const userDocRef = doc(this.firestore, 'users', userDoc.id);
         await updateDoc(userDocRef, { relatedChats: updatedRelatedChats });
-        console.log(`Chat ID removed from user ${userDoc.id}`);
       }
     });
   }

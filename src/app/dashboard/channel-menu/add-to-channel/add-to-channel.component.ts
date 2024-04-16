@@ -87,7 +87,6 @@ export class AddToChannelComponent implements OnDestroy {
 
   ngOnInit(): void {
     this.globalFunctions.getCollection('users', this.allUsers);
-    console.log(this.allUsers);
   }
 
   ngOnDestroy() {

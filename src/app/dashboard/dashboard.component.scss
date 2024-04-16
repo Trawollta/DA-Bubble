@@ -4,6 +4,8 @@
   width: 100vw;
   @include dFlex($ai:normal);
   height: calc(100vh - 145px);
+  max-width: 1920px;
+  margin: auto;
   
   .app-container {
     @include dFlex($g:16px, $ai:normal);

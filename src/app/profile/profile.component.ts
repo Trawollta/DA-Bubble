@@ -66,8 +66,6 @@ export class ProfileComponent {
    * this function just shows the edit elements
    */
   editProfile() {
-    console.log('this.profile: ',this.profile);
-    console.log('Der aktuelle Nutzer: ',this.globalVariables.currentUser);
     this.nameBuffer = this.profile.name;
     this.emailBuffer = this.profile.email;
     this.globalVariables.showEditProfile = true;

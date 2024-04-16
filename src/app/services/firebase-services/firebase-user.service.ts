@@ -96,7 +96,6 @@ export class FirebaseUserService {
   }
 
   updateCurrentUser(uid: string) {
-    //console.log('this.globalVariables.logout in Update',this.globalVariables.logout);
     this.unsubUpdateCurrentUser = onSnapshot(this.getSingleUserRef(uid), (user) => {
       if (user.data()) {
         let logedInUser = new User(user.data());
@@ -145,7 +144,6 @@ export class FirebaseUserService {
     const docIds: string[] = [];
     querySnapshot.forEach((doc) => {
       docIds.push(doc.id);
-      console.log(doc.id, ' => ', doc.data());
     });
     return docIds;
   }
@@ -180,7 +178,6 @@ export class FirebaseUserService {
             (chatId: string) => chatId !== channelId
           );
           updateDoc(userDocRef, { relatedChats: updatedRelatedChats });
-          console.log('Erfolgreich');
         } else {
           console.log('Benutzerdokument nicht gefunden');
         }
@@ -201,7 +198,6 @@ export class FirebaseUserService {
             (chatId: string) => chatId !== userId
           );
           updateDoc(channelDocRef, { members: updatedRelatedChats });
-          console.log('Erfolgreich');
         } else {
           console.log('Benutzerdokument nicht gefunden');
         }
@@ -218,7 +214,6 @@ export class FirebaseUserService {
     const docIds: string[] = [];
     querySnapshot.forEach((doc) => {
       docIds.push(doc.id);
-      console.log(doc.id, ' => ', doc.data());
     });
     return docIds;
   }

@@ -21,7 +21,7 @@ import { SearchbarComponent } from 'app/shared/searchbar/searchbar/searchbar.com
     CommonModule,
     AddNewChannelComponent,
     InputfieldComponent,
-    SearchbarComponent
+    SearchbarComponent,
   ],
 })
 export class ChannelMenuComponent {
@@ -86,7 +86,6 @@ export class ChannelMenuComponent {
   async ngOnInit() {
     await this.globalFunctions.getCollection('channels', this.allChannels);
     await this.globalFunctions.getCollection('users', this.allUsers);
-    console.log(this.allUsers);
   }
 
   async filterChannelsByActiveID(activeID: string) {
@@ -95,19 +94,18 @@ export class ChannelMenuComponent {
       if (channel.members.includes(activeID)) {
         channelsWithActiveID.push(channel);
       }
-    })
+    });
     return channelsWithActiveID;
   }
 
-  async getChannel(){
-    //console.log('HALLO')
-    const filteredChannels = await this.filterChannelsByActiveID(this.globalVariables.activeID);
+  async getChannel() {
+    const filteredChannels = await this.filterChannelsByActiveID(
+      this.globalVariables.activeID
+    );
     if (filteredChannels.length > 0) {
       this.channelToDisplay.push(...filteredChannels);
     }
-    //console.log(this.channelToDisplay);
   }
-  
 
   /**
    * this funktion sets the flag to show the header for channels and take over information of the related channel object to global variables
@@ -124,7 +122,6 @@ export class ChannelMenuComponent {
     this.globalVariables.openChannel.creator = channel.creator;
     this.globalVariables.openChannel.memberCount = channel.members.length;
     this.firebaseChatService.activeChatId = channel.chatId;
-    console.log('channel',this.globalVariables.openChannel.memberCount);
     this.globalFunctions.showChat();
   }
 

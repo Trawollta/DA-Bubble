@@ -13,7 +13,6 @@ import {
   collection,
   onSnapshot,
   updateDoc,
-  arrayUnion,
   arrayRemove,
 } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
@@ -72,15 +71,9 @@ export class CurrentUserMessageComponent {
   answerKey: string = '';
   answercount: number = 0;
   lastAnswerTime: number = 0;
-  //for edit message
-  //downloadURL = '';
-  //downloadURLAlias = ''
-  //messageImgUrl: string = '';
-  // messageText: string = '';
-  // textAfterUrl: string = '';
-  // notAllowedChars: string = '';
 
-  count = '';
+  hoverIndex: number = 0;
+  count: number = 0;
   isImage: boolean = false;
 
   constructor(
@@ -232,31 +225,27 @@ export class CurrentUserMessageComponent {
    *
    * @returns - name of first user of emoji
    */
-  async getFirstUserOfEmoji() {
-    let lenght = this.message.emoji[0].userId.length - 1;
-    let userId = this.message.emoji[0].userId[0];
+  async getFirstUserOfEmoji(index: number) {
+    let length = this.message.emoji[index].userId.length;
+    let userId = this.message.emoji[index].userId[0];
     if (userId !== '') {
-      let x = await this.firebaseUpdate.getUserData(userId);
-      this.profile = new User(x);
+      let userData = await this.firebaseUpdate.getUserData(userId);
+      this.profile = new User(userData);
       this.hoverUser = this.profile.name;
-      this.count = lenght.toString();
+      this.count = length - 1;
     }
   }
 
-  @HostListener('mouseover')
-  onMouseOver() {
-    if (this.message.emoji[0].icon) {
+  onMouseOver(index: number) {
+    if (this.message.emoji[index].icon) {
       this.mouseover = true;
-      this.getFirstUserOfEmoji();
+      this.hoverIndex = index;
+      this.getFirstUserOfEmoji(index);
     }
   }
 
-  @HostListener('mouseout')
   onMouseOut() {
     this.mouseover = false;
   }
-
-
-
-
+ 
 }

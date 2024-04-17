@@ -22,23 +22,24 @@ import { CommonModule } from '@angular/common';
 export class DashboardComponent {
   globalVariables = inject(GlobalVariablesService);
 
-  
 
-  
+
+
   constructor() {
     this.globalVariables.login = false;
+    this.globalVariables.imprintActive = false;
   }
-  ngOnInit(){
+  ngOnInit() {
     this.globalVariables.isChatVisable = window.innerWidth > 800;
     this.globalVariables.bufferThreadOpen = this.globalVariables.showThread;
   }
 
   toggleChannelMenu() {
     this.globalVariables.showChannelMenu = !this.globalVariables.showChannelMenu;
-    if(this.globalVariables.desktop800 && !this.globalVariables.desktop1200 && this.globalVariables.bufferThreadOpen)
-    this.globalVariables.showThread = !this.globalVariables.showThread;
+    if (this.globalVariables.desktop800 && !this.globalVariables.desktop1200 && this.globalVariables.bufferThreadOpen)
+      this.globalVariables.showThread = !this.globalVariables.showThread;
     this.globalVariables.isMenuOpen = !this.globalVariables.isMenuOpen;
   }
 
-  
+
 }

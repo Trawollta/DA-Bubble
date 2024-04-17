@@ -3,7 +3,7 @@ section {
     @include dFlex($fd: column, $g: 30px);
     margin: 80px 20px;
     width: 90%;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 header {
@@ -30,13 +30,19 @@ header {
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 46px;
     color: $purple1;
     margin: 0;
 }
 
 h3 {
-    font-size: 18px;
+    font-size: 25px;
+    color: $purple1;
+    margin: 0;
+}
+
+h4 {
+    font-size: 20px;
     color: $purple1;
     margin: 0;
 }
@@ -46,6 +52,33 @@ h3 {
     text-align: center;
     font-size: 20px;
     max-width: 500px;
+}
+
+@media (max-width:750px) {
+    h2 {
+        font-size: 30px;
+    }
+    h3 {
+        font-size: 20px;
+    }
+    h4 {
+        font-size: 17px;
+    }
+}
+
+@media (max-width:500px) {
+    h2 {
+        font-size: 23px;
+    }
+    h3 {
+        font-size: 20px;
+    }
+    h4 {
+        font-size: 14px;
+    }
+    .content {
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 690px) or (max-height:1040px) {
@@ -60,11 +93,10 @@ h3 {
         font-size: 14px;
     }
     h2 {
-        font-size: 24px;
-        margin: 0;
+        font-size: 19px;
     }
-    .info {
-        font-size: 13px;
+    h3 {
+        font-size: 16px;
     }
 }
 

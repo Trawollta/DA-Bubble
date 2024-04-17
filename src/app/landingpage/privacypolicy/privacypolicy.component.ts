@@ -15,6 +15,7 @@ export class PrivacypolicyComponent {
   constructor() {
     this.globalVariables.imprintActive = true;
     this.globalVariables.signup = true;
+    this.globalVariables.showSplashScreen = false;
   }
 
 }

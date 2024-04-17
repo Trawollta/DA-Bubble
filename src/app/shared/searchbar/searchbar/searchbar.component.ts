@@ -16,6 +16,7 @@ import { ClickedOutsideDirective } from 'app/directives/clicked-outside.directiv
 })
 export class SearchbarComponent {
   @Input() imgName: string = 'search';
+  @Input() classes: string | string[] = [];
   globalVariables = inject(GlobalVariablesService);
   firebaseUserService = inject(FirebaseUserService);
   firebaseChannelService = inject(FirebaseChannelService);

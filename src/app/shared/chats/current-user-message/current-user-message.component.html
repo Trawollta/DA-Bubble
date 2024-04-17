@@ -3,7 +3,7 @@
     <div class="info-area">
       <div class="info-area-wrapper">
         <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
-        <span class="username">{{ user.name }}</span>
+        <span class="username" (click)="globalFunctions.openProfile(true, globalVariables.activeID)">{{ user.name }}</span>
       </div>
       <div class="speech-bubble-current-user" (click)="onSelectMessage()">
         <span class="speech-bubble-current-user-text"
@@ -56,7 +56,7 @@
       </div>
     </div>
   </div>
-  <div class="user" (click)="globalFunctions.openProfile(true, globalVariables.activeID)">
-    <img [src]="user.img" alt="" />
+  <div class="user">
+    <img [src]="user.img" alt=""  (click)="globalFunctions.openProfile(true, globalVariables.activeID)"/>
   </div>
 </section>

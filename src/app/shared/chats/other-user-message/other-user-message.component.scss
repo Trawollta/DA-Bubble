@@ -8,7 +8,6 @@
 
   &:hover {
     background-color: #eceefe;
-    cursor: pointer;
 
     .speech-bubble {
       background-color: white !important;
@@ -27,6 +26,7 @@
     width: 50px;
 
     img {
+      cursor: pointer;
       width: 50px;
       height: 50px;
       border-radius: 40px;
@@ -40,6 +40,7 @@
       @include dFlex($g: 20px, $jc: flex-start);
 
       .username {
+        cursor: pointer;
         font-size: 18px;
         font-weight: 700;
         line-height: 25px;
@@ -54,6 +55,7 @@
     }
 
     .speech-bubble {
+      cursor: pointer;
       white-space: pre-wrap;
       padding: 15px;
       box-sizing: border-box;

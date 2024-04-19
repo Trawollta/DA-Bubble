@@ -1,49 +1,42 @@
 @import "../../styles.scss";
-
 .dashboard {
-  width: 100vw;
-  @include dFlex($ai:normal);
-  height: calc(100vh - 145px);
-  max-width: 1920px;
-  margin: auto;
-  
-  .app-container {
-    @include dFlex($g:16px, $ai:normal);
-    width: 90%;
-    margin-top: 20px;
-
-    .channel-menu {
-      flex: 0;
+    width: 100vw;
+    @include dFlex($ai: normal);
+    height: calc(100vh - 145px);
+    max-width: 1920px;
+    margin: auto;
+    .app-container {
+        @include dFlex($g: 16px, $ai: normal);
+        width: 90vw;
+        margin-top: 20px;
+        .channel-menu {
+            flex: 0;
+        }
+        .chat-content {
+            flex: 2;
+        }
+        .thread-content {
+            flex: 1;
+        }
     }
-
-    .chat-content {
-      flex: 2;
-    }
-    .thread-content{
-      flex:1;
-    }
-  }
 }
 
-
-
-
 .menu-toggle-btn {
-  @include dFlex();
-   position: fixed;
-   width: 238px;
-   height: 46px;
-  left: -96px;
-  bottom: 30%;
-  transform: rotate(270deg);
-  border-radius: 0 0 30px 30px;
-  background: $white;
-  box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  z-index: 1;
+    @include dFlex();
+    position: fixed;
+    width: 238px;
+    height: 46px;
+    left: -96px;
+    bottom: 30%;
+    transform: rotate(270deg);
+    border-radius: 0 0 30px 30px;
+    background: $white;
+    box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1;
 }
 
 .menu-toggle-btn:hover {
-  background: $purple1;
-  color: $white;
+    background: $purple1;
+    color: $white;
 }

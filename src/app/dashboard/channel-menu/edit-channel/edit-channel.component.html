@@ -74,6 +74,7 @@
 
     <div class="button-area">
       <app-button
+        *ngIf="globalVariables.activeID === this.channel.creator"
         [classes]="['primary']"
         caption="Channel Löschen"
         (click)="firebaseChannelService.deleteChanel(globalVariables.channelData.chatId)"

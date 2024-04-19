@@ -31,6 +31,7 @@ export class ChannelMenuComponent {
   allChannels: any = [];
   allUsers: any = [];
   channelToDisplay: any = [];
+  selectedChannel: any; 
 
   constructor(public globalFunctions: GlobalFunctionsService) {}
 
@@ -112,6 +113,7 @@ export class ChannelMenuComponent {
    * @param channel - object which contains information of selecet channel
    */
   openChannel(channel: any) {
+    this.selectedChannel = channel;
     this.globalVariables.scrolledToBottom = false;
     this.globalVariables.isUserChat = false;
     this.getChatUserData(channel.members);
@@ -158,4 +160,6 @@ export class ChannelMenuComponent {
     this.globalVariables.showAddChannel = true;
     document.body.style.overflow = 'hidden';
   }
+
+
 }

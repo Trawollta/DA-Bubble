@@ -24,10 +24,11 @@
                 </div>
             </div>
             <div class="channel-overview d-none" id="channels">
-                <div class="channel-overview">
-                    <div class="channel-wrapper" *ngFor="let channel of channelToDisplay" (click)="openChannel(channel)">
-                        <p><span>#</span>{{ channel.channelName }}</p>
-                    </div>
+                <div class="channel-wrapper" 
+                    *ngFor="let channel of channelToDisplay" 
+                    (click)="openChannel(channel)"
+                    [class.active-channel]="channel === selectedChannel">
+                    <p><span>#</span>{{ channel.channelName }}</p>
                 </div>
             </div>
             <div></div>

@@ -87,7 +87,12 @@ export class ChannelMenuComponent {
   async ngOnInit() {
     await this.globalFunctions.getCollection('channels', this.allChannels);
     await this.globalFunctions.getCollection('users', this.allUsers);
+
+    this.openDirectMessageMenu();
+    this.openChannelMenu();
   }
+
+
 
   async filterChannelsByActiveID(activeID: string) {
     let channelsWithActiveID: any[] = [];

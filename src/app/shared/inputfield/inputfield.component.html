@@ -5,5 +5,5 @@
     <input *ngIf="type === 'email'" [ngClass]="classes" type={{type}} id={{id}} placeholder={{placeholder}} [(ngModel)]="value" (ngModelChange)="onValueChange($event)" [required]="required" email (focus)="onFokus()" (blur)="onFocusOut()" />
     <input *ngIf="type === 'password'" [ngClass]="classes" type={{type}} id={{id}} placeholder={{placeholder}} [(ngModel)]="value" (ngModelChange)="onValueChange($event)" [required]="required" (focus)="onFokus()" (blur)="onFocusOut()">
     <input *ngIf="type === 'text'" [ngClass]="classes" type={{type}} id={{id}} placeholder={{placeholder}} [(ngModel)]="value" (ngModelChange)="onValueChange($event)" [required]="required" (focus)="onFokus()" (blur)="onFocusOut()">
-    <input *ngIf="type === 'search'" [ngClass]="classes" type={{type}} placeholder={{placeholder}} [(ngModel)]="value" (focus)="onFokus()" (blur)="onBlur()"  (mouseenter)="onMouseEnter()" (input)="onInputChange($event)">
+    <input *ngIf="type === 'search'" [ngClass]="classes" type={{type}} placeholder={{placeholder}} [(ngModel)]="value" (focus)="onFokusSearch()" (blur)="onBlurSearch()" (mouseenter)="onMouseEnter()" (input)="onInputChange($event)">
 </div>

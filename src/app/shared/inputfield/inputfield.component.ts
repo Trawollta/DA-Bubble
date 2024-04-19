@@ -42,8 +42,8 @@ export class InputfieldComponent implements OnInit, ControlValueAccessor {
   @Input() imgSrc?: string;
   imgActive: string = '';
   value: string = '';
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+  private onChange: (value: string) => void = () => { };
+  private onTouched: () => void = () => { };
 
   onInputChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
@@ -82,11 +82,16 @@ export class InputfieldComponent implements OnInit, ControlValueAccessor {
 
   // Funktion zum Wechseln des Bildes bei Fokus
   onFokus() {
+    this.imgActive = this.imgName + '_black';
+
+  }
+  onFokusSearch() {
     this.imgName = '';
   }
 
   // Funktion zum Zurücksetzen des Bildes, wenn der Fokus verloren geht
-  onBlur() {
+
+  onBlurSearch() {
     this.imgName = 'search';
   }
 

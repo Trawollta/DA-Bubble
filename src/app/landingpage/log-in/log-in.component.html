@@ -18,4 +18,7 @@
             </div>
         </form>
     </section>
+    <div data-aos="fade-left" *ngIf="toastService.showToast" class="toast">
+        <span>{{ toastService.message }}</span>
+    </div>
 </app-dialog>

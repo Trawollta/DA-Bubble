@@ -1,5 +1,4 @@
 @import "../../../../styles.scss";
-
 .overlay {
     background-color: white;
     z-index: 4;
@@ -37,7 +36,6 @@
     color: #797ef3;
     font-size: 18px;
     margin-top: 8px;
-    
 }
 
 .main-content {
@@ -59,7 +57,7 @@
 }
 
 .headline {
-    @include dFlex($jc:space-between);
+    @include dFlex($jc: space-between);
     width: 100%;
     /* display: flex;
     justify-content: space-between;
@@ -69,7 +67,7 @@
 }
 
 .add {
-    @include dFlex($jc:flex-end);
+    @include dFlex($jc: flex-end);
     /*  display: flex;
     justify-content: flex-end; */
     margin-top: 30px;
@@ -78,69 +76,56 @@
 ul {
     height: 40%;
     overflow-y: auto;
-
+    list-style: none;
     img {
         border-radius: 100%;
         width: 20px;
     }
-
     .user-display {
         display: flex;
         align-items: center;
-        padding: .375rem .75rem; /* Standard Bootstrap Padding */
-        font-size: 1rem; /* Standard Schriftgröße */
+        padding: .375rem .75rem;
+        /* Standard Bootstrap Padding */
+        font-size: 1rem;
+        /* Standard Schriftgröße */
         font-weight: 400;
         line-height: 1.5;
-        color: #495057; /* Standard Textfarbe */
-        background-color: #fff; /* Weißer Hintergrund */
+        color: #495057;
+        /* Standard Textfarbe */
+        background-color: #fff;
+        /* Weißer Hintergrund */
         background-clip: padding-box;
-        border: 1px solid #ced4da; /* Standard Border */
-        border-radius: .25rem; /* Abgerundete Ecken */
-        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        border: 1px solid #ced4da;
+        /* Standard Border */
+        border-radius: .25rem;
+        /* Abgerundete Ecken */
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     }
-
-    // .input-with-icon .user-display {
-    //     display: flex;
-    //     align-items: center;
-    //     background-color: #f0f0f0;
-    //     padding: 5px;
-    //     border-radius: 5px;
-    // }
-
-    // .input-with-icon .user-display .user-img {
-    //     width: 30px;
-    //     height: 30px;
-    //     border-radius: 50%;
-    //     margin-right: 10px;
-    // }
-
-    // .input-with-icon .user-display button {
-    //     margin-left: 10px;
-    //     border: none;
-    //     background-color: transparent;
-    //     cursor: pointer;
-    // }
-
+    li {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        cursor: pointer;
+        padding-bottom: 5px;
+    }
     .custom {
         display: flex;
         align-items: center;
-        padding: .375rem .75rem; 
+        padding: .375rem .75rem;
         font-weight: 400;
         line-height: 1.5;
-        color: #495057; 
+        color: #495057;
         background-color: #fff;
         background-clip: padding-box;
-        border: 1px solid #ced4da; 
+        border: 1px solid #ced4da;
         border-radius: 25px;
     }
-    
     .user-img {
-        width: 8px; 
-        height: 8px; 
-        object-fit: cover; 
+        width: 25px;
+        height: 25px;
+        object-fit: cover;
         margin-right: 10px;
     }
-    
     .hidden-input {
         display: none;
     }

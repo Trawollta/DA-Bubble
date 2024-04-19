@@ -8,6 +8,8 @@ import { ButtonComponent } from 'app/shared/button/button.component';
 import { AuthService } from 'app/services/firebase-services/auth.service';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { Router } from '@angular/router';
+import { ToastService } from 'app/services/app-services/toast.service';
+import Aos from 'aos';
 
 @Component({
   selector: 'app-log-in',
@@ -18,6 +20,7 @@ import { Router } from '@angular/router';
 })
 
 export class LogInComponent {
+  toastService = inject(ToastService);
   globalVariables = inject(GlobalVariablesService);
   private userService = inject(FirebaseUserService);
   private authService = inject(AuthService);
@@ -32,6 +35,10 @@ export class LogInComponent {
     password: ""
   }
 
+  ngAfterViewInit() {
+    window.dispatchEvent(new Event('resize'));
+    Aos.init();
+  }
 
   async logInWithEmailAndPassword() {
     const { email, password } = this.logInUserData;
@@ -43,6 +50,7 @@ export class LogInComponent {
       this.globalVariables.logout = false;
       this.router.navigate(['/dashboard']);
     } catch (error) {
+      this.toastService.showMessage('Benutzername oder Passwort falsch');
     }
   }
 
@@ -65,10 +73,10 @@ export class LogInComponent {
         }
         this.router.navigate(['/dashboard']);
       } else {
-        console.error("Google-Anmeldung fehlgeschlagen.");
+        this.toastService.showMessage('Fehler beim anmelden mit Goggle');
       }
     } catch (error) {
-      console.error("Fehler bei der Verarbeitung der Google-Anmeldung", error);
+      this.toastService.showMessage('Fehler bei der Verarbeitung der Google-Anmeldung');
     }
   }
 
@@ -78,7 +86,7 @@ export class LogInComponent {
       this.logInUserData.password = "gast00";
       this.logInWithEmailAndPassword();
     } catch (error) {
-      console.error("Fehler bei der Verarbeitung der anonymen Anmeldung", error);
+      this.toastService.showMessage('Fehler bei der Verarbeitung der anonymen Anmeldung');
     }
   }
 

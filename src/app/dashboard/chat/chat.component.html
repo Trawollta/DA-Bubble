@@ -1,56 +1,54 @@
 <main>
 
-  <!-- container for header it is a channel chat -->
-  <section class="msg-header" *ngIf="!globalVariables.isUserChat">
-    <app-show-contacts class="showContactsHeader"
-      *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers" appClickedOutside
-      (clickedOutside)="globalFunctions.closeMembers()"></app-show-contacts>
-    <div class="topic-headline">
-      <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
-        <div class="header-hover"># {{ globalVariables.openChannel.titel }}</div>
-        <img src="assets/img/icons/keyboard_arrow_down.svg" alt="" />
-      </div>
+    <!-- container for header it is a channel chat -->
+    <section class="msg-header" *ngIf="!globalVariables.isUserChat">
+        <app-show-contacts class="showContactsHeader" *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers" appClickedOutside (clickedOutside)="globalFunctions.closeMembers()"></app-show-contacts>
+        <div class="topic-headline">
+            <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
+                <div class="header-hover"># {{ globalVariables.openChannel.titel }}</div>
+                <img src="./assets/img/icons/keyboard_arrow_down.svg" alt="" />
+            </div>
+        </div>
+        <div class="active-contacts">
+            <div class="contact-row" *ngIf="globalVariables.desktop700" (click)="showMembers(true)">
+
+                <!-- hier kommt eine ngFor rein, die die Plaketten der Member rein rendert -->
+                <img src="assets/img/avatars/Elias_Neumann.svg" alt="" />
+                <img class="secondHeadIcon" src="assets/img/avatars/Elias_Neumann.svg" alt="" />
+                <span class="memberCount">{{ globalVariables.openChannel.memberCount }}</span>
+
+            </div>
+            <div class="add-contact" (click)="openContactsPopup()">
+                <img src="./assets/img/icons/person_add_w.svg" alt="" />
+            </div>
+        </div>
+    </section>
+
+    <!-- container for header it is a user chat -->
+    <section class="msg-header" *ngIf="globalVariables.isUserChat">
+        <div class="topic-headline">
+            <div class="headline" (click)="globalFunctions.openProfile(false, this.globalVariables.userToChatWith.id)">
+                <p></p>
+                <img src="{{ globalVariables.userToChatWith.img }}" alt="">
+                <p>{{ globalVariables.userToChatWith.name }}</p>
+                <img src="./assets/img/icons/keyboard_arrow_down.svg" alt="" />
+            </div>
+        </div>
+    </section>
+
+    <!-- container for all chat meassages -->
+    <div class="contentContainer">
+        <div class="messages">
+            <app-all-messages [isChat]="true"></app-all-messages>
+        </div>
     </div>
-    <div class="active-contacts">
-      <div class="contact-row" *ngIf="globalVariables.desktop700" (click)="showMembers(true)">
 
-        <!-- hier kommt eine ngFor rein, die die Plaketten der Member rein rendert -->
-        <img src="assets/img/avatars/Elias_Neumann.svg" alt="" />
-        <img class="secondHeadIcon" src="assets/img/avatars/Elias_Neumann.svg" alt="" />
-        <span class="memberCount">{{ globalVariables.openChannel.memberCount }}</span>
-
-      </div>
-      <div class="add-contact" (click)="openContactsPopup()">
-        <img src="assets/img/icons/person_add_w.svg" alt="" />
-      </div>
-    </div>
-  </section>
-
-  <!-- container for header it is a user chat -->
-  <section class="msg-header" *ngIf="globalVariables.isUserChat">
-    <div class="topic-headline">
-      <div class="headline" (click)="globalFunctions.openProfile(false, this.globalVariables.userToChatWith.id)">
-        <p></p>
-        <img src="{{ globalVariables.userToChatWith.img }}" alt="">
-        <p>{{ globalVariables.userToChatWith.name }}</p>
-        <img src="../../../assets/img/icons/keyboard_arrow_down.svg" alt="" />
-      </div>
-    </div>
-  </section>
-
-  <!-- container for all chat meassages -->
-  <div class="contentContainer">
-    <div class="messages">
-      <app-all-messages [isChat]="true"></app-all-messages>
-    </div>
-  </div>
-
-  <!-- container for all inputfield and controll elements -->
-  <app-textarea-chat-thread  [areaType]="'chat'"></app-textarea-chat-thread>
+    <!-- container for all inputfield and controll elements -->
+    <app-textarea-chat-thread [areaType]="'chat'"></app-textarea-chat-thread>
 
 
-  <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel>
-  <app-edit-channel *ngIf="globalVariables.editChannelOverlayOpen"></app-edit-channel>
+    <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel>
+    <app-edit-channel *ngIf="globalVariables.editChannelOverlayOpen"></app-edit-channel>
 
 
 </main>

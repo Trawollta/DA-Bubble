@@ -1,38 +1,37 @@
-<div class="overlay overlayChatHeader"
-  [ngClass]="globalVariables.headerShowMembers ? 'overlayChatHeader' : 'overlayTextInputField'">
-  <div class="headline">
-    <span>Mitglieder</span>
-    <img (click)="closeMembers()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile">
-  </div>
-  <div class="contactListContainer">
-    <div class="contactList">
-      <div class="contactItem" *ngFor="let user of selectedUsers">
-        <!-- version highlight member in message -->
-        <label class="contactContainer" *ngIf="!globalVariables.headerShowMembers">
+<div class="overlay overlayChatHeader" [ngClass]="globalVariables.headerShowMembers ? 'overlayChatHeader' : 'overlayTextInputField'">
+    <div class="headline">
+        <span>Mitglieder</span>
+        <img (click)="closeMembers()" src="./assets/img/icons/close.svg" class="close-btn" alt="close profile">
+    </div>
+    <div class="contactListContainer">
+        <div class="contactList">
+            <div class="contactItem" *ngFor="let user of selectedUsers">
+                <!-- version highlight member in message -->
+                <label class="contactContainer" *ngIf="!globalVariables.headerShowMembers">
           <input type="checkbox" (change)="checkboxChanged(user.name)" [(ngModel)]="user.checked">
           <span>{{ user.name }}</span>
         </label>
-        <!-- version open member list in header -->
-        <div class="contactContainer cCHeader" *ngIf="globalVariables.headerShowMembers">
-          <div class="userImgName">
-            <img [src]="user.img" alt="user image" class="contactImg">
-            <span>{{ user.name }}</span>
-          </div>
-          <img class="deleteContact" *ngIf="checkPermission()" (click)="log(user)" src="assets/img/icons/close.svg">
+                <!-- version open member list in header -->
+                <div class="contactContainer cCHeader" *ngIf="globalVariables.headerShowMembers">
+                    <div class="userImgName">
+                        <img [src]="user.img" alt="user image" class="contactImg">
+                        <span>{{ user.name }}</span>
+                    </div>
+                    <img class="deleteContact" *ngIf="checkPermission()" (click)="log(user)" src="./assets/img/icons/close.svg">
+                </div>
+
+
+            </div>
         </div>
-
-
-      </div>
     </div>
-  </div>
 
-  <div class="addMember" (click)="openOtherContactsOverlay()" *ngIf="globalVariables.headerShowMembers">
-    <img src="../../../assets/img/icons/add.svg" alt="" />
-    <span>Mitglieder hinzufügen</span>
-  </div>
+    <div class="addMember" (click)="openOtherContactsOverlay()" *ngIf="globalVariables.headerShowMembers">
+        <img src="./assets/img/icons/add.svg" alt="" />
+        <span>Mitglieder hinzufügen</span>
+    </div>
 
 
-  <div class="alert d-none" id="alertDiv">
-    <span class="alert-message">Sie müssen Ersteller des Channel's sein um Mitglieder hinzuzufügen.</span>
-  </div>
+    <div class="alert d-none" id="alertDiv">
+        <span class="alert-message">Sie müssen Ersteller des Channel's sein um Mitglieder hinzuzufügen.</span>
+    </div>
 </div>

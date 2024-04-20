@@ -68,7 +68,8 @@ export class LogInComponent {
             name: userCredential.displayName,
             email: userCredential.email,
             isActive: true,
-            img: userCredential.photoURL
+            img: userCredential.photoURL,
+            relatedChats: ['NQMdt08FAcXbVroDLhvm'],
           });
         }
         this.router.navigate(['/dashboard']);

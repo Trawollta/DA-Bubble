@@ -1,49 +1,49 @@
 <main>
-  <section class="thread-header">
-    <div class="headline">Thread</div>
-    <div class="tag-name"># {{ globalVariables.openChannel.titel }}</div>
-    <div class="close-img">
-      <img src="../../../assets/img/icons/close.svg" alt="close-btn" (click)="closeThread()" />
-    </div>
-  </section>
-  <section class="message-container">
-    <!-- first element -->
-    <div>
-      <div class="initialuserCurrent" [ngClass]="checkIfCurrentuser() ? '':'otherInitialUser'">
-        <div class="userContent">
-          <div class="info-area">
-            <div class="infoContainer" [ngClass]="checkIfCurrentuser() ? '':'otherInitialUser'">
-              <span class="messageTime">{{ globalVariables.messageThreadStart.timestamp | date: 'H:mm' }}</span>
-              <span class="userName">{{ globalVariables.messageThreadStart.userName }}</span>
-            </div>
-            <div class="speechBubble" [ngClass]="checkIfCurrentuser() ? '':'otherSpeachbubble'">
-              <span class="speech-bubble-text" *ngIf="messageInfo.message !== ''">{{ messageInfo.message }}</span>
-              <div class="loadedImg" *ngIf="isImage">
-                <img src="{{ messageInfo.messageImgUrl }}" alt="">
-              </div>
-              <span class="speech-bubble-text" *ngIf="messageInfo.textAfterUrl !== ''">{{ messageInfo.textAfterUrl
+    <section class="thread-header">
+        <div class="headline">Thread</div>
+        <div class="tag-name"># {{ globalVariables.openChannel.titel }}</div>
+        <div class="close-img">
+            <img src="./assets/img/icons/close.svg" alt="close-btn" (click)="closeThread()" />
+        </div>
+    </section>
+    <section class="message-container">
+        <!-- first element -->
+        <div>
+            <div class="initialuserCurrent" [ngClass]="checkIfCurrentuser() ? '':'otherInitialUser'">
+                <div class="userContent">
+                    <div class="info-area">
+                        <div class="infoContainer" [ngClass]="checkIfCurrentuser() ? '':'otherInitialUser'">
+                            <span class="messageTime">{{ globalVariables.messageThreadStart.timestamp | date: 'H:mm' }}</span>
+                            <span class="userName">{{ globalVariables.messageThreadStart.userName }}</span>
+                        </div>
+                        <div class="speechBubble" [ngClass]="checkIfCurrentuser() ? '':'otherSpeachbubble'">
+                            <span class="speech-bubble-text" *ngIf="messageInfo.message !== ''">{{ messageInfo.message }}</span>
+                            <div class="loadedImg" *ngIf="isImage">
+                                <img src="{{ messageInfo.messageImgUrl }}" alt="">
+                            </div>
+                            <span class="speech-bubble-text" *ngIf="messageInfo.textAfterUrl !== ''">{{ messageInfo.textAfterUrl
                 }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="user">
+                    <img [src]="globalVariables.messageThreadStart.userImgPath" alt="" />
+                </div>
+
             </div>
-          </div>
+            <div class="partingLineContainer">
+                <div *ngIf="globalVariables.answerCount !== 0" class="partingLineText">{{ globalVariables.answerCount }}
+                    <span> Antwort</span>
+                    <span *ngIf="globalVariables.answerCount !== 1">en</span>
+                </div>
+                <div class="partingLine"></div>
+            </div>
         </div>
-        <div class="user">
-          <img [src]="globalVariables.messageThreadStart.userImgPath" alt="" />
-        </div>
+        <!-- messages -->
+        <app-all-messages class="allMessages" [isChat]="false" [isThread]="true"></app-all-messages>
 
-      </div>
-      <div class="partingLineContainer">
-        <div *ngIf="globalVariables.answerCount !== 0" class="partingLineText">{{ globalVariables.answerCount }}
-          <span> Antwort</span>
-          <span *ngIf="globalVariables.answerCount !== 1">en</span>
-        </div>
-        <div class="partingLine"></div>
-      </div>
-    </div>
-    <!-- messages -->
-    <app-all-messages class="allMessages" [isChat]="false" [isThread]="true"></app-all-messages>
+    </section>
 
-  </section>
-
-  <app-textarea-chat-thread [areaType]="'thread'"></app-textarea-chat-thread>
+    <app-textarea-chat-thread [areaType]="'thread'"></app-textarea-chat-thread>
 
 </main>

@@ -38,6 +38,8 @@ export class TextareaChatThreadComponent {
   isEmojiContainerOpen: boolean = false;
   isMemberContainerOpen: boolean = false;
   isValidationPopupOpen: boolean = false;
+  showChannelList: boolean = false;
+  showMemberList: boolean = false;
 
   // for file upload
   storage = getStorage();
@@ -239,4 +241,12 @@ export class TextareaChatThreadComponent {
       this.isPopupOpen = false;
     }
   }
+
+  onKeyDown(event: KeyboardEvent) {
+    const key = event.key; 
+    this.showChannelList = false;
+    this.showMemberList = false;
+    this.showChannelList = key === '#';
+    this.showMemberList = key === '@';
+}
 }

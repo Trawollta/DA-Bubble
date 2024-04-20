@@ -176,7 +176,11 @@ export class CurrentUserMessageComponent {
     if(!this.activeMessage)this.globalVariables.editMessage = false;
     this.activeMessage = true;
     this.openReaction = true;
-    
+  }
+
+  onLeaveMessage() {
+    this.activeMessage = false;
+    this.openReaction = false;
   }
 
   @HostListener('document:click', ['$event'])

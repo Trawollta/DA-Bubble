@@ -18,6 +18,12 @@
         .thread-content {
             flex: 1;
         }
+        @media (max-width: 600px) {
+            width: 100vw;
+        }
+    }
+    @media (max-width: 600px) {
+        height: calc(100vh - 120px);
     }
 }
 
@@ -39,4 +45,10 @@
 .menu-toggle-btn:hover {
     background: $purple1;
     color: $white;
+}
+
+@media (max-width: 600px) {
+    .app-container {
+        margin-top: 0px !important;
+    }
 }

@@ -5,16 +5,18 @@ import { FirebaseUserService } from 'app/services/firebase-services/firebase-use
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
+import { FooterComponent } from "../../footer/footer.component";
 
 @Component({
   selector: 'app-header-menu',
   standalone: true,
+  templateUrl: './header-menu.component.html',
+  styleUrl: './header-menu.component.scss',
   imports: [
     CommonModule,
-    ProfileComponent
-  ],
-  templateUrl: './header-menu.component.html',
-  styleUrl: './header-menu.component.scss'
+    ProfileComponent,
+    FooterComponent
+  ]
 })
 export class HeaderMenuComponent {
 

@@ -1,14 +1,15 @@
 @import './../../../styles.scss';
-
 section {
     background-color: $background;
     width: 100dvw;
     height: 80px;
     @include dFlex();
-
     @media screen and (min-width: 600px) {
         padding-top: 25px;
         height: auto;
+    }
+    @media (max-width: 600px) {
+        height: 70px;
     }
 }
 
@@ -16,60 +17,46 @@ section {
     @include dFlex($jc: space-between, $g: 32px);
     width: 90vw;
     max-width: $maxScreenWidth;
-
     .logoContainer {
         @include dFlex($g: 11px);
-
         h3 {
             font-size: 16px;
             margin: 0;
         }
-
         @media screen and (min-width: 600px) {
             h3 {
                 font-size: 24px;
             }
         }
-
         img {
             @include size($w: 45px, $h: 45px);
-
             @media screen and (min-width: 600px) {
                 @include size($w: 70px, $h: 70px);
             }
         }
     }
-
     .logoHover {
         cursor: pointer;
-
         &:hover {
             img {
                 animation: blink 2s infinite;
             }
         }
     }
-
     app-searchbar {
         flex: 1;
         position: relative;
     }
-
-
-
 }
 
 @keyframes blink {
     0% {
         transform: scale(1);
     }
-
     50% {
         transform: scale(1.05);
     }
-
     100% {
         transform: scale(1);
     }
-
 }

@@ -1,5 +1,4 @@
 @import './../../../styles.scss';
-
 input {
     width: -webkit-fill-available;
     border-radius: 100px;
@@ -13,7 +12,6 @@ input {
     height: fit-content;
     position: relative;
     display: inline-block;
-
     .input-icon-img {
         @include dFlex();
         position: absolute;
@@ -21,14 +19,12 @@ input {
         left: 30px;
         top: 13px;
     }
-}
-
-.search-icon {
-    left: unset !important;
-    right: 30px;
-    @include size(35px !important, 35px);
-    top: 17px !important;
-    padding-left: 32px;
+    .search-icon {
+        left: unset !important;
+        right: 20px;
+        @include size(35px !important, 35px);
+        top: 17px !important;
+    }
 }
 
 .noIcon {
@@ -39,25 +35,30 @@ input {
     margin-top: 8px;
 }
 
+.iconRight {
+    padding: 10px 50px 10px 20px !important;
+    height: 54px;
+    font-size: 18px;
+    line-height: 22px;
+    margin-top: 8px;
+}
+
 .searchBar {
     padding: 0 32px;
     height: 70px;
     border: 0;
-
     @media screen and (min-width: 900px) {
         font-size: 16px;
     }
-
     @media screen and (min-width: 932px) {
         font-size: 18px;
     }
-
     @media screen and (min-width: 1018px) {
         font-size: 24px;
     }
 }
 
-.searchBarChannelMenu{
+.searchBarChannelMenu {
     padding: 0 !important;
 }
 
@@ -71,7 +72,6 @@ input {
         padding: 8px 10px 8px 50px !important;
         font-size: 0.8em;
     }
-
     .input-icon-img {
         height: 40px;
         left: 18px !important;
@@ -82,11 +82,9 @@ input {
 .login {
     border: 1px solid $background;
     background-color: $background;
-
     &:hover {
         border-color: $light_purple;
     }
-
     &:focus {
         border-color: $purple3 !important;
     }
@@ -95,11 +93,9 @@ input {
 .standard {
     border: 1px solid $light_purple;
     background-color: none;
-
     &:hover {
         border-color: $purple2;
     }
-
     &:focus {
         border-color: $purple3 !important;
     }

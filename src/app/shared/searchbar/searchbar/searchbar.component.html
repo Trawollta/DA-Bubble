@@ -1,26 +1,12 @@
-<app-inputfield
-  appClickedOutside
-  (clickedOutside)="closeUser()"
-  (inputChange)="handleInputChange($event)"
-  [optionClasses]="['search-icon']"
-  [classes]="classes"
-  class="searchBarContainer"
-  type="search"
-  imgName="search"
-  placeholder="Code learning durchsuchen"
-></app-inputfield>
+<app-inputfield appClickedOutside (clickedOutside)="closeUser()" (inputChange)="handleInputChange($event)" [optionClasses]="['search-icon']" [classes]="['standard', 'iconRight']" class="searchBarContainer" type="search" imgName="search" placeholder="Code learning durchsuchen"></app-inputfield>
 
 <div class="search-results" *ngIf="bestMatches.length > 0" appClickedOutside>
-  <div
-    *ngFor="let msg of bestMatches; let i = index"
-    class="search-result"
-    (click)="openChannelWhereMsgIs(bestMatches[i])"
-  >
-    <span class="name-content"> {{ bestMatches[i].name }}: </span>
-    <span class="name-content">
+    <div *ngFor="let msg of bestMatches; let i = index" class="search-result" (click)="openChannelWhereMsgIs(bestMatches[i])">
+        <span class="name-content"> {{ bestMatches[i].name }}: </span>
+        <span class="name-content">
       {{ bestMatches[i].message.substring(0, 10)
       }}{{ bestMatches[i].message.length > 20 ? "..." : "" }}
     </span>
-    <span class="channel-result"> #{{ bestMatches[i].channelName }} </span>
-  </div>
+        <span class="channel-result"> #{{ bestMatches[i].channelName }} </span>
+    </div>
 </div>

@@ -1,331 +1,297 @@
 @import "../../../styles.scss";
-
 main {
-  background-color: $background;
+    background-color: $background;
 }
 
 app-searchbar {
-  flex: 1;
-  position: relative;
+    flex: 1;
+    position: relative;
 }
 
-
 .channel-menu {
-  overflow: hidden;
-  height: 100%;
-  max-height: 940px;
-  padding: 16px 30px 32px 30px;
-  border-radius: 30px;
-  background-color: white;
-  box-sizing: border-box;
-  width: 90dvw;
-  max-width: 500px;
-
-  @media screen and (min-width: 800px) {
-    max-width: 366px;
-    width: auto;
-  }
-
-  @media screen and (min-width: 900px) {
-    width: 366px;
-  }
+    overflow: hidden;
+    height: 100%;
+    max-height: 940px;
+    padding: 16px 30px 32px 30px;
+    border-radius: 30px;
+    background-color: white;
+    box-sizing: border-box;
+    width: 90dvw;
+    max-width: 500px;
+    @media (max-width: 600px) {
+        width: 100dvw;
+        max-width: unset;
+        border-radius: 0px;
+    }
+    @media screen and (min-width: 800px) {
+        max-width: 366px;
+        width: auto;
+    }
+    @media screen and (min-width: 900px) {
+        width: 366px;
+    }
 }
 
 .header-wrapper {
-  height: 60px;
-  border-radius: 30px;
-  @include dFlex($jc: space-between);
-  text-align: center;
+    height: 60px;
+    border-radius: 30px;
+    @include dFlex($jc: space-between);
+    text-align: center;
 }
 
 .left-header-menu {
-  display: flex;
-  align-items: center;
-  height: 60px;
-  padding: 0px 20px 0px 0px;
-  gap: 15px;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 0px 20px 0px 0px;
+    gap: 15px;
 }
 
 .header-text {
-  font-size: 23px;
-  font-weight: 700;
-  line-height: 33px;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 33px;
 }
 
 .edit-img-div {
-  width: 40px;
-  height: 40px;
-  border-radius: 100px;
-  cursor: pointer;
-  padding-bottom: 4px;
-
-  @include dFlex();
-
-  &:hover {
-    background-color: $background;
-    color: $purple3;
-
-    img {
-      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    cursor: pointer;
+    padding-bottom: 4px;
+    @include dFlex();
+    &:hover {
+        background-color: $background;
+        color: $purple3;
+        img {
+            filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+        }
     }
-  }
 }
 
 .contentSection {
-  overflow: auto;
-  height: calc(100% - 60px);
+    overflow: auto;
+    height: calc(100% - 60px);
 }
 
 .active-channel {
-  color: #535af1;
+    color: #535af1;
 }
 
 .all-channel {
-  display: fleX;
-  margin-top: 25px;
-  flex-direction: column;
+    display: fleX;
+    margin-top: 25px;
+    flex-direction: column;
 }
 
-
 .channel-dialog {
-  height: 46px;
-  padding: 3px 0px 3px 0px;
-  justify-content: space-between;
-  display: flex;
-  flex-direction: row;
+    height: 46px;
+    padding: 3px 0px 3px 0px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
 }
 
 .channel-header {
-  height: 40px;
-  padding: 5px 10px 5px 0px;
-  border-radius: 15px;
-  gap: 15px;
-  display: flex;
+    height: 40px;
+    padding: 5px 10px 5px 0px;
+    border-radius: 15px;
+    gap: 15px;
+    display: flex;
 }
 
 .channel-headline-wrapper {
-  height: 27px;
-  gap: 10px;
-  flex-direction: row;
-  align-items: center;
-  display: flex;
-
-  img {
-    width: 20px;
-    height: 18px;
-    top: 0.5px;
-    left: 2px;
-    position: relative;
-  }
-
-  p {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 27px;
-    letter-spacing: 0em;
-    text-align: left;
-    width: 87px;
     height: 27px;
-  }
-
-  &:hover {
-    color: #535af1;
-
+    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+    display: flex;
     img {
-      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+        width: 20px;
+        height: 18px;
+        top: 0.5px;
+        left: 2px;
+        position: relative;
     }
-  }
+    p {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 27px;
+        letter-spacing: 0em;
+        text-align: left;
+        width: 87px;
+        height: 27px;
+    }
+    &:hover {
+        color: #535af1;
+        img {
+            filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+        }
+    }
 }
 
 .channel-add:hover {
-  color: #535af1;
+    color: #535af1;
 }
-
 
 .channel-arrow-dropdown {
-  width: 30px;
-  height: 30px;
-  border-radius: 100px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0px;
-  flex-direction: row;
-
-  &:hover {
-    color: rgb(83, 90, 241);
-    background-color: rgb(236, 238, 254);
-  }
-
-  img:hover {
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
     cursor: pointer;
-    border-radius: 40px;
-    filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
-  }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+    flex-direction: row;
+    &:hover {
+        color: rgb(83, 90, 241);
+        background-color: rgb(236, 238, 254);
+    }
+    img:hover {
+        cursor: pointer;
+        border-radius: 40px;
+        filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+    }
 }
 
-
 .channel-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  max-width: 158px;
-  max-height: 33px;
-  padding: 4px 20px 4px 20px;
-
-  p {
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 25px;
-    letter-spacing: 0em;
-    text-align: left;
-    height: 25px;
-  }
-
-  span {
-    font-size: 18px;
-  }
-
-  :hover {
-    color: #535af1;
-    cursor: pointer;
-  }
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    max-width: 158px;
+    max-height: 33px;
+    padding: 4px 20px 4px 20px;
+    p {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 25px;
+        letter-spacing: 0em;
+        text-align: left;
+        height: 25px;
+    }
+    span {
+        font-size: 18px;
+    }
+     :hover {
+        color: #535af1;
+        cursor: pointer;
+    }
 }
 
 .add-channel {
-  width: 30px;
-  height: 30px;
-  padding: 3px;
-  border-radius: 15px;
-  gap: 10px;
-
-  img:hover {
-    cursor: pointer;
-    border-radius: 40px;
-    filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
-  }
-
-  &:hover {
-    color: blue;
-  }
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+    border-radius: 15px;
+    gap: 10px;
+    img:hover {
+        cursor: pointer;
+        border-radius: 40px;
+        filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+    }
+    &:hover {
+        color: blue;
+    }
 }
 
 .menu-adder {
-  display: flex;
-  flex-direction: row;
-  height: 33px;
-  padding: 4px 10px 4px 10px;
-  gap: 10px;
-  align-items: center;
-
-  p {
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 25px;
-    letter-spacing: 0em;
-    text-align: left;
-  }
-
-  &:hover {
-    color: blue;
-    cursor: pointer;
-
-    img {
-      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
-    }
-
+    display: flex;
+    flex-direction: row;
+    height: 33px;
+    padding: 4px 10px 4px 10px;
+    gap: 10px;
+    align-items: center;
     p {
-      color: #535af1;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 25px;
+        letter-spacing: 0em;
+        text-align: left;
     }
-  }
+    &:hover {
+        color: blue;
+        cursor: pointer;
+        img {
+            filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+        }
+        p {
+            color: #535af1;
+        }
+    }
 }
 
 .messages-wrapper {
-  display: flex;
-  height: 40px;
-  padding: 5px 10px 5px 0px;
-  gap: 15px;
-  align-items: center;
+    display: flex;
+    height: 40px;
+    padding: 5px 10px 5px 0px;
+    gap: 15px;
+    align-items: center;
 }
 
 .message-helper {
-  height: 27px;
-  gap: 10px;
-  display: flex;
-  align-items: center;
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
-
-  p {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 27px;
-    letter-spacing: 0em;
-    text-align: left;
-    width: 165px;
     height: 27px;
-  }
-
-  &:hover {
-    color: #535af1;
-
+    gap: 10px;
+    display: flex;
+    align-items: center;
     img {
-      filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+        width: 24px;
+        height: 24px;
     }
-  }
+    p {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 27px;
+        letter-spacing: 0em;
+        text-align: left;
+        width: 165px;
+        height: 27px;
+    }
+    &:hover {
+        color: #535af1;
+        img {
+            filter: invert(34%) sepia(97%) saturate(2151%) hue-rotate(225deg) brightness(93%) contrast(103%);
+        }
+    }
 }
 
 .user-wrapper {
- 
-  width: 100%;
-  @include dFlex($fd: column, $g: 8px, $jc: flex-start);
-
-  .user-detail {
     width: 100%;
-    @include dFlex($jc: flex-start, $g: 10px);
-  
-
-    :hover {
-      color: #535af1;
-      cursor: pointer;
+    @include dFlex($fd: column, $g: 8px, $jc: flex-start);
+    .user-detail {
+        width: 100%;
+        @include dFlex($jc: flex-start, $g: 10px);
+         :hover {
+            color: #535af1;
+            cursor: pointer;
+        }
+        span {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 23px;
+        }
+        .userImgWithStatus {
+            @include dFlex($ai: flex-end);
+            .userImg {
+                width: 50px;
+                height: 50px;
+                border-radius: 100%;
+            }
+            .status {
+                width: 12px;
+                height: 12px;
+                margin-left: -10px;
+                margin-bottom: 2px;
+                border: 1px solid $white;
+                border-radius: 100%;
+                position: relative;
+                z-index: 2;
+            }
+        }
     }
-    span{
-      font-size: 17px;
-      font-weight: 400;
-      line-height: 23px;
-    }
-
-    .userImgWithStatus {
-      @include dFlex($ai: flex-end);
-      .userImg {
-        width: 50px;
-        height: 50px;
-        border-radius: 100%;
-      }
-
-      .status {
-        width: 12px;
-        height: 12px;
-        margin-left: -10px;
-        margin-bottom: 2px;
-        border: 1px solid $white;
-        border-radius: 100%;
-        position: relative;
-        z-index: 2;
-      }
-    }
-  }
-
-
 }
 
-
-
 .d-none {
-  display: none;
+    display: none;
 }

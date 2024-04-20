@@ -36,8 +36,7 @@
         <div class="button-area">
             <app-button [classes]="['noIcon primary']" [isDisabled]="isValid()" (clicked)="onSubmit()" type="submit" caption="weiter" imgPath=""></app-button>
         </div>
-    </div>
-
-    <div data-aos="fade-left" class="toast" [hidden]="!showError">
-        <span>{{ toastService.message }}</span>
+        <div data-aos="fade-left" *ngIf="toastService.showToast" class="toast">
+            <span>{{ toastService.message }}</span>
+        </div>
     </div>

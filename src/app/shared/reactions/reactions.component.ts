@@ -58,10 +58,7 @@ export class ReactionsComponent {
    * Fetch on init of the API.
    */
   ngOnInit(): void {
-    this.getEmojis();
-    this.messageInfo = this.globalFunctions.checkMessage(this.message.message);
-    this.isImage = this.messageInfo.hasUrl;
-    this.switchUrlWithAlias();
+    this.getEmojis();  
     this.chatFamiliy = this.globaleVariables.isUserChat ? 'chatusers' : 'chatchannels';
   }
 
@@ -165,6 +162,9 @@ export class ReactionsComponent {
    * this function opens shows the edit Message options
    */
   editOpen() { 
+    this.messageInfo = this.globalFunctions.checkMessage(this.originalMessage.message);
+    this.isImage = this.messageInfo.hasUrl;
+    this.switchUrlWithAlias();
     this.globaleVariables.editMessage = true; 
   }
   /**

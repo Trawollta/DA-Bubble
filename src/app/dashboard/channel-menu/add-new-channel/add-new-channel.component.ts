@@ -8,6 +8,8 @@ import { ButtonComponent } from 'app/shared/button/button.component';
 import { FormsModule } from '@angular/forms';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { mergeNsAndName } from '@angular/compiler';
+import { ToastService } from 'app/services/app-services/toast.service';
+import Aos from 'aos';
 
 @Component({
   selector: 'app-add-new-channel',
@@ -23,6 +25,7 @@ import { mergeNsAndName } from '@angular/compiler';
   styleUrl: './add-new-channel.component.scss',
 })
 export class AddNewChannelComponent {
+  toastService = inject(ToastService);
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChat = inject(FirebaseChannelService);
@@ -33,10 +36,12 @@ export class AddNewChannelComponent {
   description: string | null = null;
 
   async onSubmit() {
-   
+
     const result = await this.checkChannelName();
     if (result) {
-      this.showError = true; 
+      this.showError = true;
+      this.toastService.showMessage('Dieser Channelname exestiert bereits, bitte nutzen Sie einen anderen Namen.');
+
       return;
     }
 
@@ -49,6 +54,10 @@ export class AddNewChannelComponent {
     }
   }
 
+  ngAfterViewInit() {
+    window.dispatchEvent(new Event('resize'));
+    Aos.init();
+  }
   async checkChannelName(): Promise<boolean> {
     let channelExist = await this.getCurrentUserChannel();
     return channelExist;

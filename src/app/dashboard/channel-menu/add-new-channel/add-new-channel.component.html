@@ -21,7 +21,7 @@
 
             <div class="input-icon">
                 <img src="" />
-              
+
                 <app-inputfield [(ngModel)]="channelName" [classes]="['standard']" type="text" placeholder="Kooperationsprojekte" [required]="true" id="channelName"></app-inputfield>
             </div>
             <div>
@@ -38,6 +38,6 @@
         </div>
     </div>
 
-    <div data-aos="fade-left" class="toast" [hidden]="!showError"> 
-        <span>Dieser Channelname exestiert bereits, bitte nutzen Sie einen anderen Namen.</span>
+    <div data-aos="fade-left" class="toast" [hidden]="!showError">
+        <span>{{ toastService.message }}</span>
     </div>

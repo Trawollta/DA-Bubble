@@ -90,7 +90,6 @@ export class LangingpageComponent {
     this.globalVariables.showSplashScreen = true;
   }
 
-
   ngAfterViewInit() {
     setTimeout(() => {
       this.animateLogoState = 'end';

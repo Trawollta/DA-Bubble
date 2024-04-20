@@ -239,7 +239,6 @@ export class GlobalFunctionsService {
     const allowedCharPattern = /[^a-zA-Z0-9\s.,!?/:;%&=@#'§$€°ÄäÖöÜüß_-]/g;
     const forbiddenCharacters = messageWithoutEmojis.match(allowedCharPattern) || [];
     const uniqueChar = Array.from(new Set(forbiddenCharacters)).join(', ');
-    console.log(uniqueChar);
     return uniqueChar;
   }
 

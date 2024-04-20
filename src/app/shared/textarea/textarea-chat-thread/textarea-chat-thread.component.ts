@@ -67,9 +67,7 @@ export class TextareaChatThreadComponent {
    * @param newMessage - string - contains selected member
    */
   onMessageUpdated(newMessage: string) {
-    this.newMessage = newMessage; // Update newMessage when received from event
-    //Ich muss hier nochmal ran.
-    //this.newMessage muss durchsucht werden nach allen @ Einträgen und verglichen werden newMessage
+    this.newMessage = newMessage; 
   }
 
   /**

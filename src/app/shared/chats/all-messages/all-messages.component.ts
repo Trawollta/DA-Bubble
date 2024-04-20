@@ -1,8 +1,8 @@
 import {
   Component,
   inject,
-  ChangeDetectorRef,
-  AfterContentChecked,
+  //ChangeDetectorRef,
+ // AfterContentChecked,
   Input,
   ElementRef,
   ViewChild,
@@ -51,7 +51,7 @@ export class AllMessagesComponent implements AfterViewChecked {
   @Input() isThread: boolean = false;
   @ViewChild('scrolldown') scrollDownElement!: ElementRef;
 
-  constructor(private changeDetector: ChangeDetectorRef) { }
+  constructor() { } //private changeDetector: ChangeDetectorRef
 
   /**
    * this function checks if the chat is scrolled down
@@ -74,10 +74,10 @@ export class AllMessagesComponent implements AfterViewChecked {
 
 
   //this function avoids the ExpressionChangedAfterItHasBeenCheckedError in the developer Mode
-  ngAfterContentChecked(): void {
+/*   ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();
   }
-
+ */
   ngOnInit() {
     //an diesem Punkt gibt es noch keinen Chat desen Länge man messen kann
     //brauche ich das dann hier überhaupt?

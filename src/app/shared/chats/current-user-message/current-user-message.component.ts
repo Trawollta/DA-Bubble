@@ -1,5 +1,5 @@
 import {
-  ChangeDetectorRef,
+ // ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
@@ -76,12 +76,9 @@ export class CurrentUserMessageComponent {
   count: number = 0;
   isImage: boolean = false;
 
-  constructor(
-    private changeDetector: ChangeDetectorRef,
-    private elementRef: ElementRef
-  ) {
+  constructor( private elementRef: ElementRef ) {
     this.unsubUser = this.getUser(this.userId);
-  }
+  } //private changeDetector: ChangeDetectorRef,
 
   /**
    * this function unsubscribes the containing content

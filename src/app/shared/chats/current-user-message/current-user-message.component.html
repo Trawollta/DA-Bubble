@@ -5,7 +5,7 @@
         <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
         <span class="username" (click)="globalFunctions.openProfile(true, globalVariables.activeID)">{{ user.name }}</span>
       </div>
-      <div class="speech-bubble-current-user" (click)="onSelectMessage()">
+      <div class="speech-bubble-current-user" (mouseenter)="onSelectMessage()">
         <span class="speech-bubble-current-user-text"
           *ngIf="(messageInfo.message !== '' || !globalVariables.editMessage || !activeMessage)  && !globalVariables.editMessage">{{ messageInfo.message
           }}</span>

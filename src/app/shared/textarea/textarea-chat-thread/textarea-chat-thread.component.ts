@@ -247,6 +247,15 @@ export class TextareaChatThreadComponent {
     this.showChannelList = false;
     this.showMemberList = false;
     this.showChannelList = key === '#';
+     if (this.showChannelList) {
+      console.log(this.globalVariables.currentUser.relatedChats);
+    } 
     this.showMemberList = key === '@';
+    if (this.showChannelList) {
+      //setTimeout(() => {
+        console.log(this.globalVariables.openChannelUser);
+      //}, 20);
+      
+    } 
 }
 }

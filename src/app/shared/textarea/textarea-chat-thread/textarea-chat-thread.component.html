@@ -1,17 +1,25 @@
 <section class="inputfield">
-  <textarea name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="newMessage" autofocus (keydown)="onKeyDown($event)">
-    </textarea>
+  <textarea name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="newMessage" autofocus
+    (keydown)="onKeyDown($event)">
+
+  </textarea>
+  <div class="listContainer" *ngIf="showChannelList || showMemberList">
+    <div class="channelListContainer list" *ngIf="showChannelList">
+
+      <p>Channelliste...</p>
+    </div>
+
+    <div class="MemberListContainer list" *ngIf="showMemberList">
+
+      <p>Memberliste...</p>
+    </div>
+  </div>
   <div class="controllElementsContainer">
-    <app-show-contacts 
-      (messageUpdated)="onMessageUpdated($event)" 
-      (closeMember)="popUpClosed($event)"
-      class="showContactsTextInput" 
-      *ngIf="isMemberContainerOpen" appClickedOutside (clickedOutside)="closeMembers()">
+    <app-show-contacts (messageUpdated)="onMessageUpdated($event)" (closeMember)="popUpClosed($event)"
+      class="showContactsTextInput" *ngIf="isMemberContainerOpen" appClickedOutside (clickedOutside)="closeMembers()">
     </app-show-contacts>
-    <app-emoji-container 
-      (addEmoji)="addEmoji($event)"
-      class="showContactsTextInput" 
-      *ngIf="isEmojiContainerOpen" appClickedOutside (clickedOutside)="closeEmoji()">
+    <app-emoji-container (addEmoji)="addEmoji($event)" class="showContactsTextInput" *ngIf="isEmojiContainerOpen"
+      appClickedOutside (clickedOutside)="closeEmoji()">
     </app-emoji-container>
 
     <div class="moreControls">
@@ -53,14 +61,4 @@
       <div class="okBtn" (click)="closeErrorPopup()">OK</div>
     </div>
   </div>
-</div>
-
-<div *ngIf="showChannelList">
-  <
-  <p>Channelliste...</p>
-</div>
-
-<div *ngIf="showMemberList">
-  
-  <p>Memberliste...</p>
 </div>

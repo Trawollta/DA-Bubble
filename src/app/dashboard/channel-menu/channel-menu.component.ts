@@ -120,7 +120,8 @@ export class ChannelMenuComponent {
    */
   openChannel(channel: any) {
     this.selectedChannel = channel;
-    this.globalVariables.scrolledToBottom = false;
+    this.globalFunctions.openChannel(channel);
+    /* this.globalVariables.scrolledToBottom = false;
     this.globalVariables.isUserChat = false;
     this.getChatUserData(channel.members);
     this.globalVariables.openChannel.desc = channel.description;
@@ -130,28 +131,28 @@ export class ChannelMenuComponent {
     this.globalVariables.openChannel.creator = channel.creator;
     this.globalVariables.openChannel.memberCount = channel.members.length;
     this.firebaseChatService.activeChatId = channel.chatId;
-    this.globalFunctions.showChat();
+    this.globalFunctions.showChat(); */
   }
 
   /**
    * This function fills the channelUser Array with all relevant data
    * @param member - Array of member ids
    */
-  async getChatUserData(member: string[]) {
+  /* async getChatUserData(member: string[]) {
     this.globalVariables.openChannelUser = [];
     const userDataList = await Promise.all(this.getMemberData(member));
     const filteredUserDataList = userDataList.filter(
       (userData) => userData !== null
     ) as { id: string; name: string; img: string }[];
     this.globalVariables.openChannelUser.push(...filteredUserDataList);
-  }
+  } */
 
   /**
    * this function returns an array with user data for all user listed for the channel
    * @param member - Array of member ids
    * @returns - returns an array with uid, name and image path
    */
-  getMemberData(member: string[]) {
+  /* getMemberData(member: string[]) {
     return member.map(async (userId) => {
       const memberData = await this.firebasUserService.getUserData(userId);
       if (memberData) {
@@ -160,7 +161,7 @@ export class ChannelMenuComponent {
         return null;
       }
     });
-  }
+  } */
 
   openChannelOverlay() {
     this.globalVariables.showAddChannel = true;

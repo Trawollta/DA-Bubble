@@ -7,6 +7,7 @@ import {
 } from '@angular/fire/firestore';
 import { FirebaseChatService } from '../firebase-services/firebase-chat.service';
 import { FirebaseChannelService } from '../firebase-services/firebase-channel.service';
+import { FirebaseUserService } from '../firebase-services/firebase-user.service';
 
 export interface MessageInfo {
   hasUrl: boolean;
@@ -23,6 +24,7 @@ export class GlobalFunctionsService {
   globalVariables = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
   firebaseChannelService = inject(FirebaseChannelService);
+  firebasUserService = inject(FirebaseUserService);
 
   openProfile(ownProfile: boolean, userId: string) {
     this.globalVariables.profileUserId = userId;
@@ -258,5 +260,53 @@ export class GlobalFunctionsService {
       result.textAfterUrl = message.split(result.messageImgUrl)[1].trim();
     }
     return result;
+  }
+
+  //functions for loading the Channel
+  /**
+   * this funktion sets the flag to show the header for channels and take over information of the related channel object to global variables
+   * @param channel - object which contains information of selecet channel
+   */
+  openChannel(channel: any) {
+    this.globalVariables.scrolledToBottom = false;
+    this.globalVariables.isUserChat = false;
+    this.getChatUserData(channel.members);
+    this.globalVariables.openChannel.desc = channel.description;
+    this.globalVariables.openChannel.titel = channel.channelName;
+    this.globalVariables.openChannel.id = channel.id;
+    this.globalVariables.openChannel.chatId = channel.chatId;
+    this.globalVariables.openChannel.creator = channel.creator;
+    this.globalVariables.openChannel.memberCount = channel.members.length;
+    this.firebaseChatService.activeChatId = channel.chatId;
+    this.showChat();
+  }
+
+  /**
+   * This function fills the channelUser Array with all relevant data
+   * @param member - Array of member ids
+   */
+  async getChatUserData(member: string[]) {
+    this.globalVariables.openChannelUser = [];
+    const userDataList = await Promise.all(this.getMemberData(member));
+    const filteredUserDataList = userDataList.filter(
+      (userData) => userData !== null
+    ) as { id: string; name: string; img: string }[];
+    this.globalVariables.openChannelUser.push(...filteredUserDataList);
+  }
+
+  /**
+   * this function returns an array with user data for all user listed for the channel
+   * @param member - Array of member ids
+   * @returns - returns an array with uid, name and image path
+   */
+  getMemberData(member: string[]) {
+    return member.map(async (userId) => {
+      const memberData = await this.firebasUserService.getUserData(userId);
+      if (memberData) {
+        return { id: userId, name: memberData['name'], img: memberData['img'] };
+      } else {
+        return null;
+      }
+    });
   }
 }

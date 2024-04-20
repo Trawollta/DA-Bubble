@@ -4,14 +4,10 @@ import { ButtonComponent } from 'app/shared/button/button.component';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-//import { AddNewChannelComponent } from '../add-new-channel/add-new-channel.component';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { Observable, from, map, of, Subject } from 'rxjs';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
-//import { User } from 'app/models/user.class';
-//import { addDoc, collection, Firestore } from '@angular/fire/firestore';
-//import { ChannelMenuComponent } from '../channel-menu.component';
 import { FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
@@ -22,8 +18,6 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
     ButtonComponent,
     CommonModule,
     InputfieldComponent,
-   // AddNewChannelComponent,
-    //ChannelMenuComponent,
     FormsModule,
   ],
   templateUrl: './add-contacts.component.html',
@@ -218,7 +212,6 @@ export class AddContactsComponent implements OnInit {
   }
 
   close() {
-    //this.globalVariables.showProfile = false;
     this.globalVariables.adduser = false;
     document.body.style.overflow = 'auto';
   }

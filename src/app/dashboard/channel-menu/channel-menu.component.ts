@@ -39,6 +39,7 @@ export class ChannelMenuComponent {
    * this function just opens and close the menu for selecting a channel
    */
   async openChannelMenu() {
+    console.log('openChannelMenu');
     await this.getChannel();
     const channelMsg = document.getElementById(
       'channelMsgArrow'
@@ -84,12 +85,13 @@ export class ChannelMenuComponent {
     }
   }
 
-  async ngOnInit() {
+  async ngAfterViewInit() {
     await this.globalFunctions.getCollection('channels', this.allChannels);
-    await this.globalFunctions.getCollection('users', this.allUsers);
-
+    await this.globalFunctions.getCollection('users', this.allUsers);   
     this.openDirectMessageMenu();
-    this.openChannelMenu();
+    setTimeout(() => {
+      this.openChannelMenu();
+    }, 2000);
   }
 
 
@@ -166,5 +168,8 @@ export class ChannelMenuComponent {
     document.body.style.overflow = 'hidden';
   }
 
+  updateChannelArray() {
+    this.openChannelMenu();
+  }
 
 }

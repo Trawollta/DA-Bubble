@@ -13,6 +13,7 @@ import 'aos/dist/aos.css';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GoBackButtonComponent } from 'app/shared/go-back-button/go-back-button.component';
 import { Router } from '@angular/router';
+import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -28,6 +29,7 @@ export class SignUpComponent {
   globalFunctions = inject(GlobalFunctionsService);
   userService = inject(FirebaseUserService);
   toastService = inject(ToastService);
+  firebaseChannelService = inject(FirebaseChannelService);
   private router = inject(Router);
   signUpStep: string = "createAccount"; //createAccount | chooseAvatar
   selectedAvatar: string = '';
@@ -41,7 +43,8 @@ export class SignUpComponent {
     name: "",
     email: "",
     isActive: false,
-    img: ""
+    img: "",
+    relatedChats: ["NQMdt08FAcXbVroDLhvm"]
   }
 
   avatarImgs = [
@@ -64,6 +67,7 @@ export class SignUpComponent {
   goCreateAccount() {
     this.signUpStep = "createAccount";
   }
+
   ngAfterViewInit() {
     window.dispatchEvent(new Event('resize'));
     Aos.init();
@@ -105,6 +109,15 @@ export class SignUpComponent {
       console.error("Registrierungsfehler:", error);
       this.toastService.showMessage('Email bereits registriert!');
     }
+    this.addNewUserToWelcome()
   }
+
+  async addNewUserToWelcome() {
+    let id = 'fsjWrBdDhpg1SvocXmxS';
+    let name = this.signUpUserData.name;
+    let docId = await this.userService.getUserDocIdWithName(name) 
+    this.firebaseChannelService.addUserToChannel(id, docId[0]);
+  }
+
 }
 

@@ -39,7 +39,6 @@ export class ChannelMenuComponent {
    * this function just opens and close the menu for selecting a channel
    */
   async openChannelMenu() {
-    console.log('openChannelMenu');
     await this.getChannel();
     const channelMsg = document.getElementById(
       'channelMsgArrow'

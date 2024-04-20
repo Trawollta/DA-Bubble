@@ -1,5 +1,5 @@
 <section class="inputfield">
-  <textarea name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="newMessage" autofocus>
+  <textarea name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="newMessage" autofocus (keydown)="onKeyDown($event)">
     </textarea>
   <div class="controllElementsContainer">
     <app-show-contacts 
@@ -53,4 +53,14 @@
       <div class="okBtn" (click)="closeErrorPopup()">OK</div>
     </div>
   </div>
+</div>
+
+<div *ngIf="showChannelList">
+  <
+  <p>Channelliste...</p>
+</div>
+
+<div *ngIf="showMemberList">
+  
+  <p>Memberliste...</p>
 </div>

@@ -1,11 +1,11 @@
-<section class="message-current-user">
+<section class="message-current-user" (mouseenter)="onSelectMessage()" (mouseleave)="onLeaveMessage()">
   <div class="current-user-content">
     <div class="info-area">
       <div class="info-area-wrapper">
         <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
         <span class="username" (click)="globalFunctions.openProfile(true, globalVariables.activeID)">{{ user.name }}</span>
       </div>
-      <div class="speech-bubble-current-user" (mouseenter)="onSelectMessage()">
+      <div class="speech-bubble-current-user" >
         <span class="speech-bubble-current-user-text"
           *ngIf="(messageInfo.message !== '' || !globalVariables.editMessage || !activeMessage)  && !globalVariables.editMessage">{{ messageInfo.message
           }}</span>

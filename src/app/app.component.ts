@@ -46,7 +46,6 @@ export class AppComponent implements OnInit {
       if (user && this.globalVariables.logout === false) {
         this.userService.updateCurrentUser(user.uid);
       } else {
-        console.log('Benutzer ist nicht eingeloggt.');
       }
     });
   }

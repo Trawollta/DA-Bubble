@@ -106,7 +106,6 @@ export class SignUpComponent {
       this.toastService.showMessage('Konto erfolgreich erstellt!');
       setTimeout(() => this.router.navigate(['/']), 2000);
     } catch (error) {
-      console.error("Registrierungsfehler:", error);
       this.toastService.showMessage('Email bereits registriert!');
     }
     this.addNewUserToWelcome()

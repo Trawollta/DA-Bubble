@@ -16,7 +16,7 @@ export class AuthService {
       await sendPasswordResetEmail(this.auth, email);
       this.toastService.showMessage('E-Mail gesendet');
     } catch (error) {
-      console.error('Fehler beim Senden der Passwort-Zurücksetzungs-E-Mail:', error);
+      this.toastService.showMessage('Fehler beim Senden der Passwort-Zurücksetzungs-E-Mail');
       throw error;
     }
   }

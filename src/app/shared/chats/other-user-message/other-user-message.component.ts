@@ -216,5 +216,10 @@ export class OtherUserMessageComponent {
   onMouseOut() {
     this.mouseover = false;
   }
+
+  onLeaveMessage() {
+    this.openReaction = false;
+  }
+
  
 }

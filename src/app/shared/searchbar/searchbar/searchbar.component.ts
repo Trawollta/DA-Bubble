@@ -58,7 +58,6 @@ export class SearchbarComponent {
           this.globalVariables.openChannel.chatId = result['chatId'];
           this.globalVariables.openChannel.creator = result['creator'];
           this.globalVariables.openChannel.desc = result['description'];
-          this.globalVariables.openChannel.id = data;
           this.globalVariables.openChannel.titel = result['channelName'];
           this.overwriteChannel();
         } else {

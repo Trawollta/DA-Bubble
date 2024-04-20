@@ -62,7 +62,7 @@ export class FirebaseChannelService {
 
   async loadChannelDataWithChatID(chatId: string) {
     let docIds = await this.getDocId(chatId);
-    return docIds
+    return docIds;
   }
 
   async getChannelMessages(channelChatId: string) {
@@ -73,7 +73,6 @@ export class FirebaseChannelService {
     } else {
       return null;
     }
-
   }
 
   async listenToChannelData(channelId: string) {
@@ -95,9 +94,7 @@ export class FirebaseChannelService {
   }
 
   updateChannelTitle(channelId: string, newTitle: string): void {
-    // Aktualisiere den Kanal im Backend, zum Beispiel in Firebase oder einer anderen Datenbank
     this.updateChannel(channelId, { titel: newTitle }).then(() => {
-      // Aktualisiere den lokalen Zustand direkt nach dem erfolgreichen Backend-Update
       if (
         this.globalVariables.openChannel &&
         this.globalVariables.openChannel.id === channelId
@@ -131,9 +128,9 @@ export class FirebaseChannelService {
     const docId = await this.getDocId(channelId);
     await this.deleteChannelIdFromUsers(channelId);
     const channelDocRef = doc(this.firestore, 'channels', docId[0]);
-    await deleteDoc(channelDocRef)
-    const chatChannelRef = doc(this.firestore, 'chatchannels', channelId)
-    await deleteDoc (chatChannelRef);
+    await deleteDoc(channelDocRef);
+    const chatChannelRef = doc(this.firestore, 'chatchannels', channelId);
+    await deleteDoc(chatChannelRef);
     this.firebaseChatService.changeActiveChannel();
   }
 

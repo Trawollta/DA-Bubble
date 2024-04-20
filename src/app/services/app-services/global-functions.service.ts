@@ -37,14 +37,6 @@ export class GlobalFunctionsService {
     this.freezeBackground(this.globalVariables.showProfileMenu);
   }
 
-/*   openChannelOverlay() {
-    this.globalVariables.showAddChannel = !this.globalVariables.showAddChannel;
-    if (this.globalVariables.showAddChannel) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
-    this.globalVariables.channelData.channelName = '';
-    this.globalVariables.channelData.description = '';
-  } */
-
   openEditChannelOverlay() {
     this.globalVariables.channelData.channelName = this.globalVariables.openChannel.titel;
     this.globalVariables.channelData.description = this.globalVariables.openChannel.desc;
@@ -247,7 +239,6 @@ export class GlobalFunctionsService {
     const allowedCharPattern = /[^a-zA-Z0-9\s.,!?/:;%&=@#'§$€°ÄäÖöÜüß_-]/g;
     const forbiddenCharacters = messageWithoutEmojis.match(allowedCharPattern) || [];
     const uniqueChar = Array.from(new Set(forbiddenCharacters)).join(', ');
-    console.log(uniqueChar);
     return uniqueChar;
   }
 

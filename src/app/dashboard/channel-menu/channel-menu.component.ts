@@ -31,6 +31,7 @@ export class ChannelMenuComponent {
   allChannels: any = [];
   allUsers: any = [];
   channelToDisplay: any = [];
+  selectedChannel: any; 
 
   constructor(public globalFunctions: GlobalFunctionsService) {}
 
@@ -38,6 +39,7 @@ export class ChannelMenuComponent {
    * this function just opens and close the menu for selecting a channel
    */
   async openChannelMenu() {
+    console.log('openChannelMenu');
     await this.getChannel();
     const channelMsg = document.getElementById(
       'channelMsgArrow'
@@ -83,10 +85,16 @@ export class ChannelMenuComponent {
     }
   }
 
-  async ngOnInit() {
+  async ngAfterViewInit() {
     await this.globalFunctions.getCollection('channels', this.allChannels);
-    await this.globalFunctions.getCollection('users', this.allUsers);
+    await this.globalFunctions.getCollection('users', this.allUsers);   
+    this.openDirectMessageMenu();
+    setTimeout(() => {
+      this.openChannelMenu();
+    }, 2000);
   }
+
+
 
   async filterChannelsByActiveID(activeID: string) {
     let channelsWithActiveID: any[] = [];
@@ -112,6 +120,7 @@ export class ChannelMenuComponent {
    * @param channel - object which contains information of selecet channel
    */
   openChannel(channel: any) {
+    this.selectedChannel = channel;
     this.globalVariables.scrolledToBottom = false;
     this.globalVariables.isUserChat = false;
     this.getChatUserData(channel.members);
@@ -158,4 +167,9 @@ export class ChannelMenuComponent {
     this.globalVariables.showAddChannel = true;
     document.body.style.overflow = 'hidden';
   }
+
+  updateChannelArray() {
+    this.openChannelMenu();
+  }
+
 }

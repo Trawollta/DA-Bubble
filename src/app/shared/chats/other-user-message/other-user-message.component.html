@@ -1,4 +1,4 @@
-<section class="message">
+<section class="message" (mouseenter)="onSelectMessage()" (mouseleave)="onLeaveMessage()">
   <app-reactions class="reaction-field" 
     *ngIf="openReaction" [message]="message"
     [originalMessage]="originalMessage">
@@ -11,7 +11,7 @@
       <span class="username" *ngIf="user.name" (click)="globalFunctions.openProfile(false, message.userId)">{{ user.name }}</span>
       <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
     </div>
-    <div class="speech-bubble" (click)="onSelectMessage()">
+    <div class="speech-bubble">
       <span class="speech-bubble-text" *ngIf="messageInfo.message !== ''">{{ messageInfo.message }}</span>
       <div class="loadedImg" *ngIf="isImage">
         <img src="{{ messageInfo.messageImgUrl }}" alt="">

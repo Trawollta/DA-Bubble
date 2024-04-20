@@ -87,6 +87,7 @@ export class FirebaseUserService {
       email: user.email,
       isActive: user.isActive,
       img: user.img,
+      relatedChats: user.relatedChats,
     };
   }
 

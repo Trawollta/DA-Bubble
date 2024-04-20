@@ -11,7 +11,7 @@
                 <app-button type="submit" [classes]="['transparent','noIcon']" (clicked)="goToSendMail()" caption="Passwort vergessen?"></app-button>
             </div>
             <div><span class="or">ODER</span></div>
-            <app-button [classes]="['purpel-border']" imgPath="assets/img/icons/google.svg" caption="Anmelden mit Google" (clicked)="loginWithGoogle()"></app-button>
+            <app-button type="button" [classes]="['purpel-border']" imgPath="assets/img/icons/google.svg" caption="Anmelden mit Google" (clicked)="loginWithGoogle()"></app-button>
             <div class="button-field">
                 <app-button type="submit" [classes]="['primary','noIcon']" caption="Anmelden"></app-button>
                 <app-button [classes]="['secondary','noIcon']" (clicked)="loginAsGuest()" caption="Gäste-Login"></app-button>

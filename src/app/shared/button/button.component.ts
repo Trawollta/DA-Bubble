@@ -16,8 +16,8 @@ export class ButtonComponent {
   @Input() classes?: string | string[] = [];
   @Output() clicked = new EventEmitter<Event>();
 
+
   onClick() {
     this.clicked.emit();
   }
-
 }

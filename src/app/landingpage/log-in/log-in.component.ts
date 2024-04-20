@@ -50,8 +50,7 @@ export class LogInComponent {
       this.globalVariables.logout = false;
       this.router.navigate(['/dashboard']);
     } catch (error) {
-      console.log('du bist scheiße')
-      this.toastService.showMessage('Test Benutzername oder Passwort falsch');
+      this.toastService.showMessage('Benutzername oder Passwort falsch');
     }
   }
 
@@ -74,7 +73,6 @@ export class LogInComponent {
         }
         this.router.navigate(['/dashboard']);
       } else {
-        console.log('hier könnte ihre werbung stehen')
         this.toastService.showMessage('Fehler beim anmelden mit Goggle');
       }
     } catch (error) {

@@ -161,10 +161,8 @@ export class FirebaseUserService {
     if (userDocSnapshot.exists()) {
       const userData = userDocSnapshot.data();
       if (userData['relatedChats'] && Array.isArray(userData['relatedChats'])) {
-        console.log('hier1');
         await updateDoc(userDocRef, { relatedChats: arrayUnion(chatId) });
       } else {
-        console.log('hier2');
         await updateDoc(userDocRef, { relatedChats: [chatId] });
       }
     } else {
@@ -181,7 +179,6 @@ export class FirebaseUserService {
           const updatedRelatedChats = userData['relatedChats'].filter(
             (chatId: string) => chatId !== channelId
           );
-          console.log('hier3');
           updateDoc(userDocRef, { relatedChats: updatedRelatedChats });
         } else {
           console.log('Benutzerdokument nicht gefunden');

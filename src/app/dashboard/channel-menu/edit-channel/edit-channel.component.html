@@ -51,7 +51,7 @@
         </div>
 
         <div class="button-area">
-            <app-button *ngIf="globalVariables.activeID === this.channel.creator" [classes]="['primary']" caption="Channel Löschen" (click)="firebaseChannelService.deleteChanel(globalVariables.channelData.chatId)" imgPath=""></app-button>
+            <app-button *ngIf="globalVariables.activeID === this.channel.creator" [classes]="['primary']" caption="Channel Löschen" (click)="deleteChannel(globalVariables.channelData.chatId)" imgPath=""></app-button>
 
             <app-button [classes]="['noIcon primary']" caption="Channel verlassen" (click)="leaveChannel()" imgPath=""></app-button>
         </div>

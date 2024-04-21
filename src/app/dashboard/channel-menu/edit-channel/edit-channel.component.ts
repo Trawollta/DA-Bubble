@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
@@ -194,7 +194,13 @@ export class EditChannelComponent {
   leaveChannel() {
     this.firebaseUpdate.leaveChannel(this.channel.chatId, this.globalVariables.activeID);
     this.firebaseUpdate.leaveChannelUser(this.channel.chatId, this.globalVariables.activeID);
-    this.globalFunctions.closeEditOverlay()
+    this.globalFunctions.closeEditOverlay();
+  }
+
+  async deleteChannel(channelId: string){
+    await this.firebaseChannelService.deleteChanel(channelId);
+    this.globalFunctions.getStartChannel();
+    this.globalFunctions.closeEditOverlay();
   }
 
 }

@@ -78,13 +78,13 @@ export class AllMessagesComponent implements AfterViewChecked {
     this.changeDetector.detectChanges();
   }
  */
-  ngOnInit() {
+/*   ngOnInit() {
     if (this.globalVariablesService.chatChannel.messages.length > 0) {
       this.lastDisplayedDate = new Date(
         this.globalVariablesService.chatChannel.messages[0].timestamp
       );
     }
-  }
+  } */
 
 
   /**

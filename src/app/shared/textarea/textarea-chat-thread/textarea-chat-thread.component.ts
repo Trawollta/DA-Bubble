@@ -124,6 +124,8 @@ export class TextareaChatThreadComponent {
       { icon: '', userId: [] as any[], iconId: '' },
     ];
   }
+
+  
   cleardata() {
     this.newMessage = '';
     this.globalVariables.messageData.message = '';
@@ -249,11 +251,10 @@ export class TextareaChatThreadComponent {
       console.log(this.globalVariables.currentUser.relatedChats);
     } 
     this.showMemberList = key === '@';
-    if (this.showChannelList) {
-      //setTimeout(() => {
-        console.log(this.globalVariables.openChannelUser);
-      //}, 20);
-      
-    } 
+}
+
+addName(choosenName:string){
+  this.newMessage += choosenName;
+  this.showMemberList = false;
 }
 }

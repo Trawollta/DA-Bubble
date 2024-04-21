@@ -30,17 +30,26 @@
   
     .listContainer{
       position: absolute;
+      overflow: hidden;
       top: -50px;
       left: 50px;
-      min-height: 80px;
-      max-height: 150px;
+      height: 150px;
       background-color: $white;
       box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.6);
       border-radius: 20px;
+      z-index: 2;
       .list{
-        margin: 16px;
+        overflow-y: auto;
+        height: 100%;
         font-size: 16px;
         font-weight: 400;
+        .singleName{
+          padding: 2px 12px;
+          cursor: pointer;
+          &:hover{
+            color: $purple3;
+          }
+        }
       }
     }
   

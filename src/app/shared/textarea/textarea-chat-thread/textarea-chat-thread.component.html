@@ -4,14 +4,15 @@
 
   </textarea>
   <div class="listContainer" *ngIf="showChannelList || showMemberList">
-    <div class="channelListContainer list" *ngIf="showChannelList">
-
-      <p>Channelliste...</p>
+    <div class="list" *ngIf="showChannelList">
+      <div class="singleName" *ngFor="let channelName of globalVariables.openChannelUser">
+        {{channelName.name}}</div>
     </div>
 
-    <div class="MemberListContainer list" *ngIf="showMemberList">
-
-      <p>Memberliste...</p>
+    <div class="list" *ngIf="showMemberList">
+      <div class="singleName" *ngFor="let member of globalVariables.openChannelUser" (click)="addName(member.name)">
+        {{member.name}}
+      </div>
     </div>
   </div>
   <div class="controllElementsContainer">

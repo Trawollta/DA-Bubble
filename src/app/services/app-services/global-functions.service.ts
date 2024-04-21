@@ -309,4 +309,16 @@ export class GlobalFunctionsService {
       }
     });
   }
+
+    //this function should load the welcome channel when user logged in
+    getStartChannel(){
+      this.firebaseChannelService.getChannelData('fsjWrBdDhpg1SvocXmxS')
+      .then(channelData => {
+        if (channelData) {
+          channelData['id'] = 'fsjWrBdDhpg1SvocXmxS';
+          this.openChannel(channelData);
+        } else console.warn('Channel-Daten wurden nicht gefunden.');
+      })
+      .catch(error => console.error('Fehler beim Abrufen der Daten:', error));
+    }
 }

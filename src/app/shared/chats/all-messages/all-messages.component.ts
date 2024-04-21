@@ -79,8 +79,6 @@ export class AllMessagesComponent implements AfterViewChecked {
   }
  */
   ngOnInit() {
-    //an diesem Punkt gibt es noch keinen Chat desen Länge man messen kann
-    //brauche ich das dann hier überhaupt?
     if (this.globalVariablesService.chatChannel.messages.length > 0) {
       this.lastDisplayedDate = new Date(
         this.globalVariablesService.chatChannel.messages[0].timestamp

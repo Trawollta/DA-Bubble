@@ -5,7 +5,7 @@
       <div class="icon blackIcon">
         <img src="./assets/img/icons/add_reaction.svg" alt="" />
       </div>
-      <span class="tooltiptext openEmojiTT">Öffne Emojiliste</span>
+      <span [ngClass]="{'openEmojiTTc': isCurrentUser, 'openEmojiTTo': !isCurrentUser}" class="tooltiptext">Öffne Emojiliste</span>
     </div>
 
     <!-- Container edit open -->
@@ -15,7 +15,7 @@
       <div class="icon blackIcon">
         <img src="./assets/img/icons/comment.svg" alt="" />
       </div>
-      <span class="tooltiptext">Nachricht bearbeiten</span>
+      <span class="tooltiptext secondTT">Nachricht bearbeiten</span>
     </div>
 
   </div>

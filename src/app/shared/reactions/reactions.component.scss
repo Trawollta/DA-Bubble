@@ -95,53 +95,40 @@ main {
   display: inline-block;
 }
 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
-
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
 }
-.firstTT{
+
+
+.firstTT {
   left: 50px !important;
-  &::after{
+
+  &::after {
     left: 15%;
   }
 }
-  .secondTT{
-    left: 15px !important;
-    &::after{
-      left: 46%;
-    }
+
+.secondTT {
+  left: 15px !important;
+
+  &::after {
+    left: 46%;
+  }
 }
-.openEmojiTT{
+
+.openEmojiTTo {
   left: -12px !important;
-  &::after{
+
+  &::after {
     left: 69%;
+  }
+}
+
+.openEmojiTTc {
+  left: 50px !important;
+
+  &::after {
+    left: 17%;
   }
 }

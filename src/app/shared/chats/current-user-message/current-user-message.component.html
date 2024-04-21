@@ -23,7 +23,8 @@
       </div>
       <app-reactions class="reaction-field" 
         *ngIf="openReaction" [message]="message"
-        [originalMessage]="originalMessage">
+        [originalMessage]="originalMessage"
+        [isCurrentUser] = "true">
       </app-reactions>
 
         <div class="reaction-emojis">

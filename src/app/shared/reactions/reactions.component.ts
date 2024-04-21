@@ -34,6 +34,7 @@ export class ReactionsComponent {
   @Output() newEmoji = new EventEmitter<string>();
   @Input() message: any;
   @Input() originalMessage: any;
+  @Input() isCurrentUser: boolean = false;
 
   // Variable für das ausgewählte Emoji
   choosedEmoji: string = '';

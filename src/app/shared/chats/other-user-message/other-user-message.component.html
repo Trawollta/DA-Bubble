@@ -1,7 +1,8 @@
 <section class="message" (mouseenter)="onSelectMessage()" (mouseleave)="onLeaveMessage()">
   <app-reactions class="reaction-field" 
     *ngIf="openReaction" [message]="message"
-    [originalMessage]="originalMessage">
+    [originalMessage]="originalMessage"
+    [isCurrentUser] = "false">
   </app-reactions>
   <div class="user">
     <img *ngIf="user.img" [src]="user.img" alt="" (click)="globalFunctions.openProfile(false, message.userId)"/>

@@ -164,14 +164,5 @@ export class GlobalVariablesService {
 
   constructor() { }
 
-  //eine Idee:
-  //wir müssen die User überall mit der ID ansprechen und nur wenn wir den Namen brauchen holen wir ihn.
-  //wir müssten also inern ausschließlich mit den IDs arbeiten und  nur wenn wir den Profilnamen anzeigen lassen wollen wird hier hin verwiesen.
-  // dadurch können user auch den gleichen Namen haben.
-  /*  allUserIDs = [
-     {
-       userId: '',
-       userName: '',
-     },
-   ]; */
+ 
 }

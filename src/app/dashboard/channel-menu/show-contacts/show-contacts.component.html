@@ -8,9 +8,9 @@
             <div class="contactItem" *ngFor="let user of selectedUsers">
                 <!-- version highlight member in message -->
                 <label class="contactContainer" *ngIf="!globalVariables.headerShowMembers">
-          <input type="checkbox" (change)="checkboxChanged(user.name)" [(ngModel)]="user.checked">
-          <span>{{ user.name }}</span>
-        </label>
+                     <input type="checkbox" (change)="checkboxChanged(user.name)" [(ngModel)]="user.checked">
+                     <span>{{ user.name }}</span>
+                </label>
                 <!-- version open member list in header -->
                 <div class="contactContainer cCHeader" *ngIf="globalVariables.headerShowMembers">
                     <div class="userImgName">

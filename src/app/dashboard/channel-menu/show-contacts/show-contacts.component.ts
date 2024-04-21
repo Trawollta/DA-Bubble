@@ -5,7 +5,6 @@ import { GlobalVariablesService } from 'app/services/app-services/global-variabl
 import { ChannelMenuComponent } from '../channel-menu.component';
 import { AddContactsComponent } from '../add-contacts/add-contacts.component';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
-import { onSnapshot } from 'firebase/firestore';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -26,7 +25,7 @@ export class ShowContactsComponent implements OnInit {
   @Output() closeMember = new EventEmitter<boolean>();
 
   selectedUserIds: string[] = [];
-  selectedUsers: any[] = [];
+  selectedUsers: Array<{ id: string; name: string; img: string; checked: boolean; }> = [];
   allUsers: any[] = [];
   checked: boolean = false;
   checkedUsers: string = '';
@@ -39,32 +38,23 @@ export class ShowContactsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.getChannelMembers(this.globalVariables.openChannel.id);
+    this.copyUsers(this.globalVariables.openChannelUser);
   }
 
-  getChannelMembers(channelId: string) {
-    const channelRef = this.firebaseUserService.getSingleDocRef(
-      'channels',
-      channelId
-    );
-    onSnapshot(channelRef, (snapshot) => {
-      const channelData = snapshot.data();
-      if (channelData && channelData['members']) {
-        this.selectedUserIds = channelData['members'];
-        this.fetchUsersDetails(this.selectedUserIds);
-      }
-    });
-  }
-
-  fetchUsersDetails(userIds: string[]) {
-    this.selectedUsers = []; // Reset the array to ensure it's clean before adding new users
-    userIds.forEach((userId) => {
-      const userRef = this.firebaseUserService.getSingleDocRef('users', userId);
-      onSnapshot(userRef, (userSnapshot) => {
-        if (userSnapshot.exists()) {
-          this.selectedUsers.push(userSnapshot.data());
-        }
-      });
+  /**
+   * this function copies data from openChannelUser to selectedUsers
+   * @param openChannelUser - Array - contains all user data for open chat
+   */
+  copyUsers(openChannelUser: { id: string; name: string; img: string; }[]) {
+    this.selectedUsers = [];
+    openChannelUser.forEach((user: { id: string; name: string; img: string; }) => {
+      const newUser = {
+        id: user.id,
+        name: user.name,
+        img: user.img,
+        checked: false
+      };
+      this.selectedUsers.push(newUser);
     });
   }
 
@@ -109,11 +99,6 @@ export class ShowContactsComponent implements OnInit {
     else this.checkedUsers += userName;
     this.messageUpdated.emit(this.checkedUsers);
   }
-
-  /**
-* this function closes the showContacts popup by using appClickedOutside from ClickedOutsideDirective
-* but it closes the popup immediately if no additional check will happen >> is the popup open?
-*/
 
 
   async log(user: any) {

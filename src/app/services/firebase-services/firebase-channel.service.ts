@@ -192,4 +192,19 @@ export class FirebaseChannelService {
   getChannelRef() {
     return collection(this.firestore, 'channels');
   }
+
+  // get all allowed channels for activ user
+  async getChannelsWhereUserIsMember() {
+    const querySnapshot = await getDocs(this.getChannelRef());
+    this.globalVariables.viewableChannel = [];
+    querySnapshot.forEach((doc) => {
+      const channelData = doc.data();
+      if (Array.isArray(channelData['members'])) {
+        const isMember = channelData['members'].includes(this.globalVariables.activeID);
+        if (isMember) {
+          this.globalVariables.viewableChannel.push(channelData['channelName']);
+        }
+    }
+    });
+  }
 }

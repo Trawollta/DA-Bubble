@@ -5,6 +5,7 @@ import { ThreadComponent } from './thread/thread.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { CommonModule } from '@angular/common';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
+import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +23,7 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
 export class DashboardComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
+  firebaseChannelService = inject(FirebaseChannelService);
 
   constructor() {
     this.globalVariables.login = false;
@@ -31,6 +33,7 @@ export class DashboardComponent {
     this.globalVariables.isChatVisable = window.innerWidth > 800;
     this.globalVariables.bufferThreadOpen = this.globalVariables.showThread;
     this.globalFunctions.getStartChannel();
+    this.firebaseChannelService.getChannelsWhereUserIsMember();
   }
 
   toggleChannelMenu() {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ViewChild, ElementRef } from '@angular/core';
 import {
   getDownloadURL,
   getStorage,
@@ -29,6 +29,7 @@ import { EmojiContainerComponent } from 'app/shared/reactions/emoji-container/em
 })
 export class TextareaChatThreadComponent {
   @Input() areaType: string = '';
+  @ViewChild('messageTextarea') messageTextarea!: ElementRef<HTMLTextAreaElement>;
 
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
@@ -67,7 +68,7 @@ export class TextareaChatThreadComponent {
    * @param newMessage - string - contains selected member
    */
   onMessageUpdated(newMessage: string) {
-    this.newMessage = newMessage; 
+    this.newMessage = newMessage;
   }
 
   /**
@@ -125,7 +126,7 @@ export class TextareaChatThreadComponent {
     ];
   }
 
-  
+
   cleardata() {
     this.newMessage = '';
     this.globalVariables.messageData.message = '';
@@ -239,22 +240,22 @@ export class TextareaChatThreadComponent {
     } else if (this.isMemberContainerOpen && this.isPopupOpen) {
       this.isMemberContainerOpen = false;
       this.isPopupOpen = false;
+      this.messageTextarea.nativeElement.focus();
     }
   }
 
   onKeyDown(event: KeyboardEvent) {
-    const key = event.key; 
+    const key = event.key;
     this.showChannelList = false;
     this.showMemberList = false;
     this.showChannelList = key === '#';
-     if (this.showChannelList) {
-      console.log(this.globalVariables.currentUser.relatedChats);
-    } 
     this.showMemberList = key === '@';
-}
-
-addName(choosenName:string){
-  this.newMessage += choosenName;
-  this.showMemberList = false;
-}
+  }
+  
+  addName(choosenName: string) {
+    this.newMessage += choosenName;
+    this.showMemberList = false;
+    this.showChannelList = false;
+    this.messageTextarea.nativeElement.focus();
+  }
 }

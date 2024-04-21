@@ -1,12 +1,12 @@
 <section class="inputfield">
   <textarea name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="newMessage" autofocus
-    (keydown)="onKeyDown($event)">
+    (keydown)="onKeyDown($event)" #messageTextarea>
 
   </textarea>
   <div class="listContainer" *ngIf="showChannelList || showMemberList">
     <div class="list" *ngIf="showChannelList">
-      <div class="singleName" *ngFor="let channelName of globalVariables.openChannelUser">
-        {{channelName.name}}</div>
+      <div class="singleName" *ngFor="let channelName of globalVariables.viewableChannel" (click)="addName(channelName)">
+        {{channelName}}</div>
     </div>
 
     <div class="list" *ngIf="showMemberList">

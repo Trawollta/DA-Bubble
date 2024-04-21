@@ -38,7 +38,6 @@ export class GlobalVariablesService {
   isEditingChannel: boolean = false;
   headerShowMembers: boolean = false;
   newMessage: string = '';
-  //showEmojiContainer: boolean = false;
   scrolledToBottom: boolean = false;
   isMembersPopupOpen: boolean = false;
 
@@ -125,7 +124,9 @@ export class GlobalVariablesService {
       name: '',
       img: ''
     }
-  ]
+  ];
+
+  viewableChannel : Array<string> = [];
 
 
   //wird in edit-channel.component, add-contacts.component und add-to-channel.component verwendet
@@ -136,8 +137,6 @@ export class GlobalVariablesService {
     id: '',
     creator: '',
     members: [] as any[],
-    /* owner: '',
-    allowedUser: ['id1', '1d2'] */
   };
 
   //variable for chats

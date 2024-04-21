@@ -59,7 +59,7 @@ export class ReactionsComponent {
    * Fetch on init of the API.
    */
   ngOnInit(): void {
-    this.getEmojis();  
+    
     this.chatFamiliy = this.globaleVariables.isUserChat ? 'chatusers' : 'chatchannels';
   }
 
@@ -135,6 +135,7 @@ export class ReactionsComponent {
    * Open and close Emoji Picker depend on style value.
    */
   openEmojis() {
+    this.getEmojis();  
     this.showEmojiList = !this.showEmojiList;
   }
 

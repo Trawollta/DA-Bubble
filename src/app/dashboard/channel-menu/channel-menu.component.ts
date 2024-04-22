@@ -106,6 +106,7 @@ export class ChannelMenuComponent {
   }
 
   async getChannel() {
+    console.log('DOMINIK ARBEITET MIT this.GLOBALVARIABLES.CURRENTUSER')
     const filteredChannels = await this.filterChannelsByActiveID(
       this.globalVariables.activeID
     );

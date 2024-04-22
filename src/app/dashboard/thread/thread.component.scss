@@ -102,6 +102,7 @@ main {
                         line-height: 23px;
                         letter-spacing: 0em;
                         text-align: left;
+                        color: white;
                     }
                 }
             }
@@ -125,11 +126,13 @@ main {
 
 .otherInitialUser {
     flex-direction: row-reverse !important;
+    
 }
 
 .otherSpeachbubble {
     border-radius: 0px 20px 20px 20px !important;
     background-color: $background !important;
+    color: black !important;
 }
 
 .user {

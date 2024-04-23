@@ -62,7 +62,8 @@ export class EditChannelComponent {
   constructor(private channelService: FirebaseChannelService) { }
 
   async ngOnInit() {
-    let idToSearch = this.globalVariables.channelData.id;
+    console.log(this.globalVariables)
+    let idToSearch = this.globalVariables.chatChannel.relatedChannelId;
     const channelData = await this.firebaseChannelService.loadChannelData(
       idToSearch
     );

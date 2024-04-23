@@ -105,7 +105,7 @@ export class ChannelMenuComponent {
       if (this.isRelatedChatsChanged()) {
         this.getChannel();
       }
-    }, 1000); 
+    }, 100); 
   }
 
   isRelatedChatsChanged(): boolean {
@@ -128,11 +128,9 @@ export class ChannelMenuComponent {
         const channel = await this.firebaseChannelService.getDocId(channelId);
         channel.forEach(async channel => {
           let data = await this.firebaseChannelService.getChannelData(channel)
-          console.log(data)
           this.allChannels.push(data);
         });
       }
-      console.log(this.allChannels)
     } else {
       console.log("Der Benutzer hat keine Chatverbindungen.");
     }

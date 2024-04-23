@@ -10,6 +10,7 @@ import { channel } from 'app/models/channel.class';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { user } from '@angular/fire/auth';
 import { SearchbarComponent } from 'app/shared/searchbar/searchbar/searchbar.component';
+import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 
 @Component({
   selector: 'app-channel-menu',
@@ -28,10 +29,12 @@ export class ChannelMenuComponent {
   globalVariables = inject(GlobalVariablesService);
   firebaseChatService = inject(FirebaseChatService);
   firebasUserService = inject(FirebaseUserService);
+  firebaseChannelService = inject(FirebaseChannelService)
   allChannels: any = [];
   allUsers: any = [];
   channelToDisplay: any = [];
   selectedChannel: any; 
+  private previousRelatedChats: string[] = [];
 
   constructor(public globalFunctions: GlobalFunctionsService) {}
 
@@ -93,24 +96,43 @@ export class ChannelMenuComponent {
     }, 2000);
   }
 
-
-
-  async filterChannelsByActiveID(activeID: string) {
-    let channelsWithActiveID: any[] = [];
-    this.allChannels.forEach((channel: any) => {
-      if (channel.members.includes(activeID)) {
-        channelsWithActiveID.push(channel);
-      }
-    });
-    return channelsWithActiveID;
+  ngOnInit(): void {
+    this.watchRelatedChatsChanges();
   }
 
+  watchRelatedChatsChanges() {
+    setInterval(() => {
+      if (this.isRelatedChatsChanged()) {
+        this.getChannel();
+      }
+    }, 100); 
+  }
+
+  isRelatedChatsChanged(): boolean {
+    const currentRelatedChats = this.globalVariables.currentUser.relatedChats;
+    if (this.previousRelatedChats && JSON.stringify(this.previousRelatedChats) !== JSON.stringify(currentRelatedChats)) {
+      this.previousRelatedChats = currentRelatedChats;
+      return true;
+    }
+    this.previousRelatedChats = currentRelatedChats;
+    return false;
+  }
+
+
+
   async getChannel() {
-    const filteredChannels = await this.filterChannelsByActiveID(
-      this.globalVariables.activeID
-    );
-    if (filteredChannels.length > 0) {
-      this.channelToDisplay.push(...filteredChannels);
+    this.allChannels = [];
+    if (this.globalVariables.currentUser.relatedChats.length > 0) {
+      for (let i = 0; i < this.globalVariables.currentUser.relatedChats.length; i++) {
+        const channelId = this.globalVariables.currentUser.relatedChats[i];
+        const channel = await this.firebaseChannelService.getDocId(channelId);
+        channel.forEach(async channel => {
+          let data = await this.firebaseChannelService.getChannelData(channel)
+          this.allChannels.push(data);
+        });
+      }
+    } else {
+      console.log("Der Benutzer hat keine Chatverbindungen.");
     }
   }
 

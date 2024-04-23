@@ -2,7 +2,7 @@
 .dashboard {
     width: 100vw;
     @include dFlex($ai: normal);
-    height: calc(100vh - 145px);
+    height: calc(100vh - 120px);
     max-width: 1920px;
     margin: auto;
     .app-container {
@@ -23,7 +23,7 @@
         }
     }
     @media (max-width: 600px) {
-        height: calc(100vh - 120px);
+        height: 100%;
     }
 }
 

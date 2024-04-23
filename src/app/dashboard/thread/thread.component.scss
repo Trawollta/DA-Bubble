@@ -2,8 +2,6 @@
 main {
     width: 90dvw;
     min-width: 280px;
-    max-height: 940px;
-    height: 100%;
     border-radius: 30px;
     background-color: $white;
     padding-bottom: 16px;
@@ -12,8 +10,12 @@ main {
     @media (max-width: 600px) {
         border-radius: 0px;
         width: 100dvw;
+        max-height: 100%;
+        height: calc(100vh - 70px);
     }
     @media screen and (min-width: 800px) {
+        max-height: none;
+        height: calc(100vh - 180px);
         width: auto;
     }
 }
@@ -127,7 +129,6 @@ main {
 
 .otherInitialUser {
     flex-direction: row-reverse !important;
-    
 }
 
 .otherSpeachbubble {

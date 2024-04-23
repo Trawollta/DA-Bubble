@@ -36,15 +36,12 @@ export class AddNewChannelComponent {
   description: string | null = null;
 
   async onSubmit() {
-
     const result = await this.checkChannelName();
     if (result) {
       this.showError = true;
       this.toastService.showMessage('Dieser Channelname exestiert bereits, bitte nutzen Sie einen anderen Namen.');
-
       return;
     }
-
     if (this.channelName && this.description) {
       this.globalVariables.channelData.channelName = this.channelName;
       this.globalVariables.channelData.description = this.description;
@@ -58,6 +55,7 @@ export class AddNewChannelComponent {
     window.dispatchEvent(new Event('resize'));
     Aos.init();
   }
+
   async checkChannelName(): Promise<boolean> {
     let channelExist = await this.getCurrentUserChannel();
     return channelExist;
@@ -66,7 +64,6 @@ export class AddNewChannelComponent {
   async getCurrentUserChannel(): Promise<boolean> {
     try {
       let docIdChats: string[] = [];
-
       for (
         let i = 0;
         i < this.globalVariables.currentUser.relatedChats.length;
@@ -77,7 +74,6 @@ export class AddNewChannelComponent {
         );
         docIdChats.push(data[0]);
       }
-
       for (let i = 0; i < docIdChats.length; i++) {
         const data = await this.firebaseChat.getChannelData(docIdChats[i]);
         if (

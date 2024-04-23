@@ -12,15 +12,14 @@
         <!-- Description Input -->
         <div class="editName-area" [ngClass]="{ 'no-border': editChannelDM }">
             <div class="first-row">
-                <label for="channelName" class="description">Channel-Name:</label>
+                <label for="channelName" class="description">Channel-Name</label>
                 <div class="edit-btn" *ngIf="creator">
-                    <span *ngIf="!editChannelDM" (click)="editChannelName()">Bearbeiten</span
-          >
+                    <span *ngIf="!editChannelDM" (click)="editChannelName()">Bearbeiten</span>
           <span *ngIf="editChannelDM" (click)="sumbitEdit()">Speichern</span>
                 </div>
             </div>
             <div *ngIf="!editChannelDM" class="edited-field">
-                #{{ globalVariables.openChannel.titel }}
+                # {{ globalVariables.openChannel.titel }}
             </div>
             <app-inputfield *ngIf="editChannelDM" [(ngModel)]="editedName" [placeholder]="globalVariables.openChannel.titel" [classes]="['standard']" type="text"></app-inputfield>
         </div>
@@ -28,10 +27,10 @@
         <!-- Bereich für die Beschreibung -->
         <div class="editDescription-area" [ngClass]="{ 'no-border': editChannelDES }">
             <div class="second-row">
-                <label class="description" for="description">Beschreibung:</label>
+                <label class="description" for="description">Beschreibung</label>
                 <div class="edit-btn" *ngIf="creator">
-                    <span *ngIf="!editChannelDES" (click)="editChannelDescripition()">Bearbeiten</span
-          >
+                    <span *ngIf="!editChannelDES" (click)="editChannelDescripition()">Bearbeiten</span>
+
           <span *ngIf="editChannelDES" (click)="submitEdit()">Speichern</span>
                 </div>
             </div>
@@ -45,7 +44,7 @@
 
             <div class="line"></div>
             <div class="creator">
-                <label>Erstellt von:</label>
+                <span class="from">Erstellt von:</span>
                 <span class="publisher">{{ creatorName }}</span>
             </div>
         </div>

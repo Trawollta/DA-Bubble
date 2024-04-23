@@ -1,8 +1,6 @@
 import {
-  // ChangeDetectorRef,
   Component,
   ElementRef,
-  HostListener,
   inject,
   Input,
   ViewChild,
@@ -50,7 +48,7 @@ export class CurrentUserMessageComponent {
   @Input() index: any;
   @Input() isThread: boolean = false;
 
-  @ViewChild('messageTextarea') messageTextarea!: ElementRef<HTMLTextAreaElement>;
+  @ViewChild('messageTextareaBubble', {static: false}) messageTextarea!: ElementRef<HTMLTextAreaElement>;
 
   postingTime: string | null = null;
   user: User = new User();
@@ -80,9 +78,9 @@ export class CurrentUserMessageComponent {
   count: number = 0;
   isImage: boolean = false;
 
-  constructor(private elementRef: ElementRef) {
+  constructor() {
     this.unsubUser = this.getUser(this.userId);
-  } //private changeDetector: ChangeDetectorRef,
+  } 
 
   /**
    * this function unsubscribes the containing content
@@ -92,7 +90,7 @@ export class CurrentUserMessageComponent {
   }
 
   /**
-   * thsi function returns the reference to the user doc
+   * this function returns the reference to the user doc
    * @param docId - id of user
    * @returns - referenz of document
    */
@@ -124,9 +122,6 @@ export class CurrentUserMessageComponent {
     this.messageInfo = this.globalFunctions.checkMessage(this.message.message);
     this.isImage = this.messageInfo.hasUrl;
   }
-
-
-
 
   /**
    * this function clones the original message object for later remove logic
@@ -185,20 +180,6 @@ export class CurrentUserMessageComponent {
     this.mouseover = false;
   }
 
-
-  @HostListener('document:click', ['$event'])
-  onClick(event: any) {
-    if (!this.elementRef.nativeElement.contains(event.target)) {
-      if (!this.globalVariables.editMessage)
-        this.onCloseReactions();
-    }
-  }
-
-  onCloseReactions() {
-    this.activeMessage = false
-    this.openReaction = false;
-  }
-
   addUserIdToEmoji(emoji: any, index: number) {
     const activeID = this.globalVariables.activeID;
     if (emoji.userId.includes(activeID) && emoji.userId.length === 1) {
@@ -244,10 +225,9 @@ export class CurrentUserMessageComponent {
   }
 
   onSelectMessage() {
-    if (!this.activeMessage) this.globalVariables.editMessage = false;
+    //if (!this.activeMessage) this.globalVariables.editMessage = false;
     this.activeMessage = true;
     this.openReaction = true;
-    this.messageTextarea.nativeElement.focus();
   }
 
   onLeaveMessage() {
@@ -277,10 +257,23 @@ export class CurrentUserMessageComponent {
     return check;
   }
 
- 
+ /**
+  * this function sets the localEditMessage variable regarding edit button of app-reaction is hit
+  * @param check - boolean true if edit was hit
+  */
   isMessageEdit(check: boolean){
-    console.log('clickonedit',check);
     this.localEditMessage = check;
+    if (check) setTimeout(() => this.setFocusOnTextarea(), 100);
   }
+
+  /**
+   * this function sets the focus on the textarea of this element
+   */
+  setFocusOnTextarea() {
+    if (this.messageTextarea) {
+        const textareaElement = this.messageTextarea.nativeElement;
+        if (textareaElement) textareaElement.focus();  
+    }
+}
 
 }

@@ -1,7 +1,5 @@
 import {
   Component,
-  ElementRef,
-  HostListener,
   inject,
   Input,
 } from '@angular/core';
@@ -70,9 +68,7 @@ export class OtherUserMessageComponent {
   count: number = 0;
   isImage: boolean = false;
 
-  constructor(private elementRef: ElementRef) {
-
-  }
+  constructor() { }
 
   async getUser2(id: string) {
     this.user = new User(await this.firebaseUser.getUserData(id));
@@ -137,28 +133,6 @@ export class OtherUserMessageComponent {
     this.globalVariables.messageThreadStart = { message, userId, timestamp, userName, userImgPath };
   }
 
-  onSelectMessage() {
-    this.openReaction = !this.openReaction; //geändert, damit man es auch wieder schließen kann, wenn mannochmal auf das Element klickt
-    this.globalVariables.editMessage = false;
-  }
-
-  /**
-   * this listener is for closing the emoji container
-   * @param event - click event
-   */
-  @HostListener('document:click', ['$event'])
-  onClick(event: any) {
-    if (!this.elementRef.nativeElement.contains(event.target)) {
-      this.onCloseReactions();
-    }
-  }
-  /**
-   * just set flags for closing emoji container
-   */
-  onCloseReactions() {
-    this.openReaction = false;
-  }
-
   addUserIdToEmoji(emoji: any, index: number) {
     const activeID = this.globalVariables.activeID;
     if (emoji.userId.includes(activeID) && emoji.userId.length === 1) {
@@ -179,16 +153,14 @@ export class OtherUserMessageComponent {
       this.globalVariables.openChannel.chatId,
       chatFamiliy
     );
-    this.remove(this.globalVariables.openChannel.chatId, chatFamiliy); // es kommt zu einem Springen des chats, wenn Function ausgeführt wird
+    this.remove(this.globalVariables.openChannel.chatId, chatFamiliy);
   }
-
 
   remove(chatId: string, chatFamiliy: string) {
     return updateDoc(doc(this.firestore, chatFamiliy, chatId), {
       messages: arrayRemove(this.originalMessage),
     });
   }
-
 
   /**
    *
@@ -221,5 +193,8 @@ export class OtherUserMessageComponent {
     this.openReaction = false;
   }
 
- 
+  onSelectMessage() {
+    this.openReaction = true;
+  }
+
 }

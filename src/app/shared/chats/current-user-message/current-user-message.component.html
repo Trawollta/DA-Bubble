@@ -18,8 +18,8 @@
           {{ messageInfo.textAfterUrl }}
         </span>
         <div class="edit" (click)="globalFunctions.stopPropagation($event)">
-          <textarea #messageTextarea name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="message.message"
-            *ngIf="globalVariables.editMessage && activeMessage">
+          <textarea #messageTextareaBubble name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="message.message"
+            *ngIf="localEditMessage">
         </textarea>
 
         </div>

@@ -23,7 +23,7 @@ export class EmojiContainerComponent {
   emojiList: Emoji[] = [];
 
   url =
-  'https://emoji-api.com/emojis?access_key=60ede231f07183acd1dbb4bdd7dde0797f62e95e';
+    'https://emoji-api.com/emojis?access_key=60ede231f07183acd1dbb4bdd7dde0797f62e95e';
 
 
   /**
@@ -31,18 +31,15 @@ export class EmojiContainerComponent {
    */
   ngOnInit(): void {
     this.emojiList = emojis;
-    //this.getEmojis();
   }
 
-
-   /**
-   * Emoji fetch from API
-   */
-   getEmojis() {
+  /**
+  * Emoji fetch from API
+  */
+  getEmojis() {
     fetch(this.url)
       .then((res) => res.json())
       .then((data) => this.loadEmoji(data.slice(0, 100)));
-      
   }
 
   /**
@@ -52,12 +49,12 @@ export class EmojiContainerComponent {
   loadEmoji(data: Emoji[]) {
     data.forEach((emoji) => {
       const { character, codePoint } = emoji;
-      this.emojiList.push({ character, codePoint });      
+      this.emojiList.push({ character, codePoint });
     });
   }
 
-  takeEmoji(emoji: Emoji, isAddToMessage: boolean){
-    if(isAddToMessage){
+  takeEmoji(emoji: Emoji, isAddToMessage: boolean) {
+    if (isAddToMessage) {
       this.addEmoji.emit(emoji.character);
     }
   }

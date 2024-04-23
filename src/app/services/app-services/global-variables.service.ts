@@ -156,8 +156,6 @@ export class GlobalVariablesService {
   choosedEmoji: any = { icon: '', userID: '' }; // this is the emoji which is choosen in emoji-picker
   message: any;
 
-  editMessage: boolean = false;
-
   imprintActive = false;
   showSplashScreen = false;
 

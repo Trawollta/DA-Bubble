@@ -1,6 +1,5 @@
 <main>
-  <div *ngIf="!globaleVariables.editMessage" class="emojiContainer">
-
+  <div *ngIf="!editMessage" class="emojiContainer">
     <div class="tooltip" (click)="openEmojis()">
       <div class="icon blackIcon">
         <img src="./assets/img/icons/add_reaction.svg" alt="" />
@@ -10,21 +9,17 @@
 
     <!-- Container edit open -->
     <div class="tooltip" (click)="this.editOpen()"
-      *ngIf="!globaleVariables.editMessage && globaleVariables.activeID == this.message.userId" appClickedOutside
+      *ngIf="!editMessage && globaleVariables.activeID == this.message.userId" appClickedOutside
       (clickedOutside)="closeEdit()">
       <div class="icon blackIcon">
         <img src="./assets/img/icons/comment.svg" alt="" />
       </div>
       <span class="tooltiptext secondTT">Nachricht bearbeiten</span>
     </div>
-
   </div>
 
-
-
-
   <!-- Container für edit -->
-  <div id="testerino" *ngIf="globaleVariables.editMessage && globaleVariables.activeID == this.message.userId"
+  <div id="testerino" *ngIf="editMessage && globaleVariables.activeID == this.message.userId"
     class="editContainer">
     <div class="tooltip" (click)="editSave()">
       <div class="icon">
@@ -47,13 +42,10 @@
     </div>
   </div>
 
-
-
-
   <!-- Errorpopup -->
 
   <div class="errorPopUp" *ngIf="showValidatePopup">
-    <div class="popupTextContainer"> <!--  -->
+    <div class="popupTextContainer">
       <span>Deine Änderung enthält unerlaubte Zeichen:</span>
       <br>
       <span>{{ forbiddenChars }}</span>
@@ -62,9 +54,6 @@
     </div>
     <div class="errorBtn" (click)="closeValidatePopup()">close</div>
   </div>
-
-
-
 </main>
 
 <!-- emoji popup -->

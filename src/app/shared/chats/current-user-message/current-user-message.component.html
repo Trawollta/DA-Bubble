@@ -3,48 +3,46 @@
     <div class="info-area">
       <div class="info-area-wrapper">
         <span class="messagetime">{{ postingTime | date : "H:mm" }}</span>
-        <span class="username" (click)="globalFunctions.openProfile(true, globalVariables.activeID)">{{ user.name }}</span>
-      </div>
-      <div class="speech-bubble-current-user" >
-        <span class="speech-bubble-current-user-text"
-          *ngIf="(messageInfo.message !== '' || !globalVariables.editMessage || !activeMessage)  && !globalVariables.editMessage">{{ messageInfo.message
+        <span class="username" (click)="globalFunctions.openProfile(true, globalVariables.activeID)">{{ user.name
           }}</span>
-        <div class="loadedImg" *ngIf="isImage  && !globalVariables.editMessage">
+      </div>
+      <div class="speech-bubble-current-user" > 
+        <span class="speech-bubble-current-user-text" *ngIf="showMessageBeforeImg()">
+          {{ messageInfo.message }}
+        </span>
+        <div class="loadedImg" *ngIf="showMessageImage()">
           <img src="{{ messageInfo.messageImgUrl }}" alt="">
         </div>
-        <span class="speech-bubble-current-user-text" *ngIf="messageInfo.textAfterUrl !== '' && !globalVariables.editMessage">{{
-          messageInfo.textAfterUrl }}</span>
+        <span class="speech-bubble-current-user-text"
+          *ngIf="showMessageAfterImage()">
+          {{ messageInfo.textAfterUrl }}
+        </span>
         <div class="edit" (click)="globalFunctions.stopPropagation($event)">
-          <textarea name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="message.message"
+          <textarea #messageTextarea name="" id="" wrap="hard" rows="3" placeholder="Deine Nachricht" [(ngModel)]="message.message"
             *ngIf="globalVariables.editMessage && activeMessage">
         </textarea>
 
         </div>
       </div>
-      <app-reactions class="reaction-field" 
-        *ngIf="openReaction" [message]="message"
-        [originalMessage]="originalMessage"
-        [isCurrentUser] = "true">
+      <app-reactions class="reaction-field" *ngIf="openReaction" (isMessageEdit)="isMessageEdit($event)" [message]="message" [originalMessage]="originalMessage"
+        [isCurrentUser]="true">
       </app-reactions>
 
-        <div class="reaction-emojis">
-          <ng-container *ngFor="let emoji of message.emoji let index = index">
-            <div class="singleEmojiContainer"
-            (mouseenter)="onMouseOver(index)"
-            (mouseleave)="onMouseOut()">
-              <span class="reaction-emoji-field" 
-                *ngIf="emoji.userId && emoji.userId.length > 0"
-                (click)="addUserIdToEmoji(emoji, index)">
-                {{ emoji.icon }} {{ emoji.userId.length }}
-              </span>
-              <div class="tooltiptext">
-                <span *ngIf="mouseover && hoverIndex === index">{{ hoverUser }}</span>
-                <span *ngIf="count > 0 && hoverIndex === index"> & {{ count }} Person</span><span
-                  *ngIf="count > 1">en</span>
-              </div>
+      <div class="reaction-emojis">
+        <ng-container *ngFor="let emoji of message.emoji let index = index">
+          <div class="singleEmojiContainer" (mouseenter)="onMouseOver(index)" (mouseleave)="onMouseOut()">
+            <span class="reaction-emoji-field" *ngIf="emoji.userId && emoji.userId.length > 0"
+              (click)="addUserIdToEmoji(emoji, index)">
+              {{ emoji.icon }} {{ emoji.userId.length }}
+            </span>
+            <div class="tooltiptext">
+              <span *ngIf="mouseover && hoverIndex === index">{{ hoverUser }}</span>
+              <span *ngIf="count > 0 && hoverIndex === index"> & {{ count }} Person</span><span
+                *ngIf="count > 1">en</span>
             </div>
-          </ng-container>
-        </div>
+          </div>
+        </ng-container>
+      </div>
       <div *ngIf="!isThread && !globalVariables.isUserChat" class="replie-wrapper">
         <div class="replie-text" (click)="openAnswers()">
           <span *ngIf="answercount !== 0">{{ answercount }}</span><span> Antwort</span><span
@@ -58,6 +56,6 @@
     </div>
   </div>
   <div class="user">
-    <img [src]="user.img" alt=""  (click)="globalFunctions.openProfile(true, globalVariables.activeID)"/>
+    <img [src]="user.img" alt="" (click)="globalFunctions.openProfile(true, globalVariables.activeID)" />
   </div>
 </section>

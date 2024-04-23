@@ -31,7 +31,8 @@ export class ReactionsComponent {
   globaleVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
-  @Output() newEmoji = new EventEmitter<string>();
+  //@Output() newEmoji = new EventEmitter<string>();
+  @Output() isMessageEdit = new EventEmitter<boolean>();
   @Input() message: any;
   @Input() originalMessage: any;
   @Input() isCurrentUser: boolean = false;
@@ -106,7 +107,7 @@ export class ReactionsComponent {
    */
   public showInInput(emoji: any): void {
 
-    this.newEmoji.emit(emoji);
+    //this.newEmoji.emit(emoji);
     if (this.message.emoji[0].icon === '') {
       this.message.emoji[0].icon = emoji.character;
       this.message.emoji[0].userId = [this.globaleVariables.activeID];
@@ -168,12 +169,14 @@ export class ReactionsComponent {
     this.isImage = this.messageInfo.hasUrl;
     this.switchUrlWithAlias();
     this.globaleVariables.editMessage = true; 
+    this.isMessageEdit.emit(true);
   }
   /**
    * this function opens hides the edit Message options
    */
   closeEdit(){
     this.globaleVariables.editMessage = false;
+    this.isMessageEdit.emit(false);
   }
 
 /**
@@ -213,6 +216,7 @@ export class ReactionsComponent {
    */
   editClose() {
     this.globaleVariables.editMessage = false;
+    this.isMessageEdit.emit(false);
     this.message.message = this.originalMessage.message;
   }
 
@@ -224,6 +228,7 @@ export class ReactionsComponent {
     this.message.message = this.message.message.replace(this.downloadURLAlias, this.downloadURL);
     if (this.forbiddenChars.length === 0) {
       this.globaleVariables.editMessage = false;
+      this.isMessageEdit.emit(false);
       this.globaleVariables.messageData = this.message;
       let chatFamiliy = this.globaleVariables.isUserChat ? 'chatusers' : 'chatchannels';
       this.firebaseChatService.sendMessage(

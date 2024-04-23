@@ -1,10 +1,11 @@
 import {
- // ChangeDetectorRef,
+  // ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
   inject,
   Input,
+  ViewChild,
 } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import {
@@ -49,6 +50,8 @@ export class CurrentUserMessageComponent {
   @Input() index: any;
   @Input() isThread: boolean = false;
 
+  @ViewChild('messageTextarea') messageTextarea!: ElementRef<HTMLTextAreaElement>;
+
   postingTime: string | null = null;
   user: User = new User();
   originalMessage = {
@@ -65,6 +68,7 @@ export class CurrentUserMessageComponent {
   mouseover: boolean = false;
   hoverUser: string = '';
   openReaction: boolean = false;
+  localEditMessage: boolean = false;
 
   unsubUser;
   userId: string = 'guest';
@@ -76,7 +80,7 @@ export class CurrentUserMessageComponent {
   count: number = 0;
   isImage: boolean = false;
 
-  constructor( private elementRef: ElementRef ) {
+  constructor(private elementRef: ElementRef) {
     this.unsubUser = this.getUser(this.userId);
   } //private changeDetector: ChangeDetectorRef,
 
@@ -148,7 +152,7 @@ export class CurrentUserMessageComponent {
 
 
   openAnswers() {
-    this.globalVariables.bufferThreadOpen = !this.globalVariables.bufferThreadOpen; 
+    this.globalVariables.bufferThreadOpen = !this.globalVariables.bufferThreadOpen;
     this.globalVariables.showThread = !this.globalVariables.showThread;
     this.globalVariables.answerKey = this.answerKey;
     this.globalVariables.answerCount = this.answercount;
@@ -169,22 +173,24 @@ export class CurrentUserMessageComponent {
     this.globalVariables.messageThreadStart = { message, userId, timestamp, userName, userImgPath };
   }
 
-  onSelectMessage() {
-    if(!this.activeMessage)this.globalVariables.editMessage = false;
-    this.activeMessage = true;
-    this.openReaction = true;
+  onMouseOver(index: number) {
+    if (this.message.emoji[index].icon) {
+      this.mouseover = true;
+      this.hoverIndex = index;
+      this.getFirstUserOfEmoji(index);
+    }
   }
 
-  onLeaveMessage() {
-    this.activeMessage = false;
-    this.openReaction = false;
+  onMouseOut() {
+    this.mouseover = false;
   }
+
 
   @HostListener('document:click', ['$event'])
   onClick(event: any) {
     if (!this.elementRef.nativeElement.contains(event.target)) {
-      if(!this.globalVariables.editMessage)
-      this.onCloseReactions();
+      if (!this.globalVariables.editMessage)
+        this.onCloseReactions();
     }
   }
 
@@ -237,16 +243,44 @@ export class CurrentUserMessageComponent {
     }
   }
 
-  onMouseOver(index: number) {
-    if (this.message.emoji[index].icon) {
-      this.mouseover = true;
-      this.hoverIndex = index;
-      this.getFirstUserOfEmoji(index);
-    }
+  onSelectMessage() {
+    if (!this.activeMessage) this.globalVariables.editMessage = false;
+    this.activeMessage = true;
+    this.openReaction = true;
+    this.messageTextarea.nativeElement.focus();
   }
 
-  onMouseOut() {
-    this.mouseover = false;
+  onLeaveMessage() {
+    this.activeMessage = false;
+    this.openReaction = false;
+    this.localEditMessage = false;
   }
+
+  showMessageBeforeImg(): boolean{
+    let check = false;
+    if(this.messageInfo.message !== '')check = true;
+    if(this.localEditMessage) check = false;
+    return check;
+  }
+
+  showMessageImage(): boolean {
+    let check = false;
+    if(this.messageInfo.hasUrl)check = true;
+    if(this.localEditMessage) check = false;
+    return check;
+  }
+
+  showMessageAfterImage(): boolean{
+    let check = false;
+    if(this.messageInfo.textAfterUrl !== '')check = true;
+    if(this.localEditMessage) check = false;
+    return check;
+  }
+
  
+  isMessageEdit(check: boolean){
+    console.log('clickonedit',check);
+    this.localEditMessage = check;
+  }
+
 }

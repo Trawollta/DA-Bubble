@@ -146,9 +146,14 @@ export class ChannelMenuComponent {
    * @param channel - object which contains information of selecet channel
    */
   async openChannel(channel: any) {
-    let selectedChannel = await this.firebaseChannelService.getChannelData(channel)
-    /* this.selectedChannel = channel; */
+    let selectedChannel = await this.firebaseChannelService.getChannelData(channel);
     this.globalFunctions.openChannel(selectedChannel);
+    this.globalFunctions.triggerFocus();
+  }
+
+  async openDirectMessageUser(user: any){
+    this.globalFunctions.openDirectMessageUser(user);
+    this.globalFunctions.triggerFocus();
   }
 
 

@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { ElementRef, Injectable, inject } from '@angular/core';
 import { GlobalVariablesService } from './global-variables.service';
 import {
   Firestore,
@@ -8,6 +8,7 @@ import {
 import { FirebaseChatService } from '../firebase-services/firebase-chat.service';
 import { FirebaseChannelService } from '../firebase-services/firebase-channel.service';
 import { FirebaseUserService } from '../firebase-services/firebase-user.service';
+import { Subject } from 'rxjs';
 
 export interface MessageInfo {
   hasUrl: boolean;
@@ -25,6 +26,13 @@ export class GlobalFunctionsService {
   firebaseChatService = inject(FirebaseChatService);
   firebaseChannelService = inject(FirebaseChannelService);
   firebasUserService = inject(FirebaseUserService);
+
+  private focusSubject = new Subject<void>();
+  focus$ = this.focusSubject.asObservable();
+
+  triggerFocus() {
+    this.focusSubject.next();
+  }
 
   openProfile(ownProfile: boolean, userId: string) {
     this.globalVariables.profileUserId = userId;

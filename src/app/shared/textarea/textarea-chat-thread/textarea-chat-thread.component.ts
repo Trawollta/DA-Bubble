@@ -13,6 +13,7 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { EmojiContainerComponent } from 'app/shared/reactions/emoji-container/emoji-container.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-textarea-chat-thread',
@@ -30,10 +31,13 @@ import { EmojiContainerComponent } from 'app/shared/reactions/emoji-container/em
 export class TextareaChatThreadComponent {
   @Input() areaType: string = '';
   @ViewChild('messageTextarea') messageTextarea!: ElementRef<HTMLTextAreaElement>;
+  // @ViewChild('textareaElement') textareaElement!: ElementRef<HTMLTextAreaElement>;
 
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
   firebaseChatService = inject(FirebaseChatService);
+
+  private focusSubscription!: Subscription;
 
   isPopupOpen: boolean = false;
   isEmojiContainerOpen: boolean = false;
@@ -61,6 +65,31 @@ export class TextareaChatThreadComponent {
         this.globalVariables.messageThreadStart.userId +
         '_' +
         this.globalVariables.messageThreadStart.timestamp.toString();
+    this.subscribeFocus();
+    console.log('document.activeElement', document.activeElement);
+    setTimeout(() => {
+      this.messageTextarea.nativeElement.focus();
+    }, 100);
+
+  }
+
+  /**
+   * this function subscribes the focus$ observable to trigger the focus on this element
+   */
+  subscribeFocus() {
+    this.focusSubscription = this.globalFunctions.focus$.subscribe(() => {
+      this.messageTextarea.nativeElement.focus();
+    });
+  }
+
+  /**
+   * this function unsubscribes the focus$ observable
+   */
+  ngOnDestroy() {
+
+    if (this.focusSubscription) {
+      this.focusSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -100,7 +129,7 @@ export class TextareaChatThreadComponent {
       this.globalVariables.newMessage !== '' &&
       this.forbiddenChars.length === 0
     ) {
-      await this.preperDataForSendMessage();
+      await this.prepareDataForSendMessage();
       let chatFamiliy = this.globalVariables.isUserChat
         ? 'chatusers'
         : 'chatchannels';
@@ -114,7 +143,7 @@ export class TextareaChatThreadComponent {
     }
   }
 
-  async preperDataForSendMessage() {
+  async prepareDataForSendMessage() {
     this.globalVariables.messageData.userId = this.globalVariables.activeID;
     this.globalVariables.messageData.timestamp = new Date().getTime();
     this.globalVariables.messageData.answerto = this.globalVariables.showThread
@@ -251,7 +280,7 @@ export class TextareaChatThreadComponent {
     this.showChannelList = key === '#';
     this.showMemberList = key === '@';
   }
-  
+
   addName(choosenName: string) {
     this.newMessage += choosenName;
     this.showMemberList = false;

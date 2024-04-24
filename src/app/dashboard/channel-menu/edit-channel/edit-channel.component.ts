@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
@@ -85,6 +85,10 @@ export class EditChannelComponent {
     this.compareCreator();
   }
 
+  ngAfterViewInit() {
+    Aos.init();
+  }
+
 
   copyChannelInformationToGlobal() {
     this.globalVariables.openChannel.chatId = this.channel.chatId;
@@ -93,7 +97,7 @@ export class EditChannelComponent {
     this.globalVariables.openChannel.desc = this.channel.description;
   }
 
-  
+
   compareCreator() {
     if (this.globalVariables.activeID === this.channel.creator) {
       this.creator = true;
@@ -165,7 +169,7 @@ export class EditChannelComponent {
     this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
   }
 
-  async submitEdit() {   
+  async submitEdit() {
     let idToSearch = this.globalVariables.chatChannel.relatedChannelId;
     this.firebaseChannelService.updateDataChannel(this.descData(), idToSearch);
     const userData = await this.firebaseChannelService.loadChannelData(
@@ -206,7 +210,7 @@ export class EditChannelComponent {
     this.globalFunctions.closeEditOverlay();
   }
 
-  async deleteChannel(channelId: string){
+  async deleteChannel(channelId: string) {
     await this.firebaseChannelService.deleteChanel(channelId);
     this.globalFunctions.getStartChannel();
     this.globalFunctions.closeEditOverlay();

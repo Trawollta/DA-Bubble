@@ -42,7 +42,6 @@ export class ChannelMenuComponent {
    * this function just opens and close the menu for selecting a channel
    */
   async openChannelMenu() {
-    await this.getChannel();
     const channelMsg = document.getElementById(
       'channelMsgArrow'
     ) as HTMLImageElement | null;

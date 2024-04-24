@@ -10,6 +10,8 @@ import { User } from 'app/models/user.class';
 import { channel } from 'app/models/channel.class';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
+import { ToastService } from 'app/services/app-services/toast.service';
+import Aos from 'aos';
 
 @Component({
   selector: 'app-edit-channel',
@@ -27,6 +29,7 @@ export class EditChannelComponent {
   firebaseChannelService = inject(FirebaseChannelService);
   firebaseUpdate = inject(FirebaseUserService);
   firestore: Firestore = inject(Firestore);
+  toastService = inject(ToastService);
 
   editMode: { channelName: boolean; description: boolean } = {
     channelName: false,
@@ -46,27 +49,26 @@ export class EditChannelComponent {
     creator: '',
     channelMember: [],
   };
+  showError: boolean = false;
 
   channelId: string = '';
-
   editChannelDM = false;
   editChannelDES = false;
   editedName = '';
   editedDescription = '';
   creator: boolean = false;
-
   creatorName: string = '';
-
   descriptionEdited = false;
 
   constructor(private channelService: FirebaseChannelService) { }
 
   async ngOnInit() {
-    console.log(this.globalVariables)
+    console.log(this.globalVariables.chatChannel.relatedChannelId)
     let idToSearch = this.globalVariables.chatChannel.relatedChannelId;
     const channelData = await this.firebaseChannelService.loadChannelData(
       idToSearch
     );
+    console.log(channelData)
     if (channelData) {
       this.channel = {
         description: channelData['description'],
@@ -143,10 +145,16 @@ export class EditChannelComponent {
   }
 
   async sumbitEdit() {
+    const result = await this.checkChannelName();
+    if (result) {
+      console.log('Hallo?')
+      this.toastService.showMessage('Dieser Channelname exestiert bereits, bitte nutzen Sie einen anderen Namen.');
+      return;
+    }
     const newTitle = this.editedName; // Der neue Titel, den der Benutzer eingegeben hat
-    const channelId = this.globalVariables.channelData.id;
+    const channelId = this.globalVariables.chatChannel.relatedChannelId;
 
-    let idToSearch = this.globalVariables.channelData.id;
+    let idToSearch = this.globalVariables.chatChannel.relatedChannelId;
     this.firebaseChannelService.updateDataChannel(this.data(), idToSearch);
     const userData = await this.firebaseChannelService.loadChannelData(
       idToSearch
@@ -157,8 +165,8 @@ export class EditChannelComponent {
     this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
   }
 
-  async submitEdit() {
-    let idToSearch = this.globalVariables.channelData.id;
+  async submitEdit() {   
+    let idToSearch = this.globalVariables.chatChannel.relatedChannelId;
     this.firebaseChannelService.updateDataChannel(this.descData(), idToSearch);
     const userData = await this.firebaseChannelService.loadChannelData(
       idToSearch
@@ -202,6 +210,41 @@ export class EditChannelComponent {
     await this.firebaseChannelService.deleteChanel(channelId);
     this.globalFunctions.getStartChannel();
     this.globalFunctions.closeEditOverlay();
+  }
+
+
+  async checkChannelName(): Promise<boolean> {
+    let channelExist = await this.getCurrentUserChannel();
+    return channelExist;
+  }
+
+  async getCurrentUserChannel(): Promise<boolean> {
+    try {
+      let docIdChats: string[] = [];
+      for (
+        let i = 0;
+        i < this.globalVariables.currentUser.relatedChats.length;
+        i++
+      ) {
+        const data = await this.firebaseChannelService.getDocId(
+          this.globalVariables.currentUser.relatedChats[i]
+        );
+        docIdChats.push(data[0]);
+      }
+      for (let i = 0; i < docIdChats.length; i++) {
+        const data = await this.firebaseChannelService.getChannelData(docIdChats[i]);
+        if (
+          data?.['channelName']?.toLowerCase() ===
+          this.editedName?.toLowerCase()
+        ) {
+          return true;
+        }
+      }
+      return false;
+    } catch (error) {
+      console.error('Error retrieving channel data:', error);
+      return false;
+    }
   }
 
 }

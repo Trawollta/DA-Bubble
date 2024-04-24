@@ -110,31 +110,39 @@ export class ChannelMenuComponent {
 
   isRelatedChatsChanged(): boolean {
     const currentRelatedChats = this.globalVariables.currentUser.relatedChats;
-    if (this.previousRelatedChats && JSON.stringify(this.previousRelatedChats) !== JSON.stringify(currentRelatedChats)) {
+    if (!this.previousRelatedChats || this.previousRelatedChats.length !== currentRelatedChats.length) {
       this.previousRelatedChats = currentRelatedChats;
       return true;
     }
-    this.previousRelatedChats = currentRelatedChats;
+  
+    for (let i = 0; i < currentRelatedChats.length; i++) {
+      if (currentRelatedChats[i] !== this.previousRelatedChats[i]) {
+        this.previousRelatedChats = currentRelatedChats;
+        return true;
+      }
+    }
+  
     return false;
   }
 
-
-
   async getChannel() {
+    debugger;
     this.allChannels = [];
     if (this.globalVariables.currentUser.relatedChats.length > 0) {
       for (let i = 0; i < this.globalVariables.currentUser.relatedChats.length; i++) {
-        const channelId = this.globalVariables.currentUser.relatedChats[i];
-        const channel = await this.firebaseChannelService.getDocId(channelId);
-        channel.forEach(async channel => {
-          let data = await this.firebaseChannelService.getChannelData(channel)
+        let channelId = this.globalVariables.currentUser.relatedChats[i];
+        let channel = await this.firebaseChannelService.getDocId(channelId);
+        for (let j = 0; j < channel.length; j++) {
+          let data = await this.firebaseChannelService.getChannelData(channel[j]);
           this.allChannels.push(data);
-        });
+        }
       }
+      console.log('Das Sind alle Channels', this.allChannels);
     } else {
       console.log("Der Benutzer hat keine Chatverbindungen.");
     }
   }
+  
 
   /**
    * this funktion sets the flag to show the header for channels and take over information of the related channel object to global variables

@@ -30,7 +30,7 @@ export class ChannelMenuComponent {
   firebaseChatService = inject(FirebaseChatService);
   firebasUserService = inject(FirebaseUserService);
   firebaseChannelService = inject(FirebaseChannelService)
-  allChannels: any = [];
+  allChannels: any = {name: [], id: []};
   allUsers: any = [];
   channelToDisplay: any = [];
   selectedChannel: any; 
@@ -87,7 +87,7 @@ export class ChannelMenuComponent {
   }
 
   async ngAfterViewInit() {
-    await this.globalFunctions.getCollection('channels', this.allChannels);
+/*     await this.globalFunctions.getCollection('channels', this.allChannels); */
     await this.globalFunctions.getCollection('users', this.allUsers);   
     this.openDirectMessageMenu();
     setTimeout(() => {
@@ -132,7 +132,7 @@ export class ChannelMenuComponent {
         let channel = await this.firebaseChannelService.getDocId(channelId);
         for (let j = 0; j < channel.length; j++) {
           let data = await this.firebaseChannelService.getChannelData(channel[j]);
-          this.allChannels.push(data);
+          this.allChannels.push({ name: data?.['channelName'], id: channel[j] });
         }
       }
     } else {
@@ -145,9 +145,10 @@ export class ChannelMenuComponent {
    * this funktion sets the flag to show the header for channels and take over information of the related channel object to global variables
    * @param channel - object which contains information of selecet channel
    */
-  openChannel(channel: any) {
-    this.selectedChannel = channel;
-    this.globalFunctions.openChannel(channel);
+  async openChannel(channel: any) {
+    let selectedChannel = await this.firebaseChannelService.getChannelData(channel)
+    /* this.selectedChannel = channel; */
+    this.globalFunctions.openChannel(selectedChannel);
   }
 
 

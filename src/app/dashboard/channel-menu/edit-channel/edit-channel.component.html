@@ -57,7 +57,7 @@
             <div class="button-area">
                 <div class="button-area-left">
                     <app-button *ngIf="globalVariables.activeID === this.channel.creator" [classes]="['primary']"
-                        caption="Channel Löschen" (click)="deleteChannel(globalVariables.channelData.chatId)"
+                        caption="Channel Löschen" (click)="deleteChannel()"
                         imgPath=""></app-button>
 
                     <app-button [classes]="['noIcon primary']" caption="Channel verlassen" (click)="leaveChannel()"

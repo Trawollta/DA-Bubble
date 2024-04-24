@@ -221,9 +221,9 @@ export class EditChannelComponent {
     this.globalFunctions.closeEditOverlay();
   }
 
-  async deleteChannel(channelId: string) {
-    await this.firebaseChannelService.deleteChanel(channelId);
-    this.removeChannelfromChannelArray(channelId);
+  async deleteChannel() {
+    await this.firebaseChannelService.deleteChanel(this.globalVariables.openChannel.chatId);
+    this.removeChannelfromChannelArray(this.globalVariables.openChannel.id);
     this.globalFunctions.getStartChannel();
     this.globalFunctions.closeEditOverlay();
   }
@@ -234,7 +234,7 @@ export class EditChannelComponent {
    */
   removeChannelfromChannelArray(channelId: string) {
     let i = 0;
-    for (const channel of this.globalVariables.viewableChannelplusId) {
+     for (const channel of this.globalVariables.viewableChannelplusId) {
       if (channel.channelId === channelId) {
         this.globalVariables.viewableChannelplusId.splice(i, 1);
         break; 

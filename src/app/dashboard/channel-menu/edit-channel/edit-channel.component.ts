@@ -60,15 +60,13 @@ export class EditChannelComponent {
   creatorName: string = '';
   descriptionEdited = false;
 
-  constructor(private channelService: FirebaseChannelService) { }
+  constructor() { }
 
   async ngOnInit() {
-   // console.log(this.globalVariables.chatChannel.relatedChannelId)
     let idToSearch = this.globalVariables.chatChannel.relatedChannelId;
     const channelData = await this.firebaseChannelService.loadChannelData(
       idToSearch
     );
-    //console.log(channelData)
     if (channelData) {
       this.channel = {
         description: channelData['description'],
@@ -155,16 +153,29 @@ export class EditChannelComponent {
       return;
     }
     const oldName = this.globalVariables.openChannel.titel;
+    this.changeChannelName(oldName, this.editedName);
     this.globalVariables.openChannel.titel = this.editedName; // Der neue Titel, den der Benutzer eingegeben hat
     let idToSearch = this.globalVariables.chatChannel.relatedChannelId;
     this.firebaseChannelService.updateDataChannel(this.data(), idToSearch);
-    const userData = await this.firebaseChannelService.loadChannelData(
-      idToSearch
-    );
+    const userData = await this.firebaseChannelService.loadChannelData(idToSearch);
     this.channel = new channel(userData);
     this.saveChannelName();
-    this.firebaseChannelService.updateAllChannels(this.globalVariables.openChannel.titel, oldName);
+    //this.firebaseChannelService.updateAllChannels(this.globalVariables.openChannel.titel, oldName);
 
+  }
+
+  /**
+   * this function replaces the old channelname with the ne channel name for ChannelMenu
+   * @param oldName - string old name
+   * @param newName - string new name
+   */
+  changeChannelName(oldName: string, newName: string) {
+    for (const channel of this.globalVariables.viewableChannelplusId) {
+      if (channel.channelName === oldName) {
+        channel.channelName = newName;
+        break;
+      }
+    }
   }
 
   async submitEdit() {
@@ -203,17 +214,34 @@ export class EditChannelComponent {
 
 
   leaveChannel() {
+    this.removeChannelfromChannelArray(this.globalVariables.channelData.id);
     this.firebaseUpdate.leaveChannel(this.channel.chatId, this.globalVariables.activeID);
     this.firebaseUpdate.leaveChannelUser(this.channel.chatId, this.globalVariables.activeID);
+    this.globalFunctions.getStartChannel();
     this.globalFunctions.closeEditOverlay();
   }
 
   async deleteChannel(channelId: string) {
     await this.firebaseChannelService.deleteChanel(channelId);
+    this.removeChannelfromChannelArray(channelId);
     this.globalFunctions.getStartChannel();
     this.globalFunctions.closeEditOverlay();
   }
 
+  /**
+   * this function removes the chanel from viewableChannelplusId
+   * @param channelId - string Id of channel
+   */
+  removeChannelfromChannelArray(channelId: string) {
+    let i = 0;
+    for (const channel of this.globalVariables.viewableChannelplusId) {
+      if (channel.channelId === channelId) {
+        this.globalVariables.viewableChannelplusId.splice(i, 1);
+        break; 
+      }
+      i++;
+    }
+  }
 
   async checkChannelName(): Promise<boolean> {
     let channelExist = await this.getCurrentUserChannel();
@@ -221,7 +249,6 @@ export class EditChannelComponent {
   }
 
   async getCurrentUserChannel(): Promise<boolean> {
-    //debugger;
     try {
       let docIdChats: string[] = [];
       for (

@@ -66,7 +66,6 @@ export class TextareaChatThreadComponent {
         '_' +
         this.globalVariables.messageThreadStart.timestamp.toString();
     this.subscribeFocus();
-    console.log('document.activeElement', document.activeElement);
     setTimeout(() => {
       this.messageTextarea.nativeElement.focus();
     }, 100);

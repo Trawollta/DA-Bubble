@@ -12,7 +12,8 @@
             <div class="channel-dialog">
                 <div class="channel-header">
                     <div (click)="openChannelMenu()" class="channel-arrow-dropdown">
-                        <img id="channelMsgArrow" src="./assets/img/icons/arrow_drop_down_default.svg" alt="" />
+                        <img id="channelMsgArrow" *ngIf="!isChannelMenuOpen" src="./assets/img/icons/arrow_drop_down_default.svg" alt="" />
+                        <img *ngIf="isChannelMenuOpen" src="./assets/img/icons/arrow_drop_down.svg" alt="" />
                     </div>
                     <div class="channel-headline-wrapper">
                         <img src="./assets/img/icons/workspaces.svg" alt="" />
@@ -23,13 +24,14 @@
                     <img src="./assets/img/icons/add.svg" alt="" />
                 </div>
             </div>
-            <div class="channel-overview d-none" id="channels">
-                <ng-container *ngIf="this.globalVariables.allChannels && this.globalVariables.allChannels.length > 0">
+            <div class="channel-overview" id="channels" *ngIf="isChannelMenuOpen">
+   
+                <ng-container >
                     <div class="channel-wrapper" 
-                        *ngFor="let channel of this.globalVariables.allChannels" 
-                        (click)="openChannel(channel.id)"
+                        *ngFor="let channel of this.globalVariables.viewableChannelplusId" 
+                        (click)="openChannel(channel.channelId)"
                         [class.active-channel]="channel === selectedChannel">
-                        <p><span>#</span>{{ channel.name }}</p>
+                        <p><span>#</span>{{ channel.channelName }}</p>
                     </div>
                 </ng-container>
                 
@@ -46,14 +48,15 @@
         <div class="direct-messages">
             <div class="messages-wrapper">
                 <div class="channel-arrow-dropdown" (click)="openDirectMessageMenu()">
-                    <img id="msgActiveArrow" src="./assets/img/icons/arrow_drop_down_default.svg" alt="" />
+                    <img *ngIf="!isUserlMenuOpen" id="msgActiveArrow" src="./assets/img/icons/arrow_drop_down_default.svg" alt="" />
+                    <img *ngIf="isUserlMenuOpen" src="./assets/img/icons/arrow_drop_down.svg" alt="" />
                 </div>
                 <div class="message-helper">
                     <img src="./assets/img/icons/account_circle.svg" alt="" />
                     <p>Direktnachrichten</p>
                 </div>
             </div>
-            <div class="user-wrapper d-none" id="directMessage">
+            <div class="user-wrapper" id="directMessage" *ngIf="isUserlMenuOpen">
                 <div class="user-detail" *ngFor="let user of allUsers" (click)="this.openDirectMessageUser(user)">
                     <div class="userImgWithStatus">
                         <img class="userImg" [src]="user.img" alt="userImage" />

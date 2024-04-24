@@ -188,21 +188,10 @@ export class GlobalFunctionsService {
 
   constructor(private firestore: Firestore) { }
 
-  // simple function to get data from firestore returns a collection
-  /*  getData(item: string) {
-     let dataCollection = collection(this.firestore, item);
-     return collectionData(dataCollection, { idField: 'id' });
-   } */
+ 
 
   // function to get data from firebase and save it into an local Array
-  // Alex: 5.4.24: Diese Funktion wird in den Komponenten
-  // add-to-Channel
-  // add-contacts
-  // channel-menu
-  // benutzt. 
-  // Ich werde diese Funktion nach analyse in den einzelnen Komponenten verschieben
-  // und aus dem onSnapshot ggf eine getDoc machen.
-  // das Problem. Hier wird ein Snapshot aboniert der auch wieder deaboniert werden sollte
+
   async getCollection(item: string, targetArray: any) {
     const collectionReference = collection(this.firestore, item);
     onSnapshot(collectionReference, (querySnapshot) => {
@@ -220,11 +209,6 @@ export class GlobalFunctionsService {
     if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;
     else if (window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
   }
-
-/*   submitChannelNameChange(newTitle: string): void {
-    const channelId = this.globalVariables.openChannel.id; // Die ID des aktuellen Kanals
-    this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
-  } */
 
   /**
    * this function returns url if the message >>contains<< one

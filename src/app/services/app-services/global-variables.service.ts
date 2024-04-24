@@ -127,6 +127,7 @@ export class GlobalVariablesService {
   ];
 
   viewableChannel : Array<string> = [];
+  viewableChannelplusId =[{channelName:'', chatId:'', channelId:''}];
 
 
   //wird in edit-channel.component, add-contacts.component und add-to-channel.component verwendet

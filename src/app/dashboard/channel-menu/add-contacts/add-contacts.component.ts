@@ -6,7 +6,7 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
-import { Observable, from, map, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -113,7 +113,7 @@ export class AddContactsComponent implements OnInit {
   */
   async addNewChannel() {
     this.addedChannelId = await this.addChannelGetId();
-    const addedChatId: string = await this.addChatForChannelGetChatId(); 
+    const addedChatId: string = await this.addChatForChannelGetChatId();
     await this.updateChannelWithChatId(addedChatId);
     if (addedChatId) {
       this.firebaseChatService.activeChatId = addedChatId;
@@ -122,7 +122,19 @@ export class AddContactsComponent implements OnInit {
     this.addChatIdIntoUser(this.selectedUsers);
     this.firebaseChatService.changeActiveChannel();
     this.globalVariables.openChannel.titel = this.globalVariables.channelData.channelName;
+    this.pushNewChannelInViewableChannels(this.addedChannelId, addedChatId, this.globalVariables.channelData.channelName)
     this.resetAndCloseOverlay();
+  }
+
+  /**
+   * this function adds the new channel into the viewableChannelplusId array for channelmenu
+   */
+  pushNewChannelInViewableChannels(addedChannelId: string, addedChatId: string, channelName: string) {
+    this.globalVariables.viewableChannelplusId.push({
+      channelName: channelName,
+      chatId: addedChatId,
+      channelId: addedChannelId
+    });
   }
 
   /**
@@ -153,7 +165,7 @@ export class AddContactsComponent implements OnInit {
     await this.firebaseChatService
       .addChat(this.addedChannelId, 'chatchannels')
       .then((response) => {
-        id = response.id; 
+        id = response.id;
       })
       .catch((error) => {
         console.error('Fehler beim Hinzufügen des Chats:', error);

@@ -185,25 +185,29 @@ export class FirebaseChannelService {
   async getChannelsWhereUserIsMember() {
     const querySnapshot = await getDocs(this.getChannelRef());
     this.globalVariables.viewableChannel = [];
+    this.globalVariables.viewableChannelplusId = [];
     querySnapshot.forEach((doc) => {
-      const channelData = doc.data();
-      if (Array.isArray(channelData['members'])) {
-        const isMember = channelData['members'].includes(
-          this.globalVariables.activeID
-        );
-        if (isMember) {
-          this.globalVariables.viewableChannel.push(channelData['channelName']);
-        }
-      }
+      this.addRelevantChanneldata(doc);
+
     });
   }
 
-  async updateAllChannels(newName: string, oldName: string) {
-    this.globalVariables.allChannels.forEach((element: any) => {
-      //console.log(element)
-      if (element.name == oldName) {
-        element.name = newName;
+  addRelevantChanneldata(doc:any){
+    const channelData = doc.data();
+    if (Array.isArray(channelData['members'])) {
+      const isMember = channelData['members'].includes(this.globalVariables.activeID);
+      if (isMember) {
+        const channelName = channelData['channelName'];
+        const channelId = doc.id;
+        const chatId = channelData['chatId'];
+        this.globalVariables.viewableChannel.push(channelName);
+        this.globalVariables.viewableChannelplusId.push({
+          channelName: channelName,
+          chatId: chatId,
+          channelId: channelId
+          })
       }
-    });
+    }
   }
+
 }

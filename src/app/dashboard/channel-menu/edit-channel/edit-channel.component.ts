@@ -151,13 +151,11 @@ export class EditChannelComponent {
   async sumbitEdit() {
     const result = await this.checkChannelName();
     if (result) {
-      console.log('Hallo?')
       this.toastService.showMessage('Dieser Channelname exestiert bereits, bitte nutzen Sie einen anderen Namen.');
       return;
     }
-    const newTitle = this.editedName; // Der neue Titel, den der Benutzer eingegeben hat
-    const channelId = this.globalVariables.chatChannel.relatedChannelId;
-
+    const oldName = this.globalVariables.openChannel.titel;
+    this.globalVariables.openChannel.titel = this.editedName; // Der neue Titel, den der Benutzer eingegeben hat
     let idToSearch = this.globalVariables.chatChannel.relatedChannelId;
     this.firebaseChannelService.updateDataChannel(this.data(), idToSearch);
     const userData = await this.firebaseChannelService.loadChannelData(
@@ -165,8 +163,8 @@ export class EditChannelComponent {
     );
     this.channel = new channel(userData);
     this.saveChannelName();
+    this.firebaseChannelService.updateAllChannels(this.globalVariables.openChannel.titel, oldName);
 
-    this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
   }
 
   async submitEdit() {
@@ -223,6 +221,7 @@ export class EditChannelComponent {
   }
 
   async getCurrentUserChannel(): Promise<boolean> {
+    debugger;
     try {
       let docIdChats: string[] = [];
       for (

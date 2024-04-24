@@ -24,9 +24,9 @@
                 </div>
             </div>
             <div class="channel-overview d-none" id="channels">
-                <ng-container *ngIf="allChannels && allChannels.length > 0">
+                <ng-container *ngIf="this.globalVariables.allChannels && this.globalVariables.allChannels.length > 0">
                     <div class="channel-wrapper" 
-                        *ngFor="let channel of allChannels" 
+                        *ngFor="let channel of this.globalVariables.allChannels" 
                         (click)="openChannel(channel.id)"
                         [class.active-channel]="channel === selectedChannel">
                         <p><span>#</span>{{ channel.name }}</p>

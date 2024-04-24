@@ -213,10 +213,10 @@ export class GlobalFunctionsService {
     else if (window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
   }
 
-  submitChannelNameChange(newTitle: string): void {
+/*   submitChannelNameChange(newTitle: string): void {
     const channelId = this.globalVariables.openChannel.id; // Die ID des aktuellen Kanals
     this.firebaseChannelService.updateChannelTitle(channelId, newTitle);
-  }
+  } */
 
   /**
    * this function returns url if the message >>contains<< one

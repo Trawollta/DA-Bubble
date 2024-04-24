@@ -159,6 +159,8 @@ export class GlobalVariablesService {
   imprintActive = false;
   showSplashScreen = false;
 
+  allChannels: any = {name: [], id: []};
+
   constructor() { }
 
  

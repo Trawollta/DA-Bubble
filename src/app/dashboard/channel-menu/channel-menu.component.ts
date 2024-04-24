@@ -30,7 +30,7 @@ export class ChannelMenuComponent {
   firebaseChatService = inject(FirebaseChatService);
   firebasUserService = inject(FirebaseUserService);
   firebaseChannelService = inject(FirebaseChannelService)
-  allChannels: any = {name: [], id: []};
+ /*  allChannels: any = {name: [], id: []}; */
   allUsers: any = [];
   channelToDisplay: any = [];
   selectedChannel: any; 
@@ -125,14 +125,14 @@ export class ChannelMenuComponent {
   }
 
   async getChannel() {
-    this.allChannels = [];
+    this.globalVariables.allChannels = [];
     if (this.globalVariables.currentUser.relatedChats.length > 0) {
       for (let i = 0; i < this.globalVariables.currentUser.relatedChats.length; i++) {
         let channelId = this.globalVariables.currentUser.relatedChats[i];
         let channel = await this.firebaseChannelService.getDocId(channelId);
         for (let j = 0; j < channel.length; j++) {
           let data = await this.firebaseChannelService.getChannelData(channel[j]);
-          this.allChannels.push({ name: data?.['channelName'], id: channel[j] });
+          this.globalVariables.allChannels.push({ name: data?.['channelName'], id: channel[j] });
         }
       }
     } else {

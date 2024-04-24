@@ -93,17 +93,6 @@ export class FirebaseChannelService {
     await updateDoc(doc(this.firestore, 'channels', docId), data);
   }
 
-  updateChannelTitle(channelId: string, newTitle: string): void {
-    this.updateChannel(channelId, { titel: newTitle }).then(() => {
-      if (
-        this.globalVariables.openChannel &&
-        this.globalVariables.openChannel.id === channelId
-      ) {
-        this.globalVariables.openChannel.titel = newTitle;
-      }
-    });
-  }
-
   /**
    *
    * @param channelId mostlikly docRefId to channel
@@ -199,11 +188,22 @@ export class FirebaseChannelService {
     querySnapshot.forEach((doc) => {
       const channelData = doc.data();
       if (Array.isArray(channelData['members'])) {
-        const isMember = channelData['members'].includes(this.globalVariables.activeID);
+        const isMember = channelData['members'].includes(
+          this.globalVariables.activeID
+        );
         if (isMember) {
           this.globalVariables.viewableChannel.push(channelData['channelName']);
         }
-    }
+      }
+    });
+  }
+
+  async updateAllChannels(newName: string, oldName: string) {
+    this.globalVariables.allChannels.forEach((element: any) => {
+      console.log(element)
+      if (element.name == oldName) {
+        element.name = newName;
+      }
     });
   }
 }

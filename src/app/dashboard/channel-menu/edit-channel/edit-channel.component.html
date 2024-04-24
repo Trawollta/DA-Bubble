@@ -5,7 +5,8 @@
                 <span class="top">#{{ globalVariables.openChannel.titel }}</span>
             </div>
             <div>
-                <img (click)="globalFunctions.closeEditOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="Schließen" />
+                <img (click)="globalFunctions.closeEditOverlay()" src="assets/img/icons/close.svg" class="close-btn"
+                    alt="Schließen" />
             </div>
         </div>
         <div class="edit-chan-content">
@@ -21,7 +22,9 @@
                 <div *ngIf="!editChannelDM" class="edited-field">
                     # {{ globalVariables.openChannel.titel }}
                 </div>
-                <app-inputfield *ngIf="editChannelDM" [(ngModel)]="editedName" [placeholder]="globalVariables.openChannel.titel" [classes]="['standard']" type="text"></app-inputfield>
+                <app-inputfield *ngIf="editChannelDM" [(ngModel)]="editedName"
+                    [placeholder]="globalVariables.openChannel.titel" [classes]="['standard']"
+                    type="text"></app-inputfield>
             </div>
 
             <!-- Bereich für die Beschreibung -->
@@ -36,11 +39,13 @@
                 </div>
                 <div class="desc-area">
                     <span *ngIf="!editChannelDES" class="edited-field">{{
-          globalVariables.channelData.description
-        }}</span>
+                        globalVariables.channelData.description
+                        }}</span>
                 </div>
 
-                <app-inputfield *ngIf="editChannelDES" [(ngModel)]="editedDescription" [placeholder]="globalVariables.channelData.description" [classes]="['standard']" type="text"></app-inputfield>
+                <app-inputfield *ngIf="editChannelDES" [(ngModel)]="editedDescription"
+                    [placeholder]="globalVariables.channelData.description" [classes]="['standard']"
+                    type="text"></app-inputfield>
 
                 <div class="line"></div>
                 <div class="creator">
@@ -50,9 +55,16 @@
             </div>
 
             <div class="button-area">
-                <app-button *ngIf="globalVariables.activeID === this.channel.creator" [classes]="['primary']" caption="Channel Löschen" (click)="deleteChannel(globalVariables.channelData.chatId)" imgPath=""></app-button>
+                <div class="button-area-left">
+                    <app-button *ngIf="globalVariables.activeID === this.channel.creator" [classes]="['primary']"
+                        caption="Channel Löschen" (click)="deleteChannel(globalVariables.channelData.chatId)"
+                        imgPath=""></app-button>
 
-                <app-button [classes]="['noIcon primary']" caption="Channel verlassen" (click)="leaveChannel()" imgPath=""></app-button>
+                    <app-button [classes]="['noIcon primary']" caption="Channel verlassen" (click)="leaveChannel()"
+                        imgPath=""></app-button>
+                </div>
+                <app-button [classes]="['noIcon primary']" caption="Schließen"
+                    (click)="globalFunctions.closeEditOverlay()" imgPath=""></app-button>
             </div>
         </div>
     </div>

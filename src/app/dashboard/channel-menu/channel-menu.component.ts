@@ -125,7 +125,6 @@ export class ChannelMenuComponent {
   }
 
   async getChannel() {
-    debugger;
     this.allChannels = [];
     if (this.globalVariables.currentUser.relatedChats.length > 0) {
       for (let i = 0; i < this.globalVariables.currentUser.relatedChats.length; i++) {
@@ -136,7 +135,6 @@ export class ChannelMenuComponent {
           this.allChannels.push(data);
         }
       }
-      console.log('Das Sind alle Channels', this.allChannels);
     } else {
       console.log("Der Benutzer hat keine Chatverbindungen.");
     }

@@ -63,12 +63,12 @@ export class EditChannelComponent {
   constructor(private channelService: FirebaseChannelService) { }
 
   async ngOnInit() {
-    console.log(this.globalVariables.chatChannel.relatedChannelId)
+   // console.log(this.globalVariables.chatChannel.relatedChannelId)
     let idToSearch = this.globalVariables.chatChannel.relatedChannelId;
     const channelData = await this.firebaseChannelService.loadChannelData(
       idToSearch
     );
-    console.log(channelData)
+    //console.log(channelData)
     if (channelData) {
       this.channel = {
         description: channelData['description'],
@@ -221,7 +221,7 @@ export class EditChannelComponent {
   }
 
   async getCurrentUserChannel(): Promise<boolean> {
-    debugger;
+    //debugger;
     try {
       let docIdChats: string[] = [];
       for (

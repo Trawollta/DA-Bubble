@@ -200,7 +200,7 @@ export class FirebaseChannelService {
 
   async updateAllChannels(newName: string, oldName: string) {
     this.globalVariables.allChannels.forEach((element: any) => {
-      console.log(element)
+      //console.log(element)
       if (element.name == oldName) {
         element.name = newName;
       }

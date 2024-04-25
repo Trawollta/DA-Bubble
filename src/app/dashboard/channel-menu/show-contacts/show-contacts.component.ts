@@ -99,15 +99,25 @@ export class ShowContactsComponent implements OnInit {
     this.messageUpdated.emit(this.checkedUsers);
   }
 
-
-  async log(userId: string) {
-    this.leaveChannel(userId)
+  /**
+   * this function calls the function for removing user from channel and magages teh related arrays
+   * @param user - object
+   * @param index - number
+   */
+  async removeUserFromChannel(user: any, index: number) {
+    this.leaveChannel(user.id);
+    this.globalVariables.openChannelUser.splice(index, 1);
+    this.globalVariables.notInOpenChannelUser.push(user);
+    this.copyUsers(this.globalVariables.openChannelUser);
   }
 
+  /**
+   * this function removes teh selecetd user from aktice channel
+   * @param docId - string
+   */
   leaveChannel(docId: string) {
     this.firebaseUserService.leaveChannel(this.globalVariables.openChannel.chatId, docId);
     this.firebaseUserService.leaveChannelUser(this.globalVariables.openChannel.chatId, docId);
-    this.globalFunctions.closeEditOverlay()
   }
 
   checkPermission(): boolean {

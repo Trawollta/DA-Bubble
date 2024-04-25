@@ -36,7 +36,7 @@ export class FirebaseChannelService {
   async updateChannel(channelId: string, item: any) {
     const docRef = doc(this.firestore, 'channels', channelId);
     return updateDoc(docRef, item)
-      .then(() => console.log('Daten erfolgreich aktualisiert'))
+      .then(() => {const success = true})//console.log('Daten erfolgreich aktualisiert'))
       .catch((error) =>
         console.error('Fehler beim Aktualisieren der Daten', error)
       );

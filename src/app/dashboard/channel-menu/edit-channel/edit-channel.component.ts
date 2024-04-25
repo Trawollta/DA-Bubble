@@ -214,7 +214,7 @@ export class EditChannelComponent {
 
 
   leaveChannel() {
-    this.removeChannelfromChannelArray(this.globalVariables.channelData.id);
+    this.removeChannelfromChannelArray(this.globalVariables.openChannel.id);
     this.firebaseUpdate.leaveChannel(this.channel.chatId, this.globalVariables.activeID);
     this.firebaseUpdate.leaveChannelUser(this.channel.chatId, this.globalVariables.activeID);
     this.globalFunctions.getStartChannel();

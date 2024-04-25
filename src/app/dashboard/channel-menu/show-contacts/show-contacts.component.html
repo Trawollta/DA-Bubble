@@ -1,23 +1,23 @@
-<div class="overlay overlayChatHeader" [ngClass]="globalVariables.headerShowMembers ? 'overlayChatHeader' : 'overlayTextInputField'">
+<div class="overlay overlayChatHeader" [ngClass]="globalVariables.headerShowMembers ? 'overlayChatHeader' : 'overlayTextInputField'"  (click)="globalFunctions.stopPropagation($event)">
     <div class="headline">
         <span>Mitglieder</span>
         <img (click)="closeMembers()" src="./assets/img/icons/close.svg" class="close-btn" alt="close profile">
     </div>
     <div class="contactListContainer">
         <div class="contactList">
-            <div class="contactItem" *ngFor="let user of selectedUsers">
+            <div class="contactItem" *ngFor="let user of selectedUsers; let index = index">
                 <!-- version highlight member in message -->
                 <label class="contactContainer" *ngIf="!globalVariables.headerShowMembers">
                      <input type="checkbox" (change)="checkboxChanged(user.name)" [(ngModel)]="user.checked">
                      <span>{{ user.name }}</span>
                 </label>
                 <!-- version open member list in header -->
-                <div class="contactContainer cCHeader" *ngIf="globalVariables.headerShowMembers">
+                <div class="contactContainer cCHeader" *ngIf="globalVariables.headerShowMembers" >
                     <div class="userImgName">
                         <img [src]="user.img" alt="user image" class="contactImg">
                         <span>{{ user.name }}</span>
                     </div>
-                    <img class="deleteContact" *ngIf="checkPermission()" (click)="log(user.id)" src="./assets/img/icons/close.svg">
+                    <img class="deleteContact" *ngIf="checkPermission()" (click)="removeUserFromChannel(user, index)" src="./assets/img/icons/close.svg">
                 </div>
 
 

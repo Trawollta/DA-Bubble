@@ -10,7 +10,7 @@ export class ToastService {
   constructor() { }
 
   showMessage(message: string) {
-    console.log('ausgeführt')
+    //console.log('ausgeführt')
     this.message = message;
     this.showToast = true;
     setTimeout(() => this.showToast = false, 2000);

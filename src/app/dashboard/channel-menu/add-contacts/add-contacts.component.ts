@@ -119,10 +119,22 @@ export class AddContactsComponent implements OnInit {
       this.firebaseChatService.activeChatId = addedChatId;
       this.globalVariables.openChannel.chatId = addedChatId;
     }
+    this.addNewChannelSupport(addedChatId);
+  }
+
+  /**
+   * this function is just an outsource of function needed in addNewChannel
+   * @param addedChatId - string
+   */
+   addNewChannelSupport(addedChatId: string) {
     this.addChatIdIntoUser(this.selectedUsers);
+    this.globalVariables.openChannel.id = this.addedChannelId;
     this.firebaseChatService.changeActiveChannel();
     this.globalVariables.openChannel.titel = this.globalVariables.channelData.channelName;
-    this.pushNewChannelInViewableChannels(this.addedChannelId, addedChatId, this.globalVariables.channelData.channelName)
+    this.pushNewChannelInViewableChannels(this.addedChannelId, addedChatId, this.globalVariables.channelData.channelName);
+    let uniqueIds = Array.from(new Set(this.selectedUsers.map(item => item.id)));
+    if(uniqueIds.length === 0)uniqueIds.push(this.globalVariables.activeID);
+    this.globalFunctions.getChatUserData(uniqueIds);
     this.resetAndCloseOverlay();
   }
 

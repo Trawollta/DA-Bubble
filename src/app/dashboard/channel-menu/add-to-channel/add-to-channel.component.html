@@ -15,9 +15,13 @@
         </div>
         <div class="content">
             <div class="listContainer">
-                <ul class="listContainerInner">
-                    <li *ngFor="let user of selectedUsers, let i = index">
-                        <img [src]="user.img" alt="" /> {{ user.name }}
+                <ul class="listContainerInner" >
+                    <li class="liInfoTxt" *ngIf="selectedUsers.length === 0">Noch kein User ausgewählt!</li>
+                    <li class="selectedListElement" *ngFor="let user of selectedUsers, let i = index">
+                        <div class="selectedListElementInner">
+                            <img class="user-img" [src]="user.img" alt="" />
+                            <span>{{ user.name }}</span>
+                        </div>
                         <img (click)="deleteUserFromSelect(i)" src="assets/img/icons/close.svg" class="close-btn"
                             alt="close profile" />
                     </li>
@@ -28,8 +32,10 @@
 
             <div class="listContainer">
                 <ul class="listContainerInner">
-                    <li *ngFor="let user of users" (click)="selectUser(user)">
-                        <img [src]="user.img" alt="userImage" class="user-img" />{{ user.name }}
+                    <li class="liInfoTxt" *ngIf="users.length === 0">Kein User verfügbar!</li>
+                    <li class="unselectedListElement" *ngFor="let user of users" (click)="selectUser(user)">
+                        <img [src]="user.img" alt="userImage" class="user-img" />
+                        <span>{{ user.name }}</span>
                     </li>
                 </ul>
             </div>

@@ -68,6 +68,7 @@ export class ChannelMenuComponent {
   async openChannel(channel: string) {
     let selectedChannel = await this.firebaseChannelService.getChannelData(channel);
     selectedChannel!['id'] = channel;
+    this.selectedChannel = selectedChannel;
     this.globalFunctions.openChannel(selectedChannel);
     this.globalFunctions.triggerFocus();
    // console.log('alle',this.globalVariables.allUsers);

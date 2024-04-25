@@ -28,11 +28,11 @@
    
                 <ng-container >
                     <div class="channel-wrapper" 
-                        *ngFor="let channel of this.globalVariables.viewableChannelplusId" 
-                        (click)="openChannel(channel.channelId)"
-                        [class.active-channel]="channel === selectedChannel">
-                        <p><span>#</span>{{ channel.channelName }}</p>
-                    </div>
+                    *ngFor="let channel of this.globalVariables.viewableChannelplusId" 
+                    (click)="openChannel(channel.channelId)"
+                    [class.active-channel]="channel.channelId === selectedChannel?.id">
+                    <p><span>#</span>{{ channel.channelName }}</p>
+                </div>
                 </ng-container>
                 
             </div>

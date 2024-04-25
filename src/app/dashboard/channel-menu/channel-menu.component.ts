@@ -70,9 +70,9 @@ export class ChannelMenuComponent {
     selectedChannel!['id'] = channel;
     this.globalFunctions.openChannel(selectedChannel);
     this.globalFunctions.triggerFocus();
-    console.log('alle',this.globalVariables.allUsers);
-    console.log('nur chat',this.globalVariables.openChannelUser);
-    console.log('nicht im chat',this.globalVariables.notInOpenChannelUser);
+   // console.log('alle',this.globalVariables.allUsers);
+   // console.log('nur chat',this.globalVariables.openChannelUser);
+   // console.log('nicht im chat',this.globalVariables.notInOpenChannelUser);
   }
 
   async openDirectMessageUser(user: any){

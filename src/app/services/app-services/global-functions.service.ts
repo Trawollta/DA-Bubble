@@ -1,4 +1,4 @@
-import { ElementRef, Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { GlobalVariablesService } from './global-variables.service';
 import {
   Firestore,
@@ -93,14 +93,9 @@ export class GlobalFunctionsService {
     this.globalVariables.adduser = false;
   }
 
-  /*   closeReactionDialog() {
-      this.globalVariables.showProfile = false;
-      this.globalVariables.adduser = false;
-    } */
 
   closeEditOverlay() {
     this.globalVariables.editChannelOverlayOpen = false;
-    //this.globalVariables.showProfile = false; // warum wird hier die Variable für das Profil gesetzt?
     document.body.style.overflow = 'auto';
   }
 
@@ -262,7 +257,6 @@ export class GlobalFunctionsService {
   openChannel(channel: any) {
     this.globalVariables.scrolledToBottom = false;
     this.globalVariables.isUserChat = false;
-    this.splitUserData(channel.members);
     this.getChatUserData(channel.members);
     this.globalVariables.openChannel.desc = channel.description;
     this.globalVariables.openChannel.titel = channel.channelName;
@@ -274,16 +268,12 @@ export class GlobalFunctionsService {
     this.showChat();
   }
 
-  splitUserData(member: string[]) {
-
-  }
 
   /**
    * This function fills the channelUser Array with all relevant data
    * @param member - Array of member ids
    */
   async getChatUserData(member: string[]) {
-    console.log('member',member);
     this.globalVariables.openChannelUser = [];
     this.globalVariables.notInOpenChannelUser = [];
     this.globalVariables.allUsers.forEach(user => {
@@ -293,35 +283,8 @@ export class GlobalFunctionsService {
         this.globalVariables.notInOpenChannelUser.push(user);
       }
     });
-
-
-    /*  const userDataList = await Promise.all(this.getMemberData(member));
-     const filteredUserDataList = userDataList.filter(
-       (userData) => userData !== null
-     ) as { id: string; name: string; img: string }[];
-     this.globalVariables.openChannelUser.push(...filteredUserDataList); */
   }
 
-
-
-
-
-  /**
-   * this function returns an array with user data for all user listed for the channel
-   * @param member - Array of member ids
-   * @returns - returns an array with uid, name and image path
-   */
- /*  getMemberData(member: string[]) {
-    console.log(member);
-    return member.map(async (userId) => {
-      const memberData = await this.firebasUserService.getUserData(userId);
-      if (memberData) {
-        return { id: userId, name: memberData['name'], img: memberData['img'] };
-      } else {
-        return null;
-      }
-    });
-  } */
 
   //this function should load the welcome channel when user logged in
   async getStartChannel() {

@@ -1,24 +1,13 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
-import { inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from 'app/shared/button/button.component';
-import { AddContactsComponent } from '../add-contacts/add-contacts.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  takeUntil,
-} from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
-import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
-import { channel } from 'app/models/channel.class';
-import { Firestore, doc, updateDoc, arrayUnion } from '@angular/fire/firestore';
+
 
 @Component({
   selector: 'app-add-to-channel',
@@ -26,127 +15,87 @@ import { Firestore, doc, updateDoc, arrayUnion } from '@angular/fire/firestore';
   imports: [
     CommonModule,
     ButtonComponent,
-    AddContactsComponent,
     InputfieldComponent,
     FormsModule,
   ],
   templateUrl: './add-to-channel.component.html',
   styleUrl: './add-to-channel.component.scss',
 })
-export class AddToChannelComponent implements OnDestroy {
-  private destroy$ = new Subject<void>();
+export class AddToChannelComponent {
+
   globalFunctions = inject(GlobalFunctionsService);
   globalVariables = inject(GlobalVariablesService);
   firebaseChannelService = inject(FirebaseChannelService);
-  firebaseChatService = inject(FirebaseChatService);
   firebaseUserService = inject(FirebaseUserService);
-  addedChannelId: string = '';
-  addedChatId: string = '';
-  allUsers: any = [];
-  users: any = [];
-  searchInput = new Subject<string>();
-  selectedUsers: any = [];
-  userIdToAdd: string = '';
 
-  channel: channel = {
-    description: '',
-    channelName: '',
-    id: '',
-    chatId: '',
-    creator: '',
-    channelMember: [],
-  };
-
-  newUserId: string | undefined;
-
-  selectedUserName: string = '';
-
-  searchText: string = '';
-
+  selectedUserName: string = ''; 
+  users: { name: string; id: string; img: string, isActive: boolean }[] = [];
+  notInOpenChannelUser: { name: string; id: string; img: string, isActive: boolean }[] = [];
+  selectedUsers: { name: string; id: string; img: string, isActive: boolean }[] = [];
   selectedUser: any = '';
+  searchTerm: string = '';
 
-  selectedUserDetails: { name: string; img: string } = { name: '', img: '' };
-
-  constructor(
-    private userService: FirebaseUserService,
-    private firestore: Firestore
-  ) {
-    this.searchInput
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap((searchTerm) =>
-          this.userService.searchUsersByName(searchTerm)
-        ),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((filteredUsers) => {
-        this.users = filteredUsers;
-      });
+  ngOnInit() {
+    this.notInOpenChannelUser = this.users = this.globalVariables.notInOpenChannelUser;
   }
 
-  ngOnInit(): void {
-    this.globalFunctions.getCollection('users', this.allUsers);
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  async selectUser(user: any) {
-    if (!Array.isArray(this.selectedUser)) {
-      this.selectedUser = [];
-    }
-    this.selectedUser.push(user);
-
-   
-    // hier geht es dann weiter mit dem Coden - Leute hinzufügen usw
-    debugger;
-    this.userIdToAdd = user.id;
-
-    this.selectedUserName = user.name;
-    this.searchText = '';
-    this.users = [];
-  }
-
-  deleteUserFromSelect(i: number) {
-    this.selectedUser.splice(i, 1);
-  }
-
-  async addUsersToExistingChannel() {
-    if (!this.globalVariables.openChannel.id || !this.selectedUser) {
+  /**
+   * this function filters the notInOpenChannelUser array for the searchTerm
+   * @param searchTerm - string
+   * @returns - void
+   */
+  onSearchChange(searchTerm: string): void {
+    this.searchTerm = searchTerm;
+    if (!searchTerm) {
+      this.users = this.notInOpenChannelUser;
       return;
     }
+    this.users = this.notInOpenChannelUser.filter(user => {
+      return user.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
 
-    const channelRef = doc(
-      this.firestore,
-      'channels',
-      this.globalVariables.openChannel.id
-    );
-
-    try {
-      await updateDoc(channelRef, {
-        members: arrayUnion(this.userIdToAdd),
-      });
-      console.log('Benutzer erfolgreich hinzugefügt');
-    } catch (error) {
-      console.error('Fehler beim Hinzufügen des Benutzers:', error);
+  }
+  /**
+   * this function moves the selected user to the selectedUsers and removes it from notInOpenChannelUser
+   * @param user - Object - selected user Object 
+   */
+  selectUser(user: any) {
+    if (!Array.isArray(this.selectedUsers)) {
+      this.selectedUsers = [];
     }
+    this.selectedUsers.push(user);
+    const userIndex = this.notInOpenChannelUser.findIndex(u => u.id === user.id);
+    if (userIndex !== -1) {
+      this.notInOpenChannelUser.splice(userIndex, 1);
+    }
+    this.users = this.notInOpenChannelUser;
+    this.onSearchChange(this.searchTerm);
+  }
 
-    this.firebaseUserService.addChatIdToUser(
-      this.userIdToAdd,
-      this.globalVariables.openChannel.chatId
-    );
+  /**
+   * this function removes the seleced user from the selected user list and push it back to unselected.
+   * @param i - number - index 
+   */
+  deleteUserFromSelect(i: number) {
+    this.notInOpenChannelUser.push(this.selectedUsers[i]);
+    this.selectedUsers.splice(i, 1);
+  }
 
+  /**
+   * this function adds the selected user to the channel and adds the chatid to the selected user 
+   */
+  async addUsersToExistingChannel() {
+    let member: Array<string> = [];
+    this.selectedUsers.forEach((user) => {
+      this.firebaseChannelService.addUserToChannel(this.globalVariables.openChannel.id, user.id);
+      this.firebaseUserService.addChatIdToUser(user.id, this.globalVariables.openChannel.chatId);
+      member.push(user.id);
+    });
+    this.globalVariables.openChannelUser.forEach((user) => {
+      member.push(user.id);
+    });
+    this.globalFunctions.getChatUserData(member);   
     this.globalFunctions.closeAddContactsOverlay();
   }
 
-  onSearchChange(searchValue: string): void {
-    if (!searchValue) {
-      this.users = [];
-      return;
-    }
-    this.searchInput.next(searchValue);
-  }
 }

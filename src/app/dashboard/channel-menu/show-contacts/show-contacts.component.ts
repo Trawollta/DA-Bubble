@@ -82,7 +82,6 @@ export class ShowContactsComponent implements OnInit {
       document.getElementById('alertDiv')?.classList.remove('d-none');
       setTimeout(() => {
         this.closeMembers();
-        //this.globalFunctions.closeMembers();
       }, 4500);
     }, 100);
   }
@@ -102,7 +101,6 @@ export class ShowContactsComponent implements OnInit {
 
 
   async log(userId: string) {
-    //let docId = await this.firebaseUserService.getUserDocIdWithName(user.name)
     this.leaveChannel(userId)
   }
 

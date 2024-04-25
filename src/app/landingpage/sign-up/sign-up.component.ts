@@ -101,7 +101,6 @@ export class SignUpComponent {
     let uid = '';
     try {
       const userCredential = await this.authService.register(email, password);
-      //console.log(userCredential);
       uid = userCredential.user.uid;
       this.userService.addUser(uid, this.signUpUserData);
       this.toastService.showMessage('Konto erfolgreich erstellt!');
@@ -114,8 +113,6 @@ export class SignUpComponent {
 
   async addNewUserToWelcome(uid: string) {
     const channelId = 'fsjWrBdDhpg1SvocXmxS';
-    //let name = this.signUpUserData.name;
-    //let docId = await this.userService.getUserDocIdWithName(name) 
     this.firebaseChannelService.addUserToChannel(channelId, uid);
   }
 

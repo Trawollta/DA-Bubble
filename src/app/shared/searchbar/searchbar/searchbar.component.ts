@@ -82,16 +82,6 @@ export class SearchbarComponent {
       });
   }
 
-  /**
-   * gives me the docID of the user to give better workflow and get data of him
-   * @param id user id
-   * @returns
-   */
- /*  async getDataConnectedWithID(id: string) {
-    let docID = await this.firebaseUserService.getUserDocIdWithName(id);
-    let data = this.firebaseUserService.getUserData(docID[0]);
-    return data;
-  } */
 
   /**
    * init function which get data and convert them (name/chatId etc.)

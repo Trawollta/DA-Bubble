@@ -159,19 +159,6 @@ export class FirebaseUserService {
   }
 
   /**
-   * get docId with searching the name in Users to find Doc ID
-   */
-/*   async getUserDocIdWithName(name: string): Promise<string[]> {
-    const q = query(this.getUsersRef(), where('name', '==', name));
-    const querySnapshot = await getDocs(q);
-    const docIds: string[] = [];
-    querySnapshot.forEach((doc) => {
-      docIds.push(doc.id);
-    });
-    return docIds;
-  } */
-
-  /**
    * Adds the chatId to the user.
    * @param docId - id of user
    * @param chatId id of chat (globale variable)

@@ -30,7 +30,7 @@ export class ChannelMenuComponent {
   firebasUserService = inject(FirebaseUserService);
   firebaseChannelService = inject(FirebaseChannelService)
  
-  allUsers: any = [];
+  //allUsers: any = [];
   channelToDisplay: any = [];
   selectedChannel: any; 
   isChannelMenuOpen: boolean = true;
@@ -55,9 +55,9 @@ export class ChannelMenuComponent {
   }
    
 
-  async ngAfterViewInit() {
-    await this.globalFunctions.getCollection('users', this.allUsers);   
-  }
+ /*  async ngAfterViewInit() {
+    await this.globalFunctions.getCollection('users', this.allUsers);  
+  } */
 
   
 
@@ -70,6 +70,9 @@ export class ChannelMenuComponent {
     selectedChannel!['id'] = channel;
     this.globalFunctions.openChannel(selectedChannel);
     this.globalFunctions.triggerFocus();
+    console.log('alle',this.globalVariables.allUsers);
+    console.log('nur chat',this.globalVariables.openChannelUser);
+    console.log('nicht im chat',this.globalVariables.notInOpenChannelUser);
   }
 
   async openDirectMessageUser(user: any){

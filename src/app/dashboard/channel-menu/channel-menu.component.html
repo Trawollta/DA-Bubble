@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="user-wrapper" id="directMessage" *ngIf="isUserlMenuOpen">
-                <div class="user-detail" *ngFor="let user of allUsers" (click)="this.openDirectMessageUser(user)">
+                <div class="user-detail" *ngFor="let user of globalVariables.allUsers" (click)="this.openDirectMessageUser(user)">
                     <div class="userImgWithStatus">
                         <img class="userImg" [src]="user.img" alt="userImage" />
                         <img *ngIf="user.isActive" class="status" src="./assets/img/icons/online.svg" alt="profile online">

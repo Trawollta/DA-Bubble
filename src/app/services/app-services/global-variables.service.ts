@@ -118,13 +118,11 @@ export class GlobalVariablesService {
   };
 
   //this Array contains all users of the active chat
-  openChannelUser = [
-    {
-      id: '',
-      name: '',
-      img: ''
-    }
-  ];
+  openChannelUser: { name: string; id: string; img: string, isActive: boolean}[] = [];
+
+  allUsers: { name: string; id: string; img: string, isActive: boolean }[] = [];
+
+  notInOpenChannelUser : { name: string; id: string; img: string, isActive: boolean}[] = [];
 
   viewableChannel : Array<string> = [];
   viewableChannelplusId =[{channelName:'', chatId:'', channelId:''}];

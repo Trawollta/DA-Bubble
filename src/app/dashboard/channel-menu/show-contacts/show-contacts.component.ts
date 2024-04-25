@@ -26,7 +26,7 @@ export class ShowContactsComponent implements OnInit {
 
   selectedUserIds: string[] = [];
   selectedUsers: Array<{ id: string; name: string; img: string; checked: boolean; }> = [];
-  allUsers: any[] = [];
+  
   checked: boolean = false;
   checkedUsers: string = '';
 

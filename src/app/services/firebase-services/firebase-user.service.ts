@@ -136,12 +136,34 @@ export class FirebaseUserService {
   }
 
   /**
+   * this function saves all user in a global array
+   */
+  async getAllUser(){
+    try {
+      const docSnap = await getDocs(this.getUsersRef());
+      this.globalVariables.allUsers = []
+      docSnap.forEach((doc) => {
+        const userData = doc.data();   
+        this.globalVariables.allUsers.push({
+                    name: userData['name'],
+                    id: doc.id,
+                    img: userData['img'],
+                    isActive: userData['isActive'],
+                });
+            
+      });     
+    } catch (error) {
+      console.error('Fehler beim Abrufen der Benutzer:', error);
+    }
+    
+  }
+
+  /**
    * get docId with searching the name in Users to find Doc ID
    */
 
   async getUserDocIdWithName(name: string): Promise<string[]> {
-    const usersCollectionRef = collection(this.firestore, 'users');
-    const q = query(usersCollectionRef, where('name', '==', name));
+    const q = query(this.getUsersRef(), where('name', '==', name));
     const querySnapshot = await getDocs(q);
     const docIds: string[] = [];
     querySnapshot.forEach((doc) => {

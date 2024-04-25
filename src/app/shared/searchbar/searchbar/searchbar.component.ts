@@ -87,11 +87,11 @@ export class SearchbarComponent {
    * @param id user id
    * @returns
    */
-  async getDataConnectedWithID(id: string) {
+ /*  async getDataConnectedWithID(id: string) {
     let docID = await this.firebaseUserService.getUserDocIdWithName(id);
     let data = this.firebaseUserService.getUserData(docID[0]);
     return data;
-  }
+  } */
 
   /**
    * init function which get data and convert them (name/chatId etc.)

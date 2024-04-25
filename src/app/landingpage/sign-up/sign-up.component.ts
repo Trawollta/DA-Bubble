@@ -98,24 +98,25 @@ export class SignUpComponent {
     const email = this.signUpUserData.email;
     const password = this.signUpUserPassword;
     this.signUpUserData.img = this.selectedAvatar;
+    let uid = '';
     try {
       const userCredential = await this.authService.register(email, password);
-      console.log(userCredential);
-      const uid = userCredential.user.uid;
+      //console.log(userCredential);
+      uid = userCredential.user.uid;
       this.userService.addUser(uid, this.signUpUserData);
       this.toastService.showMessage('Konto erfolgreich erstellt!');
       setTimeout(() => this.router.navigate(['/']), 2000);
     } catch (error) {
       this.toastService.showMessage('Email bereits registriert!');
     }
-    this.addNewUserToWelcome()
+    this.addNewUserToWelcome(uid);
   }
 
-  async addNewUserToWelcome() {
-    let id = 'fsjWrBdDhpg1SvocXmxS';
-    let name = this.signUpUserData.name;
-    let docId = await this.userService.getUserDocIdWithName(name) 
-    this.firebaseChannelService.addUserToChannel(id, docId[0]);
+  async addNewUserToWelcome(uid: string) {
+    const channelId = 'fsjWrBdDhpg1SvocXmxS';
+    //let name = this.signUpUserData.name;
+    //let docId = await this.userService.getUserDocIdWithName(name) 
+    this.firebaseChannelService.addUserToChannel(channelId, uid);
   }
 
 }

@@ -17,7 +17,7 @@
                         <img [src]="user.img" alt="user image" class="contactImg">
                         <span>{{ user.name }}</span>
                     </div>
-                    <img class="deleteContact" *ngIf="checkPermission()" (click)="log(user)" src="./assets/img/icons/close.svg">
+                    <img class="deleteContact" *ngIf="checkPermission()" (click)="log(user.id)" src="./assets/img/icons/close.svg">
                 </div>
 
 

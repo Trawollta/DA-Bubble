@@ -100,8 +100,10 @@ export class AddToChannelComponent implements OnDestroy {
     }
     this.selectedUser.push(user);
 
-    let userId = await this.firebaseUserService.getUserDocIdWithName(user.name);
-    this.userIdToAdd = userId[0];
+    //let userId = await this.firebaseUserService.getUserDocIdWithName(user.name);
+    // hier geht es dann weiter mit dem Coden - Leute hinzufügen usw
+    debugger;
+    this.userIdToAdd = user.id;
 
     this.selectedUserName = user.name;
     this.searchText = '';

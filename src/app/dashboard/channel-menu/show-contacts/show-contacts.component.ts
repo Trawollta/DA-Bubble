@@ -26,7 +26,7 @@ export class ShowContactsComponent implements OnInit {
 
   selectedUserIds: string[] = [];
   selectedUsers: Array<{ id: string; name: string; img: string; checked: boolean; }> = [];
-  
+
   checked: boolean = false;
   checkedUsers: string = '';
 
@@ -101,14 +101,14 @@ export class ShowContactsComponent implements OnInit {
   }
 
 
-  async log(user: any) {
-    let docId = await this.firebaseUserService.getUserDocIdWithName(user.name)
-    this.leaveChannel(docId)
+  async log(userId: string) {
+    //let docId = await this.firebaseUserService.getUserDocIdWithName(user.name)
+    this.leaveChannel(userId)
   }
 
-  leaveChannel(docId: any) {
-    this.firebaseUserService.leaveChannel(this.globalVariables.openChannel.chatId, docId[0]);
-    this.firebaseUserService.leaveChannelUser(this.globalVariables.openChannel.chatId, docId[0]);
+  leaveChannel(docId: string) {
+    this.firebaseUserService.leaveChannel(this.globalVariables.openChannel.chatId, docId);
+    this.firebaseUserService.leaveChannelUser(this.globalVariables.openChannel.chatId, docId);
     this.globalFunctions.closeEditOverlay()
   }
 

@@ -10,6 +10,7 @@ import { FirebaseUserService } from 'app/services/firebase-services/firebase-use
 import { Router } from '@angular/router';
 import { ToastService } from 'app/services/app-services/toast.service';
 import Aos from 'aos';
+import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 
 @Component({
   selector: 'app-log-in',
@@ -23,6 +24,7 @@ export class LogInComponent {
   toastService = inject(ToastService);
   globalVariables = inject(GlobalVariablesService);
   private userService = inject(FirebaseUserService);
+  firebaseChannelService = inject(FirebaseChannelService);
   private authService = inject(AuthService);
   private router = inject(Router);
   constructor() {
@@ -71,6 +73,7 @@ export class LogInComponent {
             img: userCredential.photoURL,
             relatedChats: ['NQMdt08FAcXbVroDLhvm'],
           });
+          this.addNewUserToWelcome(uid);
         }
         this.router.navigate(['/dashboard']);
       } else {
@@ -89,6 +92,11 @@ export class LogInComponent {
     } catch (error) {
       this.toastService.showMessage('Fehler bei der Verarbeitung der anonymen Anmeldung');
     }
+  }
+
+  async addNewUserToWelcome(uid: string) {
+    const channelId = 'fsjWrBdDhpg1SvocXmxS';
+    this.firebaseChannelService.addUserToChannel(channelId, uid);
   }
 
   goToSendMail() {

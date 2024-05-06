@@ -14,16 +14,16 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       provideFirebaseApp(() =>
         initializeApp({
-          projectId: 'da-bubble-c426e',
-          appId: '1:220428219121:web:5e119dfd3f6ba804366f50',
-          storageBucket: 'da-bubble-c426e.appspot.com',
-          apiKey: 'AIzaSyABS1Y7CSUfqZNzEewHtAA7xUGsdBOi1mE',
-          authDomain: 'da-bubble-c426e.firebaseapp.com',
-          messagingSenderId: '220428219121',
+          apiKey: "AIzaSyD9Bcky2YKzsJfq6YN9VCXHCwEfBs8IJ1E",
+          authDomain: "dabubble-a269f.firebaseapp.com",
+          projectId: "dabubble-a269f",
+          storageBucket: "dabubble-a269f.appspot.com",
+          messagingSenderId: "195634866937",
+          appId: "1:195634866937:web:92e38b9d0b24105bd15028"
         })
       )
     ),
     importProvidersFrom(provideFirestore(() => getFirestore())),
-    importProvidersFrom(provideAuth(() => getAuth())),
+    importProvidersFrom(provideAuth(() => getAuth())), importProvidersFrom(provideFirebaseApp(() => initializeApp({"projectId":"dabubble-a269f","appId":"1:195634866937:web:92e38b9d0b24105bd15028","storageBucket":"dabubble-a269f.appspot.com","apiKey":"AIzaSyD9Bcky2YKzsJfq6YN9VCXHCwEfBs8IJ1E","authDomain":"dabubble-a269f.firebaseapp.com","messagingSenderId":"195634866937"}))), importProvidersFrom(provideFirestore(() => getFirestore())),
   ],
 };

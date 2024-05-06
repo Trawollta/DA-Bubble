@@ -6,9 +6,16 @@
           "da-bubble-c426e"
         ]
       }
+    },
+    "dabubble-a269f": {
+      "hosting": {
+        "da-bubble": [
+          "dabubble-a269f"
+        ]
+      }
     }
   },
   "projects": {
-    "default": "da-bubble-c426e"
+    "default": "dabubble-a269f"
   }
 }

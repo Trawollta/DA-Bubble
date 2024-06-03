@@ -3,12 +3,15 @@
     background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
     @include dFlex();
     z-index: 5;
-    height: 100vh;
+    height: 100svh;
     width: 100vw;
     position: absolute;
     top: 0;
     left: 0;
 }
+
+
+
 
 .animate-move-to-top-left {
     position: absolute;
@@ -19,7 +22,13 @@
     .logo {
         height: 56px;
     }
+    @media (max-width: 400px) {
+         left: 25px;
+
 }
+}
+
+
 
 .text-container {
     overflow: hidden;

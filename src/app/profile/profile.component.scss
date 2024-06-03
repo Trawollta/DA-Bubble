@@ -4,14 +4,14 @@ section {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100svh;
     width: 100dvw;
     background-color: rgba(0, 0, 0, 0.116);
     @include dFlex();
     z-index: 99;
 
     .cardOuterContainer {
-        height: 100vh;
+        height: 100svh;
         @include dFlex();
 
         .card {
@@ -43,7 +43,7 @@ section {
         @media screen and (min-width: calc($maxScreenWidth + 220px)) {
             //1560px
             @include dFlex($jc: flex-end, $ai: flex-start);
-            height: calc(100vh - 200px);
+            height: calc(100svh - 200px);
             max-width: $maxScreenWidth;
 
             .card {

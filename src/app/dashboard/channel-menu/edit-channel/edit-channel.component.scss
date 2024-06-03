@@ -2,7 +2,7 @@
 .overlay {
     background-color: white;
     z-index: 3;
-    height: 100vh;
+    height: 100svh;
     width: 100%;
 }
 
@@ -69,7 +69,7 @@
     margin-left: 32px !important;
     max-width: 100%;
     align-items: center;
-    max-height: 54vh;
+    max-height: 54svh;
 }
 
 .no-border {
@@ -139,7 +139,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100svh;
     background-color: #0003;
     z-index: 2;
 }

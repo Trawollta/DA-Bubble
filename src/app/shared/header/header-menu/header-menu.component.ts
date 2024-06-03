@@ -31,7 +31,6 @@ export class HeaderMenuComponent {
   }
 
   logOut() {
-    debugger;
     this.userService.logout();
   }
 

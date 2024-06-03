@@ -5,7 +5,7 @@
     max-width: 700px;
     padding-left: 40px;
     padding-right: 40px;
-    height: 100vh;
+    height: 100svh;
 }
 @media screen and (min-width: 800px) {
     .overlay {
@@ -15,7 +15,7 @@
         //padding-left: 40px;
         //padding-right: 40px;
         border-radius: 40px;
-        height: 55vh;
+        height: 55svh;
     }
 }
 

@@ -1,40 +1,40 @@
-import { CommonModule } from '@angular/common';
+// src/app/landingpage/log-in/log-in.component.ts
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService, LoginResponse } from 'app/services/auth.service';
+import { ToastService } from 'app/services/app-services/toast.service';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import Aos from 'aos';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
-import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { DialogComponent } from "../../shared/dialog/dialog.component";
 import { ButtonComponent } from 'app/shared/button/button.component';
-import { AuthService } from 'app/services/firebase-services/auth.service';
-import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
-import { Router } from '@angular/router';
-import { ToastService } from 'app/services/app-services/toast.service';
-import Aos from 'aos';
-import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
+import { DialogComponent } from 'app/shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-log-in',
   standalone: true,
   templateUrl: './log-in.component.html',
-  styleUrl: './log-in.component.scss',
-  imports: [CommonModule, InputfieldComponent, ButtonComponent, FormsModule, DialogComponent]
+  styleUrls: ['./log-in.component.scss'],
+  imports: [CommonModule, FormsModule, InputfieldComponent, ButtonComponent, DialogComponent]
 })
-
 export class LogInComponent {
-  toastService = inject(ToastService);
-  globalVariables = inject(GlobalVariablesService);
-  private userService = inject(FirebaseUserService);
-  firebaseChannelService = inject(FirebaseChannelService);
+  // Services und Variablen per Dependency Injection
   private authService = inject(AuthService);
   private router = inject(Router);
+  toastService = inject(ToastService);
+  globalVariables = inject(GlobalVariablesService);
+
+  // Initialisierung der Login-Daten
+  logInUserData = {
+    email: '',
+    password: ''
+  };
+
   constructor() {
+    // Beispiel: Setze globale Variablen, falls benötigt
     this.globalVariables.imprintActive = false;
     this.globalVariables.signup = false;
-  }
-
-  logInUserData = {
-    email: "",
-    password: ""
   }
 
   ngAfterViewInit() {
@@ -42,61 +42,49 @@ export class LogInComponent {
     Aos.init();
   }
 
-  async logInWithEmailAndPassword() {
+  logInWithEmailAndPassword() {
     const { email, password } = this.logInUserData;
-    try {
-      const userCredential = await this.authService.login(email, password);
-      const uid = userCredential.user.uid;
-      this.globalVariables.activeID = uid;
-      this.userService.updateCurrentUser(uid);
-      this.globalVariables.logout = false;
-      this.router.navigate(['/dashboard']);
-    } catch (error) {
-      this.toastService.showMessage('Benutzername oder Passwort falsch');
-    }
-  }
+    this.authService.login(email, password).subscribe({
+        next: (response: LoginResponse) => {
+            console.log("✅ Login erfolgreich! Benutzer:", response.user);
+            
+            // Speichere die Benutzer-ID und den Token im LocalStorage
+            localStorage.setItem('authToken', response.token);
+            localStorage.setItem('userId', response.user.id.toString());
 
-  async loginWithGoogle() {
-    try {
-      const userCredential = await this.authService.loginWithGoogle();
-      if (userCredential) {
-        const uid = userCredential.uid;
-        this.globalVariables.activeID = uid;
-        this.userService.updateCurrentUser(uid);
-        this.globalVariables.logout = false;
-        const userExists = await this.userService.userExists(uid);
-        if (!userExists) {
-          await this.userService.addUser(userCredential.uid, {
-            name: userCredential.displayName,
-            email: userCredential.email,
-            isActive: true,
-            img: userCredential.photoURL,
-            relatedChats: ['NQMdt08FAcXbVroDLhvm'],
-          });
-          this.addNewUserToWelcome(uid);
+            // Setze die Benutzer-ID in den globalen Variablen
+            this.globalVariables.activeID = response.user.id.toString();
+
+            console.log("🔑 Benutzer-ID gesetzt:", this.globalVariables.activeID);
+
+            // Navigiere zum Dashboard
+            this.router.navigate(['/dashboard']);
+        },
+        error: (err) => {
+            console.error('❌ Login fehlgeschlagen:', err);
+            this.toastService.showMessage('Benutzername oder Passwort falsch');
         }
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.toastService.showMessage('Fehler beim anmelden mit Goggle');
-      }
-    } catch (error) {
-      this.toastService.showMessage('Fehler bei der Verarbeitung der Google-Anmeldung');
-    }
+    });
+}
+
+
+
+
+  // Optional: Methoden für Google-Login oder Gäste-Login
+  async loginWithGoogle() {
+    // Hier kannst du den Flow für Google-Login implementieren,
+    // sofern dein Backend diesen unterstützt.
   }
 
   async loginAsGuest() {
     try {
-      this.logInUserData.email = "gastderdabubble@da-bubble.gast";
-      this.logInUserData.password = "gast00";
+      // Setze Beispiel-Daten für den Gäste-Login
+      this.logInUserData.email = 'gastderdabubble@da-bubble.gast';
+      this.logInUserData.password = 'gast00';
       this.logInWithEmailAndPassword();
     } catch (error) {
       this.toastService.showMessage('Fehler bei der Verarbeitung der anonymen Anmeldung');
     }
-  }
-
-  async addNewUserToWelcome(uid: string) {
-    const channelId = 'fsjWrBdDhpg1SvocXmxS';
-    this.firebaseChannelService.addUserToChannel(channelId, uid);
   }
 
   goToSendMail() {

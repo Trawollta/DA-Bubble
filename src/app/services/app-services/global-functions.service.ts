@@ -1,13 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { GlobalVariablesService } from './global-variables.service';
-import {
-  Firestore,
-  collection,
-  onSnapshot,
-} from '@angular/fire/firestore';
-import { FirebaseChatService } from '../firebase-services/firebase-chat.service';
-import { FirebaseChannelService } from '../firebase-services/firebase-channel.service';
-import { FirebaseUserService } from '../firebase-services/firebase-user.service';
+// import {
+//   Firestore,
+//   collection,
+//   onSnapshot,
+// } from '@angular/fire/firestore';
+// import { FirebaseChatService } from '../firebase-services/firebase-chat.service';
+// import { FirebaseChannelService } from '../firebase-services/firebase-channel.service';
+// import { FirebaseUserService } from '../firebase-services/firebase-user.service';
 import { Subject } from 'rxjs';
 
 export interface MessageInfo {
@@ -23,9 +23,9 @@ export interface MessageInfo {
 export class GlobalFunctionsService {
 
   globalVariables = inject(GlobalVariablesService);
-  firebaseChatService = inject(FirebaseChatService);
-  firebaseChannelService = inject(FirebaseChannelService);
-  firebasUserService = inject(FirebaseUserService);
+  // firebaseChatService = inject(FirebaseChatService);
+  // firebaseChannelService = inject(FirebaseChannelService);
+  // firebasUserService = inject(FirebaseUserService);
 
   private focusSubject = new Subject<void>();
   focus$ = this.focusSubject.asObservable();
@@ -147,18 +147,18 @@ export class GlobalFunctionsService {
    * @param user - object - contains all user information
    */
   openDirectMessageUser(user: any) {
-    this.globalVariables.isUserChat = true;
-    this.globalVariables.userToChatWith.name = user.name;
-    this.globalVariables.userToChatWith.img = user.img;
-    this.globalVariables.userToChatWith.email = user.email;
-    user.id
-      ? (this.globalVariables.userToChatWith.id = user.id)
-      : this.globalVariables.profileUserId;
-    this.globalVariables.userToChatWith.isActive = user.isActive;
-    let chatId = this.firebaseChatService.bulidUserChatId(true);
-    this.globalVariables.openChannel.chatId = chatId;
-    this.firebaseChatService.activeChatId = chatId;
-    this.showChat();
+    // this.globalVariables.isUserChat = true;
+    // this.globalVariables.userToChatWith.name = user.name;
+    // this.globalVariables.userToChatWith.img = user.img;
+    // this.globalVariables.userToChatWith.email = user.email;
+    // user.id
+    //   ? (this.globalVariables.userToChatWith.id = user.id)
+    //   : this.globalVariables.profileUserId;
+    // this.globalVariables.userToChatWith.isActive = user.isActive;
+    // let chatId = this.firebaseChatService.bulidUserChatId(true);
+    // this.globalVariables.openChannel.chatId = chatId;
+    // this.firebaseChatService.activeChatId = chatId;
+    // this.showChat();
   }
 
   /**
@@ -166,14 +166,14 @@ export class GlobalFunctionsService {
    * * @param chatId - contains the chat id of the chat which should be open
    */
   async showChat() {
-    this.globalVariables.showThread = false;
-    if (this.globalVariables.isUserChat)
-      await this.firebaseChatService.existUserChat('chatusers');
-    this.firebaseChatService.changeActiveChannel();
-    this.globalVariables.isChatVisable = true;
-    if (!this.globalVariables.desktop800) {
-      this.globalVariables.showChannelMenu = false;
-    }
+    // this.globalVariables.showThread = false;
+    // if (this.globalVariables.isUserChat)
+    //   await this.firebaseChatService.existUserChat('chatusers');
+    // this.firebaseChatService.changeActiveChannel();
+    // this.globalVariables.isChatVisable = true;
+    // if (!this.globalVariables.desktop800) {
+    //   this.globalVariables.showChannelMenu = false;
+    // }
   }
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -181,22 +181,22 @@ export class GlobalFunctionsService {
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-  constructor(private firestore: Firestore) { }
+  constructor() { }
 
 
 
   // function to get data from firebase and save it into an local Array
 
   async getCollection(item: string, targetArray: any) {
-    const collectionReference = collection(this.firestore, item);
-    onSnapshot(collectionReference, (querySnapshot) => {
-      targetArray.length = 0;
-      querySnapshot.forEach((doc) => {
-        let docData = doc.data();
-        docData['id'] = doc.id;
-        targetArray.push(docData);
-      });
-    });
+    // const collectionReference = collection(this.firestore, item);
+    // onSnapshot(collectionReference, (querySnapshot) => {
+    //   targetArray.length = 0;
+    //   querySnapshot.forEach((doc) => {
+    //     let docData = doc.data();
+    //     docData['id'] = doc.id;
+    //     targetArray.push(docData);
+    //   });
+    // });
   }
 
 
@@ -236,18 +236,26 @@ export class GlobalFunctionsService {
    * @param message - string- contains the message text
    * @returns - MessageInfo object with splited message information
    */
-  checkMessage(message: string): MessageInfo {
-    const result: MessageInfo = { hasUrl: false, message: message, textAfterUrl: '', messageImgUrl: '' };
+  checkMessage(message: string | null | undefined): MessageInfo {
+    if (!message || typeof message !== 'string') {
+        console.warn("⚠️ `checkMessage` wurde mit einer `null` oder `undefined` Nachricht aufgerufen.");
+        return { hasUrl: false, message: '', textAfterUrl: '', messageImgUrl: '' };
+    }
+
+    const result: MessageInfo = { hasUrl: false, message, textAfterUrl: '', messageImgUrl: '' };
     const urlPattern = /(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
     const urlMatch = message.match(urlPattern);
+
     if (urlMatch) {
-      result.hasUrl = true;
-      result.messageImgUrl = urlMatch[0];
-      result.message = message.split(result.messageImgUrl)[0].trim();
-      result.textAfterUrl = message.split(result.messageImgUrl)[1].trim();
+        result.hasUrl = true;
+        result.messageImgUrl = urlMatch[0];
+        result.message = message.split(result.messageImgUrl)[0].trim();
+        result.textAfterUrl = message.split(result.messageImgUrl)[1]?.trim() || '';
     }
+
     return result;
-  }
+}
+
 
   //functions for loading the Channel
   /**
@@ -264,7 +272,7 @@ export class GlobalFunctionsService {
     this.globalVariables.openChannel.chatId = channel.chatId;
     this.globalVariables.openChannel.creator = channel.creator;
     this.globalVariables.openChannel.memberCount = channel.members.length;
-    this.firebaseChatService.activeChatId = channel.chatId;
+    // this.firebaseChatService.activeChatId = channel.chatId;
     this.showChat();
   }
 
@@ -288,14 +296,15 @@ export class GlobalFunctionsService {
 
   //this function should load the welcome channel when user logged in
   async getStartChannel() {
-    await this.firebaseChannelService.getChannelData('fsjWrBdDhpg1SvocXmxS')
-      .then(channelData => {
-        if (channelData) {
-          channelData['id'] = 'fsjWrBdDhpg1SvocXmxS';
-          this.openChannel(channelData);
-          this.getChatUserData(channelData['members']);
-        } else console.warn('Channel-Daten wurden nicht gefunden.');
-      })
-      .catch(error => console.error('Fehler beim Abrufen der Daten:', error));
-  }
+  //   await this.firebaseChannelService.getChannelData('fsjWrBdDhpg1SvocXmxS')
+  //     .then(channelData => {
+  //       if (channelData) {
+  //         channelData['id'] = 'fsjWrBdDhpg1SvocXmxS';
+  //         this.openChannel(channelData);
+  //         this.getChatUserData(channelData['members']);
+  //       } else console.warn('Channel-Daten wurden nicht gefunden.');
+  //     })
+  //     .catch(error => console.error('Fehler beim Abrufen der Daten:', error));
+  // }
+}
 }

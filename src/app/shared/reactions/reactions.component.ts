@@ -8,13 +8,13 @@ import {
 import { CommonModule } from '@angular/common';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { FormsModule } from '@angular/forms';
-import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
-import {
-  Firestore,
-  arrayRemove,
-  doc,
-  updateDoc,
-} from '@angular/fire/firestore';
+// import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+// import {
+//   Firestore,
+//   arrayRemove,
+//   doc,
+//   updateDoc,
+// } from '@angular/fire/firestore';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { ClickedOutsideDirective } from 'app/directives/clicked-outside.directive';
 
@@ -27,10 +27,10 @@ import { ClickedOutsideDirective } from 'app/directives/clicked-outside.directiv
 })
 
 export class ReactionsComponent {
-  firestore: Firestore = inject(Firestore);
+  // firestore: Firestore = inject(Firestore);
   globaleVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
-  firebaseChatService = inject(FirebaseChatService);
+  // firebaseChatService = inject(FirebaseChatService);
   @Output() isMessageEdit = new EventEmitter<boolean>();
   @Input() message: any;
   @Input() originalMessage: any;
@@ -143,10 +143,10 @@ export class ReactionsComponent {
    * this function adds the new object to firebase and hemoves the old one
    */
   addEmoji() {  
-    this.globaleVariables.messageData = this.message;
-    this.globaleVariables.messageData.message = this.originalMessage.message;
-    this.firebaseChatService.sendMessage(this.globaleVariables.openChannel.chatId, this.chatFamiliy);
-    this.remove(this.globaleVariables.openChannel.chatId, this.chatFamiliy);
+    // this.globaleVariables.messageData = this.message;
+    // this.globaleVariables.messageData.message = this.originalMessage.message;
+    // this.firebaseChatService.sendMessage(this.globaleVariables.openChannel.chatId, this.chatFamiliy);
+    // this.remove(this.globaleVariables.openChannel.chatId, this.chatFamiliy);
   }
 
 /**
@@ -155,9 +155,9 @@ export class ReactionsComponent {
  * @param chatFamiliy - string - userchat or chanelchat
  */
   remove(chatId: string, chatFamiliy: string) {
-     updateDoc(doc(this.firestore, chatFamiliy, chatId), {
-      messages: arrayRemove(this.originalMessage),
-    });
+    //  updateDoc(doc(this.firestore, chatFamiliy, chatId), {
+    //   messages: arrayRemove(this.originalMessage),
+    // });
   }
 
   /**
@@ -223,22 +223,22 @@ export class ReactionsComponent {
    * this function replaces the old message with the new message
    */
   editSave() {
-    this.forbiddenChars = this.globalFunctions.isMessageValid(this.message.message); 
-    this.message.message = this.message.message.replace(this.downloadURLAlias, this.downloadURL);
-    if (this.forbiddenChars.length === 0) {
-      this.editMessage = false;
-      this.isMessageEdit.emit(false);
-      this.globaleVariables.messageData = this.message;
-      let chatFamiliy = this.globaleVariables.isUserChat ? 'chatusers' : 'chatchannels';
-      this.firebaseChatService.sendMessage(
-        this.globaleVariables.openChannel.chatId, chatFamiliy
-      );
-      if (this.originalMessage.message !== this.message.message)
-        this.remove(this.globaleVariables.openChannel.chatId, chatFamiliy);
-    }
-    else{
-      this.showValidatePopup=true; 
-    }
+    // this.forbiddenChars = this.globalFunctions.isMessageValid(this.message.message); 
+    // this.message.message = this.message.message.replace(this.downloadURLAlias, this.downloadURL);
+    // if (this.forbiddenChars.length === 0) {
+    //   this.editMessage = false;
+    //   this.isMessageEdit.emit(false);
+    //   this.globaleVariables.messageData = this.message;
+    //   let chatFamiliy = this.globaleVariables.isUserChat ? 'chatusers' : 'chatchannels';
+    //   this.firebaseChatService.sendMessage(
+    //     this.globaleVariables.openChannel.chatId, chatFamiliy
+    //   );
+    //   if (this.originalMessage.message !== this.message.message)
+    //     this.remove(this.globaleVariables.openChannel.chatId, chatFamiliy);
+    // }
+    // else{
+    //   this.showValidatePopup=true; 
+    // }
   }
   
   /**

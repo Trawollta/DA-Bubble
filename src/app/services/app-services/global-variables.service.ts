@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { ChatChannelService } from 'app/services/chat-channel.service';
 import { ChatChannel } from '../../models/chatChannel.class';
+import { Channel } from 'app/models/channel.class';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +43,10 @@ export class GlobalVariablesService {
   scrolledToBottom: boolean = false;
   isMembersPopupOpen: boolean = false;
 
+  currentChannel: Channel | null = null;
+  currentChannelId: string = '';
+  selectedChannel: Channel | null = null;
+
   //take over selected Emoji
   selectedEmoji = {
     character: '',
@@ -74,7 +80,7 @@ export class GlobalVariablesService {
   isChannelVisible: boolean = true;
 
 
-  currentChannelId: string = '';
+  // currentChannelId: string = '';
 
 
 
@@ -159,8 +165,42 @@ export class GlobalVariablesService {
   showSplashScreen = false;
 
   allChannels: any = {name: [], id: []};
+  messages: any[] = [];
 
-  constructor() { }
+  constructor(private chatChannelService: ChatChannelService) { }
+
+
+  setSelectedChannel(channel: any) {
+    console.log("✅ `selectedChannel` wird gesetzt:", channel);
+    this.selectedChannel = channel;
+    console.log("📌 Neuer Wert von `selectedChannel`:", this.selectedChannel);
+}
+
 
  
+  loadMessages() {
+    console.log("🔍 `loadMessages()` wurde aufgerufen!");
+    console.log("🛠 Aktuelles `selectedChannel`:", this.selectedChannel);
+
+    if (!this.selectedChannel || !this.selectedChannel.id) {
+        console.warn("⚠️ `loadMessages()` abgebrochen: Kein `selectedChannel` gesetzt.");
+        return;
+    }
+
+    const channelId = Number(this.selectedChannel.id);
+    console.log("📩 Lade Nachrichten für Channel ID:", channelId);
+
+    this.chatChannelService.getMessages(channelId).subscribe({
+        next: (messages) => {
+            console.log("📩 Nachrichten erfolgreich geladen:", messages);
+            this.messages = [...messages];  // ❗ Array-Kopie erstellen, damit Angular es erkennt
+        },
+        error: (error) => {
+            console.error("❌ Fehler beim Laden der Nachrichten:", error);
+        }
+    });
+}
+
+
+
 }

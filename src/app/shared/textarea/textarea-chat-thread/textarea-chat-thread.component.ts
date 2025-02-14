@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, inject, ViewChild, ElementRef } from '@angular/core';
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytes,
-} from '@angular/fire/storage';
+// import {
+//   getDownloadURL,
+//   getStorage,
+//   ref,
+//   uploadBytes,
+// } from '@angular/fire/storage';
 import { FormsModule } from '@angular/forms';
 import { ShowContactsComponent } from 'app/dashboard/channel-menu/show-contacts/show-contacts.component';
 import { ClickedOutsideDirective } from 'app/directives/clicked-outside.directive';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+// import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { EmojiContainerComponent } from 'app/shared/reactions/emoji-container/emoji-container.component';
 import { Subscription } from 'rxjs';
 
@@ -35,7 +35,7 @@ export class TextareaChatThreadComponent {
 
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
-  firebaseChatService = inject(FirebaseChatService);
+  // firebaseChatService = inject(FirebaseChatService);
 
   private focusSubscription!: Subscription;
 
@@ -47,8 +47,8 @@ export class TextareaChatThreadComponent {
   showMemberList: boolean = false;
 
   // for file upload
-  storage = getStorage();
-  deleteFileRef = ref(this.storage, '');
+  // storage = getStorage();
+  // deleteFileRef = ref(this.storage, '');
   showErrorPopup = false;
   showValidationPopup = false;
   forbiddenChars: string = '';
@@ -119,27 +119,27 @@ export class TextareaChatThreadComponent {
    * this function fills all relevant data to the messagData object and calls the send message function from firebase service
    */
   async sendMessage() {
-    this.globalVariables.newMessage = this.newMessage;
-    this.forbiddenChars = this.globalFunctions.isMessageValid(
-      this.globalVariables.newMessage
-    );
+    // this.globalVariables.newMessage = this.newMessage;
+    // this.forbiddenChars = this.globalFunctions.isMessageValid(
+    //   this.globalVariables.newMessage
+    // );
 
-    if (
-      this.globalVariables.newMessage !== '' &&
-      this.forbiddenChars.length === 0
-    ) {
-      await this.prepareDataForSendMessage();
-      let chatFamiliy = this.globalVariables.isUserChat
-        ? 'chatusers'
-        : 'chatchannels';
-      this.firebaseChatService.sendMessage(
-        this.globalVariables.openChannel.chatId,
-        chatFamiliy
-      );
-      this.cleardata();
-    } else {
-      this.showValidationPopup = true;
-    }
+    // if (
+    //   this.globalVariables.newMessage !== '' &&
+    //   this.forbiddenChars.length === 0
+    // ) {
+    //   await this.prepareDataForSendMessage();
+    //   let chatFamiliy = this.globalVariables.isUserChat
+    //     ? 'chatusers'
+    //     : 'chatchannels';
+    //   this.firebaseChatService.sendMessage(
+    //     this.globalVariables.openChannel.chatId,
+    //     chatFamiliy
+    //   );
+    //   this.cleardata();
+    // } else {
+    //   this.showValidationPopup = true;
+    // }
   }
 
   async prepareDataForSendMessage() {
@@ -201,20 +201,20 @@ export class TextareaChatThreadComponent {
    * @param file - selectedFile
    */
   async uploadfile(file: File | null) {
-    if (file) {
-      try {
-        const storageRef = ref(
-          this.storage,
-          this.globalVariables.activeID + '/' + file.name
-        );
-        this.deleteFileRef = storageRef; // if delete is necessary
-        const imageRef = ref(storageRef, file.name);
-        await uploadBytes(imageRef, file);
-        this.downloadURL = await getDownloadURL(imageRef);
-      } catch (error) {
-        console.error('error while uploading:', error);
-      }
-    } else console.error('No file availabe');
+    // if (file) {
+    //   try {
+    //     const storageRef = ref(
+    //       this.storage,
+    //       this.globalVariables.activeID + '/' + file.name
+    //     );
+    //     this.deleteFileRef = storageRef; // if delete is necessary
+    //     const imageRef = ref(storageRef, file.name);
+    //     await uploadBytes(imageRef, file);
+    //     this.downloadURL = await getDownloadURL(imageRef);
+    //   } catch (error) {
+    //     console.error('error while uploading:', error);
+    //   }
+    // } else console.error('No file availabe');
   }
 
   /**

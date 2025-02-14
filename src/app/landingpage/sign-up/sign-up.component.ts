@@ -5,15 +5,15 @@ import { ButtonComponent } from 'app/shared/button/button.component';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { AuthService } from 'app/services/firebase-services/auth.service';
-import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+// import { AuthService } from 'app/services/firebase-services/auth.service';
+// import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { ToastService } from 'app/services/app-services/toast.service';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GoBackButtonComponent } from 'app/shared/go-back-button/go-back-button.component';
 import { Router } from '@angular/router';
-import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
+// import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -24,12 +24,12 @@ import { FirebaseChannelService } from 'app/services/firebase-services/firebase-
 })
 export class SignUpComponent {
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
-  authService = inject(AuthService);
+  // authService = inject(AuthService);
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
-  userService = inject(FirebaseUserService);
+  // userService = inject(FirebaseUserService);
   toastService = inject(ToastService);
-  firebaseChannelService = inject(FirebaseChannelService);
+  // firebaseChannelService = inject(FirebaseChannelService);
   private router = inject(Router);
   signUpStep: string = "createAccount"; //createAccount | chooseAvatar
   selectedAvatar: string = '';
@@ -95,25 +95,25 @@ export class SignUpComponent {
   }
 
   async onSubmit(event: any) {
-    const email = this.signUpUserData.email;
-    const password = this.signUpUserPassword;
-    this.signUpUserData.img = this.selectedAvatar;
-    let uid = '';
-    try {
-      const userCredential = await this.authService.register(email, password);
-      uid = userCredential.user.uid;
-      this.userService.addUser(uid, this.signUpUserData);
-      this.toastService.showMessage('Konto erfolgreich erstellt!');
-      setTimeout(() => this.router.navigate(['/']), 2000);
-    } catch (error) {
-      this.toastService.showMessage('Email bereits registriert!');
-    }
-    this.addNewUserToWelcome(uid);
+    // const email = this.signUpUserData.email;
+    // const password = this.signUpUserPassword;
+    // this.signUpUserData.img = this.selectedAvatar;
+    // let uid = '';
+    // try {
+    //   const userCredential = await this.authService.register(email, password);
+    //   uid = userCredential.user.uid;
+    //   this.userService.addUser(uid, this.signUpUserData);
+    //   this.toastService.showMessage('Konto erfolgreich erstellt!');
+    //   setTimeout(() => this.router.navigate(['/']), 2000);
+    // } catch (error) {
+    //   this.toastService.showMessage('Email bereits registriert!');
+    // }
+    // this.addNewUserToWelcome(uid);
   }
 
   async addNewUserToWelcome(uid: string) {
-    const channelId = 'fsjWrBdDhpg1SvocXmxS';
-    this.firebaseChannelService.addUserToChannel(channelId, uid);
+    // const channelId = 'fsjWrBdDhpg1SvocXmxS';
+    // this.firebaseChannelService.addUserToChannel(channelId, uid);
   }
 
 }

@@ -1,92 +1,105 @@
-import { Component, inject } from '@angular/core';
-//import { RouterLink } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
-import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { AddNewChannelComponent } from './add-new-channel/add-new-channel.component';
-import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
-import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
-import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+import { UserService, User } from 'app/services/user.service';
+import { ChannelService } from 'app/services/channel.service';
 import { SearchbarComponent } from 'app/shared/searchbar/searchbar/searchbar.component';
-import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
+import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
+import { Channel } from 'app/models/channel.class';
 
 @Component({
   selector: 'app-channel-menu',
   standalone: true,
   templateUrl: './channel-menu.component.html',
   styleUrl: './channel-menu.component.scss',
-  imports: [
-    //RouterLink,
-    CommonModule,
-    AddNewChannelComponent,
-    InputfieldComponent,
-    SearchbarComponent,
-  ],
+  imports: [CommonModule, SearchbarComponent],
 })
-export class ChannelMenuComponent {
-  globalVariables = inject(GlobalVariablesService);
+export class ChannelMenuComponent implements OnInit {
+  globalVariables: GlobalVariablesService = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
-  firebaseChatService = inject(FirebaseChatService);
-  firebasUserService = inject(FirebaseUserService);
-  firebaseChannelService = inject(FirebaseChannelService)
- 
-  //allUsers: any = [];
-  channelToDisplay: any = [];
-  selectedChannel: any; 
+  private userService = inject(UserService);
+  private channelService = inject(ChannelService);
+
   isChannelMenuOpen: boolean = true;
   isUserlMenuOpen: boolean = true;
- 
+  selectedChannel: Channel | null = null;
+  channels: Channel[] = [];
 
   constructor() {}
 
-  /**
-   * this function just opens and close the menu for selecting a channel
-   */
-  openChannelMenu() {
-    this.isChannelMenuOpen = !this.isChannelMenuOpen;
+  ngOnInit() {
+    console.log("🔄 ngOnInit() wurde aufgerufen...");
+    this.loadUsers();
+    this.loadChannels();
   }
-  
 
   /**
-   * this function just opens and close the menu for selecting a user chat
+   * Lädt Benutzer aus dem Backend
    */
-  openDirectMessageMenu() {
-    this.isUserlMenuOpen = !this.isUserlMenuOpen;
+  loadUsers() {
+    console.log("🟡 loadUsers() wird aufgerufen...");
+    this.userService.getUsers().subscribe({
+      next: (users: User[]) => {
+        console.log("🟢 Benutzer erfolgreich geladen:", users);
+        this.globalVariables.allUsers = users;
+      },
+      error: (error) => {
+        console.error('🔴 Fehler beim Laden der Nutzer:', error);
+      }
+    });
   }
-   
-
- /*  async ngAfterViewInit() {
-    await this.globalFunctions.getCollection('users', this.allUsers);  
-  } */
-
-  
 
   /**
-   * this funktion sets the flag to show the header for channels and take over information of the related channel object to global variables
-   * @param channel - object which contains information of selecet channel
+   * Lädt Channels aus dem Backend
    */
-  async openChannel(channel: string) {
-    let selectedChannel = await this.firebaseChannelService.getChannelData(channel);
-    selectedChannel!['id'] = channel;
-    this.selectedChannel = selectedChannel;
-    this.globalFunctions.openChannel(selectedChannel);
-    this.globalFunctions.triggerFocus();
-   // console.log('alle',this.globalVariables.allUsers);
-   // console.log('nur chat',this.globalVariables.openChannelUser);
-   // console.log('nicht im chat',this.globalVariables.notInOpenChannelUser);
+  loadChannels() {
+    console.log("🟡 loadChannels() wird aufgerufen...");
+    this.channelService.getChannels().subscribe({
+      next: (channels: Channel[]) => {
+        console.log("🟢 Channels erfolgreich geladen:", channels);
+        this.globalVariables.viewableChannelplusId = channels.map(channel => ({
+          channelId: channel.id,
+          channelName: channel.name,
+          chatId: channel.chatId
+        }));
+        console.log("📌 Updated viewableChannelplusId:", this.globalVariables.viewableChannelplusId);
+      },
+      error: (error) => {
+        console.error('🔴 Fehler beim Laden der Channels:', error);
+      }
+    });
   }
 
-  async openDirectMessageUser(user: any){
-    this.globalFunctions.openDirectMessageUser(user);
-    this.globalFunctions.triggerFocus();
+  /**
+   * Öffnet einen Channel
+   */
+  openChannel(channel: Channel) {
+    console.log("📢 Channel geöffnet:", channel);
+    
+    // Setzt den ausgewählten Channel in GlobalVariablesService
+    this.globalVariables.setSelectedChannel(channel);
+
+    // Setzt auch die lokale Variable
+    this.selectedChannel = channel;
+    this.globalVariables.currentChannel = channel;
+    this.globalVariables.currentChannelId = channel.id;
+
+    setTimeout(() => {
+      if (this.selectedChannel) {
+        console.log("✅ `selectedChannel` wurde gesetzt:", this.selectedChannel);
+        this.globalVariables.loadMessages();
+      } else {
+        console.warn("⚠️ `selectedChannel` ist immer noch nicht gesetzt.");
+      }
+    }, 100);
   }
 
-
-  openChannelOverlay() {
-    this.globalVariables.showAddChannel = true;
-    document.body.style.overflow = 'hidden';
+  /**
+   * Wechselt den Channel und lädt Nachrichten neu
+   */
+  changeChannel(channel: Channel) {
+    console.log("🔄 Channel wird gewechselt:", channel);
+    this.globalVariables.setSelectedChannel(channel);
+    this.globalVariables.loadMessages();
   }
-
-
-
 }

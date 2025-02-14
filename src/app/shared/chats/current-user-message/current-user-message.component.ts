@@ -6,22 +6,22 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import {
-  Firestore,
-  doc,
-  collection,
-  onSnapshot,
-  updateDoc,
-  arrayRemove,
-} from '@angular/fire/firestore';
+// import {
+//   Firestore,
+//   doc,
+//   collection,
+//   onSnapshot,
+//   updateDoc,
+//   arrayRemove,
+// } from '@angular/fire/firestore';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { ReactionsComponent } from 'app/shared/reactions/reactions.component';
-import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+// import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { User } from 'app/models/user.class';
 import { FormsModule } from '@angular/forms';
-import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
-import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
+// import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
+// import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
 
 @Component({
   selector: 'app-current-user-message',
@@ -31,17 +31,17 @@ import { FirebaseUserupdateService } from 'app/services/firebase-services/fireba
     CommonModule,
     DatePipe,
     FormsModule,
-    InputfieldComponent,
+    // InputfieldComponent,
   ],
   templateUrl: './current-user-message.component.html',
   styleUrl: './current-user-message.component.scss',
 })
 export class CurrentUserMessageComponent {
-  firestore: Firestore = inject(Firestore);
+  // firestore: Firestore = inject(Firestore);
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
-  firebaseChatService = inject(FirebaseChatService);
-  firebaseUpdate = inject(FirebaseUserupdateService);
+  // firebaseChatService = inject(FirebaseChatService);
+  // firebaseUpdate = inject(FirebaseUserupdateService);
 
 
   @Input() message: any;
@@ -86,7 +86,7 @@ export class CurrentUserMessageComponent {
    * this function unsubscribes the containing content
    */
   ngOnDestroy() {
-    this.unsubUser();
+    // this.unsubUser();
   }
 
   /**
@@ -95,7 +95,7 @@ export class CurrentUserMessageComponent {
    * @returns - referenz of document
    */
   getUserRef(docId: string) {
-    return doc(collection(this.firestore, 'users'), docId);
+    // return doc(collection(this.firestore, 'users'), docId);
   }
 
   /**
@@ -104,36 +104,52 @@ export class CurrentUserMessageComponent {
    * @returns - onSnapshot object
    */
   getUser(id: string) {
-    return onSnapshot(this.getUserRef(id), (user) => {
-      if (user.data()) {
-        this.user = new User(user.data());
-      }
-    });
+    // return onSnapshot(this.getUserRef(id), (user) => {
+    //   if (user.data()) {
+    //     this.user = new User(user.data());
+    //   }
+    // });
   }
 
   /**
    * this function calls function getUser() for providing userdata for the post
    */
   ngOnInit() {
-    this.getUser(this.message.userId);
-    this.postingTime = this.message.timestamp;
-    this.fillAnswerVariables();
-    this.cloneOriginalMessage();
-    this.messageInfo = this.globalFunctions.checkMessage(this.message.message);
-    this.isImage = this.messageInfo.hasUrl;
-  }
+    console.log("🚀 `app-current-user-message` wurde geladen!");
+    console.log("📩 Nachricht erhalten:", this.message);
+
+    if (!this.message || !this.message.content) {
+        console.warn("⚠️ `message` ist nicht definiert oder hat keinen `content`.");
+        return;
+    }
+
+    console.log("🔹 Nachricht-Inhalt:", this.message?.content);
+    console.log("🔹 Sender-ID:", this.message?.sender?.id);
+
+    this.messageInfo = this.globalFunctions.checkMessage(this.message.content);
+}
 
   /**
    * this function clones the original message object for later remove logic
    */
   cloneOriginalMessage() {
+    console.log("🔍 `cloneOriginalMessage()` aufgerufen!");
+    console.log("📩 Originale Nachricht:", this.message);
+    console.log("🔎 Existiert `emoji`?", this.message?.emoji);
+
     this.originalMessage = { ...this.message }; //clone first layer
-    this.originalMessage.emoji = this.message.emoji.map((emoji: any) => ({
-      //clone second layer
-      ...emoji,
-      userId: [...emoji.userId], // clone third layer
-    }));
-  }
+
+    if (this.message?.emoji && Array.isArray(this.message.emoji)) { // ✅ Sicherstellen, dass emoji ein Array ist
+        this.originalMessage.emoji = this.message.emoji.map((emoji: any) => ({
+            ...emoji,
+            userId: [...(emoji.userId || [])] // ✅ Falls `userId` undefined ist, setze leeres Array
+        }));
+    } else {
+        console.warn("⚠️ `emoji` existiert nicht oder ist kein Array. Setze leeres Array.");
+        this.originalMessage.emoji = []; // ✅ Falls emoji nicht existiert, setze leeres Array
+    }
+}
+
 
   /**
    * this function gets all information needed for answers
@@ -194,19 +210,19 @@ export class CurrentUserMessageComponent {
   }
 
   updateMessage() {
-    this.globalVariables.messageData = this.message;
-    let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
-    this.firebaseChatService.sendMessage(
-      this.globalVariables.openChannel.chatId,
-      chatFamiliy
-    );
-    this.remove(this.globalVariables.openChannel.chatId, chatFamiliy); // es kommt zu einem Springen des chats, wenn Function ausgeführt wird
+    // this.globalVariables.messageData = this.message;
+    // let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
+    // this.firebaseChatService.sendMessage(
+    //   this.globalVariables.openChannel.chatId,
+    //   chatFamiliy
+    // );
+    // this.remove(this.globalVariables.openChannel.chatId, chatFamiliy); // es kommt zu einem Springen des chats, wenn Function ausgeführt wird
   }
 
   remove(chatId: string, chatFamiliy: string) {
-    return updateDoc(doc(this.firestore, chatFamiliy, chatId), {
-      messages: arrayRemove(this.originalMessage),
-    });
+    // return updateDoc(doc(this.firestore, chatFamiliy, chatId), {
+    //   messages: arrayRemove(this.originalMessage),
+    // });
   }
 
   /**
@@ -214,14 +230,14 @@ export class CurrentUserMessageComponent {
    * @returns - name of first user of emoji
    */
   async getFirstUserOfEmoji(index: number) {
-    let length = this.message.emoji[index].userId.length;
-    let userId = this.message.emoji[index].userId[0];
-    if (userId !== '') {
-      let userData = await this.firebaseUpdate.getUserData(userId);
-      this.profile = new User(userData);
-      this.hoverUser = this.profile.name;
-      this.count = length - 1;
-    }
+    // let length = this.message.emoji[index].userId.length;
+    // let userId = this.message.emoji[index].userId[0];
+    // if (userId !== '') {
+    //   let userData = await this.firebaseUpdate.getUserData(userId);
+    //   this.profile = new User(userData);
+    //   this.hoverUser = this.profile.name;
+    //   this.count = length - 1;
+    // }
   }
 
   onSelectMessage() {

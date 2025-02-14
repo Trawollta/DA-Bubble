@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 //import { user } from '@angular/fire/auth'; //wozu ist das hier nötig?
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from 'app/shared/button/button.component';
-import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
+// import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { User } from 'app/models/user.class';
@@ -31,7 +31,7 @@ export class ProfileComponent {
   nameBuffer: string = '';
   emailBuffer: string = '';
 
-  firebaseService = inject(FirebaseUserupdateService);
+  // firebaseService = inject(FirebaseUserupdateService);
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
 
@@ -49,10 +49,10 @@ export class ProfileComponent {
    * this function sets the isPopupOpen flag and take over profile data for the choosen user
    */
   async ngOnInit() {
-    this.isPopupOpen = true;  
-    this.globalVariables.userToChatWith.id = this.globalVariables.profileUserId; 
-    const userData = await this.firebaseService.getUserData(this.globalVariables.profileUserId);
-    this.profile = new User(userData); 
+    // this.isPopupOpen = true;  
+    // this.globalVariables.userToChatWith.id = this.globalVariables.profileUserId; 
+    // const userData = await this.firebaseService.getUserData(this.globalVariables.profileUserId);
+    // this.profile = new User(userData); 
   }
 
   /**
@@ -86,11 +86,11 @@ export class ProfileComponent {
   * this function calls the update function from firebase service
   */
   async sumbitEdit() {
-    this.firebaseService.updateData(this.data());
-    const userData = await this.firebaseService.getUserData(this.globalVariables.profileUserId);
-    this.profile = new User(userData);
-    this.cancelEdit();
-    this.isEditElementclicked = false;
+    // this.firebaseService.updateData(this.data());
+    // // const userData = await this.firebaseService.getUserData(this.globalVariables.profileUserId);
+    // this.profile = new User(userData);
+    // this.cancelEdit();
+    // this.isEditElementclicked = false;
   }
 
   /**

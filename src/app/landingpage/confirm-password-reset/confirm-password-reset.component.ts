@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { ToastService } from 'app/services/app-services/toast.service';
-import { Auth, confirmPasswordReset } from '@angular/fire/auth';
+// import { Auth, confirmPasswordReset } from '@angular/fire/auth';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -23,7 +23,7 @@ export class ConfirmPasswordResetComponent {
   toastService = inject(ToastService);
   private router = inject(Router);
   private oobCode: string;
-  private auth = inject(Auth);
+  // private auth = inject(Auth);
   private route = inject(ActivatedRoute);
   pwd1: string = "";
   pwd2: string = "";
@@ -38,18 +38,20 @@ export class ConfirmPasswordResetComponent {
   }
 
   async resetPassword(form: NgForm) {
-    if (!form.valid) {
-      return;
-    }
-    try {
-      const result = await confirmPasswordReset(this.auth, this.oobCode, form.value.password2);
-      this.toastService.showMessage('Passwort erfolgreich geändert');
-      setTimeout(() => this.router.navigate(['/']), 2000);
-      console.log('Passwort wurde erfolgreich zurückgesetzt.');
-    } catch (error) {
-      this.toastService.showMessage('Fehler beim zurücksetzen des Passworts');
-      console.error('Fehler beim Zurücksetzen des Passworts:', error);
-    }
-  }
+  //   if (!form.valid) {
+  //     return;
+  //   }
+  //   try {
+  //     const result = await confirmPasswordReset(this.auth, this.oobCode, form.value.password2);
+  //     this.toastService.showMessage('Passwort erfolgreich geändert');
+  //     setTimeout(() => this.router.navigate(['/']), 2000);
+  //     console.log('Passwort wurde erfolgreich zurückgesetzt.');
+  //   } catch (error) {
+  //     this.toastService.showMessage('Fehler beim zurücksetzen des Passworts');
+  //     console.error('Fehler beim Zurücksetzen des Passworts:', error);
+  //   }
+  // }
+
+}
 
 }

@@ -1,5 +1,29 @@
 <div class="allMessages">
-    <div *ngFor="let message of filterMessages(); let i = index" > 
+    <div *ngFor="let message of filterMessages(); let i = index"> 
+        <!-- Debugging: Zeigt jede Nachricht im JSON-Format -->
+        <p>📩 Nachricht in ngFor: {{ message | json }}</p>
+
+        <p>🔍 Sender ID: {{ message.sender.id }}</p>
+        <p>🛠 meetContitionsOtherUser: {{ meetContitionsOtherUser(message.sender.id) }}</p>
+        <p>🛠 meetContitionsCurrentUser: {{ meetContitionsCurrentUser(message.sender.id) }}</p>
+
+        <!-- Falls der Sender nicht der aktuelle Benutzer ist -->
+        <app-other-user-message *ngIf="meetContitionsOtherUser(message.sender.id)" 
+            [message]="message" 
+            [isThread]="isThread"
+            (click)="GlobalFunctionsService.openReactionDialog()">
+        </app-other-user-message>
+
+        <!-- Falls der Sender der aktuelle Benutzer ist -->
+        <app-current-user-message 
+    *ngIf="meetContitionsCurrentUser(message.sender.id)" 
+    [message]="message" 
+    [index]="i" 
+    [isThread]="isThread">
+</app-current-user-message>
+
+
+        <!-- Falls die Nachricht ein neues Datum hat -->
         <div class="dateBlockContainer">
             <ng-container *ngIf="showDateBar(message.timestamp, i, message.message)"> 
                 <div class="newDate">
@@ -18,14 +42,6 @@
                     <div class="rightBar"></div>
                 </div>
             </ng-container>
-            <div>
-                <app-other-user-message *ngIf="meetContitionsOtherUser(message.userId)" [message]="message" [isThread]="isThread"
-                    (click)="GlobalFunctionsService.openReactionDialog()"></app-other-user-message>
-
-                <app-current-user-message *ngIf="meetContitionsCurrentUser(message.userId)"
-                    [message]="message" [index]="i" [isThread]="isThread"></app-current-user-message>
-
-            </div>
         </div>
     </div>
     <div #scrolldown class="chatEnd"></div>

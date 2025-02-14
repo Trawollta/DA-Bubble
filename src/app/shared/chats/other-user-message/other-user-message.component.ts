@@ -5,19 +5,19 @@ import {
 } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
-import {
-  Firestore,
-  doc,
-  updateDoc,
-  arrayRemove,
-} from '@angular/fire/firestore';
+// import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+// import {
+//   Firestore,
+//   doc,
+//   updateDoc,
+//   arrayRemove,
+// } from '@angular/fire/firestore';
 
 import { User } from 'app/models/user.class';
 import { DatePipe, CommonModule } from '@angular/common';
 import { ReactionsComponent } from '../../reactions/reactions.component';
-import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
-import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+// import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
+// import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 
 interface Emoji {
   icon: string;
@@ -33,12 +33,12 @@ interface Emoji {
   imports: [DatePipe, ReactionsComponent, CommonModule],
 })
 export class OtherUserMessageComponent {
-  firestore: Firestore = inject(Firestore);
+  // firestore: Firestore = inject(Firestore);
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
-  firebaseChatService = inject(FirebaseChatService);
-  firebaseUpdate = inject(FirebaseUserupdateService);
-  firebaseUser = inject(FirebaseUserService);
+  // firebaseChatService = inject(FirebaseChatService);
+  // firebaseUpdate = inject(FirebaseUserupdateService);
+  // firebaseUser = inject(FirebaseUserService);
 
   openReaction: boolean = false;
   @Input() message: any;
@@ -71,20 +71,15 @@ export class OtherUserMessageComponent {
   constructor() { }
 
   async getUser2(id: string) {
-    this.user = new User(await this.firebaseUser.getUserData(id));
+    // this.user = new User(await this.firebaseUser.getUserData(id));
   }
 
   /**
    * this function calls function getUser() for providing userdata for the post
    */
   ngOnInit() {
-    this.getUser2(this.message.userId);
-    this.postingTime = this.message.timestamp;
-    this.fillAnswerVariables();
-    this.cloneOriginalMessage();
-    this.messageInfo = this.globalFunctions.checkMessage(this.message.message);
-    this.isImage = this.messageInfo.hasUrl;
-  }
+    console.log("📩 Nachricht empfangen in app-current-user-message:", this.message);
+}
 
 
   /**
@@ -147,19 +142,19 @@ export class OtherUserMessageComponent {
   }
 
   updateMessage() {
-    this.globalVariables.messageData = this.message;
-    let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
-    this.firebaseChatService.sendMessage(
-      this.globalVariables.openChannel.chatId,
-      chatFamiliy
-    );
-    this.remove(this.globalVariables.openChannel.chatId, chatFamiliy);
+    // this.globalVariables.messageData = this.message;
+    // let chatFamiliy = this.globalVariables.isUserChat ? 'chatusers' : 'chatchannels';
+    // this.firebaseChatService.sendMessage(
+    //   this.globalVariables.openChannel.chatId,
+    //   chatFamiliy
+    // );
+    // this.remove(this.globalVariables.openChannel.chatId, chatFamiliy);
   }
 
   remove(chatId: string, chatFamiliy: string) {
-    return updateDoc(doc(this.firestore, chatFamiliy, chatId), {
-      messages: arrayRemove(this.originalMessage),
-    });
+    // return updateDoc(doc(this.firestore, chatFamiliy, chatId), {
+    //   messages: arrayRemove(this.originalMessage),
+    // });
   }
 
   /**
@@ -170,8 +165,8 @@ export class OtherUserMessageComponent {
     let length = this.message.emoji[index].userId.length;
     let userId = this.message.emoji[index].userId[0];
     if (userId !== '') {
-      let userData = await this.firebaseUpdate.getUserData(userId);
-      this.profile = new User(userData);
+      // let userData = await this.firebaseUpdate.getUserData(userId);
+      // this.profile = new User(userData);
       this.hoverUser = this.profile.name;
       this.count = length - 1;
     }

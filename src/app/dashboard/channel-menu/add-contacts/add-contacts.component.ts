@@ -4,10 +4,10 @@ import { ButtonComponent } from 'app/shared/button/button.component';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
-import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
+// import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+// import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { Subject } from 'rxjs';
-import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+// import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
@@ -26,9 +26,9 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 export class AddContactsComponent implements OnInit {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
-  firebaseChatService = inject(FirebaseChatService);
-  firebaseChannelService = inject(FirebaseChannelService);
-  userService = inject(FirebaseUserService);
+  // firebaseChatService = inject(FirebaseChatService);
+  // firebaseChannelService = inject(FirebaseChannelService);
+  // userService = inject(FirebaseUserService);
 
   addedChannelId: string = '';
   allUsers: any = [];
@@ -49,15 +49,15 @@ export class AddContactsComponent implements OnInit {
   }
 
   setupSearch() {
-    this.searchTerms
-      .pipe(
-        debounceTime(300), // Verzögere die Ausführung um 300 ms
-        distinctUntilChanged(), // Führe nur aus, wenn sich der Wert geändert hat
-        switchMap((term: string) => this.userService.searchUsersByName(term))
-      )
-      .subscribe((users) => {
-        this.filteredUsers = users; // 'filteredUsers' soll die gefilterten Benutzer für die Anzeige halten
-      });
+    // this.searchTerms
+    //   .pipe(
+    //     debounceTime(300), // Verzögere die Ausführung um 300 ms
+    //     distinctUntilChanged(), // Führe nur aus, wenn sich der Wert geändert hat
+    //     switchMap((term: string) => this.userService.searchUsersByName(term))
+    //   )
+    //   .subscribe((users) => {
+    //     this.filteredUsers = users; // 'filteredUsers' soll die gefilterten Benutzer für die Anzeige halten
+    //   });
   }
 
   search(term: string): void {
@@ -112,14 +112,14 @@ export class AddContactsComponent implements OnInit {
   * it calls also addChatIdIntoUser() to add chatId to each user
   */
   async addNewChannel() {
-    this.addedChannelId = await this.addChannelGetId();
-    const addedChatId: string = await this.addChatForChannelGetChatId();
-    await this.updateChannelWithChatId(addedChatId);
-    if (addedChatId) {
-      this.firebaseChatService.activeChatId = addedChatId;
-      this.globalVariables.openChannel.chatId = addedChatId;
-    }
-    this.addNewChannelSupport(addedChatId);
+    // this.addedChannelId = await this.addChannelGetId();
+    // const addedChatId: string = await this.addChatForChannelGetChatId();
+    // await this.updateChannelWithChatId(addedChatId);
+    // if (addedChatId) {
+    //   this.firebaseChatService.activeChatId = addedChatId;
+    //   this.globalVariables.openChannel.chatId = addedChatId;
+    // }
+    // this.addNewChannelSupport(addedChatId);
   }
 
   /**
@@ -129,7 +129,7 @@ export class AddContactsComponent implements OnInit {
    addNewChannelSupport(addedChatId: string) {
     this.addChatIdIntoUser(this.selectedUsers);
     this.globalVariables.openChannel.id = this.addedChannelId;
-    this.firebaseChatService.changeActiveChannel();
+    // this.firebaseChatService.changeActiveChannel();
     this.globalVariables.openChannel.titel = this.globalVariables.channelData.channelName;
     this.pushNewChannelInViewableChannels(this.addedChannelId, addedChatId, this.globalVariables.channelData.channelName);
     let uniqueIds = Array.from(new Set(this.selectedUsers.map(item => item.id)));
@@ -153,56 +153,56 @@ export class AddContactsComponent implements OnInit {
    * this function adds a new channeldoc and returns the id
    * @returns -string - channelId
    */
-  async addChannelGetId(): Promise<string> {
-    let id = '';
-    await this.firebaseChannelService
-      .addData('channels', this.addChannelwithChoosenMembers())
-      .then((response) => {
-        id = response.id;
-      })
-      .catch((error) => {
-        console.error('Fehler beim Hinzufügen des Kanals:', error);
-        id = '';
-      });
-    return id;
-  }
+  // async addChannelGetId(): Promise<string> {
+  //   let id = '';
+  //   await this.firebaseChannelService
+  //     .addData('channels', this.addChannelwithChoosenMembers())
+  //     .then((response) => {
+  //       id = response.id;
+  //     })
+  //     .catch((error) => {
+  //       console.error('Fehler beim Hinzufügen des Kanals:', error);
+  //       id = '';
+  //     });
+  //   return id;
+  // }
 
   /**
    * this function adds the chat for channel and returns chatId
    * @param channelId - string
    * @returns - string - chatId
    */
-  async addChatForChannelGetChatId(): Promise<string> {
-    let id = '';
-    await this.firebaseChatService
-      .addChat(this.addedChannelId, 'chatchannels')
-      .then((response) => {
-        id = response.id;
-      })
-      .catch((error) => {
-        console.error('Fehler beim Hinzufügen des Chats:', error);
-        id = '';
-      });
-    return id;
-  }
+  // async addChatForChannelGetChatId(): Promise<string> {
+  //   // let id = '';
+  //   // await this.firebaseChatService
+  //   //   .addChat(this.addedChannelId, 'chatchannels')
+  //   //   .then((response) => {
+  //   //     id = response.id;
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     console.error('Fehler beim Hinzufügen des Chats:', error);
+  //   //     id = '';
+  //   //   });
+  //   // return id;
+  // }
 
   /**
    * this function updates the channel with chat Id
    * @param chatId - string
    */
   async updateChannelWithChatId(chatId: string) {
-    await this.firebaseChannelService.updateChannel(this.addedChannelId, {
-      chatId: chatId,
-    });
+    // await this.firebaseChannelService.updateChannel(this.addedChannelId, {
+    //   chatId: chatId,
+    // });
   }
   /**
    * this function adds the chatId to each user on firebase
    * @param setectedUsers - array
    */
   addChatIdIntoUser(selectedUsers: Array<any>) {
-    for (let i = 0; i < selectedUsers.length; i++) {
-      this.userService.addChatIdToUser(selectedUsers[i].id, this.firebaseChatService.activeChatId);
-    }
+    // for (let i = 0; i < selectedUsers.length; i++) {
+    //   this.userService.addChatIdToUser(selectedUsers[i].id, this.firebaseChatService.activeChatId);
+    // }
   }
 
   /**

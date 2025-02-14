@@ -1,27 +1,27 @@
 <main>
 
     <!-- container for header it is a channel chat -->
-    <section class="msg-header" *ngIf="!globalVariables.isUserChat">
-        <app-show-contacts class="showContactsHeader" *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers" appClickedOutside (clickedOutside)="globalFunctions.closeMembers()"></app-show-contacts>
-        <div class="topic-headline">
-            <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
-                <div class="header-hover"># {{ globalVariables.openChannel.titel }}</div>
-                <img src="./assets/img/icons/keyboard_arrow_down.svg" alt="" />
-            </div>
+    <!-- Header für Channels -->
+<section class="msg-header" *ngIf="!globalVariables.isUserChat">
+    <app-show-contacts class="showContactsHeader" *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers" appClickedOutside (clickedOutside)="globalFunctions.closeMembers()"></app-show-contacts>
+    <div class="topic-headline">
+        <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
+            <div class="header-hover"># {{ selectedChannel?.name || 'Channel auswählen' }}</div>
+            <img src="./assets/img/icons/keyboard_arrow_down.svg" alt="" />
         </div>
-        <div class="active-contacts">
-            <div class="contact-row" *ngIf="globalVariables.desktop700" (click)="showMembers(true)">
-
-                <img src="assets/img/avatars/Elias_Neumann.svg" alt="" />
-                <img class="secondHeadIcon" src="assets/img/avatars/Elias_Neumann.svg" alt="" />
-                <span class="memberCount">{{ this.globalVariables.openChannelUser.length }}</span>
-
-            </div>
-            <div class="add-contact" (click)="openContactsPopup()">
-                <img src="./assets/img/icons/person_add_w.svg" alt="" />
-            </div>
+    </div>
+    <div class="active-contacts">
+        <div class="contact-row" *ngIf="globalVariables.desktop700" (click)="showMembers(true)">
+            <img src="assets/img/avatars/Elias_Neumann.svg" alt="" />
+            <img class="secondHeadIcon" src="assets/img/avatars/Elias_Neumann.svg" alt="" />
+            <span class="memberCount">{{ selectedChannel?.participants?.length || 0 }}</span>
         </div>
-    </section>
+        <div class="add-contact" (click)="openContactsPopup()">
+            <img src="./assets/img/icons/person_add_w.svg" alt="" />
+        </div>
+    </div>
+</section>
+
 
     <!-- container for header it is a user chat -->
     <section class="msg-header" *ngIf="globalVariables.isUserChat">
@@ -37,9 +37,9 @@
 
     <!-- container for all chat meassages -->
     <div class="contentContainer">
-        <div class="messages">
+        <!-- <div class="messages">
             <app-all-messages [isChat]="true"></app-all-messages>
-        </div>
+        </div> -->
     </div>
 
     <!-- container for all inputfield and controll elements -->
@@ -47,7 +47,11 @@
 
 
     <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel>
-    <app-edit-channel *ngIf="globalVariables.editChannelOverlayOpen"></app-edit-channel>
+    <!-- <app-edit-channel *ngIf="globalVariables.editChannelOverlayOpen"></app-edit-channel> -->
+
+    <div class="messages">
+        <app-all-messages [messages]="messages"></app-all-messages>
+    </div>
 
 
 </main>

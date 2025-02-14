@@ -2,8 +2,8 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputfieldComponent } from '../../inputfield/inputfield.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
-import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
+// import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+// import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 import { ChatChannel } from 'app/models/chatChannel.class';
 import { ClickedOutsideDirective } from 'app/directives/clicked-outside.directive';
 
@@ -18,8 +18,8 @@ export class SearchbarComponent {
   @Input() imgName: string = 'search';
   @Input() classes: string | string[] = [];
   globalVariables = inject(GlobalVariablesService);
-  firebaseUserService = inject(FirebaseUserService);
-  firebaseChannelService = inject(FirebaseChannelService);
+  // firebaseUserService = inject(FirebaseUserService);
+  // firebaseChannelService = inject(FirebaseChannelService);
   result: any;
   allDataWithCurrentId: any;
   allChannels: any = [];
@@ -51,35 +51,35 @@ export class SearchbarComponent {
   }
 
   openChannelWhereMsgIs(data: any) {
-    this.firebaseChannelService
-      .loadChannelData(data.docId)
-      .then((result) => {
-        if (result !== null) {
-          this.globalVariables.openChannel.chatId = result['chatId'];
-          this.globalVariables.openChannel.creator = result['creator'];
-          this.globalVariables.openChannel.desc = result['description'];
-          this.globalVariables.openChannel.titel = result['channelName'];
-          this.overwriteChannel();
-        } else {
-          console.error('Das Ergebnis der Kanaldaten ist null.');
-        }
-      })
-      .catch((error) => {
-        console.error('Fehler beim Laden der Kanaldaten:', error);
-      });
+    // this.firebaseChannelService
+    //   .loadChannelData(data.docId)
+    //   .then((result) => {
+    //     if (result !== null) {
+    //       this.globalVariables.openChannel.chatId = result['chatId'];
+    //       this.globalVariables.openChannel.creator = result['creator'];
+    //       this.globalVariables.openChannel.desc = result['description'];
+    //       this.globalVariables.openChannel.titel = result['channelName'];
+    //       this.overwriteChannel();
+    //     } else {
+    //       console.error('Das Ergebnis der Kanaldaten ist null.');
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error('Fehler beim Laden der Kanaldaten:', error);
+    //   });
 
-    this.bestMatches = [];
+    // this.bestMatches = [];
   }
 
   overwriteChannel() {
-    this.firebaseChannelService
-      .getChannelMessages(this.globalVariables.openChannel.chatId)
-      .then((ergebnis) => {
-        this.globalVariables.chatChannel = new ChatChannel(ergebnis);
-      })
-      .catch((error) => {
-        console.error('Fehler beim Laden der Kanalnachrichten:', error);
-      });
+    // this.firebaseChannelService
+    //   .getChannelMessages(this.globalVariables.openChannel.chatId)
+    //   .then((ergebnis) => {
+    //     this.globalVariables.chatChannel = new ChatChannel(ergebnis);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Fehler beim Laden der Kanalnachrichten:', error);
+    //   });
   }
 
 
@@ -110,63 +110,63 @@ export class SearchbarComponent {
    * here for channels to get the messages inside channels
    */
   async getChatMessages() {
-    for (let i = 0; i < this.relatedChats.length; i++) {
-      let messages = await this.firebaseChannelService.getChannelMessages(
-        this.relatedChats[i]
-      );
-      this.allMessages.push(messages);
-    }
-    this.getCleanNames();
-    this.getCleanChannels();
-    this.allMessagesLoaded = true;
+    // for (let i = 0; i < this.relatedChats.length; i++) {
+    //   let messages = await this.firebaseChannelService.getChannelMessages(
+    //     this.relatedChats[i]
+    //   );
+    //   this.allMessages.push(messages);
+    // }
+    // this.getCleanNames();
+    // this.getCleanChannels();
+    // this.allMessagesLoaded = true;
   }
 
   /**
    * functions convert all data to docIds
    */
   async getChats() {
-    if (this.allMessages == 0) {
-      for (let i = 0; i < this.relatedChats.length; i++) {
-        let channels =
-          await this.firebaseChannelService.loadChannelDataWithChatID(
-            this.relatedChats[i]
-          );
-        this.allChannels.push(channels);
-      }
-    }
-    this.getEachChannelWithDocID();
+    // if (this.allMessages == 0) {
+    //   for (let i = 0; i < this.relatedChats.length; i++) {
+    //     let channels =
+    //       await this.firebaseChannelService.loadChannelDataWithChatID(
+    //         this.relatedChats[i]
+    //       );
+    //     this.allChannels.push(channels);
+    //   }
+    // }
+    // this.getEachChannelWithDocID();
   }
 
   /**
    * functions saves all connected chats in this.info
    */
   getEachChannelWithDocID() {
-    for (let i = 0; i < this.allChannels.length; i++) {
-      this.firebaseChannelService
-        .loadChannelData(this.allChannels[i][0])
-        .then((data) => {
-          this.info.push(data);
-        });
-    }
+    // for (let i = 0; i < this.allChannels.length; i++) {
+    //   this.firebaseChannelService
+    //     .loadChannelData(this.allChannels[i][0])
+    //     .then((data) => {
+    //       this.info.push(data);
+    //     });
+    // }
   }
 
   /**
    * functions connect the channel with the channel messages
    */
   async connectChannelWithChannelMsg() {
-    if (
-      this.allChannels &&
-      this.allChannels.length > 0 &&
-      this.allChannels.chatId
-    ) {
-      this.allChannels.chatId.forEach((id: any) => {
-        this.firebaseChannelService.getConnectionOfChannel(id).then((data) => {
-          this.allRelatedChatMsgs.push(data);
-        });
-      });
-    } else {
-      console.log('Keine Kanäle gefunden oder ungültige Daten');
-    }
+    // if (
+    //   this.allChannels &&
+    //   this.allChannels.length > 0 &&
+    //   this.allChannels.chatId
+    // ) {
+    //   this.allChannels.chatId.forEach((id: any) => {
+    //     this.firebaseChannelService.getConnectionOfChannel(id).then((data) => {
+    //       this.allRelatedChatMsgs.push(data);
+    //     });
+    //   });
+    // } else {
+    //   console.log('Keine Kanäle gefunden oder ungültige Daten');
+    // }
   }
 
   /**
@@ -208,66 +208,66 @@ export class SearchbarComponent {
    * convert live bestmatches.userId into best matches.name, firebase connection to revert the original name depended on id
    */
   async getCleanNames() {
-    if (Array.isArray(this.allMessages) && this.allMessages.length > 0) {
-      for (let i = 0; i < this.allMessages.length; i++) {
-        if (
-          this.allMessages[i] &&
-          Array.isArray(this.allMessages[i].messages) &&
-          this.allMessages[i].messages.length > 0
-        ) {
-          for (let j = 0; j < this.allMessages[i].messages.length; j++) {
-            if (
-              this.allMessages[i].messages[j] &&
-              this.allMessages[i].messages[j].userId
-            ) {
-              await this.firebaseUserService
-                .getUserData(this.allMessages[i].messages[j].userId)
-                .then((data: any) => {
-                  if (data && data.name) {
-                    this.allMessages[i].messages[j].name = data.name;
-                  }
-                })
-                .catch((error: any) => {
-                  console.log(error);
-                });
-            }
-          }
-        }
-      }
-    }
+    // if (Array.isArray(this.allMessages) && this.allMessages.length > 0) {
+    //   for (let i = 0; i < this.allMessages.length; i++) {
+    //     if (
+    //       this.allMessages[i] &&
+    //       Array.isArray(this.allMessages[i].messages) &&
+    //       this.allMessages[i].messages.length > 0
+    //     ) {
+    //       for (let j = 0; j < this.allMessages[i].messages.length; j++) {
+    //         if (
+    //           this.allMessages[i].messages[j] &&
+    //           this.allMessages[i].messages[j].userId
+    //         ) {
+    //           await this.firebaseUserService
+    //             .getUserData(this.allMessages[i].messages[j].userId)
+    //             .then((data: any) => {
+    //               if (data && data.name) {
+    //                 this.allMessages[i].messages[j].name = data.name;
+    //               }
+    //             })
+    //             .catch((error: any) => {
+    //               console.log(error);
+    //             });
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   /**
    * convert channels in real channel names
    */
   async getCleanChannels() {
-    if (Array.isArray(this.allMessages) && this.allMessages.length > 0) {
-      for (let i = 0; i < this.allMessages.length; i++) {
-        if (
-          this.allMessages[i] &&
-          Array.isArray(this.allMessages[i].messages) &&
-          this.allMessages[i].messages.length > 0
-        ) {
-          for (let j = 0; j < this.allMessages[i].messages.length; j++) {
-            if (
-              this.allMessages[i].messages[j] &&
-              this.allMessages[i].relatedChannelId // Assuming relatedChannelId exists
-            ) {
-              await this.firebaseChannelService
-                .getChannelData(this.allMessages[i].relatedChannelId)
-                .then((data: any) => {
-                  if (data && data.channelName) {
-                    this.allMessages[i].messages[j].channelName =
-                      data.channelName;
-                  }
-                })
-                .catch((error: any) => {
-                  console.error(error);
-                });
-            }
-          }
-        }
-      }
+    // if (Array.isArray(this.allMessages) && this.allMessages.length > 0) {
+    //   for (let i = 0; i < this.allMessages.length; i++) {
+    //     if (
+    //       this.allMessages[i] &&
+    //       Array.isArray(this.allMessages[i].messages) &&
+    //       this.allMessages[i].messages.length > 0
+    //     ) {
+    //       for (let j = 0; j < this.allMessages[i].messages.length; j++) {
+    //         if (
+    //           this.allMessages[i].messages[j] &&
+    //           this.allMessages[i].relatedChannelId // Assuming relatedChannelId exists
+    //         ) {
+    //           await this.firebaseChannelService
+    //             .getChannelData(this.allMessages[i].relatedChannelId)
+    //             .then((data: any) => {
+    //               if (data && data.channelName) {
+    //                 this.allMessages[i].messages[j].channelName =
+    //                   data.channelName;
+    //               }
+    //             })
+    //             .catch((error: any) => {
+    //               console.error(error);
+    //             });
+    //         }
+    //       }
+    //     }
+    //   }
     }
   }
-}
+

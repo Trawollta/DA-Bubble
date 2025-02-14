@@ -5,8 +5,8 @@ import { ThreadComponent } from './thread/thread.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { CommonModule } from '@angular/common';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
-import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
-import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+// import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
+// import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,20 +24,19 @@ import { FirebaseUserService } from 'app/services/firebase-services/firebase-use
 export class DashboardComponent {
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
-  firebaseChannelService = inject(FirebaseChannelService);
-  firebaseUserService = inject(FirebaseUserService);
+  // firebaseChannelService = inject(FirebaseChannelService);
+  // firebaseUserService = inject(FirebaseUserService);
 
   constructor() {
     this.globalVariables.login = false;
     this.globalVariables.imprintActive = false;
   }
   ngOnInit() {
-    this.globalVariables.isChatVisable = window.innerWidth > 800;
-    this.globalVariables.bufferThreadOpen = this.globalVariables.showThread;
-    this.firebaseChannelService.getChannelsWhereUserIsMember();
-    this.firebaseUserService.getAllUser();
-    this.globalFunctions.getStartChannel();
+    if (!this.globalVariables.openChannel.titel) {
+      this.globalVariables.openChannel.titel = 'General'; // Setze einen Standardtitel
+    }
   }
+  
 
   toggleChannelMenu() {
     this.globalVariables.showChannelMenu = !this.globalVariables.showChannelMenu;

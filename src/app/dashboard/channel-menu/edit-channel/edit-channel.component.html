@@ -1,4 +1,4 @@
-<div class="Edit-content" *ngIf="globalVariables.editChannelOverlayOpen">
+<!-- <div class="Edit-content" *ngIf="globalVariables.editChannelOverlayOpen">
     <div class="overlay">
         <div class="headline">
             <div>
@@ -11,7 +11,7 @@
         </div>
         <div class="edit-chan-content">
             <!-- Description Input -->
-            <div class="editName-area" [ngClass]="{ 'no-border': editChannelDM }">
+            <!-- <div class="editName-area" [ngClass]="{ 'no-border': editChannelDM }">
                 <div class="first-row">
                     <label for="channelName" class="description">Channel-Name</label>
                     <div class="edit-btn" *ngIf="creator">
@@ -28,7 +28,7 @@
             </div>
 
             <!-- Bereich für die Beschreibung -->
-            <div class="editDescription-area" [ngClass]="{ 'no-border': editChannelDES }">
+            <!-- <div class="editDescription-area" [ngClass]="{ 'no-border': editChannelDES }">
                 <div class="second-row">
                     <label class="description" for="description">Beschreibung</label>
                     <div class="edit-btn" *ngIf="creator">
@@ -41,9 +41,9 @@
                     <span *ngIf="!editChannelDES" class="edited-field">{{
                         globalVariables.channelData.description
                         }}</span>
-                </div>
+                </div> -->
 
-                <app-inputfield *ngIf="editChannelDES" [(ngModel)]="editedDescription"
+                <!-- <app-inputfield *ngIf="editChannelDES" [(ngModel)]="editedDescription"
                     [placeholder]="globalVariables.channelData.description" [classes]="['standard']"
                     type="text"></app-inputfield>
 
@@ -52,9 +52,9 @@
                     <span class="from">Erstellt von:</span>
                     <span class="publisher">{{ creatorName }}</span>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="button-area">
+            <!-- <div class="button-area">
                 <div class="button-area-left">
                     <app-button *ngIf="globalVariables.activeID === this.channel.creator" [classes]="['primary']"
                         caption="Channel Löschen" (click)="deleteChannel()"
@@ -71,4 +71,4 @@
     <div data-aos="fade-left" *ngIf="toastService.showToast" class="toast">
         <span>{{ toastService.message }}</span>
     </div>
-</div>
+</div> --> 

@@ -4,7 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ToastService } from 'app/services/app-services/toast.service';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import { AuthService } from 'app/services/firebase-services/auth.service';
+// import { AuthService } from 'app/services/firebase-services/auth.service';
 import { ButtonComponent } from 'app/shared/button/button.component';
 import { DialogComponent } from 'app/shared/dialog/dialog.component';
 import { GoBackButtonComponent } from 'app/shared/go-back-button/go-back-button.component';
@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 })
 
 export class PasswordResetComponent {
-  private authService = inject(AuthService);
+  // private authService = inject(AuthService);
   toastService = inject(ToastService);
   private router = inject(Router);
   resetMail: string = '';
@@ -31,15 +31,17 @@ export class PasswordResetComponent {
   }
 
   async onSubmit(form: NgForm) {
-    if (!form.valid) {
-      return;
-    }
-    try {
-      await this.authService.sendPasswordResetEmail(this.resetMail);
-      this.toastService.showMessage('E-Mail gesendet');
-      setTimeout(() => this.router.navigate(['/']), 2000);
-    } catch (error) {
-      this.toastService.showMessage('Fehler beim versenden der E-Mail');
-    }
-  }
+  //   if (!form.valid) {
+  //     return;
+  //   }
+  //   try {
+  //     await this.authService.sendPasswordResetEmail(this.resetMail);
+  //     this.toastService.showMessage('E-Mail gesendet');
+  //     setTimeout(() => this.router.navigate(['/']), 2000);
+  //   } catch (error) {
+  //     this.toastService.showMessage('Fehler beim versenden der E-Mail');
+  //   }
+  // }
+}
+
 }

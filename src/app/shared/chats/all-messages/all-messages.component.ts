@@ -1,22 +1,25 @@
 import {
   Component,
   inject,
-  //ChangeDetectorRef,
- // AfterContentChecked,
+  ChangeDetectorRef,
+ AfterContentChecked,
   Input,
   ElementRef,
   ViewChild,
   AfterViewChecked,
+  OnChanges,
+  OnInit
 } from '@angular/core';
 import { OtherUserMessageComponent } from 'app/shared/chats/other-user-message/other-user-message.component';
 import { CurrentUserMessageComponent } from 'app/shared/chats/current-user-message/current-user-message.component';
 import { ChatChannel } from 'app/models/chatChannel.class';
 import { ChatUsers } from 'app/models/chatUsers.class';
-import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+// import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ReactionsComponent } from '../../reactions/reactions.component';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
+import { AuthService } from 'app/services/auth.service';
 
 @Component({
   selector: 'app-all-messages',
@@ -28,12 +31,12 @@ import { GlobalFunctionsService } from 'app/services/app-services/global-functio
     CommonModule,
     OtherUserMessageComponent,
     CurrentUserMessageComponent,
-    ReactionsComponent,
+    // ReactionsComponent,
     DatePipe,
   ],
 })
-export class AllMessagesComponent implements AfterViewChecked {
-  firebaseChatService = inject(FirebaseChatService);
+export class AllMessagesComponent implements AfterViewChecked, OnInit {
+  // firebaseChatService = inject(FirebaseChatService);
   globalVariablesService = inject(GlobalVariablesService);
   GlobalFunctionsService = inject(GlobalFunctionsService);
 
@@ -49,9 +52,30 @@ export class AllMessagesComponent implements AfterViewChecked {
 
   @Input() isChat: boolean = false;
   @Input() isThread: boolean = false;
+  @Input() messages: any[] = [];
   @ViewChild('scrolldown') scrollDownElement!: ElementRef;
 
-  constructor() { } //private changeDetector: ChangeDetectorRef
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    console.log("🚀 AllMessagesComponent gestartet");
+    
+    // Hole Benutzer-ID aus LocalStorage, falls nicht gesetzt
+    if (!this.globalVariablesService.activeID || this.globalVariablesService.activeID === 'guest') {
+        const storedUserId = localStorage.getItem('userId');
+        if (storedUserId) {
+            this.globalVariablesService.activeID = storedUserId;
+            console.log("✅ Benutzer-ID aus LocalStorage geladen:", this.globalVariablesService.activeID);
+        } else {
+            console.log("⚠️ Keine Benutzer-ID im LocalStorage gefunden!");
+        }
+    }
+}
+
+
+
+
+
 
   /**
    * this function checks if the chat is scrolled down
@@ -77,14 +101,6 @@ export class AllMessagesComponent implements AfterViewChecked {
 /*   ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();
   }
- */
-/*   ngOnInit() {
-    if (this.globalVariablesService.chatChannel.messages.length > 0) {
-      this.lastDisplayedDate = new Date(
-        this.globalVariablesService.chatChannel.messages[0].timestamp
-      );
-    }
-  } */
 
 
   /**
@@ -92,16 +108,22 @@ export class AllMessagesComponent implements AfterViewChecked {
    * @returns - chat
    */
   filterMessages() {
-    let messages = this.globalVariablesService.chatChannel.messages;
-    const channelChat = messages.filter(message => message.answerto === '');
-    const threadChat = messages.filter(message => message.answerto === this.globalVariablesService.answerKey);
-    const userchat = messages;
-    if (this.globalVariablesService.isUserChat) {
-      return userchat;
-    } else {
-      return this.isThread ? threadChat : channelChat;
+    console.log("🔍 `filterMessages()` wurde aufgerufen!");
+    console.log("📩 Nachrichten vor Filterung:", this.messages);
+
+    let messages = this.messages.filter(message => message.content); // Falls `null` oder `undefined` entfernt werden soll
+
+    console.log("📊 Nachrichten nach Filterung:", messages);
+    
+    if (messages.length === 0) {
+        console.warn("⚠️ KEINE Nachrichten gefunden! Überprüfe API-Daten.");
     }
-  }
+
+    return messages; 
+}
+
+
+
 
   /**
    * this function returns the weekday in German of the day of the message timestamp
@@ -143,37 +165,21 @@ export class AllMessagesComponent implements AfterViewChecked {
    * @param message - object
    * @returns - boolean
    */
-  meetContitionsCurrentUser(userId: string) {
+  meetContitionsCurrentUser(userId: number) {
+    console.log("👤 Checking meetContitionsCurrentUser:");
+    console.log("🔹 userId:", userId);
+    console.log("🔹 activeID:", this.globalVariablesService.activeID);
 
-    let conditionTest: boolean = false;
-    if (userId) {
-      if (this.isChat)
-        conditionTest = userId === this.globalVariablesService.activeID;
-      else if (this.isThread) {
-        conditionTest = userId === this.globalVariablesService.activeID;
-      }
-      else conditionTest = false;
-    }
-    return conditionTest;
-  }
+    return userId === Number(this.globalVariablesService.activeID);
+}
 
-  /**
-   * this function is for setting the conditions for showing all messages from other users which are not an answer
-   * @param message - object
-   * @returns - boolean
-   */
-  meetContitionsOtherUser(userId: string) {
-    let conditionTest: boolean = false;
-    if (userId) {
-      if (this.isChat) {
-        conditionTest = userId !== this.globalVariablesService.activeID;
-      }
-      else if (this.isThread) {
-        conditionTest = userId !== this.globalVariablesService.activeID;
-      }
-      else conditionTest = false;
-    }
-    return conditionTest;
-  }
+meetContitionsOtherUser(userId: number) {
+    console.log("👤 Checking meetContitionsOtherUser:");
+    console.log("🔹 userId:", userId);
+    console.log("🔹 activeID:", this.globalVariablesService.activeID);
+
+    return userId !== Number(this.globalVariablesService.activeID);
+}
+
 
 }

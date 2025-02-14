@@ -1,25 +1,17 @@
-
-export class channel {
-
-    channelName: string;
+export class Channel {
+    id: string;
+    name: string;  
     description: string;
-    creator: string;
-    id:string;
     chatId: string;
-    channelMember: {
-        userId: string
-    }[];
+    creator: { id: string; username: string }; 
+    participants: { id: string; username: string }[];
 
     constructor(obj?: any) {
-        this.id = obj ? obj.id : '';
-        this.channelName = obj ? obj.channelName : '';
-        this.description = obj ? obj.description : '';
-        this.chatId = obj ? obj.chatId : '';
-        this.creator = obj ? obj.creator : ''; 
-        this.channelMember = obj && obj.channelMember ? obj.channelMember : [{
-            userId: ''
-        }]
-      
-
+        this.id = obj?.id || '';
+        this.name = obj?.name || '';  
+        this.description = obj?.description || '';
+        this.chatId = obj?.chatId || '';
+        this.creator = obj?.creator || { id: '', username: '' };
+        this.participants = obj?.participants || [];
     }
 }

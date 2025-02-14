@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from 'app/shared/button/button.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
-import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
-import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
+// import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+// import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 
 
 @Component({
@@ -25,8 +25,8 @@ export class AddToChannelComponent {
 
   globalFunctions = inject(GlobalFunctionsService);
   globalVariables = inject(GlobalVariablesService);
-  firebaseChannelService = inject(FirebaseChannelService);
-  firebaseUserService = inject(FirebaseUserService);
+  // firebaseChannelService = inject(FirebaseChannelService);
+  // firebaseUserService = inject(FirebaseUserService);
 
   selectedUserName: string = ''; 
   users: { name: string; id: string; img: string, isActive: boolean }[] = [];
@@ -85,17 +85,17 @@ export class AddToChannelComponent {
    * this function adds the selected user to the channel and adds the chatid to the selected user 
    */
   async addUsersToExistingChannel() {
-    let member: Array<string> = [];
-    this.selectedUsers.forEach((user) => {
-      this.firebaseChannelService.addUserToChannel(this.globalVariables.openChannel.id, user.id);
-      this.firebaseUserService.addChatIdToUser(user.id, this.globalVariables.openChannel.chatId);
-      member.push(user.id);
-    });
-    this.globalVariables.openChannelUser.forEach((user) => {
-      member.push(user.id);
-    });
-    this.globalFunctions.getChatUserData(member);   
-    this.globalFunctions.closeAddContactsOverlay();
+    // let member: Array<string> = [];
+    // this.selectedUsers.forEach((user) => {
+    //   this.firebaseChannelService.addUserToChannel(this.globalVariables.openChannel.id, user.id);
+    //   this.firebaseUserService.addChatIdToUser(user.id, this.globalVariables.openChannel.chatId);
+    //   member.push(user.id);
+    // });
+    // this.globalVariables.openChannelUser.forEach((user) => {
+    //   member.push(user.id);
+    // });
+    // this.globalFunctions.getChatUserData(member);   
+    // this.globalFunctions.closeAddContactsOverlay();
   }
 
 }

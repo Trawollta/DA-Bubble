@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 //import { Firestore, doc, collection, onSnapshot} from '@angular/fire/firestore';
 //import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
+// import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { AllMessagesComponent } from 'app/shared/chats/all-messages/all-messages.component';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
 //import { User } from 'app/models/user.class';
@@ -38,7 +38,7 @@ export class ThreadComponent {
   
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
-  firebaseChatService = inject(FirebaseChatService);
+  // firebaseChatService = inject(FirebaseChatService);
 
   startMessage: Message = this.globalVariables.messageThreadStart;
   isImage: boolean = false;

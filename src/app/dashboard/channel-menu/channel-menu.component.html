@@ -11,7 +11,7 @@
         <div class="all-channel">
             <div class="channel-dialog">
                 <div class="channel-header">
-                    <div (click)="openChannelMenu()" class="channel-arrow-dropdown">
+                    <div class="channel-arrow-dropdown">
                         <img id="channelMsgArrow" *ngIf="!isChannelMenuOpen" src="./assets/img/icons/arrow_drop_down_default.svg" alt="" />
                         <img *ngIf="isChannelMenuOpen" src="./assets/img/icons/arrow_drop_down.svg" alt="" />
                     </div>
@@ -20,7 +20,7 @@
                         <p>Channels</p>
                     </div>
                 </div>
-                <div class="add-channel" (click)="openChannelOverlay()">
+                <div class="add-channel">
                     <img src="./assets/img/icons/add.svg" alt="" />
                 </div>
             </div>
@@ -28,18 +28,28 @@
    
                 <ng-container >
                     <div class="channel-wrapper" 
-                    *ngFor="let channel of this.globalVariables.viewableChannelplusId" 
-                    (click)="openChannel(channel.channelId)"
-                    [class.active-channel]="channel.channelId === selectedChannel?.id">
+                    *ngFor="let channel of globalVariables.viewableChannelplusId" 
+                    [class.active-channel]="channel.channelId === selectedChannel?.id"
+                    (click)="openChannel({
+                        id: channel.channelId,
+                        name: channel.channelName || '',
+                        description: '',
+                        chatId: channel.chatId || '',
+                        creator: { id: '', username: '' },
+                        participants: []
+                    })">
                     <p><span>#</span>{{ channel.channelName }}</p>
                 </div>
+                
+               
+                  
                 </ng-container>
                 
             </div>
             <div></div>
             <div></div>
         </div>
-        <div class="channel-add" (click)="openChannelOverlay()">
+        <div class="channel-add">
             <a class="menu-adder">
                 <img src="./assets/img/icons/add_circle.svg" alt="" />
                 <p>Channel hinzufügen</p>
@@ -47,7 +57,7 @@
         </div>
         <div class="direct-messages">
             <div class="messages-wrapper">
-                <div class="channel-arrow-dropdown" (click)="openDirectMessageMenu()">
+                <div class="channel-arrow-dropdown">
                     <img *ngIf="!isUserlMenuOpen" id="msgActiveArrow" src="./assets/img/icons/arrow_drop_down_default.svg" alt="" />
                     <img *ngIf="isUserlMenuOpen" src="./assets/img/icons/arrow_drop_down.svg" alt="" />
                 </div>
@@ -57,7 +67,7 @@
                 </div>
             </div>
             <div class="user-wrapper" id="directMessage" *ngIf="isUserlMenuOpen">
-                <div class="user-detail" *ngFor="let user of globalVariables.allUsers" (click)="this.openDirectMessageUser(user)">
+                <div class="user-detail" *ngFor="let user of globalVariables.allUsers">
                     <div class="userImgWithStatus">
                         <img class="userImg" [src]="user.img" alt="userImage" />
                         <img *ngIf="user.isActive" class="status" src="./assets/img/icons/online.svg" alt="profile online">

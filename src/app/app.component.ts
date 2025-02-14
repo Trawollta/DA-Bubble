@@ -9,8 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { GlobalFunctionsService } from './services/app-services/global-functions.service';
 import { AddNewChannelComponent } from './dashboard/channel-menu/add-new-channel/add-new-channel.component';
 import { AddContactsComponent } from './dashboard/channel-menu/add-contacts/add-contacts.component';
-import { Auth } from '@angular/fire/auth';
-import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+// import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 import { FooterComponent } from './shared/footer/footer.component';
 //import { PrivateChatComponent } from './dashboard/private-chat/private-chat.component';
 
@@ -34,20 +33,19 @@ import { FooterComponent } from './shared/footer/footer.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  auth = inject(Auth);
-  userService = inject(FirebaseUserService);
+  // userService = inject(FirebaseUserService);
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
 
   title = 'da-bubble';
 
   ngOnInit() {
-    this.auth.onAuthStateChanged(user => {
-      if (user && this.globalVariables.logout === false) {
-        this.userService.updateCurrentUser(user.uid);
-      } else {
-      }
-    });
+    // this.auth.onAuthStateChanged(user => {
+    //   if (user && this.globalVariables.logout === false) {
+    //     this.userService.updateCurrentUser(user.uid);
+    //   } else {
+    //   }
+    // });
   }
 
 

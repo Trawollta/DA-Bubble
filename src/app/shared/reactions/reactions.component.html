@@ -9,7 +9,7 @@
 
     <!-- Container edit open -->
     <div class="tooltip" (click)="this.editOpen()"
-      *ngIf="!editMessage && globaleVariables.activeID == this.message.userId" appClickedOutside
+      *ngIf="!editMessage && activeID == this.message.userId" appClickedOutside
       (clickedOutside)="closeEdit()">
       <div class="icon blackIcon">
         <img src="./assets/img/icons/comment.svg" alt="" />
@@ -19,7 +19,7 @@
   </div>
 
   <!-- Container für edit -->
-  <div id="testerino" *ngIf="editMessage && globaleVariables.activeID == this.message.userId"
+  <div id="testerino" *ngIf="editMessage && activeID == this.message.userId"
     class="editContainer">
     <div class="tooltip" (click)="editSave()">
       <div class="icon">
@@ -33,8 +33,8 @@
       </div>
       <span class="tooltiptext secondTT">Bearbeitung abbrechen</span>
     </div>
-    <div class="tooltip" (click)="remove(globaleVariables.openChannel.chatId, chatFamiliy)"
-      *ngIf="globaleVariables.activeID == this.message.userId">
+    <div class="tooltip" (click)="remove(openChannel.chatId, chatFamiliy)"
+      *ngIf="activeID == this.message.userId">
       <div class="icon blackIcon">
         <img src="assets/img/icons/trash.svg" alt="" />
       </div>

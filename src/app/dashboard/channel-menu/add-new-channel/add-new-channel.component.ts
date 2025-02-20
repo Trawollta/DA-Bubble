@@ -1,6 +1,6 @@
 //import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, EventEmitter, Output } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
@@ -18,36 +18,34 @@ import Aos from 'aos';
     CommonModule,
     InputfieldComponent,
     ButtonComponent,
-    FormsModule,
-  ],
+    FormsModule,],
   templateUrl: './add-new-channel.component.html',
   styleUrl: './add-new-channel.component.scss',
 })
 export class AddNewChannelComponent {
   toastService = inject(ToastService);
-  globalVariables = inject(GlobalVariablesService);
-  globalFunctions = inject(GlobalFunctionsService);
-  // firebaseChat = inject(FirebaseChannelService);
 
-  [x: string]: any;
+  @Output() closeOverlay = new EventEmitter<void>();
+  @Output() nextOverlay = new EventEmitter<{ name: string, description: string }>();
+
+  @Output() channelCreated = new EventEmitter<{ newChannelName: string, description: string }>();
+
+
   showError: boolean = false;
-  channelName: string | null = null;
-  description: string | null = null;
+  channelName: string = '';
+  description: string = '';
 
-  async onSubmit() {
-    // const result = await this.checkChannelName();
-    // if (result) {
-    //   this.showError = true;
-    //   this.toastService.showMessage('Dieser Channelname exestiert bereits, bitte nutzen Sie einen anderen Namen.');
-    //   return;
-    // }
-    // if (this.channelName && this.description) {
-    //   this.globalVariables.channelData.channelName = this.channelName;
-    //   this.globalVariables.channelData.description = this.description;
-    //   this.globalVariables.showAddChannel = false;
-    //   this.globalVariables.adduser = true;
-    //   document.body.style.overflow = 'hidden';
-    // }
+  isValid(): boolean {
+    return this.channelName.trim().length > 0 && this.description.trim().length > 0;
+  }
+
+  onSubmit() {
+    if (this.isValid()) {
+      // Weiterleitung zur Benutzer-Auswahl mit den Channel-Daten
+      this.nextOverlay.emit({ name: this.channelName, description: this.description });
+    } else {
+      alert("Bitte fülle alle Felder aus.");
+    }
   }
 
   ngAfterViewInit() {
@@ -55,47 +53,8 @@ export class AddNewChannelComponent {
     Aos.init();
   }
 
-//   async checkChannelName(): Promise<boolean> {
-//     let channelExist = await this.getCurrentUserChannel();
-//     return channelExist;
-//   }
-
-//   async getCurrentUserChannel(): Promise<boolean> {
-//     try {
-//       let docIdChats: string[] = [];
-//       for (
-//         let i = 0;
-//         i < this.globalVariables.currentUser.relatedChats.length;
-//         i++
-//       ) {
-//         const data = await this.firebaseChat.getDocId(
-//           this.globalVariables.currentUser.relatedChats[i]
-//         );
-//         docIdChats.push(data[0]);
-//       }
-//       for (let i = 0; i < docIdChats.length; i++) {
-//         const data = await this.firebaseChat.getChannelData(docIdChats[i]);
-//         if (
-//           data?.['channelName']?.toLowerCase() ===
-//           this.channelName?.toLowerCase()
-//         ) {
-//           return true;
-//         }
-//       }
-//       return false;
-//     } catch (error) {
-//       console.error('Error retrieving channel data:', error);
-//       return false;
-//     }
-//   }
-
-//   showErrorMessage(msg: string) {
-//     console.log(msg)
-//   }
-
-//   isValid(): boolean {
-//     return this.channelName && this.description ? false : true;
-//   }
-// }
+  close() {
+    this.closeOverlay.emit();
+  }
 
 }

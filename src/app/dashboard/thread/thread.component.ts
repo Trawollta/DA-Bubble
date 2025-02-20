@@ -60,7 +60,7 @@ export class ThreadComponent {
     this.globalVariables.showThread = false;
     this.globalVariables.messageData.answerto = '';
     this.globalVariables.isChatVisable = true;
-    this.globalFunctions.showDashboardElement(1200);
+    // this.globalFunctions.showDashboardElement(1200);
     if (window.innerWidth < 800) {
       this.globalVariables.showChannelMenu = false;
       this.globalVariables.isChatVisable = true;

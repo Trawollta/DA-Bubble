@@ -16,6 +16,7 @@ import { GlobalVariablesService } from 'app/services/app-services/global-variabl
 import { User } from 'app/models/user.class';
 import { DatePipe, CommonModule } from '@angular/common';
 import { ReactionsComponent } from '../../reactions/reactions.component';
+import { UiStateService } from 'app/services/uistate.service';
 // import { FirebaseUserupdateService } from 'app/services/firebase-services/firebase-userupdate.service';
 // import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 
@@ -36,6 +37,7 @@ export class OtherUserMessageComponent {
   // firestore: Firestore = inject(Firestore);
   globalVariables = inject(GlobalVariablesService);
   globalFunctions = inject(GlobalFunctionsService);
+  public uiStateService = inject(UiStateService);
   // firebaseChatService = inject(FirebaseChatService);
   // firebaseUpdate = inject(FirebaseUserupdateService);
   // firebaseUser = inject(FirebaseUserService);
@@ -98,10 +100,10 @@ export class OtherUserMessageComponent {
    * this function gets all information needed for answers
    */
   fillAnswerVariables() {
-    let answerInfo = this.globalFunctions.getAnswerInfo(this.message);
-    this.lastAnswerTime = answerInfo.lastAnswerTime;
-    this.answercount = answerInfo.answerCount;
-    this.answerKey = answerInfo.answerKey;
+    // let answerInfo = this.globalFunctions.getAnswerInfo(this.message);
+    // this.lastAnswerTime = answerInfo.lastAnswerTime;
+    // this.answercount = answerInfo.answerCount;
+    // this.answerKey = answerInfo.answerKey;
   }
 
 
@@ -115,7 +117,7 @@ export class OtherUserMessageComponent {
     this.globalVariables.openChat = 'isChatVisable';
     this.globalVariables.messageData.answerto =
       this.message.userId + '_' + this.message.timestamp.toString();
-    this.globalFunctions.showDashboardElement(1200);
+    // this.globalFunctions.showDashboardElement(1200);
     if (window.innerWidth < 800) {
       this.globalVariables.showChannelMenu = false;
       this.globalVariables.isChatVisable = false;

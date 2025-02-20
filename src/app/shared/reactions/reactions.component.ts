@@ -48,9 +48,12 @@ export class ReactionsComponent {
 
   showEmojiList: boolean = false;
   emojiList: Array<any> = [];
-  allEmojis: Array<any> = []; // wo wird das gebraucht? 
+  allEmojis: Array<any> = [];
+  isUserChat: boolean = false;
+  activeID: string = 'guest';
 
   chatFamiliy: string = '';
+  openChannel: any; 
 
   url =
     'https://emoji-api.com/emojis?access_key=60ede231f07183acd1dbb4bdd7dde0797f62e95e';
@@ -60,7 +63,7 @@ export class ReactionsComponent {
    */
   ngOnInit(): void {
     
-    this.chatFamiliy = this.globaleVariables.isUserChat ? 'chatusers' : 'chatchannels';
+    this.chatFamiliy = this.isUserChat ? 'chatusers' : 'chatchannels';
   }
 
   /**
@@ -109,7 +112,7 @@ export class ReactionsComponent {
     //this.newEmoji.emit(emoji);
     if (this.message.emoji[0].icon === '') {
       this.message.emoji[0].icon = emoji.character;
-      this.message.emoji[0].userId = [this.globaleVariables.activeID];
+      this.message.emoji[0].userId = [this.activeID];
       this.message.emoji[0].iconId = emoji.codePoint;
     } else {
       let existingEmoji = this.message.emoji.find(
@@ -119,11 +122,11 @@ export class ReactionsComponent {
         if (!Array.isArray(existingEmoji.userId)) {
           existingEmoji.userId = [existingEmoji.userId];
         }
-        existingEmoji.userId.push(this.globaleVariables.activeID);
+        existingEmoji.userId.push(this.activeID);
       } else {
         this.message.emoji.push({
           icon: emoji.character,
-          userId: [this.globaleVariables.activeID],
+          userId: [this.activeID],
           iconId: emoji.codePoint,
         });
       }

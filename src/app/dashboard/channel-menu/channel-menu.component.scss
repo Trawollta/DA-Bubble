@@ -91,11 +91,11 @@ app-searchbar {
 }
 
 .channel-dialog {
-    height: 46px;
-    padding: 3px 0px 3px 0px;
-    justify-content: space-between;
     display: flex;
-    flex-direction: row;
+    align-items: center; 
+    justify-content: space-between; 
+    height: 46px;
+    padding: 3px 10px; 
 }
 
 .channel-header {
@@ -187,6 +187,7 @@ app-searchbar {
 }
 
 .add-channel {
+
     width: 30px;
     height: 30px;
     padding: 3px;

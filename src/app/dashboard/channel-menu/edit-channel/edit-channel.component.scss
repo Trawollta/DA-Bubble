@@ -1,7 +1,7 @@
 @import './../../../../styles.scss';
 .overlay {
     background-color: white;
-    z-index: 3;
+    z-index: 1000;
     height: 100svh;
     width: 100%;
 }

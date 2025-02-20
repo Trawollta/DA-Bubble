@@ -17,13 +17,14 @@ export class GlobalVariablesService {
   logout: boolean = false;
   signup: boolean = false;
   accountAdjustment: boolean = false;
+  isUserChat: boolean = false; 
 
   activeID: string = 'guest'; // this is the id of guest user of testusers
 
   //flags for profile
-  showProfileMenu: boolean = false;
-  showProfile: boolean = false;
-  ownprofile: boolean = true;
+  // showProfileMenu: boolean = false;
+  // showProfile: boolean = false;
+  // ownprofile: boolean = true;
   showEditProfile: boolean = false;
   isProfileOfCurrentUser: boolean = true;
   profileUserId: string = '';
@@ -45,13 +46,13 @@ export class GlobalVariablesService {
 
   currentChannel: Channel | null = null;
   currentChannelId: string = '';
-  selectedChannel: Channel | null = null;
+  // selectedChannel: Channel | null = null;
 
-  //take over selected Emoji
-  selectedEmoji = {
-    character: '',
-    codePoint: ''
-  };
+  // //take over selected Emoji
+  // selectedEmoji = {
+  //   character: '',
+  //   codePoint: ''
+  // };
 
 
   //flags for showing the dashboard main elements
@@ -63,7 +64,7 @@ export class GlobalVariablesService {
 
 
   openChat: string = ''; // used in openAnswers() to come back to the chat
-  isUserChat: boolean = false; //used as flag to show in chat the header for user chat
+  // isUserChat: boolean = false; //used as flag to show in chat the header for user chat
   answerChatKey: string = ''; //used by open chat between 2 members and contains the chat key
 
   // userToChatWith: any = [];
@@ -113,7 +114,7 @@ export class GlobalVariablesService {
     userImgPath: '',
   };
 
-  //this is the object for the active channel information. Used in channel-menu
+ 
   openChannel = {
     titel: '',
     desc: '',
@@ -170,36 +171,31 @@ export class GlobalVariablesService {
   constructor(private chatChannelService: ChatChannelService) { }
 
 
-  setSelectedChannel(channel: any) {
-    console.log("✅ `selectedChannel` wird gesetzt:", channel);
-    this.selectedChannel = channel;
-    console.log("📌 Neuer Wert von `selectedChannel`:", this.selectedChannel);
-}
 
 
  
-  loadMessages() {
-    console.log("🔍 `loadMessages()` wurde aufgerufen!");
-    console.log("🛠 Aktuelles `selectedChannel`:", this.selectedChannel);
+//   loadMessages() {
+//     console.log("🔍 `loadMessages()` wurde aufgerufen!");
+//     console.log("🛠 Aktuelles `selectedChannel`:", this.selectedChannel);
 
-    if (!this.selectedChannel || !this.selectedChannel.id) {
-        console.warn("⚠️ `loadMessages()` abgebrochen: Kein `selectedChannel` gesetzt.");
-        return;
-    }
+//     if (!this.selectedChannel || !this.selectedChannel.id) {
+//         console.warn("⚠️ `loadMessages()` abgebrochen: Kein `selectedChannel` gesetzt.");
+//         return;
+//     }
 
-    const channelId = Number(this.selectedChannel.id);
-    console.log("📩 Lade Nachrichten für Channel ID:", channelId);
+//     const channelId = Number(this.selectedChannel.id);
+//     console.log("📩 Lade Nachrichten für Channel ID:", channelId);
 
-    this.chatChannelService.getMessages(channelId).subscribe({
-        next: (messages) => {
-            console.log("📩 Nachrichten erfolgreich geladen:", messages);
-            this.messages = [...messages];  // ❗ Array-Kopie erstellen, damit Angular es erkennt
-        },
-        error: (error) => {
-            console.error("❌ Fehler beim Laden der Nachrichten:", error);
-        }
-    });
-}
+//     this.chatChannelService.getMessages(channelId).subscribe({
+//         next: (messages) => {
+//             console.log("📩 Nachrichten erfolgreich geladen:", messages);
+//             this.messages = [...messages];  // ❗ Array-Kopie erstellen, damit Angular es erkennt
+//         },
+//         error: (error) => {
+//             console.error("❌ Fehler beim Laden der Nachrichten:", error);
+//         }
+//     });
+// }
 
 
 

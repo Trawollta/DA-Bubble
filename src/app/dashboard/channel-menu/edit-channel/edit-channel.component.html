@@ -1,74 +1,72 @@
-<!-- <div class="Edit-content" *ngIf="globalVariables.editChannelOverlayOpen">
+<div class="Edit-content">
     <div class="overlay">
-        <div class="headline">
-            <div>
-                <span class="top">#{{ globalVariables.openChannel.titel }}</span>
-            </div>
-            <div>
-                <img (click)="globalFunctions.closeEditOverlay()" src="assets/img/icons/close.svg" class="close-btn"
-                    alt="Schließen" />
-            </div>
+      <div class="headline">
+        <div>
+          <!-- Verwende channelData.name, da 'titel' nicht existiert -->
+          <span class="top">#{{ channelData.name }}</span>
         </div>
-        <div class="edit-chan-content">
-            <!-- Description Input -->
-            <!-- <div class="editName-area" [ngClass]="{ 'no-border': editChannelDM }">
-                <div class="first-row">
-                    <label for="channelName" class="description">Channel-Name</label>
-                    <div class="edit-btn" *ngIf="creator">
-                        <span *ngIf="!editChannelDM" (click)="editChannelName()">Bearbeiten</span>
-                        <span *ngIf="editChannelDM" (click)="sumbitEdit()">Speichern</span>
-                    </div>
-                </div>
-                <div *ngIf="!editChannelDM" class="edited-field">
-                    # {{ globalVariables.openChannel.titel }}
-                </div>
-                <app-inputfield *ngIf="editChannelDM" [(ngModel)]="editedName"
-                    [placeholder]="globalVariables.openChannel.titel" [classes]="['standard']"
-                    type="text"></app-inputfield>
-            </div>
-
-            <!-- Bereich für die Beschreibung -->
-            <!-- <div class="editDescription-area" [ngClass]="{ 'no-border': editChannelDES }">
-                <div class="second-row">
-                    <label class="description" for="description">Beschreibung</label>
-                    <div class="edit-btn" *ngIf="creator">
-                        <span *ngIf="!editChannelDES" (click)="editChannelDescripition()">Bearbeiten</span>
-
-                        <span *ngIf="editChannelDES" (click)="submitEdit()">Speichern</span>
-                    </div>
-                </div>
-                <div class="desc-area">
-                    <span *ngIf="!editChannelDES" class="edited-field">{{
-                        globalVariables.channelData.description
-                        }}</span>
-                </div> -->
-
-                <!-- <app-inputfield *ngIf="editChannelDES" [(ngModel)]="editedDescription"
-                    [placeholder]="globalVariables.channelData.description" [classes]="['standard']"
-                    type="text"></app-inputfield>
-
-                <div class="line"></div>
-                <div class="creator">
-                    <span class="from">Erstellt von:</span>
-                    <span class="publisher">{{ creatorName }}</span>
-                </div>
-            </div> -->
-
-            <!-- <div class="button-area">
-                <div class="button-area-left">
-                    <app-button *ngIf="globalVariables.activeID === this.channel.creator" [classes]="['primary']"
-                        caption="Channel Löschen" (click)="deleteChannel()"
-                        imgPath=""></app-button>
-
-                    <app-button [classes]="['noIcon primary']" caption="Channel verlassen" (click)="leaveChannel()"
-                        imgPath=""></app-button>
-                </div>
-                <app-button [classes]="['noIcon primary']" caption="Schließen"
-                    (click)="globalFunctions.closeEditOverlay()" imgPath=""></app-button>
-            </div>
+        <div>
+          <img (click)="closeEditOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="Schließen" />
         </div>
+      </div>
+      <div class="edit-chan-content">
+        <!-- Bereich für den Channel-Namen -->
+        <div class="editName-area" [ngClass]="{ 'no-border': editChannelDM }">
+          <div class="first-row">
+            <label for="channelName" class="description">Channel-Name</label>
+            <div class="edit-btn" *ngIf="activeID === channelData.creator">
+              <span *ngIf="!editChannelDM" (click)="editChannelName()">Bearbeiten</span>
+              <span *ngIf="editChannelDM" (click)="sumbitEdit()">Speichern</span>
+            </div>
+          </div>
+          <div *ngIf="!editChannelDM" class="edited-field">
+            #{{ channelData.name }}
+          </div>
+          <app-inputfield *ngIf="editChannelDM" [(ngModel)]="editedName"
+            [placeholder]="channelData.name" [classes]="['standard']" type="text">
+          </app-inputfield>
+        </div>
+  
+        <!-- Bereich für die Beschreibung -->
+        <div class="editDescription-area" [ngClass]="{ 'no-border': editChannelDES }">
+          <div class="second-row">
+            <label class="description" for="description">Beschreibung</label>
+            <div class="edit-btn" *ngIf="activeID === channelData.creator">
+              <span *ngIf="!editChannelDES" (click)="editChannelDescripition()">Bearbeiten</span>
+              <span *ngIf="editChannelDES" (click)="submitEdit()">Speichern</span>
+            </div>
+          </div>
+          <div class="desc-area">
+            <span *ngIf="!editChannelDES" class="edited-field">{{ channelData.description }}</span>
+          </div>
+          <app-inputfield *ngIf="editChannelDES" [(ngModel)]="editedDescription"
+            [placeholder]="channelData.description" [classes]="['standard']" type="text">
+          </app-inputfield>
+          <div class="line"></div>
+          <div class="creator">
+            <span class="from">Erstellt von:</span>
+            <span class="publisher">{{ creatorName }}</span>
+          </div>
+        </div>
+  
+        <!-- Aktionen -->
+        <div class="button-area">
+          <div class="button-area-left">
+            <app-button *ngIf="activeID === channelData.creator" [classes]="['primary']"
+              caption="Channel Löschen" (click)="deleteChannel()" imgPath="">
+            </app-button>
+            <app-button [classes]="['noIcon primary']" caption="Channel verlassen"
+              (click)="leaveChannel()" imgPath="">
+            </app-button>
+          </div>
+          <app-button [classes]="['noIcon primary']" caption="Schließen"
+            (click)="closeEditOverlay()" imgPath="">
+          </app-button>
+        </div>
+      </div>
     </div>
     <div data-aos="fade-left" *ngIf="toastService.showToast" class="toast">
-        <span>{{ toastService.message }}</span>
+      <span>{{ toastService.message }}</span>
     </div>
-</div> --> 
+  </div>
+  

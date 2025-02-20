@@ -10,7 +10,7 @@ export class User {
         this.name = obj ? obj.name : '';
         this.email = obj ? obj.email : '';
         this.isActive = obj ? obj.isActive : '';
-        this.img = obj?.img || 'assets/img/default-avatar.png'; 
+        this.img = obj?.img || 'assets/img/avatars/default.svg'; 
         this.relatedChats = obj && obj.relatedChats ? obj.relatedChats:[];
         this.checked = obj?.checked || false;
 

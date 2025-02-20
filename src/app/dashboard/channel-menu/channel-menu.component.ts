@@ -1,105 +1,128 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
-import { UserService, User } from 'app/services/user.service';
+import { User, UserService } from 'app/services/user.service';
 import { ChannelService } from 'app/services/channel.service';
 import { SearchbarComponent } from 'app/shared/searchbar/searchbar/searchbar.component';
-import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { Channel } from 'app/models/channel.class';
+import { ChatChannelService } from 'app/services/chat-channel.service';
+import { AddNewChannelComponent } from './add-new-channel/add-new-channel.component';
+import { AddToChannelComponent } from './add-to-channel/add-to-channel.component';
 
 @Component({
   selector: 'app-channel-menu',
   standalone: true,
+  imports: [CommonModule, SearchbarComponent, AddNewChannelComponent, AddToChannelComponent],
   templateUrl: './channel-menu.component.html',
   styleUrl: './channel-menu.component.scss',
-  imports: [CommonModule, SearchbarComponent],
 })
 export class ChannelMenuComponent implements OnInit {
-  globalVariables: GlobalVariablesService = inject(GlobalVariablesService);
-  globalFunctions = inject(GlobalFunctionsService);
   private userService = inject(UserService);
   private channelService = inject(ChannelService);
+  private chatChannelService = inject(ChatChannelService);
+  private cdr = inject(ChangeDetectorRef); 
 
   isChannelMenuOpen: boolean = true;
   isUserlMenuOpen: boolean = true;
   selectedChannel: Channel | null = null;
+  selectedChannelId: number = 0; 
   channels: Channel[] = [];
+  messages: any[] = [];
+  isDesktop700 = window.innerWidth > 700;
+  isDesktop900 = window.innerWidth > 900;
+  users: User[] = []; 
+  showAddChannelOverlay: boolean = false;
+  showAddContactsOverlay: boolean = false;
+  channelData: { name: string; description: string } = { name: '', description: '' };
 
   constructor() {}
 
   ngOnInit() {
-    console.log("🔄 ngOnInit() wurde aufgerufen...");
     this.loadUsers();
     this.loadChannels();
   }
 
-  /**
-   * Lädt Benutzer aus dem Backend
-   */
   loadUsers() {
-    console.log("🟡 loadUsers() wird aufgerufen...");
     this.userService.getUsers().subscribe({
       next: (users: User[]) => {
-        console.log("🟢 Benutzer erfolgreich geladen:", users);
-        this.globalVariables.allUsers = users;
+        this.users = users;
       },
       error: (error) => {
-        console.error('🔴 Fehler beim Laden der Nutzer:', error);
+        console.error("🔴 Fehler beim Laden der Nutzer:", error);
       }
     });
   }
 
-  /**
-   * Lädt Channels aus dem Backend
-   */
   loadChannels() {
-    console.log("🟡 loadChannels() wird aufgerufen...");
     this.channelService.getChannels().subscribe({
-      next: (channels: Channel[]) => {
-        console.log("🟢 Channels erfolgreich geladen:", channels);
-        this.globalVariables.viewableChannelplusId = channels.map(channel => ({
-          channelId: channel.id,
-          channelName: channel.name,
-          chatId: channel.chatId
-        }));
-        console.log("📌 Updated viewableChannelplusId:", this.globalVariables.viewableChannelplusId);
+      next: (channels) => {
+        this.channels = channels;
       },
       error: (error) => {
-        console.error('🔴 Fehler beim Laden der Channels:', error);
+        console.error("🔴 Fehler beim Laden der Channels:", error);
       }
     });
   }
+  
 
-  /**
-   * Öffnet einen Channel
-   */
   openChannel(channel: Channel) {
-    console.log("📢 Channel geöffnet:", channel);
     
-    // Setzt den ausgewählten Channel in GlobalVariablesService
-    this.globalVariables.setSelectedChannel(channel);
-
-    // Setzt auch die lokale Variable
+    if (!channel || !channel.id) {
+      console.warn("⚠️ Ungültiger Channel:", channel);
+      return;
+    }
+    
     this.selectedChannel = channel;
-    this.globalVariables.currentChannel = channel;
-    this.globalVariables.currentChannelId = channel.id;
-
-    setTimeout(() => {
-      if (this.selectedChannel) {
-        console.log("✅ `selectedChannel` wurde gesetzt:", this.selectedChannel);
-        this.globalVariables.loadMessages();
-      } else {
-        console.warn("⚠️ `selectedChannel` ist immer noch nicht gesetzt.");
-      }
-    }, 100);
+    this.selectedChannelId = Number(channel.id);
+    console.log("📌 Neuer ausgewählter Channel:", this.selectedChannel);
+    this.chatChannelService.setSelectedChannel(channel);
+    
+    this.loadMessages();
+    this.cdr.detectChanges();
   }
 
-  /**
-   * Wechselt den Channel und lädt Nachrichten neu
-   */
-  changeChannel(channel: Channel) {
-    console.log("🔄 Channel wird gewechselt:", channel);
-    this.globalVariables.setSelectedChannel(channel);
-    this.globalVariables.loadMessages();
+  openChannelOverlay() {
+    this.showAddChannelOverlay = true;
+    this.cdr.detectChanges();
+  }
+
+  closeChannelOverlay() {
+    this.showAddChannelOverlay = false;
+    this.cdr.detectChanges();
+  }
+
+  nextOverlay(data: { name: string; description: string }) {
+    this.channelData = data; // Speichert Channel-Daten
+    this.showAddChannelOverlay = false;
+    this.showAddContactsOverlay = true; // Öffnet das nächste Overlay
+  }
+
+  // Schließen des "Add To Channel"-Overlays
+  closeAddContactsOverlay() {
+    this.showAddContactsOverlay = false;
+    this.cdr.detectChanges();
+  }
+  
+  
+  
+
+
+
+  loadMessages() {
+    if (!this.selectedChannel) {
+        console.warn("⚠️ Kein `selectedChannel` gesetzt.");
+        return;
+    }
+
+    const channelId = Number(this.selectedChannel.id);
+
+    this.chatChannelService.getMessages(channelId).subscribe({
+        next: (messages) => {
+            this.messages = [...messages];
+            this.cdr.detectChanges();
+        },
+        error: (error) => {
+            console.error("❌ Fehler beim Laden der Nachrichten:", error);
+        }
+    });
   }
 }

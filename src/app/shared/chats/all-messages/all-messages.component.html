@@ -1,48 +1,42 @@
 <div class="allMessages">
-    <div *ngFor="let message of filterMessages(); let i = index"> 
-        <!-- Debugging: Zeigt jede Nachricht im JSON-Format -->
-        <p>📩 Nachricht in ngFor: {{ message | json }}</p>
+    <div *ngFor="let message of (messages$ | async); let i = index" class="message-container">
 
-        <p>🔍 Sender ID: {{ message.sender.id }}</p>
-        <p>🛠 meetContitionsOtherUser: {{ meetContitionsOtherUser(message.sender.id) }}</p>
-        <p>🛠 meetContitionsCurrentUser: {{ meetContitionsCurrentUser(message.sender.id) }}</p>
-
-        <!-- Falls der Sender nicht der aktuelle Benutzer ist -->
-        <app-other-user-message *ngIf="meetContitionsOtherUser(message.sender.id)" 
-            [message]="message" 
-            [isThread]="isThread"
-            (click)="GlobalFunctionsService.openReactionDialog()">
-        </app-other-user-message>
-
-        <!-- Falls der Sender der aktuelle Benutzer ist -->
-        <app-current-user-message 
-    *ngIf="meetContitionsCurrentUser(message.sender.id)" 
-    [message]="message" 
-    [index]="i" 
-    [isThread]="isThread">
-</app-current-user-message>
-
-
-        <!-- Falls die Nachricht ein neues Datum hat -->
         <div class="dateBlockContainer">
-            <ng-container *ngIf="showDateBar(message.timestamp, i, message.message)"> 
+            <ng-container *ngIf="getWeekDay(+message.timestamp) !== 'Heute'"> 
                 <div class="newDate">
                     <div class="leftBar"></div>
                     <div class="dateContainer">
-                        <span *ngIf="getWeekDay(message.timestamp) === 'Heute'">
-                            {{ getWeekDay(message.timestamp) }}
-                        </span>
-                        <span *ngIf="getWeekDay(message.timestamp) !== 'Heute'">
-                            {{ getWeekDay(message.timestamp) }},
-                        </span>
-                        <span *ngIf="getWeekDay(message.timestamp) !== 'Heute'">
-                            {{ message.timestamp | date : 'dd.MM.YY'}}
+                        <span>
+                            {{ getWeekDay(+message.timestamp) }}
                         </span>
                     </div>
                     <div class="rightBar"></div>
                 </div>
             </ng-container>
         </div>
+
+        <!-- Falls der Sender der aktuelle Benutzer ist -->
+        <ng-container *ngIf="message.sender.id === currentUserId">
+            <app-current-user-message 
+                (click)="globalFunctionsService.openReactionDialog()"
+                [message]="message" 
+                [index]="i" 
+                [isThread]="isThread">
+            </app-current-user-message>
+          </ng-container>
+          <ng-container *ngIf="message.sender.id !== currentUserId">
+            <app-other-user-message 
+                (click)="globalFunctionsService.openReactionDialog()"
+                [message]="message" 
+                [isThread]="isThread">
+            </app-other-user-message>
+          </ng-container>
+          
+
+        <!-- Falls die Nachricht ein neues Datum hat -->
+
     </div>
-    <div #scrolldown class="chatEnd"></div>
 </div>
+    <!-- Scroll-Anker -->
+    <div #scrolldown class="chatEnd"></div>
+

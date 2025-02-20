@@ -1,28 +1,26 @@
 <section>
-    <div class="accountContainer" (click)="globalFunctions.menuProfileClicked()">
-        <h3 *ngIf="globalVariables.desktop600">{{globalVariables.currentUser.name}}</h3>
+    <div class="accountContainer" (click)="toggleProfileMenu()">
+        <h3 *ngIf="isDesktop">{{ userName }}</h3>
         <div class="avatarCon">
-            <img class="imgAvatar" [src]="globalVariables.currentUser.img" alt="avatar">
-            <img *ngIf="globalVariables.desktop600" class="imgArrow" src="assets/img/icons/keyboard_arrow_down.svg" alt="arrow-down">
+            <img class="imgAvatar" [src]="userAvatar" alt="avatar">
+            <img *ngIf="isDesktop" class="imgArrow" src="assets/img/icons/keyboard_arrow_down.svg" alt="arrow-down">
         </div>
-
-
     </div>
-    <!-- <app-profile *ngIf="globalVariables.showProfile"></app-profile> -->
-    <div *ngIf="globalVariables.showProfileMenu" class="openMenu" (click)="globalFunctions.menuProfileClicked()">
+    
+    <div *ngIf="showProfileMenu" class="openMenu" (click)="toggleProfileMenu()">
         <div class="outerContainer">
-            <div class="innerContainer" (click)="globalFunctions.stopPropagation($event)">
-                <div class="closeContainer" (click)="globalFunctions.menuProfileClicked()">
+            <div class="innerContainer" (click)="stopPropagation($event)">
+                <div class="closeContainer" (click)="toggleProfileMenu()">
                     <div class="closeBar"></div>
                 </div>
                 <div class="menuOuterContainer">
                     <div class="menu">
-                        <a (click)="globalFunctions.openProfile(true, globalVariables.activeID)">
-                            <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/account_circle.svg" alt="avatarIcon">
-                            <span>Profile </span>
+                        <a (click)="openProfile(true, profileUserId); $event.stopPropagation()">
+                            <img *ngIf="!isDesktop" src="assets/img/icons/account_circle.svg" alt="avatarIcon">
+                            <span>Profile</span>
                         </a>
                         <a (click)="logOut()">
-                            <img *ngIf="!globalVariables.desktop600" src="assets/img/icons/logout.svg" alt="logoutIcon">
+                            <img *ngIf="!isDesktop" src="assets/img/icons/logout.svg" alt="logoutIcon">
                             <span>Log out</span>
                         </a>
                     </div>
@@ -30,4 +28,8 @@
             </div>
         </div>
     </div>
-</section>
+  </section>
+  
+  <!-- Profil-Overlay -->
+  <app-profile *ngIf="showProfileOverlay" (closeProfileEvent)="closeProfile()"></app-profile>
+  

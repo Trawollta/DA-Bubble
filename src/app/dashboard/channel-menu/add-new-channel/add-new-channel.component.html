@@ -1,11 +1,11 @@
 <div class="main-content">
-    <div class="overlay" *ngIf="globalVariables.showAddChannel">
+    <div class="overlay">
         <div class="headline">
             <div>
                 <span class="top"> Channel erstellen</span>
             </div>
             <div>
-                <img (click)="globalFunctions.closeChannelOverlay()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile" />
+                <img (click)="close()" src="assets/img/icons/close.svg" class="close-btn" alt="close profile" />
             </div>
         </div>
         <div class="about">
@@ -34,7 +34,13 @@
             </div>
         </div>
         <div class="button-area">
-            <!-- <app-button [classes]="['noIcon primary']" [isDisabled]="isValid()" (clicked)="onSubmit()" type="submit" caption="weiter" imgPath=""></app-button> -->
+            <app-button 
+  [classes]="['noIcon primary']" 
+  [isDisabled]="!isValid()" 
+  (clicked)="onSubmit()" 
+  type="submit" 
+  caption="weiter">
+</app-button>
         </div>
         <div data-aos="fade-left" *ngIf="toastService.showToast" class="toast">
             <span>{{ toastService.message }}</span>

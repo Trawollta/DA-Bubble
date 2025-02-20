@@ -2,52 +2,44 @@ import {
   Component,
   inject,
   ChangeDetectorRef,
- AfterContentChecked,
   Input,
   ElementRef,
   ViewChild,
   AfterViewChecked,
   OnChanges,
-  OnInit
+  OnInit,
+  SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Store } from '@ngrx/store';  // ✅ NGRX Store importieren
+import { AppState } from 'app/store/state/app.state';  // ✅ AppState importieren
 import { OtherUserMessageComponent } from 'app/shared/chats/other-user-message/other-user-message.component';
 import { CurrentUserMessageComponent } from 'app/shared/chats/current-user-message/current-user-message.component';
-import { ChatChannel } from 'app/models/chatChannel.class';
-import { ChatUsers } from 'app/models/chatUsers.class';
-// import { FirebaseChatService } from 'app/services/firebase-services/firebase-chat.service';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-import { CommonModule, DatePipe } from '@angular/common';
-import { ReactionsComponent } from '../../reactions/reactions.component';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { AuthService } from 'app/services/auth.service';
 
 @Component({
   selector: 'app-all-messages',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   templateUrl: './all-messages.component.html',
   styleUrl: './all-messages.component.scss',
-
   imports: [
     CommonModule,
     OtherUserMessageComponent,
     CurrentUserMessageComponent,
-    // ReactionsComponent,
     DatePipe,
-  ],
+  ]
 })
-export class AllMessagesComponent implements AfterViewChecked, OnInit {
-  // firebaseChatService = inject(FirebaseChatService);
+export class AllMessagesComponent implements AfterViewChecked, OnInit, OnChanges {
   globalVariablesService = inject(GlobalVariablesService);
-  GlobalFunctionsService = inject(GlobalFunctionsService);
-
-  chatChannel: ChatChannel = new ChatChannel();
-
-  chatUsers: ChatUsers = new ChatUsers(); // das wird denke ich nicht gebraucht
-  postingTime: string | null = null;
-  index: number = 0;
-  userName: string = '';
-  userImgPath: string = '';
-
+  globalFunctionsService = inject(GlobalFunctionsService); 
+  authService = inject(AuthService);
+  messages$ = this.store.select(state => state.chat.messages); 
+  currentUserId: number = Number(localStorage.getItem('userId')) || 0;
+  
   lastDisplayedDate: Date = new Date();
 
   @Input() isChat: boolean = false;
@@ -55,31 +47,33 @@ export class AllMessagesComponent implements AfterViewChecked, OnInit {
   @Input() messages: any[] = [];
   @ViewChild('scrolldown') scrollDownElement!: ElementRef;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    private store: Store<AppState>  // ✅ Store injizieren
+  ) {
+    console.log("🟢 AllMessagesComponent wurde geladen!");
+  }
 
   ngOnInit() {
-    console.log("🚀 AllMessagesComponent gestartet");
-    
-    // Hole Benutzer-ID aus LocalStorage, falls nicht gesetzt
-    if (!this.globalVariablesService.activeID || this.globalVariablesService.activeID === 'guest') {
-        const storedUserId = localStorage.getItem('userId');
-        if (storedUserId) {
-            this.globalVariablesService.activeID = storedUserId;
-            console.log("✅ Benutzer-ID aus LocalStorage geladen:", this.globalVariablesService.activeID);
-        } else {
-            console.log("⚠️ Keine Benutzer-ID im LocalStorage gefunden!");
-        }
+    this.store.select(state => state.chat.messages).subscribe(messages => {
+      console.log("🟢 Store-Nachrichten in `AllMessagesComponent` aktualisiert:", messages);
+      this.messages = messages; // ❌ Hier fehlt eine neue Referenz
+      this.changeDetector.detectChanges();  // ⬅️ UI zwingend aktualisieren
+    });
+  }
+  
+  
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['messages']) { 
+      console.log("🔄 Neue Nachrichten in `AllMessagesComponent`:", changes['messages'].currentValue);
+  
+      this.messages = [...changes['messages'].currentValue]; 
+      this.changeDetector.detectChanges();
     }
-}
+  }
+  
 
-
-
-
-
-
-  /**
-   * this function checks if the chat is scrolled down
-   */
   ngAfterViewChecked() {
     if (!this.globalVariablesService.scrolledToBottom) {
       setTimeout(() => {
@@ -89,97 +83,48 @@ export class AllMessagesComponent implements AfterViewChecked, OnInit {
     }
   }
 
-  /**
-   * this function scrolls down the chat
-   */
   scrollToElement() {
-    this.scrollDownElement.nativeElement.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' });
+    if (this.scrollDownElement) {
+      this.scrollDownElement.nativeElement.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' });
+    }
   }
 
-
-  //this function avoids the ExpressionChangedAfterItHasBeenCheckedError in the developer Mode
-/*   ngAfterContentChecked(): void {
-    this.changeDetector.detectChanges();
-  }
-
-
-  /**
-   * this function filters all messages if they are answers of a message or not and returns the chat 
-   * @returns - chat
-   */
   filterMessages() {
-    console.log("🔍 `filterMessages()` wurde aufgerufen!");
-    console.log("📩 Nachrichten vor Filterung:", this.messages);
-
-    let messages = this.messages.filter(message => message.content); // Falls `null` oder `undefined` entfernt werden soll
-
-    console.log("📊 Nachrichten nach Filterung:", messages);
-    
-    if (messages.length === 0) {
-        console.warn("⚠️ KEINE Nachrichten gefunden! Überprüfe API-Daten.");
-    }
-
-    return messages; 
-}
-
-
-
-
-  /**
-   * this function returns the weekday in German of the day of the message timestamp
-   * this function needs to reviewed in case other langeuages should be supported
-   * @param timestamp - the timestamp of the message
-   * @returns - weekday as string
-   */
-  getWeekDay(timestamp: number): string {
-    const today = new Date(timestamp).toDateString() == new Date().toDateString();
-    return today ? 'Heute' : new Date(timestamp).toLocaleDateString('de-DE', { weekday: 'long' });
+    return this.messages ? this.messages.filter(message => message?.content) : [];
   }
 
-  /**
-   * this function returns false if the previous message has the same date like the current massage
-   * it also overwrites the lastDisplayedDate if displayDate == true
-   * @param messageTimestamp - timestamp of message
-   * @returns - boolean
-   */
+  getWeekDay(timestamp: string | number): string {
+    const date = new Date(typeof timestamp === 'string' ? Date.parse(timestamp) : timestamp);
+    
+    if (isNaN(date.getTime())) return 'Unbekannt'; // Falls ungültiges Datum
+    
+    const today = date.toDateString() === new Date().toDateString();
+    return today ? 'Heute' : date.toLocaleDateString('de-DE', { weekday: 'long' });
+  }
+  
+
   showDateBar(messageTimestamp: number, index: number, message: string): boolean {
+    if (!message) return false;
+
     let displayDate = false;
-    if(message === ''){
-      return displayDate = false;
-    }
     if (this.isChat || this.isThread) {
-      if (index == 0)
-        return displayDate = true;
-      else {
+      if (index === 0) {
+        displayDate = true;
+      } else {
         displayDate = (this.lastDisplayedDate.toLocaleDateString() !== new Date(messageTimestamp).toLocaleDateString());
       }
     }
-    if (displayDate && messageTimestamp != 0) {
+    if (displayDate && messageTimestamp !== 0) {
       this.lastDisplayedDate = new Date(messageTimestamp);
     }
     return displayDate;
   }
 
-  /**
-   * this function is for setting the conditions for showing all messages from current users which are not an answer
-   * @param message - object
-   * @returns - boolean
-   */
-  meetContitionsCurrentUser(userId: number) {
-    console.log("👤 Checking meetContitionsCurrentUser:");
-    console.log("🔹 userId:", userId);
-    console.log("🔹 activeID:", this.globalVariablesService.activeID);
+  meetConditionsCurrentUser(userId?: number) {
+    return userId !== undefined && userId === Number(this.globalVariablesService.activeID);
+  }
 
-    return userId === Number(this.globalVariablesService.activeID);
-}
-
-meetContitionsOtherUser(userId: number) {
-    console.log("👤 Checking meetContitionsOtherUser:");
-    console.log("🔹 userId:", userId);
-    console.log("🔹 activeID:", this.globalVariablesService.activeID);
-
-    return userId !== Number(this.globalVariablesService.activeID);
-}
-
-
+  meetConditionsOtherUser(userId?: number) {
+    return userId !== undefined && userId !== Number(this.globalVariablesService.activeID);
+  }
 }

@@ -31,6 +31,7 @@ export class ShowContactsComponent implements OnInit {
 
   constructor() { }
 
+
   ngOnInit() {
     this.loadUsers();
   }
@@ -39,15 +40,13 @@ export class ShowContactsComponent implements OnInit {
    * Lädt Benutzer aus dem Backend und speichert sie in `selectedUsers` & `openChannelUser`
    */
   loadUsers() {
-    console.log("🚀 Hole Benutzer aus dem Backend...");
     this.userService.getUsers().subscribe({
       next: (users: User[]) => {
-        console.log("📌 Benutzer erhalten:", users);
         this.selectedUsers = users.map(user => ({
           id: user.id,
           name: user.name,
           email: user.email,
-          img: user.img || 'assets/img/default-avatar.png',
+          img: user.img || 'assets/img/avatars/default.svg',
           isActive: false,
         }));
   

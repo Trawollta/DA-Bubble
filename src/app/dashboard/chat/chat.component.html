@@ -1,57 +1,65 @@
 <main>
-
-    <!-- container for header it is a channel chat -->
     <!-- Header für Channels -->
-<section class="msg-header" *ngIf="!globalVariables.isUserChat">
-    <app-show-contacts class="showContactsHeader" *ngIf="globalVariables.memberlist && globalVariables.headerShowMembers" appClickedOutside (clickedOutside)="globalFunctions.closeMembers()"></app-show-contacts>
-    <div class="topic-headline">
-        <div class="headline" (click)="globalFunctions.openEditChannelOverlay()">
-            <div class="header-hover"># {{ selectedChannel?.name || 'Channel auswählen' }}</div>
-            <img src="./assets/img/icons/keyboard_arrow_down.svg" alt="" />
-        </div>
-    </div>
-    <div class="active-contacts">
-        <div class="contact-row" *ngIf="globalVariables.desktop700" (click)="showMembers(true)">
-            <img src="assets/img/avatars/Elias_Neumann.svg" alt="" />
-            <img class="secondHeadIcon" src="assets/img/avatars/Elias_Neumann.svg" alt="" />
-            <span class="memberCount">{{ selectedChannel?.participants?.length || 0 }}</span>
-        </div>
-        <div class="add-contact" (click)="openContactsPopup()">
-            <img src="./assets/img/icons/person_add_w.svg" alt="" />
-        </div>
-    </div>
-</section>
-
-
-    <!-- container for header it is a user chat -->
-    <section class="msg-header" *ngIf="globalVariables.isUserChat">
+    <section class="msg-header" *ngIf="!isUserChat">
+        <app-show-contacts class="showContactsHeader" *ngIf="memberlist && headerShowMembers" 
+            appClickedOutside (clickedOutside)="closeMembers()">
+        </app-show-contacts>
+        
         <div class="topic-headline">
-            <div class="headline" (click)="globalFunctions.openProfile(false, this.globalVariables.userToChatWith.id)">
-                <p></p>
-                <img src="{{ globalVariables.userToChatWith.img }}" alt="">
-                <p>{{ globalVariables.userToChatWith.name }}</p>
+            <div class="headline" (click)="openEditChannelOverlay()">
+                <div class="header-hover"># {{ selectedChannel?.name || 'Channel auswählen' }}</div>
+                <img src="./assets/img/icons/keyboard_arrow_down.svg" alt="" />
+            </div>
+        </div>
+
+        <div class="active-contacts">
+            <div class="contact-row" *ngIf="desktop700" (click)="showMembers(true)">
+                <img src="assets/img/avatars/Elias_Neumann.svg" alt="" />
+                <img class="secondHeadIcon" src="assets/img/avatars/Elias_Neumann.svg" alt="" />
+                <span class="memberCount">{{ selectedChannel?.participants?.length || 0 }}</span>
+            </div>
+            <div class="add-contact" (click)="openContactsPopup()">
+                <img src="./assets/img/icons/person_add_w.svg" alt="" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Header für Direktnachrichten -->
+    <section class="msg-header" *ngIf="isUserChat">
+        <div class="topic-headline">
+            <div class="headline" (click)="openProfile(userToChatWith.id)">
+                <img src="{{ userToChatWith.img }}" alt="">
+                <p>{{ userToChatWith.name }}</p>
                 <img src="./assets/img/icons/keyboard_arrow_down.svg" alt="" />
             </div>
         </div>
     </section>
 
-    <!-- container for all chat meassages -->
+    <!-- Nachrichtencontainer -->
     <div class="contentContainer">
-        <!-- <div class="messages">
-            <app-all-messages [isChat]="true"></app-all-messages>
-        </div> -->
+        <div class="messages">
+        <ng-container *ngIf="messages$ | async as messagesList">
+            <app-all-messages [messages]="messagesList"></app-all-messages>
+          </ng-container>
+        </div>
     </div>
 
-    <!-- container for all inputfield and controll elements -->
-    <app-textarea-chat-thread [areaType]="'chat'"></app-textarea-chat-thread>
+    <!-- Eingabefeld für neue Nachrichten -->
+    <app-textarea-chat-thread [chatId]="selectedChannelId" [messages]="messages"></app-textarea-chat-thread>
 
-
-    <app-add-to-channel *ngIf="globalVariables.showContacts"></app-add-to-channel>
-    <!-- <app-edit-channel *ngIf="globalVariables.editChannelOverlayOpen"></app-edit-channel> -->
-
-    <div class="messages">
-        <app-all-messages [messages]="messages"></app-all-messages>
-    </div>
-
-
+    <!-- Popups für Kanal-Verwaltung -->
+    <app-add-to-channel *ngIf="showContacts"></app-add-to-channel>
 </main>
+
+<app-edit-channel 
+  *ngIf="showEditChannelOverlay && selectedChannelData"
+  [channelData]="selectedChannelData!"
+  (closeOverlay)="closeEditChannelOverlay()">
+</app-edit-channel>
+
+<app-show-contacts 
+  *ngIf="showContacts" 
+  (closeMember)="closeContactsPopup()">
+</app-show-contacts>
+
+

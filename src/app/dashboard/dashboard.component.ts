@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { ChannelMenuComponent } from './channel-menu/channel-menu.component';
-import { ChatComponent } from './chat/chat.component';
 import { ThreadComponent } from './thread/thread.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { CommonModule } from '@angular/common';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
+import { ChatComponent } from './chat/chat.component';
 // import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 // import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 
@@ -33,7 +33,8 @@ export class DashboardComponent {
   }
   ngOnInit() {
     if (!this.globalVariables.openChannel.titel) {
-      this.globalVariables.openChannel.titel = 'General'; // Setze einen Standardtitel
+      this.globalVariables.openChannel.titel = 'General'; //
+      this.globalVariables.isChatVisable = window.innerWidth > 800;
     }
   }
   

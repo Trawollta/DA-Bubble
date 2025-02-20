@@ -1,15 +1,15 @@
 <div class="main-content">
-    <div class="overlay" *ngIf="globalVariables.showContacts">
+    <div class="overlay">
         <div class="headline">
             <div>
                 <span class="top"> Personen hinzufügen</span>
 
                 <div>
-                    <span class="title">#{{ globalVariables.openChannel.titel }}</span>
+                    <span class="title">#{{ openChannel.titel }}</span>
                 </div>
             </div>
             <div>
-                <img (click)="globalFunctions.closeAddContactsOverlay()" src="assets/img/icons/close.svg"
+                <img src="assets/img/icons/close.svg"
                     class="close-btn" alt="close profile" />
             </div>
         </div>
@@ -42,9 +42,19 @@
         </div>
         <div class="add">
             <div class="button-area">
-                <app-button [classes]="['noIcon primary']" (click)="addUsersToExistingChannel()" caption="Hinzufügen"
+                <app-button [classes]="['noIcon primary']" (click)="createChannel()" caption="Hinzufügen"
                     imgPath=""></app-button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- <app-add-new-channel 
+  (nextOverlay)="openAddToChannelOverlay($event)">
+</app-add-new-channel>
+
+<app-add-to-channel 
+  *ngIf="showAddToChannelOverlay"
+  [newChannelName]="channelData?.newChannelName"
+  [description]="channelData?.description">
+</app-add-to-channel> -->

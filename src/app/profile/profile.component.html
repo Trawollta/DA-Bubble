@@ -1,132 +1,100 @@
 <section>
-    <div class="cardOuterContainer" [ngClass]="{ 'cardCurrentUser': globalVariables.ownprofile }">
-        <div class="card "  appClickedOutside (clickedOutside)="closeProfile()">
-            <div class="content" >
+    <div class="cardOuterContainer" [ngClass]="{ 'cardCurrentUser': true }">
 
-                <!-- area head show name -->
-                <div *ngIf="!globalVariables.showEditProfile" class="head">
-                    <h3>Profile</h3>
-                    <img (click)="close()" src="assets/img/icons/close.svg" alt="close profile">
-                </div>
-
-                <!-- area head edit name -->
-                <div *ngIf="globalVariables.showEditProfile" class="head">
-                    <h3>Dein Profil bearbeiten</h3>
-                    <img 
-                        (click)="cancelEdit()" 
-                        src="assets/img/icons/close.svg" 
-                        alt="close profile"
-                    >
-                </div>
-
-                <!-- area profile image -->
-                <div class="imgContainer">
-                    <img [src]="profile.img" alt="profile image">
-                </div>
-            </div>
-            <!-- form show or edit start -->
-            <form class="content">
-
-                <!-- area show name -->
-                <div *ngIf="!globalVariables.showEditProfile" class="nameContainer">
-                    <h2>{{profile.name}}</h2>
-                    <div class="editContainer" 
-                        *ngIf="globalVariables.ownprofile" 
-                        (click)="editProfile()"
-                    >
-                        <img 
-                            *ngIf="!globalVariables.desktop600" 
-                            src="assets/img/icons/edit.svg" 
-                            alt="edit profile"
-                        >
-                        <span *ngIf="globalVariables.desktop600">Bearbeiten</span>
-                    </div>
-                </div>
-
-                <!-- area show aktiv or not -->
-                <div *ngIf="profile.isActive && !globalVariables.showEditProfile" class="status">
-                    <img src="assets/img/icons/online.svg" alt="profile online">
-                    <span>Aktiv</span>
-                </div>
-                <div *ngIf="!profile.isActive && !globalVariables.showEditProfile" class="status">
-                    <img src="assets/img/icons/offline.svg" alt="profile offline">
-                    <span>Abwesend</span>
-                </div>
-
-                <!-- area edit name-->
-                <div *ngIf="globalVariables.showEditProfile" class="iconTxtContainer">
-                    <img src="assets/img/icons/account_circle.svg" alt="edit profile">
-                    <h4>Vollständiger Name</h4>
-                </div>
-
-                <div class="inputFieldContainer">
-                    <app-inputfield 
-                        *ngIf="globalVariables.showEditProfile" 
-                        [classes]="'noIcon standard'" 
-                        name='profileName'  
-                        [(ngModel)]="nameBuffer" 
-                        type="text" 
-                        placeholder="Dein Name hier"
-                    >
-                    </app-inputfield>
-                </div>
-
-                <!-- area mail -->
-                <div class="mailContainer">
-                    <!-- area show mail -->
-                    <div class="iconTxtContainer">
-                        <img src="assets/img/input-imgs/mail_black.svg" alt="e-mail">
-                        <h4>E-Mail-Adresse</h4>
-                    </div>
-                    <div *ngIf="!globalVariables.showEditProfile" class="mailAdressContainer">
-                        <a  href="mailto:{{profile.email}}">{{profile.email}}</a>
-                    </div>
-                    <!-- area edit mail -->
-                    <div *ngIf="globalVariables.showEditProfile" class="inputFieldContainer">
-                        <app-inputfield 
-                            type="email" 
-                            [classes]="'noIcon standard'" 
-                            name='email'  
-                            [(ngModel)]="emailBuffer" 
-                            placeholder="Deine E-Mail hier"
-                            >
-                        </app-inputfield>
-                    </div>
-                </div>
-                <!-- area button write message -->
-                <div 
-                    class="messageBtn" 
-                    *ngIf="!globalVariables.showEditProfile && globalVariables.ownprofile"
-                >
-                </div>
-                <app-button 
-                    class="messageBtn" 
-                    type="button"
-                    *ngIf="!globalVariables.showEditProfile && !globalVariables.ownprofile" 
-                    [classes]="['primary']" 
-                    (click)="globalFunctions.openDirectMessageUser(profile)"
-                    (click)="close()"
-                    caption="Nachricht" imgPath="assets/img/icons/mode_comment.svg"
-                    >
-                </app-button>
-                <!-- area button cancel or submit change -->
-                <div *ngIf="globalVariables.showEditProfile" class="btnContainer">
-                    <app-button 
-                        [classes]="['secondary noIcon']" 
-                        (clicked)="cancelEdit()" 
-                        caption="Abbrechen"
-                        >
-                    </app-button>
-                    <app-button 
-                        [classes]="['primary noIcon']" 
-                        (clicked)="sumbitEdit()" 
-                        caption="Speichern"
-                    >
-                    </app-button>
-                </div>
-
-            </form>
+      <div class="card" appClickedOutside (clickedOutside)="close()">
+        <div class="content">
+          <!-- Header-Bereich -->
+          <div *ngIf="!showEditProfile" class="head">
+            <h3>Profil</h3>
+            <img (click)="close()" src="assets/img/icons/close.svg" alt="Profil schließen">
+          </div>
+          <div *ngIf="showEditProfile" class="head">
+            <h3>Dein Profil bearbeiten</h3>
+            <img (click)="cancelEdit()" src="assets/img/icons/close.svg" alt="Profil schließen">
+          </div>
+  
+          <!-- Profilbild -->
+          <div class="imgContainer">
+            <img [src]="profile.img || 'assets/img/avatars/default.svg'" alt="Profilbild">
+          </div>
         </div>
+        <!-- Formular zum Anzeigen / Bearbeiten -->
+        <form class="content">
+          <!-- Bereich: Name anzeigen -->
+          <div *ngIf="!showEditProfile" class="nameContainer">
+            <h2>{{ profile.name }}</h2>
+            <div class="editContainer" *ngIf="ownProfile" (click)="editProfile()">
+              <img src="assets/img/icons/edit.svg" alt="Profil bearbeiten">
+              <span>Bearbeiten</span>
+            </div>
+          </div>
+          <!-- Bereich: Status anzeigen -->
+          <div *ngIf="profile.isActive && !showEditProfile" class="status">
+            <img src="assets/img/icons/online.svg" alt="Online">
+            <span>Aktiv</span>
+          </div>
+          <div *ngIf="!profile.isActive && !showEditProfile" class="status">
+            <img src="assets/img/icons/offline.svg" alt="Abwesend">
+            <span>Abwesend</span>
+          </div>
+          <!-- Bereich: Name bearbeiten -->
+          <div *ngIf="showEditProfile" class="iconTxtContainer">
+            <img src="assets/img/icons/account_circle.svg" alt="Profil bearbeiten">
+            <h4>Vollständiger Name</h4>
+          </div>
+          <div class="inputFieldContainer" *ngIf="showEditProfile">
+            <app-inputfield 
+              [classes]="'noIcon standard'" 
+              name="profileName"  
+              [(ngModel)]="nameBuffer" 
+              type="text" 
+              placeholder="Dein Name hier">
+            </app-inputfield>
+          </div>
+          <!-- Bereich: E-Mail anzeigen / bearbeiten -->
+          <div class="mailContainer">
+            <div class="iconTxtContainer">
+              <img src="assets/img/input-imgs/mail_black.svg" alt="E-Mail">
+              <h4>E-Mail-Adresse</h4>
+            </div>
+            <div *ngIf="!showEditProfile" class="mailAdressContainer">
+              <a href="mailto:{{ profile.email }}">{{ profile.email }}</a>
+            </div>
+            <div class="inputFieldContainer" *ngIf="showEditProfile">
+              <app-inputfield 
+                type="email" 
+                [classes]="'noIcon standard'" 
+                name="email"  
+                [(ngModel)]="emailBuffer" 
+                placeholder="Deine E-Mail hier">
+              </app-inputfield>
+            </div>
+          </div>
+          <!-- Bereich: Nachricht schreiben (optional, falls nicht eigenes Profil) -->
+          <div class="messageBtn" *ngIf="!showEditProfile && !ownProfile">
+            <app-button 
+              [classes]="['primary']" 
+              type="button"
+              (click)="close()"
+              caption="Nachricht" 
+              imgPath="assets/img/icons/mode_comment.svg">
+            </app-button>
+          </div>
+          <!-- Bereich: Änderungen speichern oder abbrechen -->
+          <div *ngIf="showEditProfile" class="btnContainer">
+            <app-button 
+              [classes]="['secondary noIcon']" 
+              (clicked)="cancelEdit()" 
+              caption="Abbrechen">
+            </app-button>
+            <app-button 
+              [classes]="['primary noIcon']" 
+              (clicked)="submitEdit()" 
+              caption="Speichern">
+            </app-button>
+          </div>
+        </form>
+      </div>
     </div>
-
-</section>
+  </section>
+  

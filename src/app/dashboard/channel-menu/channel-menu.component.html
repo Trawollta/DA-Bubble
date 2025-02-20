@@ -1,56 +1,48 @@
 <main class="channel-menu">
-    <section class="header-wrapper" *ngIf="globalVariables.desktop700">
+    <section class="header-wrapper" *ngIf="isDesktop700">
         <div class="left-header-menu">
             <img src="./assets/img/icons/Workspace_logo.svg" alt="" />
             <p class="header-text">Code Learning</p>
         </div>
     </section>
-    <app-searchbar *ngIf="!globalVariables.desktop900" [classes]="['searchBarChannelMenu', 'searchBar']"></app-searchbar>
+    <app-searchbar *ngIf="isDesktop900" [classes]="['searchBarChannelMenu', 'searchBar']"></app-searchbar>
 
     <section class="contentSection">
         <div class="all-channel">
-            <div class="channel-dialog">
-                <div class="channel-header">
-                    <div class="channel-arrow-dropdown">
-                        <img id="channelMsgArrow" *ngIf="!isChannelMenuOpen" src="./assets/img/icons/arrow_drop_down_default.svg" alt="" />
-                        <img *ngIf="isChannelMenuOpen" src="./assets/img/icons/arrow_drop_down.svg" alt="" />
-                    </div>
-                    <div class="channel-headline-wrapper">
-                        <img src="./assets/img/icons/workspaces.svg" alt="" />
-                        <p>Channels</p>
-                    </div>
-                </div>
-                <div class="add-channel">
-                    <img src="./assets/img/icons/add.svg" alt="" />
-                </div>
-            </div>
+         <div class="channel-dialog">
+    <div class="channel-header">
+        <div class="channel-arrow-dropdown">
+            <img id="channelMsgArrow" *ngIf="!isChannelMenuOpen" src="./assets/img/icons/arrow_drop_down_default.svg" alt="" />
+            <img *ngIf="isChannelMenuOpen" src="./assets/img/icons/arrow_drop_down.svg" alt="" />
+        </div>
+        <div class="channel-headline-wrapper">
+            <img src="./assets/img/icons/workspaces.svg" alt="" />
+            <p>Channels</p>
+        </div>
+    </div>
+    
+    <!-- Hier bleibt das "+"-Symbol auf derselben Zeile -->
+    <div class="add-channel">
+        <img src="./assets/img/icons/add.svg" alt="Channel hinzufügen" />
+    </div>
+</div>
             <div class="channel-overview" id="channels" *ngIf="isChannelMenuOpen">
    
-                <ng-container >
+                <ng-container *ngFor="let channel of channels">
                     <div class="channel-wrapper" 
-                    *ngFor="let channel of globalVariables.viewableChannelplusId" 
-                    [class.active-channel]="channel.channelId === selectedChannel?.id"
-                    (click)="openChannel({
-                        id: channel.channelId,
-                        name: channel.channelName || '',
-                        description: '',
-                        chatId: channel.chatId || '',
-                        creator: { id: '', username: '' },
-                        participants: []
-                    })">
-                    <p><span>#</span>{{ channel.channelName }}</p>
-                </div>
-                
-               
+                         [class.active-channel]="channel.id === selectedChannel?.id"
+                         (click)="openChannel(channel)">
+                      <p># {{ channel.name }}</p>
+                    </div>
+                  </ng-container>
                   
-                </ng-container>
                 
             </div>
             <div></div>
             <div></div>
         </div>
         <div class="channel-add">
-            <a class="menu-adder">
+            <a class="menu-adder" (click)="openChannelOverlay()">
                 <img src="./assets/img/icons/add_circle.svg" alt="" />
                 <p>Channel hinzufügen</p>
             </a>
@@ -67,7 +59,7 @@
                 </div>
             </div>
             <div class="user-wrapper" id="directMessage" *ngIf="isUserlMenuOpen">
-                <div class="user-detail" *ngFor="let user of globalVariables.allUsers">
+                <div class="user-detail" *ngFor="let user of users">
                     <div class="userImgWithStatus">
                         <img class="userImg" [src]="user.img" alt="userImage" />
                         <img *ngIf="user.isActive" class="status" src="./assets/img/icons/online.svg" alt="profile online">
@@ -75,7 +67,23 @@
                     </div>
                     <span>{{ user.name }}</span>
                 </div>
+                
             </div>
         </div>
     </section>
 </main>
+
+<app-add-new-channel 
+  *ngIf="showAddChannelOverlay" 
+  (closeOverlay)="closeChannelOverlay()"
+  (nextOverlay)="nextOverlay($event)">
+</app-add-new-channel>
+
+<app-add-to-channel 
+  *ngIf="showAddContactsOverlay" 
+  [channelData]="channelData"
+  (closeOverlay)="closeAddContactsOverlay()">
+</app-add-to-channel>
+
+
+

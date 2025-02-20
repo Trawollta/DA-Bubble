@@ -1,24 +1,56 @@
 <app-dialog>
-    <section>
-        <header>
-            <h2>Anmeldung</h2>
-        </header>
-        <div class="info">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</div>
-        <form #logInForm="ngForm" name="login-form" (ngSubmit)="logInWithEmailAndPassword()">
-            <div class="input-fields">
-                <app-inputfield #email="ngModel" name="email" id="email" [(ngModel)]="logInUserData.email" [required]="true" [imgSize]="'16px'" [classes]="['login']" type="email" id="email" imgName="mail" placeholder="beispielname@email.com"></app-inputfield>
-                <app-inputfield #password="ngModel" name="password" [(ngModel)]="logInUserData.password" [required]="true" [imgSize]="'22px'" [classes]="['login']" type="password" imgName="lock" placeholder="Password"></app-inputfield>
-                <app-button type="submit" [classes]="['transparent','noIcon']" (clicked)="goToSendMail()" caption="Passwort vergessen?"></app-button>
-            </div>
-            <div><span class="or">ODER</span></div>
-            <app-button type="button" [classes]="['purpel-border']" imgPath="assets/img/icons/google.svg" caption="Anmelden mit Google" (clicked)="loginWithGoogle()"></app-button>
-            <div class="button-field">
-                <app-button type="submit" [classes]="['primary','noIcon']" caption="Anmelden"></app-button>
-                <app-button [classes]="['secondary','noIcon']" (clicked)="loginAsGuest()" caption="Gäste-Login"></app-button>
-            </div>
-        </form>
-    </section>
-    <div data-aos="fade-left" *ngIf="toastService.showToast" class="toast">
-        <span>{{ toastService.message }}</span>
+  <section>
+    <header>
+      <h2>Anmeldung</h2>
+    </header>
+    <div class="info">
+      Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.
     </div>
+    <form #logInForm="ngForm" name="login-form" (ngSubmit)="logInWithEmailAndPassword()">
+      <div class="input-fields">
+        <app-inputfield 
+          #email="ngModel" 
+          name="email" 
+          id="email" 
+          [(ngModel)]="logInUserData.email" 
+          [required]="true" 
+          [imgSize]="'16px'" 
+          [classes]="['login']" 
+          type="email" 
+          imgName="mail" 
+          placeholder="beispielname@email.com">
+        </app-inputfield>
+        <app-inputfield 
+          #password="ngModel" 
+          name="password" 
+          [(ngModel)]="logInUserData.password" 
+          [required]="true" 
+          [imgSize]="'22px'" 
+          [classes]="['login']" 
+          type="password" 
+          imgName="lock" 
+          placeholder="Password">
+        </app-inputfield>
+        <app-button type="submit" [classes]="['transparent','noIcon']" (clicked)="goToSendMail()" caption="Passwort vergessen?"></app-button>
+      </div>
+      <div>
+        <span class="or">ODER</span>
+      </div>
+      <!-- <app-button 
+        type="button" 
+        [classes]="['purpel-border']" 
+        imgPath="assets/img/icons/google.svg" 
+        caption="Anmelden mit Google" 
+        (clicked)="loginWithGoogle()">
+      </app-button> -->
+      <div class="button-field">
+        <app-button type="submit" [classes]="['primary','noIcon']" caption="Anmelden"></app-button>
+        <!-- Wichtig: Gäste-Login-Button als "button", nicht als "submit" -->
+        <app-button type="button" [classes]="['secondary','noIcon']" (clicked)="loginAsGuest()" caption="Gäste-Login"></app-button>
+      </div>
+    </form>
+  </section>
+  <div data-aos="fade-left" *ngIf="toastService.showToast" class="toast">
+    <span>{{ toastService.message }}</span>
+  </div>
 </app-dialog>

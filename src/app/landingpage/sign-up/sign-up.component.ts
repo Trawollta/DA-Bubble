@@ -3,49 +3,40 @@ import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from 'app/shared/button/button.component';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
-import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
-// import { AuthService } from 'app/services/firebase-services/auth.service';
-// import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
+import { DialogComponent } from 'app/shared/dialog/dialog.component';
+import { GoBackButtonComponent } from 'app/shared/go-back-button/go-back-button.component';
+import { Router } from '@angular/router';
 import { ToastService } from 'app/services/app-services/toast.service';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
-import { GoBackButtonComponent } from 'app/shared/go-back-button/go-back-button.component';
-import { Router } from '@angular/router';
-// import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
+import { AuthService } from 'app/services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
   imports: [CommonModule, InputfieldComponent, ButtonComponent, FormsModule, DialogComponent, GoBackButtonComponent],
   templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss'
+  styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
-  // authService = inject(AuthService);
-  globalVariables = inject(GlobalVariablesService);
-  globalFunctions = inject(GlobalFunctionsService);
-  // userService = inject(FirebaseUserService);
-  toastService = inject(ToastService);
-  // firebaseChannelService = inject(FirebaseChannelService);
   private router = inject(Router);
-  signUpStep: string = "createAccount"; //createAccount | chooseAvatar
+  toastService = inject(ToastService);
+  authService = inject(AuthService);
+
+  // Sign-up-Schritte: "createAccount" oder "chooseAvatar"
+  signUpStep: string = "createAccount";
   selectedAvatar: string = '';
   signUpUserPassword: string = "";
 
-  constructor() {
-    this.globalVariables.signup = true;
-  }
-
+  // Lokale Benutzerdaten
   signUpUserData = {
     name: "",
     email: "",
     isActive: false,
     img: "",
-    relatedChats: ["NQMdt08FAcXbVroDLhvm"]
-  }
+    relatedChats: [] as string[]
+  };
 
   avatarImgs = [
     'assets/img/avatars/avatar_1.svg',
@@ -54,7 +45,9 @@ export class SignUpComponent {
     'assets/img/avatars/avatar_4.svg',
     'assets/img/avatars/avatar_5.svg',
     'assets/img/avatars/avatar_6.svg'
-  ]
+  ];
+
+  constructor() {}
 
   triggerFileInput() {
     this.fileInput!.nativeElement.click();
@@ -83,6 +76,7 @@ export class SignUpComponent {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         if (e.target && e.target.result !== null) {
+          // Optional: Dateigrößenprüfung (1MB)
           if (e.target.result.toString().length > 1048487) {
             this.toastService.showMessage('Bild darf nicht größer als 1MB sein.');
           } else {
@@ -94,27 +88,27 @@ export class SignUpComponent {
     }
   }
 
-  async onSubmit(event: any) {
-    // const email = this.signUpUserData.email;
-    // const password = this.signUpUserPassword;
-    // this.signUpUserData.img = this.selectedAvatar;
-    // let uid = '';
-    // try {
-    //   const userCredential = await this.authService.register(email, password);
-    //   uid = userCredential.user.uid;
-    //   this.userService.addUser(uid, this.signUpUserData);
-    //   this.toastService.showMessage('Konto erfolgreich erstellt!');
-    //   setTimeout(() => this.router.navigate(['/']), 2000);
-    // } catch (error) {
-    //   this.toastService.showMessage('Email bereits registriert!');
-    // }
-    // this.addNewUserToWelcome(uid);
+  onSubmit(event: any) {
+    const formData = new FormData();
+    formData.append('name', this.signUpUserData.name);
+    formData.append('email', this.signUpUserData.email);
+    formData.append('password', this.signUpUserPassword);
+    formData.append('related_chats', JSON.stringify(this.signUpUserData.relatedChats));
+    
+    // Hänge das img-Feld nur an, wenn eine Datei ausgewählt wurde
+    if (this.fileInput && this.fileInput.nativeElement.files[0]) {
+      formData.append('img', this.fileInput.nativeElement.files[0]);
+    }
+    
+    this.authService.register(formData).subscribe({
+      next: (response) => {
+        this.toastService.showMessage('Konto erfolgreich erstellt!');
+        setTimeout(() => this.router.navigate(['/']), 2000);
+      },
+      error: (error) => {
+        this.toastService.showMessage('Registrierung fehlgeschlagen!');
+        console.error("Registrierungsfehler:", error);
+      }
+    });
   }
-
-  async addNewUserToWelcome(uid: string) {
-    // const channelId = 'fsjWrBdDhpg1SvocXmxS';
-    // this.firebaseChannelService.addUserToChannel(channelId, uid);
-  }
-
 }
-

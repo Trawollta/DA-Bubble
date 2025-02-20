@@ -1,10 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { GlobalFunctionsService } from 'app/services/app-services/global-functions.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from 'app/shared/button/button.component';
 import { GlobalVariablesService } from 'app/services/app-services/global-variables.service';
 import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component';
+import { ChatChannelService } from 'app/services/chat-channel.service';
+import { AuthService } from 'app/services/auth.service';
+import { UserService } from 'app/services/user.service';
 // import { FirebaseUserService } from 'app/services/firebase-services/firebase-user.service';
 // import { FirebaseChannelService } from 'app/services/firebase-services/firebase-channel.service';
 
@@ -23,8 +26,8 @@ import { InputfieldComponent } from 'app/shared/inputfield/inputfield.component'
 })
 export class AddToChannelComponent {
 
-  globalFunctions = inject(GlobalFunctionsService);
-  globalVariables = inject(GlobalVariablesService);
+  // globalFunctions = inject(GlobalFunctionsService);
+  // globalVariables = inject(GlobalVariablesService);
   // firebaseChannelService = inject(FirebaseChannelService);
   // firebaseUserService = inject(FirebaseUserService);
 
@@ -34,10 +37,34 @@ export class AddToChannelComponent {
   selectedUsers: { name: string; id: string; img: string, isActive: boolean }[] = [];
   selectedUser: any = '';
   searchTerm: string = '';
+  openChannel = {
+    titel: '',
+    desc: '',
+    id: '',
+    chatId: '',
+    creator: '',
+    memberCount: 0
+  };
+  @Input() channelData!: { name: string; description: string };
+  @Input() newChannelName: string = '';
+  @Input() description: string = '';
+
+  constructor(
+    private chatChannelService: ChatChannelService,  
+    private userService: UserService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    this.notInOpenChannelUser = this.users = this.globalVariables.notInOpenChannelUser;
+    this.userService.getUsers().subscribe({
+      next: (userList: { name: string; id: string; img: string; isActive: boolean }[]) => {
+        this.users = userList;
+        this.notInOpenChannelUser = [...userList];
+      },
+      error: (error: any) => console.error("❌ Fehler beim Abrufen der Benutzer:", error)
+    });
   }
+  
 
   /**
    * this function filters the notInOpenChannelUser array for the searchTerm
@@ -55,21 +82,14 @@ export class AddToChannelComponent {
     });
 
   }
+
   /**
    * this function moves the selected user to the selectedUsers and removes it from notInOpenChannelUser
    * @param user - Object - selected user Object 
    */
   selectUser(user: any) {
-    if (!Array.isArray(this.selectedUsers)) {
-      this.selectedUsers = [];
-    }
     this.selectedUsers.push(user);
-    const userIndex = this.notInOpenChannelUser.findIndex(u => u.id === user.id);
-    if (userIndex !== -1) {
-      this.notInOpenChannelUser.splice(userIndex, 1);
-    }
-    this.users = this.notInOpenChannelUser;
-    this.onSearchChange(this.searchTerm);
+    this.users = this.users.filter(u => u.id !== user.id); // Entferne Benutzer aus der Liste
   }
 
   /**
@@ -84,18 +104,38 @@ export class AddToChannelComponent {
   /**
    * this function adds the selected user to the channel and adds the chatid to the selected user 
    */
-  async addUsersToExistingChannel() {
-    // let member: Array<string> = [];
-    // this.selectedUsers.forEach((user) => {
-    //   this.firebaseChannelService.addUserToChannel(this.globalVariables.openChannel.id, user.id);
-    //   this.firebaseUserService.addChatIdToUser(user.id, this.globalVariables.openChannel.chatId);
-    //   member.push(user.id);
-    // });
-    // this.globalVariables.openChannelUser.forEach((user) => {
-    //   member.push(user.id);
-    // });
-    // this.globalFunctions.getChatUserData(member);   
-    // this.globalFunctions.closeAddContactsOverlay();
-  }
+  createChannel() {
+    if (!this.channelData.name.trim()) {
+      alert("Bitte einen Channel-Namen eingeben!");
+      return;
+    }
 
+    if (this.selectedUsers.length === 0) {
+      alert("Bitte wähle mindestens einen Benutzer aus!");
+      return;
+    }
+
+    const creatorId = this.authService.getUserId();
+    const selectedUserIds = this.selectedUsers.map(user => Number(user.id));
+
+    const channelData = {
+      name: this.channelData.name,
+      description: this.channelData.description,
+      created_by: creatorId,
+      participants: selectedUserIds
+    };
+
+    console.log("📤 Sende Channel-Daten an API:", channelData);
+
+    this.chatChannelService.createChannel(channelData).subscribe({
+      next: (channel) => {
+        console.log("✅ Neuer Channel erstellt:", channel);
+      },
+      error: (error) => {
+        console.error("❌ Fehler beim Erstellen des Channels:", error);
+      }
+    });
+  }
+  
+  
 }

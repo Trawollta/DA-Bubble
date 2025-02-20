@@ -8,7 +8,7 @@ import { GlobalVariablesService } from './global-variables.service';
 // import { FirebaseChatService } from '../firebase-services/firebase-chat.service';
 // import { FirebaseChannelService } from '../firebase-services/firebase-channel.service';
 // import { FirebaseUserService } from '../firebase-services/firebase-user.service';
-import { Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 
 export interface MessageInfo {
   hasUrl: boolean;
@@ -22,7 +22,7 @@ export interface MessageInfo {
 })
 export class GlobalFunctionsService {
 
-  globalVariables = inject(GlobalVariablesService);
+  // globalVariables = inject(GlobalVariablesService);
   // firebaseChatService = inject(FirebaseChatService);
   // firebaseChannelService = inject(FirebaseChannelService);
   // firebasUserService = inject(FirebaseUserService);
@@ -35,47 +35,54 @@ export class GlobalFunctionsService {
   }
 
   openProfile(ownProfile: boolean, userId: string) {
-    this.globalVariables.profileUserId = userId;
-    this.globalVariables.ownprofile = ownProfile ? true : false;
-    this.globalVariables.showProfile = true;
+    // this.globalVariables.profileUserId = userId;
+    // this.globalVariables.ownprofile = ownProfile ? true : false;
+    // this.globalVariables.showProfile = true;
   }
 
   //Diese openOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
   menuProfileClicked() {
-    this.globalVariables.showProfileMenu =
-      !this.globalVariables.showProfileMenu;
-    this.freezeBackground(this.globalVariables.showProfileMenu);
+    // this.globalVariables.showProfileMenu =
+    //   !this.globalVariables.showProfileMenu;
+    // this.freezeBackground(this.globalVariables.showProfileMenu);
+  }
+  searchUsersByName(term: string): Observable<any[]> {
+
+    // Implement the search logic here
+
+    return of([]); // Replace with actual search logic
+
   }
 
   openEditChannelOverlay() {
-    this.globalVariables.channelData.channelName = this.globalVariables.openChannel.titel;
-    this.globalVariables.channelData.description = this.globalVariables.openChannel.desc;
-    this.globalVariables.channelData.chatId = this.globalVariables.openChannel.chatId;
-    this.globalVariables.channelData.id = this.globalVariables.openChannel.id;
-    this.globalVariables.channelData.creator = this.globalVariables.openChannel.creator;
+    // this.globalVariables.channelData.channelName = this.globalVariables.openChannel.titel;
+    // this.globalVariables.channelData.description = this.globalVariables.openChannel.desc;
+    // this.globalVariables.channelData.chatId = this.globalVariables.openChannel.chatId;
+    // this.globalVariables.channelData.id = this.globalVariables.openChannel.id;
+    // this.globalVariables.channelData.creator = this.globalVariables.openChannel.creator;
 
-    this.globalVariables.isEditingChannel = true;
+    // this.globalVariables.isEditingChannel = true;
 
-    this.globalVariables.editChannelOverlayOpen = true;
+    // this.globalVariables.editChannelOverlayOpen = true;
   }
 
   openUserOverlay() {
-    this.globalVariables.adduser = !this.globalVariables.adduser;
-    if (this.globalVariables.adduser) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
+    // this.globalVariables.adduser = !this.globalVariables.adduser;
+    // if (this.globalVariables.adduser) document.body.style.overflow = 'hidden';
+    // else document.body.style.overflow = 'auto';
   }
 
   openReactionDialog() {
-    this.globalVariables.openReaction = !this.globalVariables.openReaction;
-    if (this.globalVariables.adduser) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
+    // this.globalVariables.openReaction = !this.globalVariables.openReaction;
+    // if (this.globalVariables.adduser) document.body.style.overflow = 'hidden';
+    // else document.body.style.overflow = 'auto';
   }
 
   openAddContactsOverlay() {
-    this.globalVariables.showContacts = true;
-    if (this.globalVariables.showContacts)
-      document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
+    // this.globalVariables.showContacts = true;
+    // if (this.globalVariables.showContacts)
+    //   document.body.style.overflow = 'hidden';
+    // else document.body.style.overflow = 'auto';
   }
 
 
@@ -88,22 +95,22 @@ export class GlobalFunctionsService {
   //Diese CloseOverlay Funktionen sollten wir zu einer zusammenfassen und nur einen Parameter übergeben
 
   closeChannelOverlay() {
-    this.globalVariables.showAddChannel = false;
-    this.globalVariables.showContacts = false;
-    this.globalVariables.adduser = false;
+    // this.globalVariables.showAddChannel = false;
+    // this.globalVariables.showContacts = false;
+    // this.globalVariables.adduser = false;
   }
 
 
   closeEditOverlay() {
-    this.globalVariables.editChannelOverlayOpen = false;
-    document.body.style.overflow = 'auto';
+    // this.globalVariables.editChannelOverlayOpen = false;
+    // document.body.style.overflow = 'auto';
   }
 
   closeAddContactsOverlay() {
-    this.globalVariables.showContacts = false;
-    this.globalVariables.showAddChannel = false;
-    this.globalVariables.adduser = false;
-    document.body.style.overflow = 'auto';
+    // this.globalVariables.showContacts = false;
+    // this.globalVariables.showAddChannel = false;
+    // this.globalVariables.adduser = false;
+    // document.body.style.overflow = 'auto';
   }
 
   /**
@@ -111,12 +118,12 @@ export class GlobalFunctionsService {
  * but it closes the popup immediately if no additional check will happen >> is the popup open?
  */
   closeMembers() {
-    if (this.globalVariables.memberlist && !this.globalVariables.isMembersPopupOpen) {
-      this.globalVariables.isMembersPopupOpen = true;
-    } else if (this.globalVariables.memberlist && this.globalVariables.isMembersPopupOpen) {
-      this.globalVariables.memberlist = false;
-      this.globalVariables.isMembersPopupOpen = false;
-    }
+    // if (this.globalVariables.memberlist && !this.globalVariables.isMembersPopupOpen) {
+    //   this.globalVariables.isMembersPopupOpen = true;
+    // } else if (this.globalVariables.memberlist && this.globalVariables.isMembersPopupOpen) {
+    //   this.globalVariables.memberlist = false;
+    //   this.globalVariables.isMembersPopupOpen = false;
+    // }
   }
 
   stopPropagation(e: Event) {
@@ -127,17 +134,17 @@ export class GlobalFunctionsService {
   /**
  * this function provides all relevant information for the answer section
  */
-  getAnswerInfo(message: any): { answerCount: number, lastAnswerTime: number, answerKey: string } {
-    let answerInfo = { answerCount: 0, lastAnswerTime: 0, answerKey: '' };
-    answerInfo.answerKey = message.userId + '_' + message.timestamp.toString();
-    let filteredMessages = this.globalVariables.chatChannel.messages.filter(
-      (message) => message.answerto === answerInfo.answerKey
-    );
-    answerInfo.answerCount = filteredMessages.length;
-    if (filteredMessages.length > 0 && filteredMessages[filteredMessages.length - 1].timestamp)
-      answerInfo.lastAnswerTime = filteredMessages[filteredMessages.length - 1].timestamp;
-    return answerInfo;
-  }
+  // getAnswerInfo(message: any): { answerCount: number, lastAnswerTime: number, answerKey: string } {
+  //   // let answerInfo = { answerCount: 0, lastAnswerTime: 0, answerKey: '' };
+  //   // answerInfo.answerKey = message.userId + '_' + message.timestamp.toString();
+  //   // let filteredMessages = this.globalVariables.chatChannel.messages.filter(
+  //   //   (message) => message.answerto === answerInfo.answerKey
+  //   // );
+  //   // answerInfo.answerCount = filteredMessages.length;
+  //   // if (filteredMessages.length > 0 && filteredMessages[filteredMessages.length - 1].timestamp)
+  //   //   answerInfo.lastAnswerTime = filteredMessages[filteredMessages.length - 1].timestamp;
+  //   // return answerInfo;
+  // }
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //functions to change the chat start
@@ -200,10 +207,10 @@ export class GlobalFunctionsService {
   }
 
 
-  showDashboardElement(screenWidth: number) {
-    if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;
-    else if (window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
-  }
+  // showDashboardElement(screenWidth: number) {
+  //   if (window.innerWidth < screenWidth && this.globalVariables.showThread) this.globalVariables.showChannelMenu = false;
+  //   else if (window.innerWidth >= 800) this.globalVariables.showChannelMenu = true;
+  // }
 
   /**
    * this function returns url if the message >>contains<< one
@@ -263,17 +270,17 @@ export class GlobalFunctionsService {
    * @param channel - object which contains information of selecet channel
    */
   openChannel(channel: any) {
-    this.globalVariables.scrolledToBottom = false;
-    this.globalVariables.isUserChat = false;
-    this.getChatUserData(channel.members);
-    this.globalVariables.openChannel.desc = channel.description;
-    this.globalVariables.openChannel.titel = channel.channelName;
-    this.globalVariables.openChannel.id = channel.id;
-    this.globalVariables.openChannel.chatId = channel.chatId;
-    this.globalVariables.openChannel.creator = channel.creator;
-    this.globalVariables.openChannel.memberCount = channel.members.length;
-    // this.firebaseChatService.activeChatId = channel.chatId;
-    this.showChat();
+    // this.globalVariables.scrolledToBottom = false;
+    // this.globalVariables.isUserChat = false;
+    // this.getChatUserData(channel.members);
+    // this.globalVariables.openChannel.desc = channel.description;
+    // this.globalVariables.openChannel.titel = channel.channelName;
+    // this.globalVariables.openChannel.id = channel.id;
+    // this.globalVariables.openChannel.chatId = channel.chatId;
+    // this.globalVariables.openChannel.creator = channel.creator;
+    // this.globalVariables.openChannel.memberCount = channel.members.length;
+    // // this.firebaseChatService.activeChatId = channel.chatId;
+    // this.showChat();
   }
 
 
@@ -282,15 +289,15 @@ export class GlobalFunctionsService {
    * @param member - Array of member ids
    */
   async getChatUserData(member: string[]) {
-    this.globalVariables.openChannelUser = [];
-    this.globalVariables.notInOpenChannelUser = [];
-    this.globalVariables.allUsers.forEach(user => {
-      if (member.includes(user.id)) {
-        this.globalVariables.openChannelUser.push(user);
-      } else {
-        this.globalVariables.notInOpenChannelUser.push(user);
-      }
-    });
+    // this.globalVariables.openChannelUser = [];
+    // this.globalVariables.notInOpenChannelUser = [];
+    // this.globalVariables.allUsers.forEach(user => {
+    //   if (member.includes(user.id)) {
+    //     this.globalVariables.openChannelUser.push(user);
+    //   } else {
+    //     this.globalVariables.notInOpenChannelUser.push(user);
+    //   }
+    // });
   }
 
 
